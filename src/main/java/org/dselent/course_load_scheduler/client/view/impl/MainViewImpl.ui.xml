@@ -22,8 +22,51 @@
 			<g:Label>Custom Header</g:Label>
 		</g:tab>
 		<g:tab>
-			<g:header size='7'><b>Account</b></g:header>
-			<g:Label>Custom Header</g:Label>
+			<g:header>Account</g:header>
+			<g:HorizontalPanel width="100%" height="100%">
+				<g:VerticalPanel width="100%" height="100%">
+					<g:Grid width="100%" height="79px">
+						<g:row>
+							<g:customCell>
+								<g:Label text="Real Name"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Username"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Account State"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Email"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox/>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					<g:Button width="118px">Change Password</g:Button>
+				</g:VerticalPanel>
+				<g:VerticalPanel width="100%" height="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:ScrollPanel height="111px"/>
+					<g:Button height="29px">Edit</g:Button>
+				</g:VerticalPanel>
+			
+			</g:HorizontalPanel>
 		</g:tab>
 		</g:TabLayoutPanel>
 		<g:SimplePanel height="100%" width="100%"/>
