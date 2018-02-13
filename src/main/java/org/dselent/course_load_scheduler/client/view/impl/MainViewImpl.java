@@ -10,11 +10,15 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.Grid;
 
 public class MainViewImpl extends Composite implements HasText {
 
 	private static MainViewImplUiBinder uiBinder = GWT.create(MainViewImplUiBinder.class);
 	@UiField Button button;
+	@UiField Button createSection;
+	@UiField Button editSection;
+	@UiField Button validate;
 
 	interface MainViewImplUiBinder extends UiBinder<Widget, MainViewImpl> {
 	}

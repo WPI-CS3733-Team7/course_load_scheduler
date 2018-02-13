@@ -49,6 +49,17 @@
 							<g:Button text="Edit Course"/>
 						</g:HorizontalPanel>
 					</g:VerticalPanel>
+					<g:VerticalPanel width="278px" height="471px">
+						<g:Label text="Schedule" wordWrap = "false" horizontalAlignment="ALIGN_CENTER" styleName="{style.important}"/>
+						<g:SimplePanel height="250px">
+							<g:Grid width="100%" height="100%" ui:field="calendar"/>
+						</g:SimplePanel>
+						<g:HorizontalPanel spacing="5">
+							<g:Button ui:field="createSection" text="Create Section" width="100%" height="50"/>
+							<g:Button ui:field="editSection" text="Edit Section" width="100%" height="50"/>
+							<g:Button ui:field="validate" text="Validate" width = "62px" height="50"/>
+						</g:HorizontalPanel>
+					</g:VerticalPanel>
 				</g:HorizontalPanel>
 			</g:VerticalPanel>
 		</g:tab>
