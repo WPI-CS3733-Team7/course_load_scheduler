@@ -13,9 +13,19 @@
 			<g:SimplePanel width="100%" height="100%"/>
 		</g:HorizontalPanel>
 		<g:TabLayoutPanel barHeight="2" barUnit="EM" width="100%" height="221px">
-		<g:tab>
+			<g:tab>
 			<g:header size='7'><b>Scheduler</b></g:header>
-			<g:Label>Custom Header</g:Label>
+			<g:VerticalPanel>
+				<g:HorizontalPanel/>
+				<g:HorizontalPanel>
+					<g:Button/>
+					<g:Button/>
+					<g:Button/>
+					<g:Button/>
+					<g:Button/>
+					<g:Button/>
+				</g:HorizontalPanel>
+			</g:VerticalPanel>
 		</g:tab>
 		<g:tab>
 			<g:header size='7'><b>Request</b></g:header>
