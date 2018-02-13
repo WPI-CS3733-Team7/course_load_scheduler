@@ -10,11 +10,17 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class MainViewImpl extends Composite implements HasText {
 
 	private static MainViewImplUiBinder uiBinder = GWT.create(MainViewImplUiBinder.class);
-	@UiField Button button;
+	@UiField Button scheduleAddCourse;
+	@UiField Button scheduleAddInstructor;
+	@UiField Button scheduleEditInstructor;
+	@UiField Button scheduleEditCourse;
+	@UiField VerticalPanel scheduleInstructorsPanel;
+	@UiField VerticalPanel scheduleCoursesPanel;
 
 	interface MainViewImplUiBinder extends UiBinder<Widget, MainViewImpl> {
 	}
@@ -37,7 +43,7 @@ public class MainViewImpl extends Composite implements HasText {
 		return null;
 	}
 
-	@UiHandler("button")
-	void onButtonClick(ClickEvent event) {
+	@UiHandler("scheduleAddCourse")
+	void onScheduleAddCourseClick(ClickEvent event) {
 	}
 }
