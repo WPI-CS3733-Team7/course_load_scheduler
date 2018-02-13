@@ -11,6 +11,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 
 public class MainViewImpl extends Composite implements HasText {
 
@@ -22,6 +24,10 @@ public class MainViewImpl extends Composite implements HasText {
 	@UiField Button addInstructor;
 	@UiField Button editInstructor;
 	@UiField Button editCourse;
+	@UiField Label selectYear;
+	@UiField Label selectTerm;
+	@UiField ListBox yearSelect;
+	@UiField ListBox termSelect;
 
 	interface MainViewImplUiBinder extends UiBinder<Widget, MainViewImpl> {
 	}
