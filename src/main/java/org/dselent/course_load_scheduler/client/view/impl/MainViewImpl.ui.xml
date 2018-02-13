@@ -12,18 +12,43 @@
 			<g:SimplePanel width="100%" height="100%"/>
 			<g:SimplePanel width="100%" height="100%"/>
 		</g:HorizontalPanel>
-		<g:TabLayoutPanel barHeight="2" barUnit="EM" width="100%" height="221px">
+		<g:TabLayoutPanel barHeight="2" barUnit="EM" width="100%" height="550px">
 			<g:tab>
 			<g:header size='7'><b>Scheduler</b></g:header>
 			<g:VerticalPanel>
-				<g:HorizontalPanel/>
-				<g:HorizontalPanel>
-					<g:Button/>
-					<g:Button/>
-					<g:Button/>
-					<g:Button/>
-					<g:Button/>
-					<g:Button/>
+				<g:HorizontalPanel spacing="15">
+					<g:VerticalPanel width="100%" height="450px">
+						<g:Label text="Instructors" wordWrap="false" horizontalAlignment="ALIGN_CENTER" styleName="{style.important}"/>
+						<g:Cell width="150px" height="400px">
+							<g:ScrollPanel width="" height="">
+						<g:VerticalPanel width="100%" height="100%">
+							<g:Button text="Instructor 1" width="100%" height="50"/>
+							<g:Button text="Instructor 2" width="100%" height="50"/>
+							<g:Button text="Instructor 3" width="100%" height="50"/>
+						</g:VerticalPanel>
+					</g:ScrollPanel>
+						</g:Cell>
+						<g:HorizontalPanel spacing="5">
+							<g:Button text="Add Instructor"/>
+							<g:Button text="Edit Instructor"/>
+						</g:HorizontalPanel>
+					</g:VerticalPanel>
+					<g:VerticalPanel width="100%" height="450px">
+						<g:Label text="Courses" wordWrap="false" horizontalAlignment="ALIGN_CENTER" styleName="{style.important}"/>
+						<g:Cell width="150px" height="400px">
+							<g:ScrollPanel>
+						<g:VerticalPanel width="100%" height="100%">
+							<g:Button text="Course 1" width="100%" height="50"/>
+							<g:Button text="Course 2" width="100%" height="50"/>
+							<g:Button text="Course 3" width="100%" height="50"/>
+						</g:VerticalPanel>
+					</g:ScrollPanel>
+						</g:Cell>
+						<g:HorizontalPanel spacing="5">
+							<g:Button text="Add Course" ui:field="button"/>
+							<g:Button text="Edit Course"/>
+						</g:HorizontalPanel>
+					</g:VerticalPanel>
 				</g:HorizontalPanel>
 			</g:VerticalPanel>
 		</g:tab>
