@@ -9,27 +9,27 @@ import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.RadioButton;
 
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
+//import com.google.gwt.user.client.ui.Label;
+//import com.google.gwt.user.client.ui.ListBox;
 
 public class MainViewImpl extends Composite implements HasText {
 
 	private static MainViewImplUiBinder uiBinder = GWT.create(MainViewImplUiBinder.class);
-	@UiField Button button;
-	@UiField Button button_1;
+	//@UiField Button button;
+	//@UiField Button button_1;
 
 
 	@UiField RadioButton rdoCourse;
 	@UiField RadioButton rdoOther;
 	@UiField Button rdoSubmit;
 
-	@UiField Button createSection;
+	/*@UiField Button createSection;
 	@UiField Button editSection;
 	@UiField Button validate;
 	@UiField Label selectYear;
 	@UiField Label selectTerm;
 	@UiField ListBox yearSelect;
-	@UiField ListBox termSelect;
+	@UiField ListBox termSelect;*/
 
 
 
@@ -57,8 +57,8 @@ public class MainViewImpl extends Composite implements HasText {
 
 
 
-	}
-	@UiHandler("button_1")
-	void onButton_1Click(ClickEvent event) {
-	}
+	//}
+	//@UiHandler("button_1")
+	//void onButton_1Click(ClickEvent event) {
+	//}
 }
