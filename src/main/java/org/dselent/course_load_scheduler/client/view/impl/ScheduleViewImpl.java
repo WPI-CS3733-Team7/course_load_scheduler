@@ -101,6 +101,18 @@ public class ScheduleViewImpl extends Composite implements ScheduleView {
 		}
 	}
 	
+	//Gets the currently selected button
+	@Override
+	public Button getSelectedInstructor() {
+		return selectedInstructorButton;
+	}
+	
+	//Gets the currently selected course
+	@Override
+	public Button getSelectedCourse() {
+		return selectedCourseButton;
+	}
+	
 	//Adds a button for a given instructor to the list of instructor buttons
 	@Override
 	public void addInstructorButton(String instructorName) {

@@ -17,6 +17,18 @@
 			<g:header size='7'><b>Scheduler</b></g:header>
 			<g:VerticalPanel>
 				<g:HorizontalPanel spacing="15">
+					<g:VerticalPanel>
+						<g:VerticalPanel width="391px">
+							<g:HorizontalPanel width="391px">
+								<g:Label text="Select Year:" ui:field="selectYear" horizontalAlignment="ALIGN_CENTER"/>
+								<g:ListBox visibleItemCount="1" height="22px" ui:field="yearSelect"/>
+							</g:HorizontalPanel>
+							<g:HorizontalPanel width="391px">
+								<g:Label text="Select Term:" ui:field="selectTerm" horizontalAlignment="ALIGN_CENTER"/>
+								<g:ListBox visibleItemCount="1" height="21px" ui:field="termSelect"/>
+							</g:HorizontalPanel>
+						</g:VerticalPanel>
+					<g:HorizontalPanel>
 					<g:VerticalPanel width="100%" height="450px">
 						<g:Label text="Instructors" wordWrap="false" horizontalAlignment="ALIGN_CENTER" styleName="{style.important}"/>
 						<g:Cell width="150px" height="400px">
@@ -29,8 +41,10 @@
 					</g:ScrollPanel>
 						</g:Cell>
 						<g:HorizontalPanel spacing="5">
+
 							<g:Button text="Add Instructor" ui:field="scheduleAddInstructor"/>
 							<g:Button text="Edit Instructor" ui:field="scheduleEditInstructor"/>
+
 						</g:HorizontalPanel>
 					</g:VerticalPanel>
 					<g:VerticalPanel width="100%" height="450px">
@@ -45,18 +59,61 @@
 					</g:ScrollPanel>
 						</g:Cell>
 						<g:HorizontalPanel spacing="5">
+
 							<g:Button text="Add Course" ui:field="scheduleAddCourse"/>
 							<g:Button text="Edit Course" ui:field="scheduleEditCourse"/>
+
+						</g:HorizontalPanel>
+					</g:VerticalPanel>
+					</g:HorizontalPanel>
+					</g:VerticalPanel>
+					<g:VerticalPanel width="278px" height="494px">
+						<g:Label text="Schedule" wordWrap = "false" horizontalAlignment="ALIGN_CENTER" styleName="{style.important}"/>
+						<g:Cell width="150px" height="400px">
+						<g:SimplePanel height="378px">
+							<g:Grid width="100%" height="100%" ui:field="calendar"/>
+						</g:SimplePanel>
+						</g:Cell>
+						<g:HorizontalPanel spacing="5" height="52px">
+							<g:Button ui:field="createSection" text="Create Section" width="100%" height="41px"/>
+							<g:Button ui:field="editSection" text="Edit Section" width="100%" height="41px"/>
+							<g:Button ui:field="validate" text="Validate" width = "82px" height="42px"/>
+
 						</g:HorizontalPanel>
 					</g:VerticalPanel>
 				</g:HorizontalPanel>
 			</g:VerticalPanel>
 		</g:tab>
-		<g:tab>
-			<g:header size='7'><b>Request</b></g:header>
-			<g:Label>Custom Header</g:Label>
-		</g:tab>
-		<g:tab>
+			<g:tab>
+				<g:header>Request</g:header>
+				<g:AbsolutePanel>
+					<g:at top="10" left="49">
+						<g:Label text="Create a request"/>
+					</g:at>
+					<g:at top="36" left="10">
+						<g:Label text="Request Type:"/>
+					</g:at>
+					<g:at top="56" left="10">
+						<g:RadioButton name="new name" text="Course" ui:field="rdoCourse"/>
+					</g:at>
+					<g:at top="77" left="10">
+						<g:RadioButton name="new name" text="Other" ui:field="rdoOther"/>
+					</g:at>
+					<g:at top="102" left="10">
+						<g:TextArea width="148px" height="36px"/>
+					</g:at>
+					<g:at top="158" left="61">
+						<g:Button text="Submit" ui:field="rdoSubmit"/>
+					</g:at>
+					<g:at top="36" left="212">
+						<g:ListBox visibleItemCount="5" width="207px" height="133px"/>
+					</g:at>
+					<g:at top="10" left="271">
+						<g:Label text="Request History"/>
+					</g:at>
+				</g:AbsolutePanel>
+			</g:tab>
+			<g:tab>
 			<g:header size='7'><b>Account</b></g:header>
 			<g:Label>Custom Header</g:Label>
 		</g:tab>
