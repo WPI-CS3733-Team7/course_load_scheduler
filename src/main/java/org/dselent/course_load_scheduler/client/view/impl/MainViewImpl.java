@@ -10,14 +10,27 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
+
 import com.google.gwt.user.client.ui.RadioButton;
+
+import com.google.gwt.user.client.ui.Grid;
 
 public class MainViewImpl extends Composite implements HasText {
 
 	private static MainViewImplUiBinder uiBinder = GWT.create(MainViewImplUiBinder.class);
+
 	@UiField RadioButton rdoCourse;
 	@UiField RadioButton rdoOther;
 	@UiField Button rdoSubmit;
+
+	@UiField Button addCourse;
+	@UiField Button createSection;
+	@UiField Button editSection;
+	@UiField Button validate;
+	@UiField Button addInstructor;
+	@UiField Button editInstructor;
+	@UiField Button editCourse;
+
 
 	interface MainViewImplUiBinder extends UiBinder<Widget, MainViewImpl> {
 	}
@@ -40,4 +53,7 @@ public class MainViewImpl extends Composite implements HasText {
 		return null;
 	}
 
+	@UiHandler("addCourse")
+	void onAddCourseClick(ClickEvent event) {
+	}
 }
