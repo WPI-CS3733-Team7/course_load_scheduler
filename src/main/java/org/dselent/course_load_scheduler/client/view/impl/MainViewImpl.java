@@ -15,10 +15,13 @@ import com.google.gwt.user.client.ui.Grid;
 public class MainViewImpl extends Composite implements HasText {
 
 	private static MainViewImplUiBinder uiBinder = GWT.create(MainViewImplUiBinder.class);
-	@UiField Button button;
+	@UiField Button addCourse;
 	@UiField Button createSection;
 	@UiField Button editSection;
 	@UiField Button validate;
+	@UiField Button addInstructor;
+	@UiField Button editInstructor;
+	@UiField Button editCourse;
 
 	interface MainViewImplUiBinder extends UiBinder<Widget, MainViewImpl> {
 	}
@@ -41,7 +44,7 @@ public class MainViewImpl extends Composite implements HasText {
 		return null;
 	}
 
-	@UiHandler("button")
-	void onButtonClick(ClickEvent event) {
+	@UiHandler("addCourse")
+	void onAddCourseClick(ClickEvent event) {
 	}
 }

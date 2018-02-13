@@ -29,8 +29,8 @@
 					</g:ScrollPanel>
 						</g:Cell>
 						<g:HorizontalPanel spacing="5">
-							<g:Button text="Add Instructor"/>
-							<g:Button text="Edit Instructor"/>
+							<g:Button text="Add Instructor" ui:field="addInstructor"/>
+							<g:Button text="Edit Instructor" ui:field="editInstructor"/>
 						</g:HorizontalPanel>
 					</g:VerticalPanel>
 					<g:VerticalPanel width="100%" height="450px">
@@ -45,19 +45,21 @@
 					</g:ScrollPanel>
 						</g:Cell>
 						<g:HorizontalPanel spacing="5">
-							<g:Button text="Add Course" ui:field="button"/>
-							<g:Button text="Edit Course"/>
+							<g:Button text="Add Course" ui:field="addCourse"/>
+							<g:Button text="Edit Course" ui:field="editCourse"/>
 						</g:HorizontalPanel>
 					</g:VerticalPanel>
 					<g:VerticalPanel width="278px" height="471px">
 						<g:Label text="Schedule" wordWrap = "false" horizontalAlignment="ALIGN_CENTER" styleName="{style.important}"/>
-						<g:SimplePanel height="250px">
+						<g:Cell width="150px" height="400px">
+						<g:SimplePanel height="378px">
 							<g:Grid width="100%" height="100%" ui:field="calendar"/>
 						</g:SimplePanel>
-						<g:HorizontalPanel spacing="5">
-							<g:Button ui:field="createSection" text="Create Section" width="100%" height="50"/>
-							<g:Button ui:field="editSection" text="Edit Section" width="100%" height="50"/>
-							<g:Button ui:field="validate" text="Validate" width = "62px" height="50"/>
+						</g:Cell>
+						<g:HorizontalPanel spacing="5" height="52px">
+							<g:Button ui:field="createSection" text="Create Section" width="100%" height="41px"/>
+							<g:Button ui:field="editSection" text="Edit Section" width="100%" height="41px"/>
+							<g:Button ui:field="validate" text="Validate" width = "82px" height="42px"/>
 						</g:HorizontalPanel>
 					</g:VerticalPanel>
 				</g:HorizontalPanel>
