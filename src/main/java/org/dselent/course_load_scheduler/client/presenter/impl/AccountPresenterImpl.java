@@ -73,7 +73,8 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		this.parentPresenter = parentPresenter;
 	}
 	
-	
+	/*
+	@Override
 	public void changePassword()
 	{
 		if(!changePasswordClickInProgress)
@@ -81,18 +82,18 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			changePasswordClickInProgress = true;
 			view.getChangePasswordButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
-			
+
 			String userName = view.getNameTextBox().getText();
-			//String password = view.getPasswordTextBox().getText();
+			String password = view.getPasswordTextBox().getText();
 			
 			boolean validUserName = true;
 			boolean validPassword = true;
 
 			List<String> invalidReasonList = new ArrayList<>();
-			/*
+			
 			try
 			{
-			//	validateLoginUserName(userName);
+				validateLoginUserName(userName);
 			}
 			catch(EmptyStringException e)
 			{
@@ -102,7 +103,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 
 			try
 			{
-				//validateLoginPassword(password);
+				validateLoginPassword(password);
 			}
 			catch(EmptyStringException e)
 			{
@@ -112,7 +113,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			
 			if(validUserName && validPassword)
 			{
-				//sendLogin(userName, password);
+				sendLogin(userName, password);
 			}
 			else
 			{
@@ -120,10 +121,11 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 				InvalidLoginEvent ile = new InvalidLoginEvent(ila);
 				eventBus.fireEvent(ile);
 			}
-			*/
 		}
 	}
-
+	*/
+	
+	// GET RID OF THIS
 	@Override
 	public void login() {
 		// TODO Auto-generated method stub
