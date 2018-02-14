@@ -6,63 +6,60 @@ import org.dselent.course_load_scheduler.client.view.UserRequestView;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RadioButton;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 
+public class UserRequestViewImpl extends BaseViewImpl<UserRequestPresenter> implements UserRequestView {
 
-public class UserRequestViewImpl extends BaseViewImpl<UserRequestPresenter> implements UserRequestView
-{
 	private static UserRequestViewImplUiBinder uiBinder = GWT.create(UserRequestViewImplUiBinder.class);
-	
-	interface UserRequestViewImplUiBinder extends UiBinder<Widget, UserRequestViewImpl>{}
-			
-	@UiField
-	HorizontalPanel requestTabPanel;
-	
-	@UiField
-	VerticalPanel createPanel;
-	
-	@UiField
-	VerticalPanel requestHistoryPanel;
-	
-	@UiField
+	@UiField 
 	Label createLabel;
 	
-	@UiField
+	@UiField 
+	HorizontalPanel requestTabPanel;
+	
+	@UiField 
+	VerticalPanel createPanel;
+	
+	@UiField 
+	VerticalPanel requestHistoryPanel;
+	
+	@UiField 
 	Label requestTypeLabel;
 	
-	@UiField
+	@UiField 
 	RadioButton courseRdo;
 	
-	@UiField
+	@UiField 
 	RadioButton otherRdo;
 	
-	@UiField
+	@UiField 
 	TextArea descriptTextArea;
 	
-	@UiField
+	@UiField 
 	Button submitButton;
 	
-	@UiField
+	@UiField 
 	Label requestHistoryLabel;
 	
-	@UiField
+	@UiField 
 	ListBox requestHistoryList;
-	
-	
-	public UserRequestViewImpl()
-	{
+
+	interface UserRequestViewImplUiBinder extends UiBinder<Widget, UserRequestViewImpl> {
+	}
+
+	public UserRequestViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	
@@ -147,6 +144,5 @@ public class UserRequestViewImpl extends BaseViewImpl<UserRequestPresenter> impl
 	{
 		presenter.userRequest();
 	}
-
 
 }

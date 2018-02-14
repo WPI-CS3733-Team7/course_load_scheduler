@@ -4,5 +4,14 @@ public interface SchedulePresenter extends BasePresenter {
 
 	IndexPresenter getParentPresenter();
 	void setParentPresenter(IndexPresenter parentPresenter);
+	void deleteInstructor();
+	void editInstructor();
+	void deleteCourse();
+	void editCourse();
+	void selectInstructor();
+	void selectCourse();
+	
+	// request methods for courses, instructors, sections, validate
+	
 	
 }
