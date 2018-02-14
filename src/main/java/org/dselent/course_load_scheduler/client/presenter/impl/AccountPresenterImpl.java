@@ -73,6 +73,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		this.parentPresenter = parentPresenter;
 	}
 	
+
 	@Override
 	public void changePassword()
 	{
@@ -81,11 +82,6 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			changePasswordClickInProgress = true;
 			view.getChangePasswordButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
-			
-			String name = view.getNameTextBox().getText();
-			String userName = view.getNameTextBox().getText();
-			String accountState = view.getAccountStateTextBox().getText();
-			String email = view.getEmailTextBox().getText();
 			
 			boolean validUserName = true;
 			boolean validPassword = true;
@@ -123,6 +119,13 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 				eventBus.fireEvent(ile);
 			}
 		}
+	}
+	
+	// GET RID OF THIS
+	@Override
+	public void login() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
