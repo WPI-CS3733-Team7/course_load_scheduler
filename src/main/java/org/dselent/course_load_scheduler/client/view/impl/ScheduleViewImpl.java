@@ -3,8 +3,8 @@ package org.dselent.course_load_scheduler.client.view.impl;
 	import java.util.ArrayList;
 	import java.util.List;
 
-import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
-import org.dselent.course_load_scheduler.client.view.ScheduleView;
+	import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
+	import org.dselent.course_load_scheduler.client.view.ScheduleView;
 
 	import com.google.gwt.core.client.GWT;
 	import com.google.gwt.event.dom.client.ClickEvent;
@@ -15,12 +15,15 @@ import org.dselent.course_load_scheduler.client.view.ScheduleView;
 	import com.google.gwt.uibinder.client.UiTemplate;
 	import com.google.gwt.user.client.ui.Button;
 	import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Label;
+	import com.google.gwt.user.client.ui.Grid;
+	import com.google.gwt.user.client.ui.HasWidgets;
+	import com.google.gwt.user.client.ui.Label;
 	import com.google.gwt.user.client.ui.ListBox;
+	import com.google.gwt.user.client.ui.PopupPanel;
+	import com.google.gwt.user.client.ui.TextBox;
 	import com.google.gwt.user.client.ui.VerticalPanel;
 	import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.HorizontalPanel;
+	import com.google.gwt.user.client.ui.HorizontalPanel;
 
 	public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements ScheduleView {
 
@@ -29,6 +32,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 		//@UiTemplate(value = "MainViewImpl.ui.xml")
 		interface ScheduleViewImplUiBinder extends UiBinder<Widget, ScheduleViewImpl>{}
 
+		SchedulePresenter presenter;
 		
 		List<Button> instructorButtons = new ArrayList<Button>();
 		List<Button> courseButtons = new ArrayList<Button>();
@@ -64,65 +68,179 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 		Button validate;
 		
 		@UiField 
-		Label selectYear;
-		
-		@UiField 
-		Label selectTerm;
-		
-		@UiField 
 		ListBox yearSelect;
 		
 		@UiField 
 		ListBox termSelect;
 		
-		@UiField
-		Label instructorsTitle;
-		
-		@UiField 
-		Label coursesTitle;
-		
-		@UiField 
-		Button instructor1;
-		
-		@UiField
-		Button instructor2;
-		
-		@UiField 
-		Button instructor3;
-		
-		@UiField
-		Button course1;
-		
-		@UiField 
-		Button course2;
-		
-		@UiField 
-		Button course3;
-		
-		@UiField 
-		Label scheduleTitle;
-		
 		@UiField 
 		HorizontalPanel scheduleViewPanel;
+		
+		/* Pop-up Widgets for Instructor */
+		Label popInstructorLabelFirstName = new Label("First Name:");
+		Label popInstructorLabelLastName = new Label("Last Name:");
+		Label popInstructorLabelRank = new Label("Rank:");
+		Label popInstructorLabelEmail = new Label("Email:");
+		TextBox popInstructorTextFirstName = new TextBox();
+		TextBox popInstructorTextLastName = new TextBox();
+		TextBox popInstructorTextRank = new TextBox();
+		TextBox popInstructorTextEmail = new TextBox();
+		Button popIntructorButtonDelete = new Button();
+		Button popIntructorButtonSubmit = new Button();
 
+		/* Pop-up Widgets for Course */
+		Label popCourseLabelName = new Label("Course Name:");
+		Label popCourseLabelNumber = new Label("Course Number:");
+		Label popCourseLabelFrequency = new Label("Required Frequency:");
+		TextBox popCourseTextName = new TextBox();
+		TextBox popCourseTextNumber = new TextBox();
+		TextBox popCourseTextFrequency = new TextBox();
+		Button popCourseButtonDelete = new Button();
+		Button popCourseButtonSubmit = new Button();
+
+		/* Constructor */
 		public ScheduleViewImpl() {
 			initWidget(uiBinder.createAndBindUi(this));
 		}
+		
+		/* Methods to generate pop-up windows */
+
+		private void makeInstructorPopUp(boolean creating) {
+			Grid popGrid = new Grid(5, 2);
+			popGrid.setWidget(0, 0, popInstructorLabelFirstName);
+			popGrid.setWidget(1, 0, popInstructorLabelLastName);
+			popGrid.setWidget(2, 0, popInstructorLabelRank);
+			popGrid.setWidget(3, 0, popInstructorLabelEmail);
+			popGrid.setWidget(0, 1, popInstructorTextFirstName);
+			popGrid.setWidget(1, 1, popInstructorTextLastName);
+			popGrid.setWidget(2, 1, popInstructorTextRank);
+			popGrid.setWidget(3, 1, popInstructorTextEmail);
+			popGrid.setWidget(4, 1, popIntructorButtonSubmit);
+			if(!creating) {
+				popGrid.setWidget(4, 0, popIntructorButtonDelete);
+			}
+			
+			PopupPanel editPopup = new PopupPanel(true);
+			editPopup.add(popGrid);
+			editPopup.isGlassEnabled();
+			editPopup.center();
+		}
+		
+		private void makeCoursePopUp(boolean creating) {
+			Grid popGrid = new Grid(4, 2);
+			popGrid.setWidget(0, 0, popCourseLabelName);
+			popGrid.setWidget(1, 0, popCourseLabelNumber);
+			popGrid.setWidget(2, 0, popCourseLabelFrequency);
+			popGrid.setWidget(0, 1, popCourseTextName);
+			popGrid.setWidget(1, 1, popCourseTextNumber);
+			popGrid.setWidget(2, 1, popCourseTextFrequency);
+			popGrid.setWidget(3, 1, popCourseButtonSubmit);
+			if(!creating) {
+				popGrid.setWidget(3, 0, popCourseButtonDelete);
+			}
+			
+			PopupPanel editPopup = new PopupPanel(true);
+			editPopup.add(popGrid);
+			editPopup.isGlassEnabled();
+			editPopup.center();
+		}
+		
+		/* Getters and Setters for pop-up text boxes */
+		
+		public TextBox getPopInstructorTextFirstName() {
+			return popInstructorTextFirstName;
+		}
+
+		public void setPopInstructorTextFirstName(TextBox popInstructorTextFirstName) {
+			this.popInstructorTextFirstName = popInstructorTextFirstName;
+		}
+
+		public TextBox getPopInstructorTextLastName() {
+			return popInstructorTextLastName;
+		}
+
+		public void setPopInstructorTextLastName(TextBox popInstructorTextLastName) {
+			this.popInstructorTextLastName = popInstructorTextLastName;
+		}
+
+		public TextBox getPopInstructorTextRank() {
+			return popInstructorTextRank;
+		}
+
+		public void setPopInstructorTextRank(TextBox popInstructorTextRank) {
+			this.popInstructorTextRank = popInstructorTextRank;
+		}
+
+		public TextBox getPopInstructorTextEmail() {
+			return popInstructorTextEmail;
+		}
+
+		public void setPopInstructorTextEmail(TextBox popInstructorTextEmail) {
+			this.popInstructorTextEmail = popInstructorTextEmail;
+		}
+
+		public TextBox getPopCourseTextName() {
+			return popCourseTextName;
+		}
+
+		public void setPopCourseTextName(TextBox popCourseTextName) {
+			this.popCourseTextName = popCourseTextName;
+		}
+
+		public TextBox getPopCourseTextNumber() {
+			return popCourseTextNumber;
+		}
+
+		public void setPopCourseTextNumber(TextBox popCourseTextNumber) {
+			this.popCourseTextNumber = popCourseTextNumber;
+		}
+
+		public TextBox getPopCourseTextFrequency() {
+			return popCourseTextFrequency;
+		}
+
+		public void setPopCourseTextFrequency(TextBox popCourseTextFrequency) {
+			this.popCourseTextFrequency = popCourseTextFrequency;
+		}
+
+		/* Getters and Setters for year and term dropdowns */
+		
+		public ListBox getYearSelect() {
+			return yearSelect;
+		}
+
+		public void setYearSelect(ListBox yearSelect) {
+			this.yearSelect = yearSelect;
+		}
+
+		public ListBox getTermSelect() {
+			return termSelect;
+		}
+
+		public void setTermSelect(ListBox termSelect) {
+			this.termSelect = termSelect;
+		}
+		
+		/* Bound UI Event Handlers */
 
 		@UiHandler("scheduleAddInstructor")
 		void onClickAddInstructor(ClickEvent event) {
+			makeInstructorPopUp(true);
 		}
 		
 		@UiHandler("scheduleEditInstructor")
 		void onClickEditInstructor(ClickEvent event) {
+			makeInstructorPopUp(false);
 		}
 		
 		@UiHandler("scheduleAddCourse")
 		void onClickAddCourse(ClickEvent event) {
+			makeCoursePopUp(true);
 		}
 		
 		@UiHandler("scheduleEditCourse")
 		void onClickEditCourse(ClickEvent event) {
+			makeCoursePopUp(false);
 		}
 		
 		@UiHandler("createSection")
@@ -152,6 +270,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 					selectedInstructorButton.setText(selectedInstructorButton.getText().substring(4, selectedInstructorButton.getText().length()-5));
 				linkedButton.setText("[[[ "+ linkedButton.getText() +" ]]]");
 				selectedInstructorButton = linkedButton;
+				presenter.selectInstructor();
 			}
 		}
 		
@@ -168,6 +287,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 					selectedCourseButton.setText(selectedCourseButton.getText().substring(4, selectedCourseButton.getText().length()-5));
 				linkedButton.setText("[[[ "+ linkedButton.getText() +" ]]]");
 				selectedCourseButton = linkedButton;
+				presenter.selectCourse();
 			}
 		}
 		

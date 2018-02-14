@@ -1,7 +1,7 @@
 package org.dselent.course_load_scheduler.client.view;
 
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
-
+import org.dselent.course_load_scheduler.client.view.BaseView;
 import com.google.gwt.user.client.ui.Button;
 
 public interface ScheduleView extends BaseView<SchedulePresenter>{
