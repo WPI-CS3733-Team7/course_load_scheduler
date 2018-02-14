@@ -14,6 +14,8 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -44,6 +46,27 @@ public class ScheduleViewImpl extends Composite implements ScheduleView {
 	
 	@UiField
 	Button scheduleEditCourse;
+	
+	@UiField
+	Button createSection;
+	
+	@UiField
+	Button editSection;
+	
+	@UiField 
+	Button validate;
+	
+	@UiField 
+	Label selectYear;
+	
+	@UiField 
+	Label selectTerm;
+	
+	@UiField 
+	ListBox yearSelect;
+	
+	@UiField 
+	ListBox termSelect;
 
 	@UiTemplate(value = "MainViewImpl.ui.xml")
 	interface MainViewImplUiBinder extends UiBinder<Widget, ScheduleViewImpl> {
@@ -68,6 +91,20 @@ public class ScheduleViewImpl extends Composite implements ScheduleView {
 	@UiHandler("scheduleEditCourse")
 	void onClickEditCourse(ClickEvent event) {
 	}
+	
+	@UiHandler("createSection")
+	void onClickAddSection(ClickEvent event) {
+	}
+	
+	@UiHandler("editSection")
+	void onClickEditSection(ClickEvent event) {
+	}
+	
+	@UiHandler("validate")
+	void onClickValidate(ClickEvent event) {
+	}
+	
+	//UiHandlers for select year/term labels and list boxes needed?
 
 	private class instructorClickHandler implements ClickHandler{
 		private Button linkedButton;
