@@ -106,7 +106,7 @@ public class UserRequestViewImpl extends BaseViewImpl<UserRequestPresenter> impl
 
 
 	@Override
-	public Button getRequestButton() {
+	public Button getSubmitButton() {
 		// TODO Auto-generated method stub
 		return submitButton;
 	}

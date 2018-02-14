@@ -16,7 +16,7 @@ public interface UserRequestView extends BaseView<UserRequestPresenter>{
 		void setCourseRdo(RadioButton courseRdo);
 		RadioButton getOtherRdo();
 		void setOtherRdo(RadioButton otherRdo);
-		TextBox getDescriptionText();
+		TextBox getDescriptionTextBox();
 		void setDescriptionText(TextBox descriptionTextBox);
 		ListBox getRequestHistoryList();
 		void setRequestHistoryList(ListBox requestHistoryList);
