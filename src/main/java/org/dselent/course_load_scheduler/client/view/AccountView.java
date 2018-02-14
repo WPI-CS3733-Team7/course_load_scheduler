@@ -16,4 +16,9 @@ public interface AccountView extends BaseView<AccountPresenter>{
 	Button getChangePasswordButton();
 	Button getEditUserButton();
 	void showErrorMessages(String errorMessages);
+	//
+	TextBox getOldPasswordText();
+	TextBox getNewPasswordText();
+	TextBox getConfirmPasswordText();
+	Button getSubmitButton();
 }
