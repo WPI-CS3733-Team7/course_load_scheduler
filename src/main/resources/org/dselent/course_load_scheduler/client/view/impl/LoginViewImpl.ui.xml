@@ -90,6 +90,8 @@
 
 <!--  .center style borrowed from https://stackoverflow.com/questions/18167237/htmlpanel-centering-with-uibinder-and-gwt -->
 <!-- ^above comment slightly old -->
+
+<!-- 
 <ui:style>
      
 	.center
@@ -171,43 +173,65 @@
 	}
 	
 </ui:style>
+-->
+<g:VerticalPanel ui:field="loginPanel" horizontalAlignment="center">
+	<g:HorizontalPanel width="623px" height="86px">
+		<g:Cell width="100%" height="100%">
+			<g:SimplePanel width="100%" height="100%"/>
+		</g:Cell>
+		<g:Cell width="100%" height="100%">
+			<g:SimplePanel width="100%" height="100%">
+			<g:Label text="Course Scheduling Portal" width="198px" height="100%" horizontalAlignment="ALIGN_CENTER"/>
+		</g:SimplePanel>
+		</g:Cell>
+		<g:SimplePanel width="203px" height="100%">
+			<g:Image width="193px" height="100%"/>
+		</g:SimplePanel>
+	</g:HorizontalPanel>
+	<g:Cell horizontalAlignment="ALIGN_CENTER">
+		<g:AbsolutePanel height="336px">
+			<g:at top="28" left="147">
+				<g:VerticalPanel width="348px" height="218px" verticalAlignment="ALIGN_TOP">
+					<g:Cell horizontalAlignment="ALIGN_CENTER">
+						<g:HTMLPanel height="36px">
+						<g:Label text="Sign In" ui:field="titleLabel"/>
+					</g:HTMLPanel>
+					</g:Cell>
+					<g:Grid width="348px" height="86px">
+						<g:row>
+							<g:customCell>
+								<g:Label text="Username" horizontalAlignment="ALIGN_RIGHT" ui:field="loginUserLabel"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox alignment="CENTER" ui:field="loginUserTextBox"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Password" horizontalAlignment="ALIGN_RIGHT" ui:field="loginPasswordLabel"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox alignment="RIGHT" ui:field="loginPasswordTextBox"/>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					<g:Cell verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+						<g:AbsolutePanel height="48px">
+							<g:at top="10" left="138">
+								<g:Button ui:field="loginButton" text="Login" width="20%">New Button</g:Button>
+							</g:at>
+						</g:AbsolutePanel>
+					</g:Cell>
+					<g:Cell horizontalAlignment="ALIGN_CENTER">
+						<g:HTMLPanel height="46px">
+						<g:Button width="20%" height="30px" text="Register" ui:field="registerButton"/>
+					</g:HTMLPanel>
+					</g:Cell>
+				</g:VerticalPanel>
+			</g:at>
+		</g:AbsolutePanel>
+	</g:Cell>
 
-<g:VerticalPanel ui:field="loginPanel" addStyleNames="{style.login-panel} {style.center}" horizontalAlignment="center">
-
-	<g:Label ui:field="viewLabel" addStyleNames="{style.view-label}">Couse Load Scheduling System</g:Label>
-	 
-	<g:VerticalPanel horizontalAlignment="center" addStyleNames="{style.login-form}">
-		<!-- Grid panel -->
-		<!-- http://www.gwtproject.org/javadoc/latest/com/google/gwt/user/client/ui/Grid.html -->
-		<g:Grid>
-			<g:row>
-				<!-- cell only works for html -->
-				<!-- customcell works for widgets -->
-				<g:customCell>
-					<g:Label ui:field="nameLabel" addStyleNames="{style.login-label}">User Name:</g:Label>
-				</g:customCell>
-						
-				<g:customCell>
-					<g:TextBox ui:field="nameTextBox" addStyleNames="{style.login-text}"/>
-				</g:customCell>
-			</g:row>
-					
-			<g:row>
-				<g:customCell>
-					<g:Label ui:field="passwordLabel" addStyleNames="{style.login-label}">Password:</g:Label>
-				</g:customCell>
-						
-				<g:customCell>
-					<g:TextBox ui:field="passwordTextBox" addStyleNames="{style.login-text}"/>
-				</g:customCell>
-			</g:row>
-		</g:Grid>
-			
-		<g:Label ui:field="warningLabel" addStyleNames="{style.warning-label}">Warning! Your password will appear as plain text and is not encrypted.</g:Label>
-		<g:Button ui:field="loginButton" addStyleNames="{style.login-button}">Login</g:Button>
-				
-	</g:VerticalPanel>
-	
 </g:VerticalPanel>
 
 </ui:UiBinder>
