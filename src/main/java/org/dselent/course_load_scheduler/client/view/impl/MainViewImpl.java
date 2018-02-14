@@ -15,8 +15,6 @@ import com.google.gwt.user.client.ui.ListBox;
 public class MainViewImpl extends Composite implements HasText {
 
 	private static MainViewImplUiBinder uiBinder = GWT.create(MainViewImplUiBinder.class);
-	@UiField Button button;
-	@UiField Button button_1;
 
 
 	@UiField RadioButton rdoCourse;
@@ -52,13 +50,5 @@ public class MainViewImpl extends Composite implements HasText {
 	public String getText() {
 		// todo
 		return null;
-	}
-
-
-
-
-	}
-	@UiHandler("button_1")
-	void onButton_1Click(ClickEvent event) {
 	}
 }
