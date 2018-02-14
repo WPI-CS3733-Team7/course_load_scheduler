@@ -82,8 +82,10 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			view.getChangePasswordButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
 			
+			String name = view.getNameTextBox().getText();
 			String userName = view.getNameTextBox().getText();
-			String password = view.getPasswordTextBox().getText();
+			String accountState = view.getAccountStateTextBox().getText();
+			String email = view.getEmailTextBox().getText();
 			
 			boolean validUserName = true;
 			boolean validPassword = true;
