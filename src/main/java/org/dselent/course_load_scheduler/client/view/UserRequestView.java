@@ -6,6 +6,7 @@ import org.dselent.course_load_scheduler.client.presenter.UserRequestPresenter;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.ListBox;
 
@@ -15,8 +16,10 @@ public interface UserRequestView extends BaseView<UserRequestPresenter>{
 		void setCourseRdo(RadioButton courseRdo);
 		RadioButton getOtherRdo();
 		void setOtherRdo(RadioButton otherRdo);
-		Button getRequestButton();
+		TextBox getDescriptionText();
+		void setDescriptionText(TextBox descriptionTextBox);
 		ListBox getRequestHistoryList();
 		void setRequestHistoryList(ListBox requestHistoryList);
+		Button getSubmitButton();
 		public void showErrorMessages(String errorMessages);
 }
