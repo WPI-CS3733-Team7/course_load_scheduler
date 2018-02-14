@@ -235,13 +235,13 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 
 		@Override
 		public Widget getWidgetContainer() {
-			// TODO Auto-generated method stub
-			return null;
+			
+			return this;
 		}
 
 		@Override
 		public HasWidgets getViewRootPanel() {
-			// TODO Auto-generated method stub
-			return null;
-		}
+			
+			return scheduleViewPanel;
+		}		
 	}
