@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.ListBox;
 
 public interface UserRequestView extends BaseView<UserRequestPresenter>{
-	//user request tab
+	
 		RadioButton getCourseRdo();
 		void setCourseRdo(RadioButton courseRdo);
 		RadioButton getOtherRdo();
