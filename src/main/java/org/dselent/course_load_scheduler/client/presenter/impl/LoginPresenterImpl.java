@@ -3,10 +3,15 @@ package org.dselent.course_load_scheduler.client.presenter.impl;
 import java.util.ArrayList;
 import java.util.List;
 import org.dselent.course_load_scheduler.client.action.InvalidLoginAction;
+import org.dselent.course_load_scheduler.client.action.InvalidRegisterAction;
 import org.dselent.course_load_scheduler.client.action.SendLoginAction;
+import org.dselent.course_load_scheduler.client.action.SendRegisterAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidLoginStrings;
+import org.dselent.course_load_scheduler.client.errorstring.InvalidRegisterStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidLoginEvent;
+import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.SendLoginEvent;
+import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.LoginPresenter;
@@ -21,6 +26,7 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 	private IndexPresenter parentPresenter;
 	private LoginView view;
 	private boolean loginClickInProgress;
+	private boolean submitClickInProgress;
 
 	@Inject
 	public LoginPresenterImpl(IndexPresenter parentPresenter, LoginView view)
@@ -29,6 +35,7 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 		this.parentPresenter = parentPresenter;
 		view.setPresenter(this);
 		loginClickInProgress = false;
+		submitClickInProgress = true;
 	}
 	
 	@Override
@@ -80,8 +87,8 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 			view.getLoginButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
 			
-			String userName = view.getNameTextBox().getText();
-			String password = view.getPasswordTextBox().getText();
+			String userName = view.getLoginUserTextBox().getText();
+			String password = view.getLoginPasswordTextBox().getText();
 			
 			boolean validUserName = true;
 			boolean validPassword = true;
@@ -90,7 +97,7 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 			
 			try
 			{
-				validateLoginUserName(userName);
+				validateField(userName);
 			}
 			catch(EmptyStringException e)
 			{
@@ -100,7 +107,7 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 
 			try
 			{
-				validateLoginPassword(password);
+				validateField(password);
 			}
 			catch(EmptyStringException e)
 			{
@@ -128,14 +135,9 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 		eventBus.fireEvent(sle);
 	}
 	
-	private void validateLoginUserName(String userName) throws EmptyStringException
+	private void validateField(String userName) throws EmptyStringException
 	{
 		checkEmptyString(userName);
-	}
-	
-	private void validateLoginPassword(String password) throws EmptyStringException
-	{
-		checkEmptyString(password);
 	}
 	
 	private void checkEmptyString(String string) throws EmptyStringException
@@ -161,4 +163,123 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 		InvalidLoginAction ila = evt.getAction();
 		view.showErrorMessages(ila.toString());
 	}
+
+	@Override
+	public void register() {
+		if (!submitClickInProgress) {
+			submitClickInProgress = true;
+			view.getSubmitButton().setEnabled(false);
+			parentPresenter.showLoadScreen();
+			
+			boolean validUserName = true;
+			boolean validFirstName = true;
+			boolean validLastName = true;
+			boolean validEmail = true;
+			boolean validPassword = true;
+			
+			String userName = view.getUsernameText().getText();
+			String firstName = view.getFirstnameText().getText();
+			String lastName = view.getLastnameText().getText();
+			String email = view.getEmailText().getText();
+			String password = view.getPasswordText().getText();
+			
+			List<String> invalidReasonList = new ArrayList<>();
+			
+			//
+			
+			try
+			{
+				validateField(userName);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidRegisterStrings.NULL_USER_NAME);
+				validUserName = false;
+			}
+			
+			//
+			
+			try
+			{
+				validateField(firstName);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidRegisterStrings.NULL_FIRST_NAME);
+				validUserName = false;
+			}
+			
+			//
+			
+			try
+			{
+				validateField(lastName);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidRegisterStrings.NULL_LAST_NAME);
+				validUserName = false;
+			}
+			
+			//
+			
+			try
+			{
+				validateField(email);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidRegisterStrings.NULL_EMAIL);
+				validUserName = false;
+			}
+
+			//
+			
+			try
+			{
+				validateField(password);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidRegisterStrings.NULL_PASSWORD);
+				validPassword = false;
+			}
+			
+			if (password.length() < 8 || password.length() > 20) {
+				invalidReasonList.add(InvalidRegisterStrings.BAD_PASSWORD_LENGTH);
+				validPassword = false;
+			}
+		
+			//
+			
+			if(validUserName && validFirstName && validLastName && validEmail && validPassword)
+			{
+				sendRegister(userName, firstName, lastName, email, password);
+			}
+			else
+			{
+				InvalidRegisterAction ira = new InvalidRegisterAction(invalidReasonList);
+				InvalidRegisterEvent ire = new InvalidRegisterEvent(ira);
+				eventBus.fireEvent(ire);
+			}
+		}
+	}
+	
+	public void onInvalidRegistration(InvalidRegisterEvent evt)
+	{
+		parentPresenter.hideLoadScreen();
+		view.getSubmitButton().setEnabled(true);
+		submitClickInProgress = false;
+		
+		InvalidRegisterAction ira = evt.getAction();
+		view.showErrorMessages(ira.toString());
+	}
+	
+	private void sendRegister(String userName, String firstName, String lastName, String email, String password)
+	{
+		SendRegisterAction sra = new SendRegisterAction(userName, firstName, lastName, email, password);
+		SendRegisterEvent sre = new SendRegisterEvent(sra);
+		eventBus.fireEvent(sre);
+	}
+
 }

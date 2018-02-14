@@ -6,10 +6,22 @@ import com.google.gwt.user.client.ui.TextBox;
 
 public interface LoginView extends BaseView<LoginPresenter>
 {
-	TextBox getNameTextBox();
-	void setNameTextBox(TextBox nameTextBox);
-	TextBox getPasswordTextBox();
-	void setPasswordTextBox(TextBox passwordTextBox);
+	TextBox getLoginUserTextBox();
+	void setLoginUserTextBox(TextBox loginUserTextBox);
+	TextBox getLoginPasswordTextBox();
+	void setLoginPasswordTextBox(TextBox loginPasswordTextBox);
+	TextBox getUsernameText();
+	void setUsernameText(TextBox usernameTextBox);
+	TextBox getFirstnameText();
+	void setFirstnameText(TextBox firstnameTextBox);
+	TextBox getLastnameText();
+	void setLastnameText(TextBox lastnameTextBox);
+	TextBox getEmailText();
+	void setEmailText(TextBox emailTextBox);
+	TextBox getPasswordText();
+	void setPasswordText(TextBox passwordTextBox);
 	Button getLoginButton();
+	Button getRegisterButton();
+	Button getSubmitButton();
 	void showErrorMessages(String errorMessages);
 }
