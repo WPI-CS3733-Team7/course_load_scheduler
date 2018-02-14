@@ -5,6 +5,7 @@ import org.dselent.course_load_scheduler.client.view.AccountView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -20,41 +21,60 @@ import com.google.gwt.user.client.ui.Widget;
 public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements AccountView {
 
 	private static AccountViewImplUiBinder uiBinder = GWT.create(AccountViewImplUiBinder.class);
+	
+	interface AccountViewImplUiBinder extends UiBinder<Widget, AccountViewImpl> {}
+	
 	@UiField 
 	Label nameLabel;
-	
 	@UiField 
 	TextBox nameTextBox;
-	
 	@UiField 
 	Label usernameLabel;
-	
 	@UiField 
 	TextBox usernameTextBox;
-	
 	@UiField 
 	Label accountStateLabel;
-	
 	@UiField 
 	TextBox accountStateTextBox;
-	
 	@UiField 
 	Label emailLabel;
-	
 	@UiField 
 	TextBox emailTextBox;
-	
 	@UiField 
 	Button changePasswordButton;
-	
 	@UiField 
 	Button editUserButton;
-	
 	@UiField 
 	HorizontalPanel accountViewPanel;
 
-	
-	interface AccountViewImplUiBinder extends UiBinder<Widget, AccountViewImpl> {
+	Label changePasswordTitle = new Label("Change Password");
+	Label changePasswordOld = new Label("Old password");
+	Label changePasswordNew = new Label("New password");
+	Label changePasswordConfirm = new Label("Confirm password");
+	TextBox oldPasswordText = new TextBox();
+	TextBox newPasswordText = new TextBox();
+	TextBox confirmPasswordText = new TextBox();
+	Button submitButton = new Button("Submit", new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			//presenter.changePassword();
+		}
+	});
+
+	public TextBox getOldPasswordText() {
+		return oldPasswordText;
+	}
+
+	public TextBox getNewPasswordText() {
+		return newPasswordText;
+	}
+
+	public TextBox getConfirmPasswordText() {
+		return confirmPasswordText;
+	}
+
+	public Button getSubmitButton() {
+		return submitButton;
 	}
 
 	public AccountViewImpl() {
@@ -154,8 +174,6 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		return accountViewPanel;
 	}
 	
-	
-	
 	@Override
 	public Widget getWidgetContainer()
 	{
@@ -163,9 +181,9 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	}
 
 	@Override
-	public void setPresenter(AccountPresenter presenter) {
-		// TODO Auto-generated method stub
-		
+	public void setPresenter(AccountPresenter presenter)
+	{
+		this.presenter = presenter;
 	}
 
 }

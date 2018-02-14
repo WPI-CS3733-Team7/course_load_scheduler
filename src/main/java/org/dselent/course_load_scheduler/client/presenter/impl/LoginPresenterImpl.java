@@ -35,7 +35,7 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 		this.parentPresenter = parentPresenter;
 		view.setPresenter(this);
 		loginClickInProgress = false;
-		submitClickInProgress = true;
+		submitClickInProgress = false;
 	}
 	
 	@Override
@@ -51,6 +51,9 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 		
 		registration = eventBus.addHandler(InvalidLoginEvent.TYPE, this);
 		eventBusRegistration.put(InvalidLoginEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(InvalidRegisterEvent.TYPE, this);
+		eventBusRegistration.put(InvalidRegisterEvent.TYPE, registration);
 	}
 		
 	@Override
@@ -135,9 +138,9 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 		eventBus.fireEvent(sle);
 	}
 	
-	private void validateField(String userName) throws EmptyStringException
+	private void validateField(String field) throws EmptyStringException
 	{
-		checkEmptyString(userName);
+		checkEmptyString(field);
 	}
 	
 	private void checkEmptyString(String string) throws EmptyStringException
@@ -165,8 +168,10 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 	}
 
 	@Override
-	public void register() {
-		if (!submitClickInProgress) {
+	public void register()
+	{	
+		if (!submitClickInProgress)
+		{
 			submitClickInProgress = true;
 			view.getSubmitButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
@@ -235,16 +240,6 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 
 			//
 			
-			try
-			{
-				validateField(password);
-			}
-			catch(EmptyStringException e)
-			{
-				invalidReasonList.add(InvalidRegisterStrings.NULL_PASSWORD);
-				validPassword = false;
-			}
-			
 			if (password.length() < 8 || password.length() > 20) {
 				invalidReasonList.add(InvalidRegisterStrings.BAD_PASSWORD_LENGTH);
 				validPassword = false;
@@ -265,7 +260,8 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 		}
 	}
 	
-	public void onInvalidRegistration(InvalidRegisterEvent evt)
+	@Override
+	public void onInvalidRegister(InvalidRegisterEvent evt)
 	{
 		parentPresenter.hideLoadScreen();
 		view.getSubmitButton().setEnabled(true);

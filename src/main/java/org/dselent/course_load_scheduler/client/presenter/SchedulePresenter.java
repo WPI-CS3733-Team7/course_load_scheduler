@@ -10,4 +10,8 @@ public interface SchedulePresenter extends BasePresenter {
 	void editCourse();
 	void selectInstructor();
 	void selectCourse();
+	
+	// request methods for courses, instructors, sections, validate
+	
+	
 }
