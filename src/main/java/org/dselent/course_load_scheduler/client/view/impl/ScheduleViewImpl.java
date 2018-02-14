@@ -20,10 +20,15 @@ import com.google.gwt.user.client.ui.Label;
 	import com.google.gwt.user.client.ui.ListBox;
 	import com.google.gwt.user.client.ui.VerticalPanel;
 	import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 
 	public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements ScheduleView {
 
-		private static MainViewImplUiBinder uiBinder = GWT.create(MainViewImplUiBinder.class);
+		private static ScheduleViewImplUiBinder uiBinder = GWT.create(ScheduleViewImplUiBinder.class);
+		
+		//@UiTemplate(value = "MainViewImpl.ui.xml")
+		interface ScheduleViewImplUiBinder extends UiBinder<Widget, ScheduleViewImpl>{}
+
 		
 		List<Button> instructorButtons = new ArrayList<Button>();
 		List<Button> courseButtons = new ArrayList<Button>();
@@ -69,10 +74,36 @@ import com.google.gwt.user.client.ui.Label;
 		
 		@UiField 
 		ListBox termSelect;
-
-		//@UiTemplate(value = "MainViewImpl.ui.xml")
-		interface MainViewImplUiBinder extends UiBinder<Widget, ScheduleViewImpl> {
-		}
+		
+		@UiField
+		Label instructorsTitle;
+		
+		@UiField 
+		Label coursesTitle;
+		
+		@UiField 
+		Button instructor1;
+		
+		@UiField
+		Button instructor2;
+		
+		@UiField 
+		Button instructor3;
+		
+		@UiField
+		Button course1;
+		
+		@UiField 
+		Button course2;
+		
+		@UiField 
+		Button course3;
+		
+		@UiField 
+		Label scheduleTitle;
+		
+		@UiField 
+		HorizontalPanel scheduleViewPanel;
 
 		public ScheduleViewImpl() {
 			initWidget(uiBinder.createAndBindUi(this));
