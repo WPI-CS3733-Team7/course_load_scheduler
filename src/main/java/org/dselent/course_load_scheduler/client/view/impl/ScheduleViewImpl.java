@@ -108,8 +108,8 @@ import com.google.gwt.user.client.ui.PopupPanel;
 		TextBox popInstructorTextLastName = new TextBox();
 		TextBox popInstructorTextRank = new TextBox();
 		TextBox popInstructorTextEmail = new TextBox();
-		Button popIntructorButtonDelete = new Button();
-		Button popIntructorButtonSubmit = new Button();
+		Button popInstructorButtonDelete = new Button();
+		Button popInstructorButtonSubmit = new Button();
 
 		/* Pop-up Widgets for Course */
 		Label popCourseLabelName = new Label("Course Name:");
@@ -131,7 +131,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 		TextBox sectionIdText = new TextBox();
 		TextBox sectionTypeText = new TextBox();
 		TextBox populationText = new TextBox();
-		Button submitButton = new Button("Submit", new ClickHandler() {
+		Button sectionSubmitButton = new Button("Submit", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				//presenter.();
@@ -155,9 +155,9 @@ import com.google.gwt.user.client.ui.PopupPanel;
 			popGrid.setWidget(1, 1, popInstructorTextLastName);
 			popGrid.setWidget(2, 1, popInstructorTextRank);
 			popGrid.setWidget(3, 1, popInstructorTextEmail);
-			popGrid.setWidget(4, 1, popIntructorButtonSubmit);
+			popGrid.setWidget(4, 1, popInstructorButtonSubmit);
 			if(!creating) {
-				popGrid.setWidget(4, 0, popIntructorButtonDelete);
+				popGrid.setWidget(4, 0, popInstructorButtonDelete);
 			}
 			
 			PopupPanel editPopup = new PopupPanel(true);
@@ -283,12 +283,28 @@ import com.google.gwt.user.client.ui.PopupPanel;
 			this.populationText = populationTextBox;			
 		}
 		
-		public Button getSubmitButton() {
-			return submitButton;
+		public Button getInstructorSubmitButton() {
+			return popInstructorButtonSubmit;
+		}
+		
+		public void setInstructorSubmitButton(Button submitButton) {
+			this.popInstructorButtonSubmit = submitButton;
+		}
+		
+		public Button getCourseSubmitButton() {
+			return popCourseButtonSubmit;
+		}
+		
+		public void setCourseSubmitButton(Button submitButton) {
+			this.popCourseButtonSubmit = submitButton;
+		}
+		
+		public Button getSectionSubmitButton() {
+			return sectionSubmitButton;
 		}
 
-		public void setSubmitButton(Button submitButton) {
-			this.submitButton = submitButton;
+		public void setSectionSubmitButton(Button submitButton) {
+			this.sectionSubmitButton = submitButton;
 		}
 
 		/* Getters and Setters for year and term dropdowns */
@@ -350,7 +366,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 			VerticalPanel vertPanel = new VerticalPanel();
 			vertPanel.add(sectionLabel);
 			vertPanel.add(sectionGrid);
-			vertPanel.add(submitButton);
+			vertPanel.add(sectionSubmitButton);
 			
 			PopupPanel registerPopup = new PopupPanel(true);
 			registerPopup.add(vertPanel);
@@ -373,7 +389,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 			VerticalPanel vertPanel = new VerticalPanel();
 			vertPanel.add(sectionLabel);
 			vertPanel.add(sectionGrid);
-			vertPanel.add(submitButton);
+			vertPanel.add(sectionSubmitButton);
 			
 			PopupPanel sectionPopup = new PopupPanel(true);
 			sectionPopup.add(vertPanel);

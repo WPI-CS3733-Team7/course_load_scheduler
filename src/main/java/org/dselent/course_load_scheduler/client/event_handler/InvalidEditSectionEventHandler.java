@@ -5,6 +5,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface InvalidEditSectionEventHandler extends EventHandler {
 	
-	public void onInvalidLogin(InvalidEditSectionEvent evt);
+	public void onInvalidEditSection(InvalidEditSectionEvent evt);
 
 }
