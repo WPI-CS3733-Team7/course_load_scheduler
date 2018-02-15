@@ -3,9 +3,12 @@ package org.dselent.course_load_scheduler.client.view;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
+
+import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
+
 import com.google.gwt.user.client.ui.Button;
 
-public interface AdminRequestView {
+public interface AdminRequestView extends BaseView<AdminRequestPresenter>{
 		ListBox getRequestList();
 		void setRequestList(ListBox requestList);
 		Label getUserRequestLabel();

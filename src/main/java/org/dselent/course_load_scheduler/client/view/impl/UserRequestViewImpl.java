@@ -103,6 +103,15 @@ public class UserRequestViewImpl extends BaseViewImpl<UserRequestPresenter> impl
 		this.otherRdo = otherRdo;
 	}
 
+	@Override
+	public TextArea getDescriptionText() {
+		return this.descriptTextArea;
+	}
+	
+	@Override
+	public void setDescriptionText(TextArea descriptionTextArea) {
+		this.descriptTextArea = descriptionTextArea;
+	}
 
 
 	@Override
@@ -142,7 +151,7 @@ public class UserRequestViewImpl extends BaseViewImpl<UserRequestPresenter> impl
 	@UiHandler("submitButton")
 	void onloginButtonClicked(ClickEvent evt)
 	{
-		presenter.userRequest();
+		presenter.submit();
 	}
 
 }

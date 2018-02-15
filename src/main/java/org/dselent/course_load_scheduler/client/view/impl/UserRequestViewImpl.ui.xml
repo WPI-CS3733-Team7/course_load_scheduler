@@ -16,7 +16,7 @@
 			</g:Cell>
 		</g:VerticalPanel>
 		<g:VerticalPanel width="293px" height="464px" ui:field="requestHistoryPanel">
-			<g:Label text="New Label" ui:field="requestHistoryLabel"/>
+			<g:Label text="Request History" ui:field="requestHistoryLabel" horizontalAlignment="ALIGN_CENTER"/>
 			<g:ListBox visibleItemCount="5" width="293px" height="201px" ui:field="requestHistoryList"/>
 		</g:VerticalPanel>
 	</g:HorizontalPanel>
