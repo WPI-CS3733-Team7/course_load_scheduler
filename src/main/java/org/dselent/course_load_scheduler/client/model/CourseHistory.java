@@ -173,7 +173,7 @@ public class CourseHistory extends Model
                 return false;
             }
         }
-        else if (!former_id.equals(other.frequency))
+        else if (!frequency.equals(other.frequency))
         {
             return false;
         }

@@ -167,7 +167,6 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		Window.alert(errorMessages);
 	}
 	
-
 	@Override
 	public HasWidgets getViewRootPanel()
 	{
