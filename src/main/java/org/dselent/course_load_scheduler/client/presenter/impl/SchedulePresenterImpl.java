@@ -15,6 +15,7 @@ import java.util.List;
 import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidEditSectionStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
+import org.dselent.course_load_scheduler.client.event_handler.InvalidEditSectionEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
@@ -23,7 +24,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class SchedulePresenterImpl extends BasePresenterImpl implements SchedulePresenter {
+public class SchedulePresenterImpl extends BasePresenterImpl implements SchedulePresenter, InvalidEditSectionEventHandler {
 	
 	private IndexPresenter parentPresenter;
 	private ScheduleView view;
