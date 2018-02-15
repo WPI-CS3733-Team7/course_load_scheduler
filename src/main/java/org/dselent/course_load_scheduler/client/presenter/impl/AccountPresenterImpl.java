@@ -23,6 +23,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	private IndexPresenter parentPresenter;
 	private AccountView view;
 	private boolean changePasswordClickInProgress;
+	private boolean editUserClickInProgress;
 
 	@Inject
 	public AccountPresenterImpl(IndexPresenter parentPresenter, AccountView view)
@@ -31,6 +32,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		this.parentPresenter = parentPresenter;
 		view.setPresenter(this);
 		changePasswordClickInProgress = false;
+		editUserClickInProgress = false;
 	}
 	
 	@Override
@@ -44,8 +46,11 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	{
 		HandlerRegistration registration;
 		
-		registration = eventBus.addHandler(InvalidLoginEvent.TYPE, this);
-		eventBusRegistration.put(InvalidLoginEvent.TYPE, registration);
+		//registration = eventBus.addHandler(InvalidChangePasswordEvent.TYPE, this);
+		//eventBusRegistration.put(InvalidChangePasswordEvent.TYPE, registration);
+		
+		//registration = eventBus.addHandler(InvalidEditUserEvent.TYPE, this);
+		//eventBusRegistration.put(InvalidEditUserEvent.TYPE, registration);
 	}
 	
 	@Override
@@ -73,10 +78,11 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		this.parentPresenter = parentPresenter;
 	}
 	
-	/*
+	
 	@Override
 	public void changePassword()
 	{
+		/*
 		if(!changePasswordClickInProgress)
 		{
 			changePasswordClickInProgress = true;
@@ -122,16 +128,15 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 				eventBus.fireEvent(ile);
 			}
 		}
+		*/
 	}
-	*/
 	
-	// GET RID OF THIS
 	@Override
-	public void login() {
-		// TODO Auto-generated method stub
-		
+	public void editUser()
+	{
+		if(!editUserClickInProgress)
+		{
+			editUserClickInProgress = true;
+		}
 	}
-	
 }
-
-
