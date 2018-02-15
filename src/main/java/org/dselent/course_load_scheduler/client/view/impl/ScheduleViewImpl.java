@@ -2,7 +2,9 @@ package org.dselent.course_load_scheduler.client.view.impl;
 
 	import java.util.ArrayList;
 	import java.util.List;
-	import org.dselent.course_load_scheduler.client.model.Instructor;
+
+import org.dselent.course_load_scheduler.client.model.Course;
+import org.dselent.course_load_scheduler.client.model.Instructor;
 	import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 	import org.dselent.course_load_scheduler.client.view.ScheduleView;
 	import com.google.gwt.core.client.GWT;
@@ -27,16 +29,15 @@ package org.dselent.course_load_scheduler.client.view.impl;
 
 		private static ScheduleViewImplUiBinder uiBinder = GWT.create(ScheduleViewImplUiBinder.class);
 		
-		//@UiTemplate(value = "MainViewImpl.ui.xml")
 		interface ScheduleViewImplUiBinder extends UiBinder<Widget, ScheduleViewImpl>{}
 
 		SchedulePresenter presenter;
 		
 		List<ModelButton<Instructor>> instructorButtons = new ArrayList<ModelButton<Instructor>>();
-		List<Button> courseButtons = new ArrayList<Button>();
+		List<ModelButton<Course>> courseButtons = new ArrayList<ModelButton<Course>>();
 		
 		ModelButton<Instructor> selectedInstructorButton = null;
-		Button selectedCourseButton = null;
+		ModelButton<Course> selectedCourseButton = null;
 		
 		@UiField
 		VerticalPanel scheduleInstructorsPanel;
@@ -342,36 +343,33 @@ package org.dselent.course_load_scheduler.client.view.impl;
 					selectedInstructorButton.setText(selectedInstructorButton.getModel().displayText());
 				linkedButton.setText("[[[ "+ selectedInstructorButton.getModel().displayText() +" ]]]");
 				selectedInstructorButton = linkedButton;
-				presenter.selectInstructor();
+				presenter.selectInstructor(linkedButton);
 			}
 		}
 		
 		private class courseClickHandler implements ClickHandler{
-			private Button linkedButton;
+			private ModelButton<Course> linkedButton;
 			
-			public courseClickHandler(Button courseButton) {
+			public courseClickHandler(ModelButton<Course> courseButton) {
 				linkedButton = courseButton;
 			}
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if(selectedCourseButton!=null)
-					selectedCourseButton.setText(selectedCourseButton.getText().substring(4, selectedCourseButton.getText().length()-4));
-				linkedButton.setText("[[[ "+ linkedButton.getText() +" ]]]");
-				selectedCourseButton = linkedButton;
-				presenter.selectCourse();
+				
+				presenter.selectCourse(linkedButton);
 			}
 		}
 		
 		//Gets the currently selected button
 		@Override
-		public Button getSelectedInstructor() {
+		public ModelButton<Instructor> getSelectedInstructorButton() {
 			return selectedInstructorButton;
 		}
 		
 		//Gets the currently selected course
 		@Override
-		public Button getSelectedCourse() {
+		public ModelButton<Course> getSelectedCourseButton() {
 			return selectedCourseButton;
 		}
 		
@@ -386,9 +384,8 @@ package org.dselent.course_load_scheduler.client.view.impl;
 
 		//Adds a button for a given course to the list of course buttons
 		@Override
-		public void addCourseButton(String courseName) {
-			Button courseButton = new Button();
-			courseButton.setText(courseName);
+		public void addCourseButton(Course course) {
+			ModelButton<Course> courseButton = new ModelButton<Course>(course);
 			courseButton.addClickHandler(new courseClickHandler(courseButton));
 			scheduleCoursesPanel.add(courseButton);
 			courseButtons.add(courseButton);
@@ -396,9 +393,9 @@ package org.dselent.course_load_scheduler.client.view.impl;
 
 		//Removes a button for a given instructor from the list of instructor buttons
 		@Override
-		public void removeInstructorButton(String instructorName) {
-			for(Button b : instructorButtons) {
-				if(b.getText().equals(instructorName)) {
+		public void removeInstructorButton(Instructor instructor) {
+			for(ModelButton<Instructor> b : instructorButtons) {
+				if(b.getModel().equals(instructor)) {
 					scheduleInstructorsPanel.remove(b);
 					instructorButtons.remove(b);
 					return;
@@ -408,9 +405,9 @@ package org.dselent.course_load_scheduler.client.view.impl;
 
 		//Removes a button for a given course from the list of course buttons
 		@Override
-		public void removeCourseButton(String courseName) {
-			for(Button b : courseButtons) {
-				if(b.getText().equals(courseName)) {
+		public void removeCourseButton(Course course) {
+			for(ModelButton<Course> b : courseButtons) {
+				if(b.getModel().equals(course)) {
 					scheduleCoursesPanel.remove(b);
 					courseButtons.remove(b);
 					return;
@@ -521,5 +518,17 @@ package org.dselent.course_load_scheduler.client.view.impl;
 
 		public void setSubmitButton(Button submitButton) {
 			this.submitButton = submitButton;
+		}
+
+		@Override
+		public void setSelectedInstructorButton(ModelButton<Instructor> selection) {
+			selectedInstructorButton = selection;
+			
+		}
+
+		@Override
+		public void setSelectedCourseButton(ModelButton<Course> selection) {
+			// TODO Auto-generated method stub
+			selectedCourseButton = selection;
 		}
 	}
