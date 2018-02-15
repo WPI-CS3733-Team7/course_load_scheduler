@@ -185,6 +185,13 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		}
 	}
 	
+	private void sendEditUser()
+	{
+		//SendEditUserAction seua = new SendEditUserAction();
+		//SendEditUserEvent seue = new SendEditUserEvent(seue);
+		//eventBus.fireEvent(seue);
+	}
+	
 	private void validateField(String field) throws EmptyStringException
 	{
 		checkEmptyString(field);
