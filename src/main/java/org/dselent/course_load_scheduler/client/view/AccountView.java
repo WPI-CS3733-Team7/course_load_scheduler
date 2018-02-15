@@ -20,5 +20,8 @@ public interface AccountView extends BaseView<AccountPresenter>{
 	TextBox getOldPasswordText();
 	TextBox getNewPasswordText();
 	TextBox getConfirmPasswordText();
-	Button getSubmitButton();
+	Button getSubmitChangePasswordButton();
+	//
+	Button getSubmitEditUserButton();
+	Button getDeleteEditUserButton();
 }

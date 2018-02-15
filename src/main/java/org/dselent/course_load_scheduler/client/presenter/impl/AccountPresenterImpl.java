@@ -22,6 +22,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	private IndexPresenter parentPresenter;
 	private AccountView view;
 	private boolean changePasswordClickInProgress;
+	private boolean editUserClickInProgress;
 
 	@Inject
 	public AccountPresenterImpl(IndexPresenter parentPresenter, AccountView view)
@@ -30,6 +31,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		this.parentPresenter = parentPresenter;
 		view.setPresenter(this);
 		changePasswordClickInProgress = false;
+		editUserClickInProgress = false;
 	}
 	
 	@Override
@@ -43,8 +45,11 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	{
 		HandlerRegistration registration;
 		
-		registration = eventBus.addHandler(InvalidLoginEvent.TYPE, this);
-		eventBusRegistration.put(InvalidLoginEvent.TYPE, registration);
+		//registration = eventBus.addHandler(InvalidChangePasswordEvent.TYPE, this);
+		//eventBusRegistration.put(InvalidChangePasswordEvent.TYPE, registration);
+		
+		//registration = eventBus.addHandler(InvalidEditUserEvent.TYPE, this);
+		//eventBusRegistration.put(InvalidEditUserEvent.TYPE, registration);
 	}
 	
 	@Override
@@ -72,7 +77,6 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		this.parentPresenter = parentPresenter;
 	}
 	
-	// Method that changes password
 	@Override
 	public void changePassword()
 	{
@@ -90,7 +94,6 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			String oldPassword = view.getOldPasswordText().getText();
 			String newPassword = view.getNewPasswordText().getText();
 			String confirmNewPassword = view.getConfirmPasswordText().getText();
-			
 			
 			List<String> invalidReasonList = new ArrayList<>();
 			
@@ -165,12 +168,28 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			}
 		}
 	}
-	
+
 	private void sendChangePassword(String oldPassword, String newPassword, String confirmNewPassword)
 	{
 		SendChangePasswordAction scpa = new SendChangePasswordAction(oldPassword, newPassword);
 		SendChangePasswordEvent scpe = new SendChangePasswordEvent(scpa);
 		eventBus.fireEvent(scpe);
+	}
+	
+	@Override
+	public void editUser()
+	{
+		if(!editUserClickInProgress)
+		{
+			editUserClickInProgress = true;
+		}
+	}
+	
+	private void sendEditUser()
+	{
+		//SendEditUserAction seua = new SendEditUserAction();
+		//SendEditUserEvent seue = new SendEditUserEvent(seue);
+		//eventBus.fireEvent(seue);
 	}
 	
 	private void validateField(String field) throws EmptyStringException
@@ -185,7 +204,4 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			throw new EmptyStringException();
 		}
 	}
-	
 }
-
-
