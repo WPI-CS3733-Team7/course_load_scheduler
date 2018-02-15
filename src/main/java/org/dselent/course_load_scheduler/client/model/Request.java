@@ -235,5 +235,13 @@ public class Request extends Model
         builder.append("]");
         return builder.toString();
     }
+
+	@Override
+	public String displayText() {
+		if(request_details.length()>20)
+			return request_details.substring(0,17)+"...";
+		else
+			return request_details;
+	}
 }
 

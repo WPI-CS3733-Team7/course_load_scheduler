@@ -77,4 +77,40 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		
 	}
 
+	@Override
+	public void deleteInstructor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editInstructor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteCourse() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editCourse() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void selectInstructor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void selectCourse() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

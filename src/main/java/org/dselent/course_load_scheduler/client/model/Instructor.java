@@ -1,8 +1,9 @@
 package org.dselent.course_load_scheduler.client.model;
 
+/*
 import java.sql.Timestamp;
 import java.time.Instant;
-
+*/
 public class Instructor extends Model
 {
     // attributes
@@ -12,8 +13,8 @@ public class Instructor extends Model
     private String firstName;
     private String lastName;
     private String email;
-    private Instant createdAt;
-    private Instant updatedAt;
+    //private Instant createdAt;
+    //private Instant updatedAt;
     private Boolean deleted;
 
     // methods
@@ -67,7 +68,7 @@ public class Instructor extends Model
         this.email = email;
     }
 
-    public Instant getCreatedAt()
+  /*  public Instant getCreatedAt()
     {
         return createdAt;
     }
@@ -76,7 +77,7 @@ public class Instructor extends Model
     {
         if(createdAt != null)
         {
-            this.createdAt = createdAt.toInstant();
+            //this.createdAt = createdAt.toInstant();
         }
     }
 
@@ -89,9 +90,9 @@ public class Instructor extends Model
     {
         if(updatedAt != null)
         {
-            this.updatedAt = updatedAt.toInstant();
+            //this.updatedAt = updatedAt.toInstant();
         }
-    }
+    }*/
 
     public Boolean getDeleted() {
         return deleted;
@@ -101,7 +102,7 @@ public class Instructor extends Model
         this.deleted = deleted;
     }
 
-    @Override
+    /*@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -190,6 +191,11 @@ public class Instructor extends Model
         builder.append(deleted);
         builder.append("]");
         return builder.toString();
-    }
+    }*/
+
+	@Override
+	public String displayText() {
+		return firstName + " " + lastName;
+	}
 
 }

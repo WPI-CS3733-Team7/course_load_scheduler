@@ -9,5 +9,7 @@ package org.dselent.course_load_scheduler.client.model;
  */
 public abstract class Model
 {
-	
+	public String displayText() {
+		return toString();
+	}
 }
