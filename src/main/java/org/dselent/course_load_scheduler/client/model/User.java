@@ -314,5 +314,10 @@ public class User extends Model
 		builder.append("]");
 		return builder.toString();
 	}
+
+	@Override
+	public String displayText() {
+		return userName;
+	}
 	
 }

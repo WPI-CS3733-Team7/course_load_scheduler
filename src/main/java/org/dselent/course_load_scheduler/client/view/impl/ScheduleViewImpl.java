@@ -2,19 +2,16 @@ package org.dselent.course_load_scheduler.client.view.impl;
 
 	import java.util.ArrayList;
 	import java.util.List;
-
+	import org.dselent.course_load_scheduler.client.model.Instructor;
 	import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 	import org.dselent.course_load_scheduler.client.view.ScheduleView;
-
 	import com.google.gwt.core.client.GWT;
 	import com.google.gwt.event.dom.client.ClickEvent;
 	import com.google.gwt.event.dom.client.ClickHandler;
 	import com.google.gwt.uibinder.client.UiBinder;
 	import com.google.gwt.uibinder.client.UiField;
 	import com.google.gwt.uibinder.client.UiHandler;
-	import com.google.gwt.uibinder.client.UiTemplate;
 	import com.google.gwt.user.client.ui.Button;
-	import com.google.gwt.user.client.ui.Composite;
 	import com.google.gwt.user.client.ui.Grid;
 	import com.google.gwt.user.client.ui.HasWidgets;
 	import com.google.gwt.user.client.ui.Label;
@@ -24,28 +21,7 @@ package org.dselent.course_load_scheduler.client.view.impl;
 	import com.google.gwt.user.client.ui.VerticalPanel;
 	import com.google.gwt.user.client.ui.Widget;
 	import com.google.gwt.user.client.ui.HorizontalPanel;
-import java.util.ArrayList;
-import java.util.List;
-import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
-import org.dselent.course_load_scheduler.client.view.ScheduleView;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.PopupPanel;
+	import com.google.gwt.user.client.Window;
 
 	public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements ScheduleView {
 
@@ -56,10 +32,10 @@ import com.google.gwt.user.client.ui.PopupPanel;
 
 		SchedulePresenter presenter;
 		
-		List<Button> instructorButtons = new ArrayList<Button>();
+		List<ModelButton<Instructor>> instructorButtons = new ArrayList<ModelButton<Instructor>>();
 		List<Button> courseButtons = new ArrayList<Button>();
 		
-		Button selectedInstructorButton = null;
+		ModelButton<Instructor> selectedInstructorButton = null;
 		Button selectedCourseButton = null;
 		
 		@UiField
@@ -108,9 +84,21 @@ import com.google.gwt.user.client.ui.PopupPanel;
 		TextBox popInstructorTextLastName = new TextBox();
 		TextBox popInstructorTextRank = new TextBox();
 		TextBox popInstructorTextEmail = new TextBox();
-		Button popIntructorButtonDelete = new Button();
-		Button popIntructorButtonSubmit = new Button();
+		Button popIntructorButtonDelete = new Button("Delete", new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				presenter.deleteInstructor();
+			}
+		});
+		Button popIntructorButtonSubmit = new Button("Submit", new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				presenter.editInstructor();
+				addInstructorButton(new Instructor());
+			}
+		});
 
+		/* Pop-up Widgets for Course Sections */
 		Label sectionLabel = new Label("Create/Edit a Section");
 		Label sectionNameLabel = new Label("Section Name");
 		Label sectionIdLabel = new Label("Section ID (CRN)");
@@ -163,6 +151,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 			editPopup.add(popGrid);
 			editPopup.isGlassEnabled();
 			editPopup.center();
+			
 		}
 		
 		private void makeCoursePopUp(boolean creating) {
@@ -307,6 +296,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 			registerPopup.add(vertPanel);
 			registerPopup.isGlassEnabled();
 			registerPopup.center();
+			
 		}
 		
 		@UiHandler("editSection")
@@ -340,17 +330,17 @@ import com.google.gwt.user.client.ui.PopupPanel;
 		//UiHandlers for select year/term labels and list boxes needed?
 
 		private class instructorClickHandler implements ClickHandler{
-			private Button linkedButton;
+			private ModelButton<Instructor> linkedButton;
 			
-			public instructorClickHandler(Button instButton) {
+			public instructorClickHandler(ModelButton<Instructor> instButton) {
 				linkedButton = instButton;
 			}
 
 			@Override
 			public void onClick(ClickEvent event) {
 				if(selectedInstructorButton!=null)
-					selectedInstructorButton.setText(selectedInstructorButton.getText().substring(4, selectedInstructorButton.getText().length()-5));
-				linkedButton.setText("[[[ "+ linkedButton.getText() +" ]]]");
+					selectedInstructorButton.setText(selectedInstructorButton.getModel().displayText());
+				linkedButton.setText("[[[ "+ selectedInstructorButton.getModel().displayText() +" ]]]");
 				selectedInstructorButton = linkedButton;
 				presenter.selectInstructor();
 			}
@@ -366,7 +356,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 			@Override
 			public void onClick(ClickEvent event) {
 				if(selectedCourseButton!=null)
-					selectedCourseButton.setText(selectedCourseButton.getText().substring(4, selectedCourseButton.getText().length()-5));
+					selectedCourseButton.setText(selectedCourseButton.getText().substring(4, selectedCourseButton.getText().length()-4));
 				linkedButton.setText("[[[ "+ linkedButton.getText() +" ]]]");
 				selectedCourseButton = linkedButton;
 				presenter.selectCourse();
@@ -387,9 +377,8 @@ import com.google.gwt.user.client.ui.PopupPanel;
 		
 		//Adds a button for a given instructor to the list of instructor buttons
 		@Override
-		public void addInstructorButton(String instructorName) {
-			Button instButton = new Button();
-			instButton.setText(instructorName);
+		public void addInstructorButton(Instructor instructor) {
+			ModelButton<Instructor> instButton = new ModelButton<Instructor>(instructor);
 			instButton.addClickHandler(new instructorClickHandler(instButton));
 			scheduleInstructorsPanel.add(instButton);
 			instructorButtons.add(instButton);

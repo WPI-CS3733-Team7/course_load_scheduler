@@ -1,11 +1,11 @@
 package org.dselent.course_load_scheduler.client.action;
 
-public class SendRequestAction {
+public class SelectRequestAction {
 	private String requestType;
 	private String requester;
 	private String description;
 	
-	public SendRequestAction(String requester, String requestType, String description) {
+	public SelectRequestAction(String requester, String requestType, String description) {
 		this.requester = requester;
 		this.requestType = requestType;
 		this.description = description;
@@ -25,7 +25,7 @@ public class SendRequestAction {
 
 	@Override
 	public String toString() {
-		return "SendRequestAction [re=" + requester + ", requestType=" + requestType + ", description=" + description
+		return "SelectRequestAction [requester=" + requester + ", requestType=" + requestType + ", description=" + description
 				+ "]";
 	}	
 }

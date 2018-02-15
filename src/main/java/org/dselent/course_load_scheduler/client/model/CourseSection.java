@@ -225,4 +225,10 @@ public class CourseSection extends Model
 			return builder.toString();
 		}
 
+		@Override
+		public String displayText() {
+			// TODO Auto-generated method stub
+			return sectionName + ": " + sectionId;
+		}
+
 }
