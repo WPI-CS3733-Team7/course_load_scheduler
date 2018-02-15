@@ -3,11 +3,12 @@ package org.dselent.course_load_scheduler.client.presenter.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dselent.course_load_scheduler.client.action.InvalidRequestAction;
-import org.dselent.course_load_scheduler.client.action.SendRequestAction;
+import org.dselent.course_load_scheduler.client.action.InvalidReplyAction;
+import org.dselent.course_load_scheduler.client.action.SendReplyAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidRequestStrings;
+import org.dselent.course_load_scheduler.client.event.InvalidReplyEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
-import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
+import org.dselent.course_load_scheduler.client.event.SendReplyEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
@@ -43,7 +44,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 
 	@Override
 	public void go(HasWidgets container) {
-		// TODO Auto-generated method stub
+	
 		HandlerRegistration registration;
 		
 		registration = eventBus.addHandler(InvalidReplyEvent.TYPE, this);
@@ -51,7 +52,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	}
 
 	@Override
-	public UserRequestView getView() {
+	public AdminRequestView getView() {
 		// TODO Auto-generated method stub
 		return view;
 	}
@@ -67,8 +68,31 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		// TODO Auto-generated method stub
 		this.parentPresenter = parentPresenter;
 	}
-
+	
 	@Override
+	public void reply() {
+		if(!replyClickInProgress) {
+			replyClickInProgress = true;
+			view.getReplyButton().setEnabled(false);
+			parentPresenter.showLoadScreen();
+			
+			String description = view.getReplyTextArea().getText();
+			String approved = view.getApproved().getText();
+			String tentative = view.getTentative().getText();
+			String rejected = view.getRejected().getText();
+			
+			boolean validDescription = true;
+			boolean validReplyType = true;
+			
+			List<String> invalidReasonList= newArrayList<>();
+			
+			try {
+				validateField(description);
+			}
+		}
+	}
+
+	/*@Override
 	public void submit() {
 		// TODO Auto-generated method stub
 		if(!submitClickInProgress)
@@ -116,7 +140,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		SendRequestAction sra = new SendRequestAction(description);
 		SendRequestEvent sre = new SendRequestEvent(sra);
 		eventBus.fireEvent(sre);
-	}
+	}*/
 	
 	private void validateField(String field) throws EmptyStringException
 	{

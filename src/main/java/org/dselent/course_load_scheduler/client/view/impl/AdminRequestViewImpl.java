@@ -141,6 +141,38 @@ public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> im
 	}
 	
 	@Override
+	public RadioButton getApproved() {
+		return approvedRdo;
+	}
+
+	@Override
+	public void setApproved(RadioButton approvedRdo) {
+		this.approvedRdo = approvedRdo;
+	}
+
+	@Override
+	public RadioButton getTentative() {
+		return tentativeRdo;
+	}
+
+	@Override
+	public void setTentative(RadioButton tentativeRdo) {
+		this.tentativeRdo = tentativeRdo;
+		
+	}
+
+	@Override
+	public RadioButton getRejected() {
+		return rejectedRdo;
+	}
+
+	@Override
+	public void setRejected(RadioButton rejectedRdo) {
+		this.rejectedRdo = rejectedRdo;
+	}
+	
+	
+	@Override
 	public Button getReplyButton() {
 		return replyButton;
 	}
@@ -164,4 +196,6 @@ public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> im
 		// TODO Auto-generated method stub
 		return adminRequestPanel;
 	}
+
+
 }
