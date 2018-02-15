@@ -1,5 +1,6 @@
 package org.dselent.course_load_scheduler.client.view;
 
+import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.view.BaseView;
 import com.google.gwt.user.client.ui.Button;
@@ -7,7 +8,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 public interface ScheduleView extends BaseView<SchedulePresenter>{
 	
-	public void addInstructorButton(String instructorName);
+	public void addInstructorButton(Instructor instructor);
 	public void addCourseButton(String courseName);
 	public void removeInstructorButton(String instructorName);
 	public void removeCourseButton(String courseName);

@@ -216,4 +216,12 @@ public class Course extends Model
         return builder.toString();
     }
 
+	@Override
+	public String displayText() {
+		if(course_name.length()>15)
+			return course_number + " " + course_name.substring(0, 12) + "...";
+		else
+			return course_number + " " + course_name;
+	}
+
 }
