@@ -37,5 +37,7 @@ public interface ScheduleView extends BaseView<SchedulePresenter>{
 	void setSectionTypeText(TextBox sectionTypeTextBox);
 	TextBox getPopulationText();
 	void setPopulationText(TextBox populationTextBox);
-	Button getSubmitButton();
+	Button getSectionSubmitButton();
+	Button getInstructorSubmitButton();
+	Button getCourseSubmitButton();
 }

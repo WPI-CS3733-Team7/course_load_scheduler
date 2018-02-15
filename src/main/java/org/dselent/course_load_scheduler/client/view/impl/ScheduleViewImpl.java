@@ -13,7 +13,9 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 	import com.google.gwt.uibinder.client.UiBinder;
 	import com.google.gwt.uibinder.client.UiField;
 	import com.google.gwt.uibinder.client.UiHandler;
+	import com.google.gwt.uibinder.client.UiTemplate;
 	import com.google.gwt.user.client.ui.Button;
+	import com.google.gwt.user.client.ui.Composite;
 	import com.google.gwt.user.client.ui.Grid;
 	import com.google.gwt.user.client.ui.HasWidgets;
 	import com.google.gwt.user.client.ui.Label;
@@ -23,7 +25,28 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 	import com.google.gwt.user.client.ui.VerticalPanel;
 	import com.google.gwt.user.client.ui.Widget;
 	import com.google.gwt.user.client.ui.HorizontalPanel;
-	import com.google.gwt.user.client.Window;
+import java.util.ArrayList;
+import java.util.List;
+import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
+import org.dselent.course_load_scheduler.client.view.ScheduleView;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.PopupPanel;
 
 	public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements ScheduleView {
 
@@ -91,28 +114,11 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 				presenter.deleteInstructor();
 			}
 		});
-		Button popIntructorButtonSubmit = new Button("Submit", new ClickHandler() {
+		Button popInstructorButtonSubmit = new Button("Submit", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				presenter.editInstructor();
 				addInstructorButton(new Instructor());
-			}
-		});
-
-		/* Pop-up Widgets for Course Sections */
-		Label sectionLabel = new Label("Create/Edit a Section");
-		Label sectionNameLabel = new Label("Section Name");
-		Label sectionIdLabel = new Label("Section ID (CRN)");
-		Label sectionTypeLabel = new Label("Section Type");
-		Label populationLabel = new Label("Population");
-		TextBox sectionNameText = new TextBox();
-		TextBox sectionIdText = new TextBox();
-		TextBox sectionTypeText = new TextBox();
-		TextBox populationText = new TextBox();
-		Button submitButton = new Button("Submit", new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				//presenter.();
 			}
 		});
 
@@ -125,6 +131,23 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 		TextBox popCourseTextFrequency = new TextBox();
 		Button popCourseButtonDelete = new Button();
 		Button popCourseButtonSubmit = new Button();
+		
+		/* Pop-up Widgets for Course Sections */
+		Label sectionLabel = new Label("Create/Edit a Section");
+		Label sectionNameLabel = new Label("Section Name");
+		Label sectionIdLabel = new Label("Section ID (CRN)");
+		Label sectionTypeLabel = new Label("Section Type");
+		Label populationLabel = new Label("Population");
+		TextBox sectionNameText = new TextBox();
+		TextBox sectionIdText = new TextBox();
+		TextBox sectionTypeText = new TextBox();
+		TextBox populationText = new TextBox();
+		Button sectionSubmitButton = new Button("Submit", new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				//presenter.();
+			}
+		});
 
 		/* Constructor */
 		public ScheduleViewImpl() {
@@ -143,7 +166,7 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 			popGrid.setWidget(1, 1, popInstructorTextLastName);
 			popGrid.setWidget(2, 1, popInstructorTextRank);
 			popGrid.setWidget(3, 1, popInstructorTextEmail);
-			popGrid.setWidget(4, 1, popIntructorButtonSubmit);
+			popGrid.setWidget(4, 1, popInstructorButtonSubmit);
 			if(!creating) {
 				popGrid.setWidget(4, 0, popIntructorButtonDelete);
 			}
@@ -152,7 +175,6 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 			editPopup.add(popGrid);
 			editPopup.isGlassEnabled();
 			editPopup.center();
-			
 		}
 		
 		private void makeCoursePopUp(boolean creating) {
@@ -231,6 +253,70 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 		public void setPopCourseTextFrequency(TextBox popCourseTextFrequency) {
 			this.popCourseTextFrequency = popCourseTextFrequency;
 		}
+		
+		@Override
+		public TextBox getSectionNameText() {
+			return sectionNameText;
+		}
+
+		@Override
+		public void setSectionNameText(TextBox sectionNameTextBox) {
+			this.sectionNameText = sectionNameTextBox;			
+		}
+
+		@Override
+		public TextBox getSectionIdText() {
+			return sectionIdText;
+		}
+
+		@Override
+		public void setSectionIdText(TextBox sectionIdTextBox) {
+			this.sectionIdText = sectionIdTextBox;			
+		}
+
+		@Override
+		public TextBox getSectionTypeText() {
+			return sectionTypeText;
+		}
+
+		@Override
+		public void setSectionTypeText(TextBox sectionTypeTextBox) {
+			this.sectionTypeText = sectionTypeTextBox;			
+		}
+
+		@Override
+		public TextBox getPopulationText() {
+			return populationText;
+		}
+
+		@Override
+		public void setPopulationText(TextBox populationTextBox) {
+			this.populationText = populationTextBox;			
+		}
+		
+		public Button getInstructorSubmitButton() {
+			return popInstructorButtonSubmit;
+		}
+		
+		public void setInstructorSubmitButton(Button submitButton) {
+			this.popInstructorButtonSubmit = submitButton;
+		}
+		
+		public Button getCourseSubmitButton() {
+			return popCourseButtonSubmit;
+		}
+		
+		public void setCourseSubmitButton(Button submitButton) {
+			this.popCourseButtonSubmit = submitButton;
+		}
+		
+		public Button getSectionSubmitButton() {
+			return sectionSubmitButton;
+		}
+
+		public void setSectionSubmitButton(Button submitButton) {
+			this.sectionSubmitButton = submitButton;
+		}
 
 		/* Getters and Setters for year and term dropdowns */
 		
@@ -291,13 +377,12 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 			VerticalPanel vertPanel = new VerticalPanel();
 			vertPanel.add(sectionLabel);
 			vertPanel.add(sectionGrid);
-			vertPanel.add(submitButton);
+			vertPanel.add(sectionSubmitButton);
 			
 			PopupPanel registerPopup = new PopupPanel(true);
 			registerPopup.add(vertPanel);
 			registerPopup.isGlassEnabled();
 			registerPopup.center();
-			
 		}
 		
 		@UiHandler("editSection")
@@ -315,12 +400,12 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 			VerticalPanel vertPanel = new VerticalPanel();
 			vertPanel.add(sectionLabel);
 			vertPanel.add(sectionGrid);
-			vertPanel.add(submitButton);
+			vertPanel.add(sectionSubmitButton);
 			
-			PopupPanel registerPopup = new PopupPanel(true);
-			registerPopup.add(vertPanel);
-			registerPopup.isGlassEnabled();
-			registerPopup.center();
+			PopupPanel sectionPopup = new PopupPanel(true);
+			sectionPopup.add(vertPanel);
+			sectionPopup.isGlassEnabled();
+			sectionPopup.center();
 		}
 		
 		@UiHandler("validate")
@@ -339,10 +424,6 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if(selectedInstructorButton!=null)
-					selectedInstructorButton.setText(selectedInstructorButton.getModel().displayText());
-				linkedButton.setText("[[[ "+ selectedInstructorButton.getModel().displayText() +" ]]]");
-				selectedInstructorButton = linkedButton;
 				presenter.selectInstructor(linkedButton);
 			}
 		}
@@ -431,6 +512,8 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 			
 			return scheduleViewPanel;
 		}
+		
+		/* Getters for buttons */
 
 		@Override
 		public Button getAddInstructorButton() {
@@ -470,54 +553,6 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 		@Override
 		public void showErrorMessages(String errorMessages) {
 			Window.alert(errorMessages);			
-		}
-
-		@Override
-		public TextBox getSectionNameText() {
-			return sectionNameText;
-		}
-
-		@Override
-		public void setSectionNameText(TextBox sectionNameTextBox) {
-			this.sectionNameText = sectionNameTextBox;			
-		}
-
-		@Override
-		public TextBox getSectionIdText() {
-			return sectionIdText;
-		}
-
-		@Override
-		public void setSectionIdText(TextBox sectionIdTextBox) {
-			this.sectionIdText = sectionIdTextBox;			
-		}
-
-		@Override
-		public TextBox getSectionTypeText() {
-			return sectionTypeText;
-		}
-
-		@Override
-		public void setSectionTypeText(TextBox sectionTypeTextBox) {
-			this.sectionTypeText = sectionTypeTextBox;			
-		}
-
-		@Override
-		public TextBox getPopulationText() {
-			return populationText;
-		}
-
-		@Override
-		public void setPopulationText(TextBox populationTextBox) {
-			this.populationText = populationTextBox;			
-		}
-		
-		public Button getSubmitButton() {
-			return submitButton;
-		}
-
-		public void setSubmitButton(Button submitButton) {
-			this.submitButton = submitButton;
 		}
 
 		@Override

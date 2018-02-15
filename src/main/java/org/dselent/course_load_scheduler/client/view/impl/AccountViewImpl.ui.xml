@@ -42,11 +42,11 @@
 					</g:customCell>
 				</g:row>
 			</g:Grid>
-			<g:Button width="118px" ui:field="changePasswordButton">Change Password</g:Button>
+			<g:Button width="192px" ui:field="changePasswordButton" height="80px">Change Password</g:Button>
 		</g:VerticalPanel>
-		<g:VerticalPanel width="100%" height="100%"
+		<g:VerticalPanel width="170px" height="100%"
 			horizontalAlignment="ALIGN_CENTER">
-			<g:ScrollPanel height="111px" />
+			<g:ScrollPanel height="244px" />
 			<g:Button height="29px" ui:field="editUserButton">Edit</g:Button>
 		</g:VerticalPanel>
 

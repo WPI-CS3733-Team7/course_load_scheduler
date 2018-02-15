@@ -12,6 +12,9 @@ import java.util.List;
 //import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
 //import org.dselent.course_load_scheduler.client.event.SendLoginEvent;
 //import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
+import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
+import org.dselent.course_load_scheduler.client.errorstring.InvalidEditSectionStrings;
+import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.Course;
 import org.dselent.course_load_scheduler.client.model.Instructor;
@@ -35,7 +38,9 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	private boolean createSectionClickInProgress;
 	private boolean editSectionClickInProgress;
 	private boolean validateClickInProgress;
-	private boolean submitClickInProgress;
+	private boolean submitEditInstructorClickInProgress;
+	private boolean submitEditCourseClickInProgress;
+	private boolean submitEditSectionClickInProgress;
 	
 	@Inject
 	public SchedulePresenterImpl(IndexPresenter parentPresenter, ScheduleView view)
@@ -50,7 +55,9 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		createSectionClickInProgress = false;
 		editSectionClickInProgress = false;
 		validateClickInProgress = false;
-		submitClickInProgress = false;
+		submitEditInstructorClickInProgress = false;
+		submitEditCourseClickInProgress = false;
+		submitEditSectionClickInProgress = false;
 	}
 	
 	@Override
@@ -59,12 +66,13 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		bind();
 	}
 	
-	// event handlers - CHANGE FROM REGISTER AND LOGIN
-	
 	@Override
 	public void bind()
 	{
 		HandlerRegistration registration;
+		
+		registration = eventBus.addHandler(InvalidEditSectionEvent.TYPE, this);
+		eventBusRegistration.put(InvalidEditSectionEvent.TYPE, registration);
 		
 		/*registration = eventBus.addHandler(InvalidLoginEvent.TYPE, this);
 		eventBusRegistration.put(InvalidLoginEvent.TYPE, registration);
@@ -121,22 +129,116 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 
 	@Override
 	public void selectInstructor(ModelButton<Instructor> clickedButton) {
-		
+		if(view.getSelectedInstructorButton()!=null)
+			view.getSelectedInstructorButton().setText(view.getSelectedInstructorButton().getModel().displayText());
+		clickedButton.setText("[[[ "+ clickedButton.getModel().displayText() +" ]]]");
+		view.setSelectedInstructorButton(clickedButton);
 	}
 
 	@Override
 	public void selectCourse(ModelButton<Course> clickedButton) {
-		if(view.getSelectedCourseButton!=null)
-			selectedCourseButton.setText(selectedCourseButton.getModel().displayText());
+		if(view.getSelectedCourseButton()!=null)
+			view.getSelectedCourseButton().setText(view.getSelectedCourseButton().getModel().displayText());
 		clickedButton.setText("[[[ "+ clickedButton.getModel().displayText() +" ]]]");
-		selectedCourseButton = clickedButton;
+		view.setSelectedCourseButton(clickedButton);
 		
 	}
 
 	@Override
 	public void editSection() {
-		// TODO Auto-generated method stub
 		
+		if (!submitEditSectionClickInProgress)
+		{
+			submitEditSectionClickInProgress = true;
+			view.getSectionSubmitButton().setEnabled(false);
+			parentPresenter.showLoadScreen();
+			
+			boolean validSectionName = true;
+			boolean validSectionId = true;
+			boolean validSectionType = true;
+			boolean validPopulation = true;
+			
+			String sectionName = view.getSectionNameText().getText();
+			String sectionId = view.getSectionIdText().getText();
+			String sectionType = view.getSectionTypeText().getText();
+			String population = view.getPopulationText().getText();
+			
+			List<String> invalidReasonList = new ArrayList<>();
+			
+			//
+			
+			try
+			{
+				validateField(sectionName);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.NULL_SECTION_NAME);
+				validSectionName = false;
+			}
+			
+			//
+			
+			try
+			{
+				validateField(sectionId);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.NULL_SECTION_ID);
+				validSectionId = false;
+			}
+			
+			//
+			
+			try
+			{
+				validateField(sectionType);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.NULL_SECTION_TYPE);
+				validSectionType = false;
+			}
+			
+			//
+			
+			try
+			{
+				validateField(population);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.NULL_POPULATION);
+				validPopulation = false;
+			}
+
+			//
+			
+			if(validSectionName && validSectionId && validSectionType && validPopulation)
+			{
+				//sendRegister(userName, firstName, lastName, email, password);
+			}
+			else
+			{
+				InvalidEditSectionAction iesa = new InvalidEditSectionAction(invalidReasonList);
+				InvalidEditSectionEvent iese = new InvalidEditSectionEvent(iesa);
+				eventBus.fireEvent(iese);
+			}
+		}
+		
+	}
+	
+
+	@Override
+	public void onInvalidEditSection(InvalidEditSectionEvent evt)
+	{
+		parentPresenter.hideLoadScreen();
+		view.getSectionSubmitButton().setEnabled(true);
+		submitEditSectionClickInProgress = false;
+		
+		InvalidEditSectionAction iesa = evt.getAction();
+		view.showErrorMessages(iesa.toString());
 	}
 
 	@Override
@@ -144,5 +246,17 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	private void validateField(String field) throws EmptyStringException
+	{
+		checkEmptyString(field);
+	}
+	
+	private void checkEmptyString(String string) throws EmptyStringException
+	{
+		if(string == null || string.equals(""))
+		{
+			throw new EmptyStringException();
+		}
+	}
 }
