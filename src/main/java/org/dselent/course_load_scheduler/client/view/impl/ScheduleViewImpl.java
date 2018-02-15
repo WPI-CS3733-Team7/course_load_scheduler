@@ -111,6 +111,17 @@ import com.google.gwt.user.client.ui.PopupPanel;
 		Button popIntructorButtonDelete = new Button();
 		Button popIntructorButtonSubmit = new Button();
 
+		/* Pop-up Widgets for Course */
+		Label popCourseLabelName = new Label("Course Name:");
+		Label popCourseLabelNumber = new Label("Course Number:");
+		Label popCourseLabelFrequency = new Label("Required Frequency:");
+		TextBox popCourseTextName = new TextBox();
+		TextBox popCourseTextNumber = new TextBox();
+		TextBox popCourseTextFrequency = new TextBox();
+		Button popCourseButtonDelete = new Button();
+		Button popCourseButtonSubmit = new Button();
+		
+		/* Pop-up Widgets for Course Sections */
 		Label sectionLabel = new Label("Create/Edit a Section");
 		Label sectionNameLabel = new Label("Section Name");
 		Label sectionIdLabel = new Label("Section ID (CRN)");
@@ -126,16 +137,6 @@ import com.google.gwt.user.client.ui.PopupPanel;
 				//presenter.();
 			}
 		});
-
-		/* Pop-up Widgets for Course */
-		Label popCourseLabelName = new Label("Course Name:");
-		Label popCourseLabelNumber = new Label("Course Number:");
-		Label popCourseLabelFrequency = new Label("Required Frequency:");
-		TextBox popCourseTextName = new TextBox();
-		TextBox popCourseTextNumber = new TextBox();
-		TextBox popCourseTextFrequency = new TextBox();
-		Button popCourseButtonDelete = new Button();
-		Button popCourseButtonSubmit = new Button();
 
 		/* Constructor */
 		public ScheduleViewImpl() {
@@ -241,6 +242,54 @@ import com.google.gwt.user.client.ui.PopupPanel;
 		public void setPopCourseTextFrequency(TextBox popCourseTextFrequency) {
 			this.popCourseTextFrequency = popCourseTextFrequency;
 		}
+		
+		@Override
+		public TextBox getSectionNameText() {
+			return sectionNameText;
+		}
+
+		@Override
+		public void setSectionNameText(TextBox sectionNameTextBox) {
+			this.sectionNameText = sectionNameTextBox;			
+		}
+
+		@Override
+		public TextBox getSectionIdText() {
+			return sectionIdText;
+		}
+
+		@Override
+		public void setSectionIdText(TextBox sectionIdTextBox) {
+			this.sectionIdText = sectionIdTextBox;			
+		}
+
+		@Override
+		public TextBox getSectionTypeText() {
+			return sectionTypeText;
+		}
+
+		@Override
+		public void setSectionTypeText(TextBox sectionTypeTextBox) {
+			this.sectionTypeText = sectionTypeTextBox;			
+		}
+
+		@Override
+		public TextBox getPopulationText() {
+			return populationText;
+		}
+
+		@Override
+		public void setPopulationText(TextBox populationTextBox) {
+			this.populationText = populationTextBox;			
+		}
+		
+		public Button getSubmitButton() {
+			return submitButton;
+		}
+
+		public void setSubmitButton(Button submitButton) {
+			this.submitButton = submitButton;
+		}
 
 		/* Getters and Setters for year and term dropdowns */
 		
@@ -326,10 +375,10 @@ import com.google.gwt.user.client.ui.PopupPanel;
 			vertPanel.add(sectionGrid);
 			vertPanel.add(submitButton);
 			
-			PopupPanel registerPopup = new PopupPanel(true);
-			registerPopup.add(vertPanel);
-			registerPopup.isGlassEnabled();
-			registerPopup.center();
+			PopupPanel sectionPopup = new PopupPanel(true);
+			sectionPopup.add(vertPanel);
+			sectionPopup.isGlassEnabled();
+			sectionPopup.center();
 		}
 		
 		@UiHandler("validate")
@@ -445,6 +494,8 @@ import com.google.gwt.user.client.ui.PopupPanel;
 			
 			return scheduleViewPanel;
 		}
+		
+		/* Getters for buttons */
 
 		@Override
 		public Button getAddInstructorButton() {
@@ -484,53 +535,5 @@ import com.google.gwt.user.client.ui.PopupPanel;
 		@Override
 		public void showErrorMessages(String errorMessages) {
 			Window.alert(errorMessages);			
-		}
-
-		@Override
-		public TextBox getSectionNameText() {
-			return sectionNameText;
-		}
-
-		@Override
-		public void setSectionNameText(TextBox sectionNameTextBox) {
-			this.sectionNameText = sectionNameTextBox;			
-		}
-
-		@Override
-		public TextBox getSectionIdText() {
-			return sectionIdText;
-		}
-
-		@Override
-		public void setSectionIdText(TextBox sectionIdTextBox) {
-			this.sectionIdText = sectionIdTextBox;			
-		}
-
-		@Override
-		public TextBox getSectionTypeText() {
-			return sectionTypeText;
-		}
-
-		@Override
-		public void setSectionTypeText(TextBox sectionTypeTextBox) {
-			this.sectionTypeText = sectionTypeTextBox;			
-		}
-
-		@Override
-		public TextBox getPopulationText() {
-			return populationText;
-		}
-
-		@Override
-		public void setPopulationText(TextBox populationTextBox) {
-			this.populationText = populationTextBox;			
-		}
-		
-		public Button getSubmitButton() {
-			return submitButton;
-		}
-
-		public void setSubmitButton(Button submitButton) {
-			this.submitButton = submitButton;
 		}
 	}
