@@ -15,6 +15,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
@@ -109,15 +110,24 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		Label yearLabel = new Label("Year");
 		Label termLabel = new Label("Term");
 		Label daysLabel = new Label("Days of the Week");
+		Label mondayLabel = new Label("M");
+		Label tuesdayLabel = new Label("T");
+		Label wednesdayLabel = new Label("W");
+		Label thursdayLabel = new Label("R");
+		Label fridayLabel = new Label("F");
 		Label startTimeLabel = new Label("Start Time");
 		Label endTimeLabel = new Label("End Time");
 		TextBox sectionNameText = new TextBox();
 		TextBox sectionIdText = new TextBox();
-		TextBox sectionTypeText = new TextBox(); // THIS NEEDS TO BE CHANGED TO A DROPDOWN MENU
+		ListBox sectionTypeListBox = new ListBox();
 		TextBox populationText = new TextBox();
 		TextBox yearText = new TextBox();
 		TextBox termText = new TextBox();
-		// check boxes for days of the week
+		CheckBox monday = new CheckBox();
+		CheckBox tuesday = new CheckBox();
+		CheckBox wednesday = new CheckBox();
+		CheckBox thursday = new CheckBox();
+		CheckBox friday = new CheckBox();
 		TextBox startTimeText = new TextBox();
 		TextBox endTimeText = new TextBox();
 		Button sectionSubmitButton = new Button("Submit", new ClickHandler() {
@@ -174,16 +184,45 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			editPopup.center();
 		}
 		
-		private void makeSectionPopUp(boolean creating) {
-		Grid sectionGrid = new Grid(4, 2);		
+		//Creates the grid for the days of the week check boxes in the Course Section pop-up
+		
+		private Grid makeCalendarInfoGrid() {
+			Grid calendarInfoGrid = new Grid(2, 10);
+			calendarInfoGrid.setWidget(0, 0, daysLabel);
+			calendarInfoGrid.setWidget(1, 0, monday);
+			calendarInfoGrid.setWidget(1, 1, mondayLabel);
+			calendarInfoGrid.setWidget(1, 2, tuesday);
+			calendarInfoGrid.setWidget(1, 3, tuesdayLabel);
+			calendarInfoGrid.setWidget(1, 4, wednesday);
+			calendarInfoGrid.setWidget(1, 5, wednesdayLabel);
+			calendarInfoGrid.setWidget(1, 6, thursday);
+			calendarInfoGrid.setWidget(1, 7, thursdayLabel);
+			calendarInfoGrid.setWidget(1, 8, friday);
+			calendarInfoGrid.setWidget(1, 9, fridayLabel);
+			
+			return calendarInfoGrid;
+			
+		}
+		
+		private void makeSectionPopUp() {
+		Grid sectionGrid = new Grid(9, 2);		
 		sectionGrid.setWidget(0, 0, sectionNameLabel);
 		sectionGrid.setWidget(0, 1, sectionNameText);
 		sectionGrid.setWidget(1, 0, sectionIdLabel);
 		sectionGrid.setWidget(1, 1, sectionIdText);
 		sectionGrid.setWidget(2, 0, sectionTypeLabel);
-		sectionGrid.setWidget(2, 1, sectionTypeText);
+		sectionGrid.setWidget(2, 1, sectionTypeListBox);
 		sectionGrid.setWidget(3, 0, populationLabel);
 		sectionGrid.setWidget(3, 1, populationText);
+		sectionGrid.setWidget(4, 0, yearLabel);
+		sectionGrid.setWidget(4, 1, yearText);
+		sectionGrid.setWidget(5, 0, termLabel);
+		sectionGrid.setWidget(5, 1, termText);
+		sectionGrid.setWidget(6, 0, makeCalendarInfoGrid());
+		sectionGrid.setWidget(7, 0, startTimeLabel);
+		sectionGrid.setWidget(7, 1, startTimeText);
+		sectionGrid.setWidget(8, 0, endTimeLabel);
+		sectionGrid.setWidget(8, 1, endTimeText);
 		
 		VerticalPanel vertPanel = new VerticalPanel();
 		vertPanel.add(sectionLabel);
@@ -275,13 +314,13 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		}
 
 		@Override
-		public TextBox getSectionTypeText() {
-			return sectionTypeText;
+		public ListBox getSectionTypeListBox() {
+			return sectionTypeListBox;
 		}
 
 		@Override
-		public void setSectionTypeText(TextBox sectionTypeTextBox) {
-			this.sectionTypeText = sectionTypeTextBox;			
+		public void setSectionTypeListBox(ListBox sectionTypeListBox) {
+			this.sectionTypeListBox = sectionTypeListBox;			
 		}
 
 		@Override
@@ -294,6 +333,96 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			this.populationText = populationTextBox;			
 		}
 		
+		@Override
+		public TextBox getYearText() {
+			return yearText;
+		}
+
+		@Override
+		public void setYearText(TextBox yearText) {
+			this.yearText = yearText;
+		}
+
+		@Override
+		public TextBox getTermText() {
+			return termText;
+		}
+
+		@Override
+		public void setTermText(TextBox termText) {
+			this.termText = termText;
+		}
+
+		@Override
+		public CheckBox getMonday() {
+			return monday;
+		}
+
+		@Override
+		public void setMonday(CheckBox monday) {
+			this.monday = monday;
+		}
+
+		@Override
+		public CheckBox getTuesday() {
+			return tuesday;
+		}
+
+		@Override
+		public void setTuesday(CheckBox tuesday) {
+			this.tuesday = tuesday;
+		}
+
+		@Override
+		public CheckBox getWednesday() {
+			return wednesday;
+		}
+
+		@Override
+		public void setWednesday(CheckBox wednesday) {
+			this.wednesday = wednesday;
+		}
+
+		@Override
+		public CheckBox getThursday() {
+			return thursday;
+		}
+		
+		@Override
+		public void setThursday(CheckBox thursday) {
+			this.thursday = thursday;
+		}
+
+		@Override
+		public CheckBox getFriday() {
+			return friday;
+		}
+
+		@Override
+		public void setFriday(CheckBox friday) {
+			this.friday = friday;
+		}
+
+		@Override
+		public TextBox getStartTimeText() {
+			return startTimeText;
+		}
+
+		@Override
+		public void setStartTimeText(TextBox startTimeText) {
+			this.startTimeText = startTimeText;
+		}
+
+		@Override
+		public TextBox getEndTimeText() {
+			return endTimeText;
+		}
+
+		@Override
+		public void setEndTimeText(TextBox endTimeText) {
+			this.endTimeText = endTimeText;
+		}
+
 		public Button getInstructorSubmitButton() {
 			return popInstructorButtonSubmit;
 		}
@@ -364,56 +493,20 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		
 		@UiHandler("createSection")
 		void onClickAddSection(ClickEvent event) {
-			Grid sectionGrid = new Grid(4, 2);		
-			sectionGrid.setWidget(0, 0, sectionNameLabel);
-			sectionGrid.setWidget(0, 1, sectionNameText);
-			sectionGrid.setWidget(1, 0, sectionIdLabel);
-			sectionGrid.setWidget(1, 1, sectionIdText);
-			sectionGrid.setWidget(2, 0, sectionTypeLabel);
-			sectionGrid.setWidget(2, 1, sectionTypeText);
-			sectionGrid.setWidget(3, 0, populationLabel);
-			sectionGrid.setWidget(3, 1, populationText);
-			
-			VerticalPanel vertPanel = new VerticalPanel();
-			vertPanel.add(sectionLabel);
-			vertPanel.add(sectionGrid);
-			vertPanel.add(sectionSubmitButton);
-			
-			PopupPanel registerPopup = new PopupPanel(true);
-			registerPopup.add(vertPanel);
-			registerPopup.isGlassEnabled();
-			registerPopup.center();
+			isCreating=true;
+			makeSectionPopUp();
 		}
 		
 		@UiHandler("editSection")
 		void onClickEditSection(ClickEvent event) {
-			Grid sectionGrid = new Grid(4, 2);		
-			sectionGrid.setWidget(0, 0, sectionNameLabel);
-			sectionGrid.setWidget(0, 1, sectionNameText);
-			sectionGrid.setWidget(1, 0, sectionIdLabel);
-			sectionGrid.setWidget(1, 1, sectionIdText);
-			sectionGrid.setWidget(2, 0, sectionTypeLabel);
-			sectionGrid.setWidget(2, 1, sectionTypeText);
-			sectionGrid.setWidget(3, 0, populationLabel);
-			sectionGrid.setWidget(3, 1, populationText);
-			
-			VerticalPanel vertPanel = new VerticalPanel();
-			vertPanel.add(sectionLabel);
-			vertPanel.add(sectionGrid);
-			vertPanel.add(sectionSubmitButton);
-			
-			PopupPanel sectionPopup = new PopupPanel(true);
-			sectionPopup.add(vertPanel);
-			sectionPopup.isGlassEnabled();
-			sectionPopup.center();
+			isCreating=false;
+			makeSectionPopUp();
 		}
 		
 	@UiHandler("validate")
 	void onClickValidate(ClickEvent event) {
 		presenter.validate();
 	}
-		
-		//UiHandlers for select year/term labels and list boxes needed?
 
 		private class instructorClickHandler implements ClickHandler{
 			private ModelButton<Instructor> linkedButton;
