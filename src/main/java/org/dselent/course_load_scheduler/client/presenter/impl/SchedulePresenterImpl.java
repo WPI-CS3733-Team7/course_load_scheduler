@@ -5,17 +5,8 @@ import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidCreateCourseAction;
 import org.dselent.course_load_scheduler.client.action.InvalidCreateInstructorAction;
-//import org.dselent.course_load_scheduler.client.action.InvalidLoginAction;
-//import org.dselent.course_load_scheduler.client.action.InvalidRegisterAction;
-//import org.dselent.course_load_scheduler.client.action.SendLoginAction;
-//import org.dselent.course_load_scheduler.client.action.SendRegisterAction;
-//import org.dselent.course_load_scheduler.client.errorstring.InvalidLoginStrings;
-//import org.dselent.course_load_scheduler.client.errorstring.InvalidRegisterStrings;
-//import org.dselent.course_load_scheduler.client.event.InvalidLoginEvent;
-//import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
-//import org.dselent.course_load_scheduler.client.event.SendLoginEvent;
-//import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
 import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
+import org.dselent.course_load_scheduler.client.action.InvalidLoginAction;
 import org.dselent.course_load_scheduler.client.action.InvalidRegisterAction;
 import org.dselent.course_load_scheduler.client.action.SendEditCourseAction;
 import org.dselent.course_load_scheduler.client.action.SendEditInstructorAction;
@@ -30,10 +21,13 @@ import org.dselent.course_load_scheduler.client.event.SendEditCourseEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidCreateCourseEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidCreateInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
+import org.dselent.course_load_scheduler.client.event.InvalidLoginEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.SendValidateEvent;
+import org.dselent.course_load_scheduler.client.event_handler.InvalidCreateCourseEventHandler;
+import org.dselent.course_load_scheduler.client.event_handler.InvalidCreateInstructorEventHandler;
 import org.dselent.course_load_scheduler.client.event_handler.InvalidEditSectionEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.Course;
@@ -47,7 +41,8 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class SchedulePresenterImpl extends BasePresenterImpl implements SchedulePresenter, InvalidEditSectionEventHandler {
+public class SchedulePresenterImpl extends BasePresenterImpl implements SchedulePresenter, InvalidCreateInstructorEventHandler,
+InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 	
 	private IndexPresenter parentPresenter;
 	private ScheduleView view;
@@ -90,6 +85,12 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	public void bind()
 	{
 		HandlerRegistration registration;
+		
+		registration = eventBus.addHandler(InvalidCreateInstructorEvent.TYPE, this);
+		eventBusRegistration.put(InvalidCreateInstructorEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(InvalidCreateCourseEvent.TYPE,  this);
+		eventBusRegistration.put(InvalidCreateCourseEvent.TYPE, registration);				
 		
 		registration = eventBus.addHandler(InvalidEditSectionEvent.TYPE, this);
 		eventBusRegistration.put(InvalidEditSectionEvent.TYPE, registration);
@@ -189,6 +190,17 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		SendEditInstructorEvent siee = new SendEditInstructorEvent(siea);
 		eventBus.fireEvent(siee);
 	}
+	
+	@Override
+	public void onInvalidCreateInstructor(InvalidCreateInstructorEvent evt)
+	{
+		parentPresenter.hideLoadScreen();
+		view.getAddInstructorButton().setEnabled(true);
+		addInstructorClickInProgress = false;
+		
+		InvalidCreateInstructorAction icia = evt.getAction();
+		view.showErrorMessages(icia.toString());
+	}
 
 
 	@Override
@@ -250,6 +262,17 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		SendEditCourseAction scea = new SendEditCourseAction(id.toString(), courseName, courseNumber, frequency, Boolean.toString(deleted));
 		SendEditCourseEvent scee = new SendEditCourseEvent(scea);
 		eventBus.fireEvent(scee);	
+	}
+	
+	@Override
+	public void onInvalidCreateCourse(InvalidCreateCourseEvent evt)
+	{
+		parentPresenter.hideLoadScreen();
+		view.getAddCourseButton().setEnabled(true);
+		addCourseClickInProgress = false;
+		
+		InvalidCreateCourseAction icca = evt.getAction();
+		view.showErrorMessages(icca.toString());
 	}
 
 	@Override
