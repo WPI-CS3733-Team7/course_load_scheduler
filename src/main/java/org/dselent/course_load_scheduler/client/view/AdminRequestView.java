@@ -24,7 +24,7 @@ public interface AdminRequestView extends BaseView<AdminRequestPresenter>{
 		Label getRequesterDescriptLabel();
 		void setRequesterDescriptLabel(String requestDetail);
 		TextArea getReplyTextArea();
-		void setReplyTextArea(TextArea replyTextArea);
+		void setReplyTextArea(String text);
 		RadioButton getApproved();
 		void setApproved(RadioButton approvedRdo);
 		RadioButton getTentative();

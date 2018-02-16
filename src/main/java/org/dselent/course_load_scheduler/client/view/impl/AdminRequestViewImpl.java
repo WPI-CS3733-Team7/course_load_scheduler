@@ -167,7 +167,7 @@ public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> im
 	}
 	
 	@Override
-	public void setReplyTextArea(TextArea replyTextArea) {
+	public void setReplyTextArea(String Text) {
 		this.replyTextArea = replyTextArea;
 	}
 	

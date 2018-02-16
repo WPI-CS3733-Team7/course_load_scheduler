@@ -83,7 +83,7 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			view.getSubmitButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
 			
-			String description = view.getDescriptionTextBox().getText();
+			String description = view.getDescriptionTextArea().getText();
 			
 			boolean validRequesttype = true;
 
@@ -131,4 +131,5 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			throw new EmptyStringException();
 		}
 	}
+
 }

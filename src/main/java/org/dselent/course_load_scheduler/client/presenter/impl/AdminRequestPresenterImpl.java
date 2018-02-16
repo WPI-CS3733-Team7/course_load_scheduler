@@ -141,6 +141,9 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 				eventBus.fireEvent(ire);
 			}
 		}
+		else {
+			view.setReplyTextArea("");
+		}
 	}
 	
 	private void sendReply(String description, String replyType) {
@@ -159,15 +162,22 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			int selectedIndex = view.getRequestList().getSelectedIndex();
 			//String selectedItem = view.getRequestList().getValue(selectedIndex);
 			Request selectedRequest = view.getRequest(selectedIndex);
+			
 			String requester = String.valueOf(selectedRequest.getRequesterId());
 			String requestType = selectedRequest.getRequestType();
 			String requestDetail = selectedRequest.getRequestDetails();
 			selectRequestAction(selectedRequest.getRequesterId(), requestType, requestDetail);
+			
 			view.setUserRequestLabel(requester);
 			view.setTypeLabel(requestType);
 			view.setRequesterDescriptLabel(requestDetail);
 			
 			
+		} 
+		else {
+			view.setUserRequestLabel("");
+			view.setTypeLabel("");
+			view.setRequesterDescriptLabel("");
 		}
 		
 		
@@ -179,55 +189,6 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		SelectRequestEvent sre = new SelectRequestEvent(sra);
 		eventBus.fireEvent(sre);
 	}
-	/*@Override
-	public void submit() {
-		// TODO Auto-generated method stub
-		if(!submitClickInProgress)
-		{
-			submitClickInProgress = true;
-			view.getSubmitButton().setEnabled(false);
-			parentPresenter.showLoadScreen();
-			
-			
-			String description = view.getDescriptionText().getText();
-			String courseType = view.getCourseRdo().getText();
-			String otherType = view.getOtherRdo().getText();
-			
-			
-			boolean validRequest = true;
-			boolean validDescription = true;
-			
-			List<String> invalidReasonList = new ArrayList<>();
-			
-			try
-			{
-				validateField(description);
-			}
-			catch(EmptyStringException e)
-			{
-				invalidReasonList.add(InvalidRequestStrings.NULL_DESCRIPTION);
-				
-				validDescription = false;
-			}
-			
-			if(validDescription)
-			{
-				sendRequest(description);
-			}
-			else
-			{
-				InvalidRequestAction ira = new InvalidRequestAction(invalidReasonList);
-				InvalidRequestEvent ire = new InvalidRequestEvent(ira);
-				eventBus.fireEvent(ire);
-			}
-		}
-	}
-	private void sendRequest(String description)
-	{
-		SendRequestAction sra = new SendRequestAction(description);
-		SendRequestEvent sre = new SendRequestEvent(sra);
-		eventBus.fireEvent(sre);
-	}*/
 	
 	private void validateField(String field) throws EmptyStringException
 	{
