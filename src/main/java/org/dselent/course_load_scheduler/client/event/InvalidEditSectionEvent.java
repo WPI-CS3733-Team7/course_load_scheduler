@@ -35,7 +35,6 @@ public static Type<InvalidEditSectionEventHandler> TYPE = new Type<InvalidEditSe
 	@Override
 	protected void dispatch(InvalidEditSectionEventHandler handler)
 	{
-		handler.onInvalidLogin(this);
+		handler.onInvalidEditSection(this);
 	}
-
 }

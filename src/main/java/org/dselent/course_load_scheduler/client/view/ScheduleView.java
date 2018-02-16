@@ -2,18 +2,21 @@ package org.dselent.course_load_scheduler.client.view;
 
 import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
-import org.dselent.course_load_scheduler.client.view.BaseView;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TextBox;
+import org.dselent.course_load_scheduler.client.model.Course;
+import org.dselent.course_load_scheduler.client.view.impl.ModelButton; 
 
 public interface ScheduleView extends BaseView<SchedulePresenter>{
 	
 	public void addInstructorButton(Instructor instructor);
-	public void addCourseButton(String courseName);
-	public void removeInstructorButton(String instructorName);
-	public void removeCourseButton(String courseName);
-	public Button getSelectedInstructor();
-	public Button getSelectedCourse();
+	public void addCourseButton(Course course);
+	public void removeInstructorButton(Instructor instructor);
+	public void removeCourseButton(Course course);
+	public ModelButton<Instructor> getSelectedInstructorButton();
+	public ModelButton<Course> getSelectedCourseButton();
+	public void setSelectedInstructorButton(ModelButton<Instructor> selection);
+	public void setSelectedCourseButton(ModelButton<Course> selection);
 	
 	Button getAddInstructorButton();
 	Button getEditInstructorButton();
@@ -32,5 +35,8 @@ public interface ScheduleView extends BaseView<SchedulePresenter>{
 	void setSectionTypeText(TextBox sectionTypeTextBox);
 	TextBox getPopulationText();
 	void setPopulationText(TextBox populationTextBox);
-	Button getSubmitButton();
+	
+	Button getSectionSubmitButton();
+	Button getInstructorSubmitButton();
+	Button getCourseSubmitButton();
 }

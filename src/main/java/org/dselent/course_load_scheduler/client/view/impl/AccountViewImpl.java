@@ -11,9 +11,12 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -47,6 +50,7 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	@UiField 
 	HorizontalPanel accountViewPanel;
 
+	// Change password pop-up widgets
 	Label changePasswordTitle = new Label("Change Password");
 	Label changePasswordOld = new Label("Old password");
 	Label changePasswordNew = new Label("New password");
@@ -54,10 +58,29 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	TextBox oldPasswordText = new TextBox();
 	TextBox newPasswordText = new TextBox();
 	TextBox confirmPasswordText = new TextBox();
-	Button submitButton = new Button("Submit", new ClickHandler() {
+	Button submitChangePasswordButton = new Button("Submit", new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
 			//presenter.changePassword();
+		}
+	});
+	
+	// Edit user pop-up widgets
+	Label editUserTitle = new Label("Edit User");
+	Label editUserRole = new Label("Role");
+	Label editUserLinked = new Label("Linked Instructor");
+	Button deleteEditUserButton = new Button("Delete", new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			//change deleted to true
+			//presenter.editUser()
+		}
+	});
+	Button submitEditUserButton = new Button("Submit", new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			// set deleted to false
+			//presenter.editUser();
 		}
 	});
 
@@ -73,8 +96,13 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		return confirmPasswordText;
 	}
 
-	public Button getSubmitButton() {
-		return submitButton;
+	public Button getSubmitChangePasswordButton() {
+		return submitChangePasswordButton;
+	}
+	
+	public Button getSubmitEditUserButton()
+	{
+		return submitEditUserButton;
 	}
 
 	public AccountViewImpl() {
@@ -162,6 +190,11 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	}
 	
 	@Override
+	public Button getDeleteEditUserButton() {
+		return deleteEditUserButton;
+	}
+	
+	@Override
 	public void showErrorMessages(String errorMessages)
 	{
 		Window.alert(errorMessages);
@@ -184,5 +217,50 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	{
 		this.presenter = presenter;
 	}
+	
+	@UiHandler("changePasswordButton")
+	void onChangePasswordButtonClicked(ClickEvent evt)
+	{
+		Grid regGrid = new Grid(3, 2);
+		regGrid.setWidget(0, 0, changePasswordOld);
+		regGrid.setWidget(0, 1, oldPasswordText);
+		regGrid.setWidget(1, 0, changePasswordNew);
+		regGrid.setWidget(1, 1, newPasswordText);
+		regGrid.setWidget(2, 0, changePasswordConfirm);
+		regGrid.setWidget(2, 1, confirmPasswordText);
+		
+		VerticalPanel vertPanel = new VerticalPanel();
+		vertPanel.add(changePasswordTitle);
+		vertPanel.add(regGrid);
+		vertPanel.add(submitChangePasswordButton);
+		
+		PopupPanel registerPopup = new PopupPanel(true);
+		registerPopup.add(vertPanel);
+		registerPopup.isGlassEnabled();
+		registerPopup.center();
+	}
 
+	@UiHandler("editUserButton")
+	void onEditUserPasswordButtonClicked(ClickEvent evt)
+	{
+		Grid regGrid = new Grid(3, 2);
+		regGrid.setWidget(0, 0, editUserRole);
+		// set 0, 1 to a drop down menu
+		regGrid.setWidget(1, 0, editUserLinked);
+		// set 1, 1 to a drop down menu
+		regGrid.setWidget(2, 0, deleteEditUserButton);
+		regGrid.setWidget(2, 1, submitEditUserButton);
+		
+		VerticalPanel vertPanel = new VerticalPanel();
+		vertPanel.add(editUserTitle);
+		vertPanel.add(regGrid);
+		
+		PopupPanel registerPopup = new PopupPanel(true);
+		registerPopup.add(vertPanel);
+		registerPopup.isGlassEnabled();
+		registerPopup.center();
+	}
+
+
+	
 }
