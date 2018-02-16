@@ -106,14 +106,24 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		Label sectionIdLabel = new Label("Section ID (CRN)");
 		Label sectionTypeLabel = new Label("Section Type");
 		Label populationLabel = new Label("Population");
+		Label yearLabel = new Label("Year");
+		Label termLabel = new Label("Term");
+		Label daysLabel = new Label("Days of the Week");
+		Label startTimeLabel = new Label("Start Time");
+		Label endTimeLabel = new Label("End Time");
 		TextBox sectionNameText = new TextBox();
 		TextBox sectionIdText = new TextBox();
-		TextBox sectionTypeText = new TextBox();
+		TextBox sectionTypeText = new TextBox(); // THIS NEEDS TO BE CHANGED TO A DROPDOWN MENU
 		TextBox populationText = new TextBox();
+		TextBox yearText = new TextBox();
+		TextBox termText = new TextBox();
+		// check boxes for days of the week
+		TextBox startTimeText = new TextBox();
+		TextBox endTimeText = new TextBox();
 		Button sectionSubmitButton = new Button("Submit", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				//presenter.();
+				presenter.editSection();
 			}
 		});
 
