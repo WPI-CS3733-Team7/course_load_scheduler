@@ -1,6 +1,7 @@
 package org.dselent.course_load_scheduler.client;
 
 import org.dselent.course_load_scheduler.client.gin.Injector;
+import org.dselent.course_load_scheduler.client.presenter.impl.AccountPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.IndexPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.LoginPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.MainPresenterImpl;
@@ -61,12 +62,15 @@ public class CourseLoadScheduler implements EntryPoint
 		
 		//SchedulePresenterImpl schedPresenter = injector.getSchedulePresenter();
 		//schedPresenter.init();
-		//LoginView loginView = loginPresenter.getView();	
-		MainPresenterImpl mainPresenter = injector.getMainPresenter();
-		mainPresenter.init();
+		//MainPresenterImpl mainPresenter = injector.getMainPresenter();
+		//mainPresenter.init();
+		//LoginPresenterImpl loginPresenter = injector.getLoginPresenter();
+		//loginPresenter.init();
+		AccountPresenterImpl accountPresenter = injector.getAccountPresenter();
+		accountPresenter.init();
 		
 		//indexPresenter.go(RootPanel.get("indexContainer"));
 		indexPresenter.go(root);
-		mainPresenter.go(indexView.getViewRootPanel());
+		accountPresenter.go(indexView.getViewRootPanel());
 	}
 }
