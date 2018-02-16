@@ -208,18 +208,17 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		//Creates the grid for the days of the week check boxes in the Course Section pop-up
 		
 		private Grid makeCalendarInfoGrid() {
-			Grid calendarInfoGrid = new Grid(2, 10);
-			calendarInfoGrid.setWidget(0, 0, daysLabel);
-			calendarInfoGrid.setWidget(1, 0, monday);
-			calendarInfoGrid.setWidget(1, 1, mondayLabel);
-			calendarInfoGrid.setWidget(1, 2, tuesday);
-			calendarInfoGrid.setWidget(1, 3, tuesdayLabel);
-			calendarInfoGrid.setWidget(1, 4, wednesday);
-			calendarInfoGrid.setWidget(1, 5, wednesdayLabel);
-			calendarInfoGrid.setWidget(1, 6, thursday);
-			calendarInfoGrid.setWidget(1, 7, thursdayLabel);
-			calendarInfoGrid.setWidget(1, 8, friday);
-			calendarInfoGrid.setWidget(1, 9, fridayLabel);
+			Grid calendarInfoGrid = new Grid(1, 10);
+			calendarInfoGrid.setWidget(0, 0, monday);
+			calendarInfoGrid.setWidget(0, 1, mondayLabel);
+			calendarInfoGrid.setWidget(0, 2, tuesday);
+			calendarInfoGrid.setWidget(0, 3, tuesdayLabel);
+			calendarInfoGrid.setWidget(0, 4, wednesday);
+			calendarInfoGrid.setWidget(0, 5, wednesdayLabel);
+			calendarInfoGrid.setWidget(0, 6, thursday);
+			calendarInfoGrid.setWidget(0, 7, thursdayLabel);
+			calendarInfoGrid.setWidget(0, 8, friday);
+			calendarInfoGrid.setWidget(0, 9, fridayLabel);
 			
 			return calendarInfoGrid;
 			
@@ -241,10 +240,11 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		//Combines all 3 grids into one pop-up
 		
 		private void makeSectionPopUp() {
-		Grid sectionGrid = new Grid(3, 1);		
+		Grid sectionGrid = new Grid(4, 1);		
 		sectionGrid.setWidget(0, 0, makeFirstGrid());
-		sectionGrid.setWidget(1, 0, makeCalendarInfoGrid());
-		sectionGrid.setWidget(2, 0, makeLastGrid());
+		sectionGrid.setWidget(1, 0, daysLabel);
+		sectionGrid.setWidget(2, 0, makeCalendarInfoGrid());
+		sectionGrid.setWidget(3, 0, makeLastGrid());
 		
 		VerticalPanel vertPanel = new VerticalPanel();
 		vertPanel.add(sectionLabel);
