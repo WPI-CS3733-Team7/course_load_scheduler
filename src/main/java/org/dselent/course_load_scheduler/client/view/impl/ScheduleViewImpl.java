@@ -2,6 +2,8 @@ package org.dselent.course_load_scheduler.client.view.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.dselent.course_load_scheduler.client.model.Course;
+import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
 import com.google.gwt.core.client.GWT;

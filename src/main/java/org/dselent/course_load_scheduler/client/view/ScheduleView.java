@@ -9,12 +9,14 @@ import org.dselent.course_load_scheduler.client.view.impl.ModelButton;
 
 public interface ScheduleView extends BaseView<SchedulePresenter>{
 	
-	public void removeInstructorButton(Instructor instructor); 
-	public void removeCourseButton(Course course);  
-	public ModelButton<Instructor> getSelectedInstructorButton(); 	 
-	public ModelButton<Course> getSelectedCourseButton(); 	 
-	public void setSelectedInstructorButton(ModelButton<Instructor> selection); 	 
-	public void setSelectedCourseButton(ModelButton<Course> selection); 
+	public void addInstructorButton(Instructor instructor);
+	public void addCourseButton(Course course);
+	public void removeInstructorButton(Instructor instructor);
+	public void removeCourseButton(Course course);
+	public ModelButton<Instructor> getSelectedInstructorButton();
+	public ModelButton<Course> getSelectedCourseButton();
+	public void setSelectedInstructorButton(ModelButton<Instructor> selection);
+	public void setSelectedCourseButton(ModelButton<Course> selection);
 	
 	Button getAddInstructorButton();
 	Button getEditInstructorButton();
