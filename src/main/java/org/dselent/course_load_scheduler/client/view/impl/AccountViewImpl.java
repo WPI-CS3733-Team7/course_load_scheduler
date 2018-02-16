@@ -2,6 +2,7 @@ package org.dselent.course_load_scheduler.client.view.impl;
 
 import org.dselent.course_load_scheduler.client.presenter.AccountPresenter;
 import org.dselent.course_load_scheduler.client.view.AccountView;
+import org.dselent.course_load_scheduler.client.view.impl.AccountViewImpl;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -19,6 +20,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.ListBox;
 
 
 public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements AccountView {
@@ -30,25 +32,30 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	@UiField 
 	Label nameLabel;
 	@UiField 
-	TextBox nameTextBox;
+	Label changingNameLabel;
 	@UiField 
 	Label usernameLabel;
 	@UiField 
-	TextBox usernameTextBox;
+	Label changingUsernameLabel;
 	@UiField 
 	Label accountStateLabel;
 	@UiField 
-	TextBox accountStateTextBox;
+	Label changingAccountStateLabel;
 	@UiField 
 	Label emailLabel;
 	@UiField 
-	TextBox emailTextBox;
+	Label changingEmailLabel;
 	@UiField 
 	Button changePasswordButton;
 	@UiField 
 	Button editUserButton;
 	@UiField 
 	HorizontalPanel accountViewPanel;
+	@UiField
+	ListBox userList;
+	
+	
+	
 
 	// Change password pop-up widgets
 	Label changePasswordTitle = new Label("Change Password");
@@ -130,12 +137,12 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		this.nameLabel = nameLabel;
 	}
 
-	public TextBox getNameTextBox() {
-		return nameTextBox;
+	public Label getChangingNameLabel() {
+		return changingNameLabel;
 	}
 
-	public void setNameTextBox(TextBox nameTextBox) {
-		this.nameTextBox = nameTextBox;
+	public void setChangingNameLabel(Label changingNameLabel) {
+		this.changingNameLabel = changingNameLabel;
 	}
 
 	public Label getUsernameLabel() {
@@ -146,12 +153,12 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		this.usernameLabel = usernameLabel;
 	}
 
-	public TextBox getUsernameTextBox() {
-		return usernameTextBox;
+	public Label getChangingUsernameLabel() {
+		return changingUsernameLabel;
 	}
 
-	public void setUsernameTextBox(TextBox usernameTextBox) {
-		this.usernameTextBox = usernameTextBox;
+	public void setChangingUsernameLabel(Label changingUsernameLabel) {
+		this.changingUsernameLabel = changingUsernameLabel;
 	}
 
 	public Label getAccountStateLabel() {
@@ -162,12 +169,12 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		this.accountStateLabel = accountStateLabel;
 	}
 
-	public TextBox getAccountStateTextBox() {
-		return accountStateTextBox;
+	public Label getChangingAccountStateLabel() {
+		return changingAccountStateLabel;
 	}
 
-	public void setAccountStateTextBox(TextBox accountStateTextBox) {
-		this.accountStateTextBox = accountStateTextBox;
+	public void setChangingAccountStateLabel(Label changingAccountStateLabel) {
+		this.changingAccountStateLabel = changingAccountStateLabel;
 	}
 
 	public Label getEmailLabel() {
@@ -178,12 +185,20 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		this.emailLabel = emailLabel;
 	}
 
-	public TextBox getEmailTextBox() {
-		return emailTextBox;
+	public Label getChangingEmailLabel() {
+		return changingEmailLabel;
 	}
 
-	public void setEmailTextBox(TextBox emailTextBox) {
-		this.emailTextBox = emailTextBox;
+	public void setChangingEmailLabel(Label changingEmailLabel) {
+		this.changingEmailLabel = changingEmailLabel;
+	}
+	
+	public ListBox getUserList() {
+		return userList;
+	}
+
+	public void setUserList(ListBox userList) {
+		this.userList = userList;
 	}
 
 	public Button getChangePasswordButton() {

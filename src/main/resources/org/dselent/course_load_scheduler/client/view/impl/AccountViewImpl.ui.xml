@@ -14,7 +14,7 @@
 						<g:Label text="Name" ui:field="nameLabel" />
 					</g:customCell>
 					<g:customCell>
-						<g:TextBox ui:field="nameTextBox" />
+						<g:Label text="xxxxxxx" ui:field="changingNameLabel"/>
 					</g:customCell>
 				</g:row>
 				<g:row>
@@ -22,7 +22,7 @@
 						<g:Label text="Username" ui:field="usernameLabel" />
 					</g:customCell>
 					<g:customCell>
-						<g:TextBox ui:field="usernameTextBox" />
+						<g:Label text="xxxxxxx" ui:field="changingUsernameLabel"/>
 					</g:customCell>
 				</g:row>
 				<g:row>
@@ -30,7 +30,7 @@
 						<g:Label text="Account State" ui:field="accountStateLabel" />
 					</g:customCell>
 					<g:customCell>
-						<g:TextBox ui:field="accountStateTextBox" />
+						<g:Label text="xxxxxxx" ui:field="changingAccountStateLabel"/>
 					</g:customCell>
 				</g:row>
 				<g:row>
@@ -38,7 +38,7 @@
 						<g:Label text="Email" ui:field="emailLabel" />
 					</g:customCell>
 					<g:customCell>
-						<g:TextBox ui:field="emailTextBox" />
+						<g:Label text="xxxxxxx" ui:field="changingEmailLabel"/>
 					</g:customCell>
 				</g:row>
 			</g:Grid>
@@ -46,7 +46,7 @@
 		</g:VerticalPanel>
 		<g:VerticalPanel width="170px" height="100%"
 			horizontalAlignment="ALIGN_CENTER">
-			<g:ScrollPanel height="244px" />
+			<g:ListBox visibleItemCount="5" width="164px" height="234px" ui:field="userList"/>
 			<g:Button height="29px" ui:field="editUserButton">Edit</g:Button>
 		</g:VerticalPanel>
 
