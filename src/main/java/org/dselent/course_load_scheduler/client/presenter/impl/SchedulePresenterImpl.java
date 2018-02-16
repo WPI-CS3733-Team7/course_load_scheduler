@@ -13,8 +13,10 @@ import java.util.List;
 //import org.dselent.course_load_scheduler.client.event.SendLoginEvent;
 //import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
 import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
+import org.dselent.course_load_scheduler.client.action.SendEditSectionAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidEditSectionStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
+import org.dselent.course_load_scheduler.client.event.SendEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event_handler.InvalidEditSectionEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.Course;
@@ -218,7 +220,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			
 			if(validSectionName && validSectionId && validSectionType && validPopulation)
 			{
-				//sendRegister(userName, firstName, lastName, email, password);
+				sendEditSection(sectionName, sectionId, sectionType, population);
 			}
 			else
 			{
@@ -240,6 +242,13 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		
 		InvalidEditSectionAction iesa = evt.getAction();
 		view.showErrorMessages(iesa.toString());
+	}
+	
+	private void sendEditSection(String sectionName, String sectionId, String sectionType, String population)
+	{
+		SendEditSectionAction sesa = new SendEditSectionAction(sectionName, sectionId, sectionType, population);
+		SendEditSectionEvent sese = new SendEditSectionEvent(sesa);
+		eventBus.fireEvent(sese);
 	}
 
 	@Override
