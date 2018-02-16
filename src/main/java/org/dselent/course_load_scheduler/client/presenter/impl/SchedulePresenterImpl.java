@@ -308,7 +308,7 @@ InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 			
 			String sectionName = view.getSectionNameText().getText();
 			String sectionId = view.getSectionIdText().getText();
-			String sectionType = view.getSectionTypeText().getText();
+			String sectionType = view.getSectionTypeListBox().getTitle();
 			String population = view.getPopulationText().getText();
 			
 			List<String> invalidReasonList = new ArrayList<>();
