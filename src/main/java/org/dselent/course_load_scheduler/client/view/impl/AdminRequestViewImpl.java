@@ -22,6 +22,12 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.dselent.course_load_scheduler.client.model.Request;
+
+
 public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> implements AdminRequestView {
 
 	private static AdminRequestViewImplUiBinder uiBinder = GWT.create(AdminRequestViewImplUiBinder.class);
@@ -75,10 +81,14 @@ public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> im
 	
 	@UiField 
 	Button replyButton;
+	
+	private List<Request> requests = new ArrayList<>();
 
 	interface AdminRequestViewImplUiBinder extends UiBinder<Widget, AdminRequestViewImpl> {
 	}
 
+	
+	
 	public AdminRequestViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
@@ -87,11 +97,25 @@ public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> im
 	public void setPresenter(AdminRequestPresenter presenter) {
 		// TODO Auto-generated method stub
 		this.presenter = presenter;
-		
+	}
+	
+	public void addRequest(Request r) {
+		this.requests.add(r);
+		this.requestList.addItem(r.getRequestDetails());
 	}
 	
 	@Override
-	public ListBox getRequestList() {
+	public Request getRequest(int index) {
+		return requests.get(index);
+	}
+	
+	public void setRequest(List<Request> requests) {
+		this.requests = requests;
+	}
+	
+	
+	@Override
+	public ListBox getRequestList() { 
 		return requestList;
 	}
 	
@@ -101,13 +125,20 @@ public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> im
 	}
 	
 	@Override
+	public void setRequestList(List<Request> requests) {
+		for(Request r : requests) {
+			addRequest(r);
+		}
+	}
+	
+	@Override
 	public Label getUserRequestLabel() {
 		return setUserLabel;
 	}
 	
 	@Override
-	public void setUserRequestLabel(Label setUserLabel) {
-		this.setUserLabel = setUserLabel;
+	public void setUserRequestLabel(String requester) {
+		this.setUserLabel.setText(requester);
 	}
 	
 	@Override
@@ -116,8 +147,8 @@ public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> im
 	}
 	
 	@Override
-	public void setTypeLabel(Label setTypeLabel) {
-		this.setTypeLabel = setTypeLabel;
+	public void setTypeLabel(String requestType) {
+		this.setTypeLabel.setText(requestType);
 	}
 	
 	@Override
@@ -126,8 +157,8 @@ public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> im
 	}
 	
 	@Override
-	public void setRequesterDescriptLabel(Label setDescriptLabel) {
-		this.setUserDescriptLabel = setDescriptLabel;
+	public void setRequesterDescriptLabel(String requestDetail) {
+		this.setUserDescriptLabel.setText(requestDetail);
 	}
 	
 	@Override

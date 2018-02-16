@@ -5,19 +5,24 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.RadioButton;
 
+import java.util.List;
+
+import org.dselent.course_load_scheduler.client.model.Request;
 import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
 
 import com.google.gwt.user.client.ui.Button;
 
 public interface AdminRequestView extends BaseView<AdminRequestPresenter>{
+		Request getRequest(int index);
 		ListBox getRequestList();
 		void setRequestList(ListBox requestList);
+		void setRequestList(List<Request> requests);
 		Label getUserRequestLabel();
-		void setUserRequestLabel(Label setUserLabel);
+		void setUserRequestLabel(String requester);
 		Label getTypeLabel();
-		void setTypeLabel(Label setTypeLabel);
+		void setTypeLabel(String requestType);
 		Label getRequesterDescriptLabel();
-		void setRequesterDescriptLabel(Label setDescriptLabel);
+		void setRequesterDescriptLabel(String requestDetail);
 		TextArea getReplyTextArea();
 		void setReplyTextArea(TextArea replyTextArea);
 		RadioButton getApproved();

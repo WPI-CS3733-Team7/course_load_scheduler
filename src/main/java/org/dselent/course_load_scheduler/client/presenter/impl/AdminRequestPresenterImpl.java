@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidReplyAction;
+import org.dselent.course_load_scheduler.client.action.SelectRequestAction;
 import org.dselent.course_load_scheduler.client.action.SendReplyAction;
-import org.dselent.course_load_scheduler.client.errorstring.InvalidRequestStrings;
+import org.dselent.course_load_scheduler.client.errorstring.InvalidReplyStrings;
+import org.dselent.course_load_scheduler.client.event.InvalidLoginEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidReplyEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
+import org.dselent.course_load_scheduler.client.event.SelectRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendReplyEvent;
+import org.dselent.course_load_scheduler.client.event_handler.InvalidReplyEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
+import org.dselent.course_load_scheduler.client.model.Request;
 import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
@@ -22,10 +27,11 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class AdminRequestPresenterImpl extends BasePresenterImpl implements AdminRequestPresenter{
+public class AdminRequestPresenterImpl extends BasePresenterImpl implements AdminRequestPresenter, InvalidReplyEventHandler{
 	private IndexPresenter parentPresenter;
 	private AdminRequestView view;
 	private boolean replyClickInProgress;
+	private boolean selectClickInProgress;
 	
 	@Inject
 	public AdminRequestPresenterImpl(IndexPresenter parentPresenter, AdminRequestView view)
@@ -34,6 +40,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		this.parentPresenter = parentPresenter;
 		view.setPresenter(this);
 		replyClickInProgress = false;
+		selectClickInProgress = false;
 	}
 	
 	@Override
@@ -43,12 +50,19 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	}
 
 	@Override
-	public void go(HasWidgets container) {
-	
+	public void bind()
+	{
 		HandlerRegistration registration;
 		
 		registration = eventBus.addHandler(InvalidReplyEvent.TYPE, this);
 		eventBusRegistration.put(InvalidReplyEvent.TYPE, registration);
+	}
+	
+	@Override
+	public void go(HasWidgets container)
+	{
+		container.clear();
+		container.add(view.getWidgetContainer());
 	}
 
 	@Override
@@ -77,21 +91,94 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			parentPresenter.showLoadScreen();
 			
 			String description = view.getReplyTextArea().getText();
-			String approved = view.getApproved().getText();
-			String tentative = view.getTentative().getText();
-			String rejected = view.getRejected().getText();
+			boolean approved = view.getApproved().getValue();
+			boolean tentative = view.getTentative().getValue();
+			boolean rejected = view.getRejected().getValue();
+			String replyType = "";
 			
 			boolean validDescription = true;
 			boolean validReplyType = true;
 			
-			List<String> invalidReasonList= newArrayList<>();
+			List<String> invalidReasonList= new ArrayList<>();
 			
 			try {
 				validateField(description);
 			}
+			catch(EmptyStringException e) {
+				invalidReasonList.add(InvalidReplyStrings.NULL_DESCRIPTION);
+				
+				validDescription = false;
+			}
+			
+			if(approved) {
+				replyType = "approved";
+			}
+			else if(tentative){
+				replyType = "tentative";
+			}
+			else if(rejected) {
+				replyType = "rejected";
+			}
+			else {
+				replyType = null;
+			}
+			
+			try {
+				validateField(replyType);
+			}
+			catch(EmptyStringException e) {
+				invalidReasonList.add(InvalidReplyStrings.NULL_REPLYTYPE);
+				
+				validReplyType = false;
+			}
+			
+			if(validDescription && validReplyType) {
+				sendReply(description, replyType);
+			}
+			else {
+				InvalidReplyAction ira = new InvalidReplyAction(invalidReasonList);
+				InvalidReplyEvent ire = new InvalidReplyEvent(ira);
+				eventBus.fireEvent(ire);
+			}
 		}
 	}
+	
+	private void sendReply(String description, String replyType) {
+		SendReplyAction sra = new SendReplyAction(description, replyType);
+		SendReplyEvent sre = new SendReplyEvent(sra);
+		eventBus.fireEvent(sre);
+	}
 
+	@Override
+	public void selectRequest() {
+		if(!selectClickInProgress) {
+			selectClickInProgress = true;
+			view.getRequestList().setEnabled(false);
+			parentPresenter.showLoadScreen();
+			
+			int selectedIndex = view.getRequestList().getSelectedIndex();
+			//String selectedItem = view.getRequestList().getValue(selectedIndex);
+			Request selectedRequest = view.getRequest(selectedIndex);
+			String requester = String.valueOf(selectedRequest.getRequesterId());
+			String requestType = selectedRequest.getRequestType();
+			String requestDetail = selectedRequest.getRequestDetails();
+			selectRequestAction(selectedRequest.getRequesterId(), requestType, requestDetail);
+			view.setUserRequestLabel(requester);
+			view.setTypeLabel(requestType);
+			view.setRequesterDescriptLabel(requestDetail);
+			
+			
+		}
+		
+		
+		
+	}
+	
+	private void selectRequestAction(Integer requester, String requestType, String Description) {
+		SelectRequestAction sra = new SelectRequestAction(requester, requestType, Description);
+		SelectRequestEvent sre = new SelectRequestEvent(sra);
+		eventBus.fireEvent(sre);
+	}
 	/*@Override
 	public void submit() {
 		// TODO Auto-generated method stub
@@ -154,4 +241,12 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			throw new EmptyStringException();
 		}
 	}
+
+	@Override
+	public void onInvalidReply(InvalidReplyEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }

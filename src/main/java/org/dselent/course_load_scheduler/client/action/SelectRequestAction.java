@@ -2,16 +2,16 @@ package org.dselent.course_load_scheduler.client.action;
 
 public class SelectRequestAction {
 	private String requestType;
-	private String requester;
+	private Integer requester;
 	private String description;
 	
-	public SelectRequestAction(String requester, String requestType, String description) {
+	public SelectRequestAction(Integer requester, String requestType, String description) {
 		this.requester = requester;
 		this.requestType = requestType;
 		this.description = description;
 	}
 
-	public String getrequester() {
+	public Integer getrequester() {
 		return requester;
 	}
 

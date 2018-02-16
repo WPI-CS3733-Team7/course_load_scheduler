@@ -7,7 +7,7 @@
 	<g:HorizontalPanel ui:field="adminRequestPanel">
 		<g:VerticalPanel width="359px" height="538px" ui:field="requestListPanel">
 			<g:Label text="Request List" ui:field="requestListLabel" horizontalAlignment="ALIGN_CENTER"/>
-			<g:ListBox visibleItemCount="5" width="359px" height="330px" ui:field="requestList"/>
+			<g:ListBox visibleItemCount="5" width="358px" height="201px" ui:field="requestList"/>
 		</g:VerticalPanel>
 		<g:Cell horizontalAlignment="ALIGN_RIGHT">
 			<g:AbsolutePanel width="360px" height="538px" ui:field="replyPanel">
