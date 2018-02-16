@@ -305,11 +305,39 @@ InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 			boolean validSectionId = true;
 			boolean validSectionType = true;
 			boolean validPopulation = true;
+			boolean validYear = true;
+			boolean validTerm = true;
+			boolean validDays = true;
+			boolean validStartTime = true;
+			boolean validEndTime = true;
 			
 			String sectionName = view.getSectionNameText().getText();
 			String sectionId = view.getSectionIdText().getText();
-			String sectionType = view.getSectionTypeText().getText();
+			String sectionType = view.getSectionTypeListBox().getSelectedItemText();
 			String population = view.getPopulationText().getText();
+			String year = view.getYearText().getText();
+			String term = view.getTermText().getText();
+			//String days = view.
+			
+			String day = "";
+			if(view.getMonday().isEnabled() == true) {
+				day = "Monday";
+			}
+			else if(view.getTuesday().isEnabled() == true) {
+				day = "Tuesday";
+			}
+			else if(view.getWednesday().isEnabled() == true) {
+				day = "Wednesday";
+			}
+			else if(view.getThursday().isEnabled() == true) {
+				day = "Thursday";
+			}
+			else if(view.getFriday().isEnabled() == true) {
+				day = "Friday";
+			}
+			
+			String startTime = view.getStartTimeText().getText();
+			String endTime = view.getEndTimeText().getText();
 			
 			List<String> invalidReasonList = new ArrayList<>();
 			
@@ -363,9 +391,67 @@ InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 
 			//
 			
-			if(validSectionName && validSectionId && validSectionType && validPopulation)
+			try
 			{
-				sendEditSection(sectionName, sectionId, sectionType, population);
+				validateField(year);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.NULL_YEAR);
+				validYear = false;
+			}
+			
+			//
+			
+			try
+			{
+				validateField(term);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.NULL_TERM);
+				validTerm = false;
+			}
+			
+			//
+			
+			try
+			{
+				validateField(day);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.NULL_DAYS);
+				validDays = false;
+			}
+			
+			//
+			
+			try
+			{
+				validateField(startTime);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.NULL_START_TIME);
+				validStartTime = false;
+			}
+			
+			//
+			
+			try
+			{
+				validateField(endTime);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.NULL_END_TIME);
+				validEndTime = false;
+			}
+			
+			if(validSectionName && validSectionId && validSectionType && validPopulation && validYear && validTerm && validDays && validStartTime && validEndTime)
+			{
+				sendEditSection(sectionName, sectionId, sectionType, population, year, term, day, startTime, endTime);
 			}
 			else
 			{
@@ -389,9 +475,10 @@ InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 		view.showErrorMessages(iesa.toString());
 	}
 	
-	private void sendEditSection(String sectionName, String sectionId, String sectionType, String population)
+	private void sendEditSection(String sectionName, String sectionId, String sectionType, String population, String year, String term, String days, String startTime,
+			String endTime)
 	{
-		SendEditSectionAction sesa = new SendEditSectionAction(sectionName, sectionId, sectionType, population);
+		SendEditSectionAction sesa = new SendEditSectionAction(sectionName, sectionId, sectionType, population, year, term, days, startTime, endTime);
 		SendEditSectionEvent sese = new SendEditSectionEvent(sesa);
 		eventBus.fireEvent(sese);
 	}
