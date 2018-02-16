@@ -2,6 +2,9 @@ package org.dselent.course_load_scheduler.client.presenter.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.dselent.course_load_scheduler.client.action.InvalidCreateCourseAction;
+import org.dselent.course_load_scheduler.client.action.InvalidCreateInstructorAction;
 //import org.dselent.course_load_scheduler.client.action.InvalidLoginAction;
 //import org.dselent.course_load_scheduler.client.action.InvalidRegisterAction;
 //import org.dselent.course_load_scheduler.client.action.SendLoginAction;
@@ -14,12 +17,18 @@ import java.util.List;
 //import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
 import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
 import org.dselent.course_load_scheduler.client.action.InvalidRegisterAction;
+import org.dselent.course_load_scheduler.client.action.SendEditCourseAction;
+import org.dselent.course_load_scheduler.client.action.SendEditInstructorAction;
 import org.dselent.course_load_scheduler.client.action.SendRegisterAction;
 import org.dselent.course_load_scheduler.client.action.SendEditSectionAction;
 import org.dselent.course_load_scheduler.client.action.SendValidateAction;
+import org.dselent.course_load_scheduler.client.errorstring.InvalidEditCourseStrings;
+import org.dselent.course_load_scheduler.client.errorstring.InvalidEditInstructorStrings;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidEditSectionStrings;
 import org.dselent.course_load_scheduler.client.event.SendEditInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditCourseEvent;
+import org.dselent.course_load_scheduler.client.event.InvalidCreateCourseEvent;
+import org.dselent.course_load_scheduler.client.event.InvalidCreateInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
@@ -160,8 +169,8 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 				}
 				else
 				{
-					InvalidInstructorCreateAction iica = new InvalidInstructorCreateAction(invalidReasonList);
-					InvalidInstructorCreateEvent iice = new InvalidInstructorCreateEvent(iica);
+					InvalidCreateInstructorAction iica = new InvalidCreateInstructorAction(invalidReasonList);
+					InvalidCreateInstructorEvent iice = new InvalidCreateInstructorEvent(iica);
 					eventBus.fireEvent(iice);
 				}
 			} else {
@@ -176,8 +185,8 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	
 	private void sendInstructorEdit(Integer id, String firstName, String lastName, String rank, String email, boolean deleted)
 	{
-		SendInstructorEditAction siea = new SendInstructorEditAction(firstName, lastName, rank, email, deleted);
-		SendInstructorEditEvent siee = new SendInstructorEditEvent(siea);
+		SendEditInstructorAction siea = new SendEditInstructorAction(id.toString(), firstName, lastName, rank, email, Boolean.toString(deleted));
+		SendEditInstructorEvent siee = new SendEditInstructorEvent(siea);
 		eventBus.fireEvent(siee);
 	}
 
@@ -224,22 +233,22 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 				}
 				else
 				{
-					InvalidCourseCreateAction icca = new InvalidCourseCreateAction(invalidReasonList);
-					InvalidCourseCreateEvent icce = new InvalidCourseCreateEvent(icca);
+					InvalidCreateCourseAction icca = new InvalidCreateCourseAction(invalidReasonList);
+					InvalidCreateCourseEvent icce = new InvalidCreateCourseEvent(icca);
 					eventBus.fireEvent(icce);
 				}
 			} else {
-				sendInstructorEdit(view.getSelectedInstructorButton().getModel().getId(), courseName, courseNumber, frequency, deleting);
+				sendCourseEdit(view.getSelectedInstructorButton().getModel().getId(), courseName, courseNumber, frequency, deleting);
 			}
-			view.getInstructorSubmitButton().setEnabled(false);
+			view.getCourseSubmitButton().setEnabled(false);
 			
 		}
 		
 	}
 
 	private void sendCourseEdit(Integer id, String courseName, String courseNumber, String frequency, boolean deleted) {
-		SendCourseEditAction scea = new SendCourseEditAction(id, courseName, courseNumber, frequency, deleted);
-		SendCourseEditEvent scee = new SendCourseEditEvent(scea);
+		SendEditCourseAction scea = new SendEditCourseAction(id.toString(), courseName, courseNumber, frequency, Boolean.toString(deleted));
+		SendEditCourseEvent scee = new SendEditCourseEvent(scea);
 		eventBus.fireEvent(scee);	
 	}
 

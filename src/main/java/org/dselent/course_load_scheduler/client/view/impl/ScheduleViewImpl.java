@@ -52,38 +52,6 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 	@UiField ListBox termSelect;
 	@UiField HorizontalPanel scheduleViewPanel;
 		
-	
-		
-		@UiField
-		Button scheduleAddInstructor;
-		
-		@UiField
-		Button scheduleEditInstructor;
-		
-		@UiField
-		Button scheduleAddCourse;
-		
-		@UiField
-		Button scheduleEditCourse;
-		
-		@UiField
-		Button createSection;
-		
-		@UiField
-		Button editSection;
-		
-		@UiField 
-		Button validate;
-		
-		@UiField 
-		ListBox yearSelect;
-		
-		@UiField 
-		ListBox termSelect;
-		
-		@UiField 
-		HorizontalPanel scheduleViewPanel;
-		
 		boolean isCreating;
 
 		/* Pop-up Widgets for Instructor */
