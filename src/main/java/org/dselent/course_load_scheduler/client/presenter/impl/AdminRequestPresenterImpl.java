@@ -128,7 +128,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			}
 			catch(EmptyStringException e) {
 				invalidReasonList.add(InvalidReplyStrings.NULL_REPLYTYPE);
-				
+				view.showErrorMessages(InvalidReplyStrings.NULL_REPLYTYPE);
 				validReplyType = false;
 			}
 			
