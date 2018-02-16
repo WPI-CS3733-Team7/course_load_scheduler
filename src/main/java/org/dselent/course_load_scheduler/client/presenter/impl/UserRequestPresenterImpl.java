@@ -7,8 +7,6 @@ import org.dselent.course_load_scheduler.client.action.InvalidRequestAction;
 import org.dselent.course_load_scheduler.client.action.SendRequestAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidSubmitStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
-import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
-import org.dselent.course_load_scheduler.client.event_handler.InvalidRequestEventHandler;
 import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
@@ -16,7 +14,6 @@ import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.UserRequestPresenter;
 import org.dselent.course_load_scheduler.client.view.BaseView;
 import org.dselent.course_load_scheduler.client.view.UserRequestView;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
@@ -96,7 +93,6 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			catch(EmptyStringException e)
 			{
 				invalidReasonList.add(InvalidSubmitStrings.NULL_REQUESTTYPE);
-				view.showErrorMessages(InvalidSubmitStrings.NULL_REQUESTTYPE);
 				validRequesttype = false;
 			}
 			
@@ -112,6 +108,17 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			}
 		}
 	}
+	
+	public void onInvalidRequest(InvalidRequestEvent evt)
+	{
+		parentPresenter.hideLoadScreen();
+		view.getSubmitButton().setEnabled(true);
+		submitClickInProgress = false;
+		
+		InvalidRequestAction ira = evt.getAction();
+		view.showErrorMessages(ira.toString());
+	}
+	
 	private void sendRequest(String Requesttype)
 	{
 		SendRequestAction sra = new SendRequestAction(Requesttype);
@@ -131,5 +138,4 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			throw new EmptyStringException();
 		}
 	}
-
 }
