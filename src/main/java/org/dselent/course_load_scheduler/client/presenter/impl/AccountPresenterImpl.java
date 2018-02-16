@@ -3,11 +3,19 @@ package org.dselent.course_load_scheduler.client.presenter.impl;
 import org.dselent.course_load_scheduler.client.presenter.AccountPresenter;
 import java.util.ArrayList;
 import java.util.List;
-import org.dselent.course_load_scheduler.client.action.InvalidLoginAction;
+
+import org.dselent.course_load_scheduler.client.action.InvalidChangePasswordAction;
+import org.dselent.course_load_scheduler.client.action.InvalidEditUserAction;
 import org.dselent.course_load_scheduler.client.action.SendChangePasswordAction;
+import org.dselent.course_load_scheduler.client.action.SendEditUserAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidChangePasswordStrings;
-import org.dselent.course_load_scheduler.client.event.InvalidLoginEvent;
+import org.dselent.course_load_scheduler.client.errorstring.InvalidEditUserStrings;
+import org.dselent.course_load_scheduler.client.event.InvalidChangePasswordEvent;
+import org.dselent.course_load_scheduler.client.event.InvalidEditUserEvent;
 import org.dselent.course_load_scheduler.client.event.SendChangePasswordEvent;
+import org.dselent.course_load_scheduler.client.event.SendEditUserEvent;
+import org.dselent.course_load_scheduler.client.event_handler.InvalidChangePasswordEventHandler;
+import org.dselent.course_load_scheduler.client.event_handler.InvalidEditUserEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.view.AccountView;
@@ -17,7 +25,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
 
-public class AccountPresenterImpl  extends BasePresenterImpl implements AccountPresenter{	
+public class AccountPresenterImpl  extends BasePresenterImpl implements AccountPresenter, InvalidChangePasswordEventHandler, InvalidEditUserEventHandler{	
 	
 	private IndexPresenter parentPresenter;
 	private AccountView view;
@@ -45,11 +53,11 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	{
 		HandlerRegistration registration;
 		
-		//registration = eventBus.addHandler(InvalidChangePasswordEvent.TYPE, this);
-		//eventBusRegistration.put(InvalidChangePasswordEvent.TYPE, registration);
+		registration = eventBus.addHandler(InvalidChangePasswordEvent.TYPE, this);
+		eventBusRegistration.put(InvalidChangePasswordEvent.TYPE, registration);
 		
-		//registration = eventBus.addHandler(InvalidEditUserEvent.TYPE, this);
-		//eventBusRegistration.put(InvalidEditUserEvent.TYPE, registration);
+		registration = eventBus.addHandler(InvalidEditUserEvent.TYPE, this);
+		eventBusRegistration.put(InvalidEditUserEvent.TYPE, registration);
 	}
 	
 	@Override
@@ -162,9 +170,9 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			}
 			else
 			{
-				InvalidLoginAction ila = new InvalidLoginAction(invalidReasonList);
-				InvalidLoginEvent ile = new InvalidLoginEvent(ila);
-				eventBus.fireEvent(ile);
+				InvalidChangePasswordAction icpa = new InvalidChangePasswordAction(invalidReasonList);
+				InvalidChangePasswordEvent icpe = new InvalidChangePasswordEvent(icpa);
+				eventBus.fireEvent(icpe);
 			}
 		}
 	}
@@ -176,20 +184,80 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		eventBus.fireEvent(scpe);
 	}
 	
+	public void onInvalidChangePassword(InvalidChangePasswordEvent evt)
+	{
+		parentPresenter.hideLoadScreen();
+		view.getSubmitChangePasswordButton().setEnabled(true);
+		changePasswordClickInProgress = false;
+		
+		InvalidChangePasswordAction icpa = evt.getAction();
+		view.showErrorMessages(icpa.toString());
+	}
+	
 	@Override
 	public void editUser()
 	{
 		if(!editUserClickInProgress)
 		{
 			editUserClickInProgress = true;
+			view.getChangePasswordButton().setEnabled(false);
+			parentPresenter.showLoadScreen();
+			
+			boolean validUserRole = true;
+			boolean validLinkedInstructor = true;
+			String userAdmin = "ADMIN";
+			String userUser = "USER";
+			
+			String userRole = view.getUserRoleText().getText();
+			String linkedInstructor = view.getLinkedInstructorText().getText();
+			String deleted = Boolean.toString(view.isDeleted());
+			
+			List<String> invalidReasonList = new ArrayList<>();
+			
+			try
+			{
+				validateField(userRole);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditUserStrings.NULL_USER_ROLE);
+				validUserRole = false;
+			}
+			
+			if(!(userRole == userAdmin && userRole == userUser))
+			{
+				invalidReasonList.add(InvalidEditUserStrings.BAD_USER_ROLE);
+				validUserRole = false;
+			}
+			
+			if(validUserRole && validLinkedInstructor)
+			{
+				sendEditUser(userRole, linkedInstructor, deleted);
+			}
+			else
+			{
+				InvalidEditUserAction ieua = new InvalidEditUserAction(invalidReasonList);
+				InvalidEditUserEvent ieue = new InvalidEditUserEvent(ieua);
+				eventBus.fireEvent(ieue);
+			}
 		}
 	}
 	
-	private void sendEditUser()
+	public void onInvalidEditUser(InvalidEditUserEvent evt)
 	{
-		//SendEditUserAction seua = new SendEditUserAction();
-		//SendEditUserEvent seue = new SendEditUserEvent(seue);
-		//eventBus.fireEvent(seue);
+		parentPresenter.hideLoadScreen();
+		view.getSubmitEditUserButton().setEnabled(true);
+		editUserClickInProgress = false;
+		
+		InvalidEditUserAction ieua = evt.getAction();
+		view.showErrorMessages(ieua.toString());
+	}
+	
+	private void sendEditUser(String userRole, String linkedInstructor, String deleted)
+	{
+		SendEditUserAction seua = new SendEditUserAction(userRole, linkedInstructor, deleted);
+		SendEditUserEvent seue = new SendEditUserEvent(seua);
+		eventBus.fireEvent(seue);
 	}
 	
 	private void validateField(String field) throws EmptyStringException

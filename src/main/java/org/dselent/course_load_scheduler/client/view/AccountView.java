@@ -22,6 +22,9 @@ public interface AccountView extends BaseView<AccountPresenter>{
 	TextBox getConfirmPasswordText();
 	Button getSubmitChangePasswordButton();
 	//
+	TextBox getUserRoleText();
+	TextBox getLinkedInstructorText();
 	Button getSubmitEditUserButton();
 	Button getDeleteEditUserButton();
+	boolean isDeleted();
 }

@@ -61,7 +61,7 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	Button submitChangePasswordButton = new Button("Submit", new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			//presenter.changePassword();
+			presenter.changePassword();
 		}
 	});
 	
@@ -69,18 +69,23 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	Label editUserTitle = new Label("Edit User");
 	Label editUserRole = new Label("Role");
 	Label editUserLinked = new Label("Linked Instructor");
+	TextBox userRoleText = new TextBox();
+	TextBox linkedInstructorText = new TextBox();
+	private boolean deleted = false;
 	Button deleteEditUserButton = new Button("Delete", new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
 			//change deleted to true
-			//presenter.editUser()
+			deleted = true;
+			presenter.editUser();
 		}
 	});
 	Button submitEditUserButton = new Button("Submit", new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
 			// set deleted to false
-			//presenter.editUser();
+			deleted = false;
+			presenter.editUser();
 		}
 	});
 
@@ -103,6 +108,14 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	public Button getSubmitEditUserButton()
 	{
 		return submitEditUserButton;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public AccountViewImpl() {
@@ -245,9 +258,9 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	{
 		Grid regGrid = new Grid(3, 2);
 		regGrid.setWidget(0, 0, editUserRole);
-		// set 0, 1 to a drop down menu
+		// set 0, 1 to a drop down menu (how about a text box?)
 		regGrid.setWidget(1, 0, editUserLinked);
-		// set 1, 1 to a drop down menu
+		// set 1, 1 to a drop down menu (how about a text box?)
 		regGrid.setWidget(2, 0, deleteEditUserButton);
 		regGrid.setWidget(2, 1, submitEditUserButton);
 		
@@ -259,6 +272,16 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		registerPopup.add(vertPanel);
 		registerPopup.isGlassEnabled();
 		registerPopup.center();
+	}
+
+	@Override
+	public TextBox getUserRoleText() {
+		return userRoleText;
+	}
+
+	@Override
+	public TextBox getLinkedInstructorText() {
+		return linkedInstructorText;
 	}
 
 
