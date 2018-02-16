@@ -4,5 +4,4 @@ public interface UserRequestPresenter extends BasePresenter{
 	IndexPresenter getParentPresenter();
 	void setParentPresenter(IndexPresenter parentPresenter);
 	void submit();
-	void reply();
 }

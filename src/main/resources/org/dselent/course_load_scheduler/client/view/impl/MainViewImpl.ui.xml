@@ -21,80 +21,12 @@
 			<d:ScheduleViewImpl ui:field="schedulePanel"/>
 		</g:tab>
 		<g:tab>
-				<g:header>Request</g:header>
-				<g:AbsolutePanel>
-					<g:at top="10" left="49">
-						<g:Label text="Create a request"/>
-					</g:at>
-					<g:at top="36" left="10">
-						<g:Label text="Request Type:"/>
-					</g:at>
-					<g:at top="56" left="10">
-						<g:RadioButton name="new name" text="Course" ui:field="rdoCourse"/>
-					</g:at>
-					<g:at top="77" left="10">
-						<g:RadioButton name="new name" text="Other" ui:field="rdoOther"/>
-					</g:at>
-					<g:at top="102" left="10">
-						<g:TextArea width="148px" height="36px"/>
-					</g:at>
-					<g:at top="158" left="61">
-						<g:Button text="Submit" ui:field="rdoSubmit"/>
-					</g:at>
-					<g:at top="36" left="212">
-						<g:ListBox visibleItemCount="5" width="207px" height="133px"/>
-					</g:at>
-					<g:at top="10" left="271">
-						<g:Label text="Request History"/>
-					</g:at>
-				</g:AbsolutePanel>
+			<g:header>Request</g:header>
+			<d:UserRequestViewImpl ui:field="requestPanel"/>
 		</g:tab>
 		<g:tab>
 			<g:header>Account</g:header>
-			<g:HorizontalPanel width="100%" height="100%">
-				<g:VerticalPanel width="100%" height="100%">
-					<g:Grid width="100%" height="79px">
-						<g:row>
-							<g:customCell>
-								<g:Label text="Real Name"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Username"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Account State"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Email"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox/>
-							</g:customCell>
-						</g:row>
-					</g:Grid>
-					<g:Button width="118px">Change Password</g:Button>
-				</g:VerticalPanel>
-				<g:VerticalPanel width="100%" height="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:ScrollPanel height="111px"/>
-					<g:Button height="29px">Edit</g:Button>
-				</g:VerticalPanel>
-			
-			</g:HorizontalPanel>
+			<d:AccountViewImpl ui:field="accountPanel"/>
 		</g:tab>
 		</g:TabLayoutPanel>
 		<g:SimplePanel height="100%" width="100%"/>

@@ -313,7 +313,9 @@ InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 			
 			String sectionName = view.getSectionNameText().getText();
 			String sectionId = view.getSectionIdText().getText();
+			//String sectionType = view.getSectionTypeListBox().getSelectedItemText();
 			String sectionType = view.getSectionTypeListBox().getItemText(view.getSectionTypeListBox().getSelectedIndex());
+
 			String population = view.getPopulationText().getText();
 			String year = view.getYearText().getText();
 			String term = view.getTermText().getText();

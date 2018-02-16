@@ -145,15 +145,15 @@ public class UserRequestViewImpl extends BaseViewImpl<UserRequestPresenter> impl
 		presenter.submit();
 	}
 
-	@Override
-	public TextArea getDescriptionText() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	public void setDescriptionText(TextArea descriptionTextBox) {
-		// TODO Auto-generated method stub
-		
+	public TextArea getDescriptionTextArea() {
+		return descriptTextArea;
 	}
+	
+	@Override
+	public void setDescriptionTextArea(TextArea descriptionTextArea) {
+		this.descriptTextArea = descriptionTextArea;
+	}
+	
 }
