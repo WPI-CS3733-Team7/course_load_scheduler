@@ -27,16 +27,15 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 
 	private static ScheduleViewImplUiBinder uiBinder = GWT.create(ScheduleViewImplUiBinder.class);
 		
-	//@UiTemplate(value = "MainViewImpl.ui.xml")
 	interface ScheduleViewImplUiBinder extends UiBinder<Widget, ScheduleViewImpl>{}
 
 	SchedulePresenter presenter;
 		
-	List<Button> instructorButtons = new ArrayList<Button>();
-	List<Button> courseButtons = new ArrayList<Button>();
+	List<ModelButton<Instructor>> instructorButtons = new ArrayList<ModelButton<Instructor>>();
+	List<ModelButton<Course>> courseButtons = new ArrayList<ModelButton<Course>>();
 		
-	Button selectedInstructorButton = null;
-	Button selectedCourseButton = null;
+	ModelButton<Instructor> selectedInstructorButton = null;
+	ModelButton<Course> selectedCourseButton = null;
 		
 	@UiField VerticalPanel scheduleInstructorsPanel;		
 	@UiField VerticalPanel scheduleCoursesPanel;
@@ -52,16 +51,27 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 	@UiField HorizontalPanel scheduleViewPanel;
 		
 	/* Pop-up Widgets for Instructor */
-	Label popInstructorLabelFirstName = new Label("First Name:");
-	Label popInstructorLabelLastName = new Label("Last Name:");
-	Label popInstructorLabelRank = new Label("Rank:");
-	Label popInstructorLabelEmail = new Label("Email:");
-	TextBox popInstructorTextFirstName = new TextBox();
-	TextBox popInstructorTextLastName = new TextBox();
-	TextBox popInstructorTextRank = new TextBox();
-	TextBox popInstructorTextEmail = new TextBox();
-	Button popInstructorButtonDelete = new Button();
-	Button popInstructorButtonSubmit = new Button();
+		Label popInstructorLabelFirstName = new Label("First Name:");
+		Label popInstructorLabelLastName = new Label("Last Name:");
+		Label popInstructorLabelRank = new Label("Rank:");
+		Label popInstructorLabelEmail = new Label("Email:");
+		TextBox popInstructorTextFirstName = new TextBox();
+		TextBox popInstructorTextLastName = new TextBox();
+		TextBox popInstructorTextRank = new TextBox();
+		TextBox popInstructorTextEmail = new TextBox();
+		Button popIntructorButtonDelete = new Button("Delete", new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				presenter.deleteInstructor();
+			}
+		});
+		Button popInstructorButtonSubmit = new Button("Submit", new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				presenter.editInstructor();
+				addInstructorButton(new Instructor());
+			}
+		});
 
 	/* Pop-up Widgets for Course */
 	Label popCourseLabelName = new Label("Course Name:");
@@ -344,56 +354,47 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 	//UiHandlers for select year/term labels and list boxes needed?
 
 	private class instructorClickHandler implements ClickHandler{
-		private Button linkedButton;
+		private ModelButton<Instructor> linkedButton;
 			
-		public instructorClickHandler(Button instButton) {
+		public instructorClickHandler(ModelButton<Instructor> instButton) {
 			linkedButton = instButton;
 		}
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if(selectedInstructorButton!=null)
-				selectedInstructorButton.setText(selectedInstructorButton.getText().substring(4, selectedInstructorButton.getText().length()-5));
-			linkedButton.setText("[[[ "+ linkedButton.getText() +" ]]]");
-			selectedInstructorButton = linkedButton;
-			presenter.selectInstructor();
+			presenter.selectInstructor(linkedButton);
 		}
 	}
 		
 	private class courseClickHandler implements ClickHandler{
-		private Button linkedButton;
+		private ModelButton<Course> linkedButton;
 			
-		public courseClickHandler(Button courseButton) {
+		public courseClickHandler(ModelButton<Course> courseButton) {
 			linkedButton = courseButton;
 		}
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if(selectedCourseButton!=null)
-				selectedCourseButton.setText(selectedCourseButton.getText().substring(4, selectedCourseButton.getText().length()-5));
-			linkedButton.setText("[[[ "+ linkedButton.getText() +" ]]]");
-			selectedCourseButton = linkedButton;
-			presenter.selectCourse();
+			presenter.selectCourse(linkedButton);
 		}
 	}
 		
 	//Gets the currently selected button
 	@Override
-	public Button getSelectedInstructor() {
+	public ModelButton<Instructor> getSelectedInstructorButton() {
 		return selectedInstructorButton;
 	}
 		
 	//Gets the currently selected course
 	@Override
-	public Button getSelectedCourse() {
+	public ModelButton<Course> getSelectedCourseButton() {
 		return selectedCourseButton;
 	}
 		
 	//Adds a button for a given instructor to the list of instructor buttons
 	@Override
-	public void addInstructorButton(String instructorName) {
-		Button instButton = new Button();
-		instButton.setText(instructorName);
+	public void addInstructorButton(Instructor instructor) {
+		ModelButton<Instructor> instButton = new ModelButton<Instructor>(instructor);
 		instButton.addClickHandler(new instructorClickHandler(instButton));
 		scheduleInstructorsPanel.add(instButton);
 		instructorButtons.add(instButton);
@@ -401,19 +402,18 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 
 	//Adds a button for a given course to the list of course buttons
 	@Override
-	public void addCourseButton(String courseName) {
-		Button courseButton = new Button();
-		courseButton.setText(courseName);
+	public void addCourseButton(Course course) {
+		ModelButton<Course> courseButton = new ModelButton<Course>(course);
 		courseButton.addClickHandler(new courseClickHandler(courseButton));
 		scheduleCoursesPanel.add(courseButton);
-		courseButtons.add(courseButton);
+		courseButtons.add(courseButton);;
 	}
 
 	//Removes a button for a given instructor from the list of instructor buttons
 	@Override
-	public void removeInstructorButton(String instructorName) {
-		for(Button b : instructorButtons) {
-			if(b.getText().equals(instructorName)) {
+	public void removeInstructorButton(Instructor instructor) {
+		for(ModelButton<Instructor> b : instructorButtons) {
+			if(b.getModel().equals(instructor)) {
 				scheduleInstructorsPanel.remove(b);
 				instructorButtons.remove(b);
 				return;
@@ -423,9 +423,9 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 
 	//Removes a button for a given course from the list of course buttons
 	@Override
-	public void removeCourseButton(String courseName) {
-		for(Button b : courseButtons) {
-			if(b.getText().equals(courseName)) {
+	public void removeCourseButton(Course course) {
+		for(ModelButton<Course> b : courseButtons) {
+			if(b.getModel().equals(course)) {
 				scheduleCoursesPanel.remove(b);
 				courseButtons.remove(b);
 				return;
@@ -488,5 +488,15 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 	@Override
 	public void showErrorMessages(String errorMessages) {
 		Window.alert(errorMessages);			
+	}
+	
+	@Override
+	public void setSelectedInstructorButton(ModelButton<Instructor> selection) {
+		selectedInstructorButton = selection;	
+	}
+
+	@Override
+	public void setSelectedCourseButton(ModelButton<Course> selection) {
+		selectedCourseButton = selection;
 	}
 }

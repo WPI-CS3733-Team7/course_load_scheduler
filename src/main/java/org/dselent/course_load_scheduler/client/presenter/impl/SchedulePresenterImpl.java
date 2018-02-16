@@ -17,9 +17,13 @@ import org.dselent.course_load_scheduler.client.errorstring.InvalidEditSectionSt
 import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event_handler.InvalidEditSectionEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
+import org.dselent.course_load_scheduler.client.model.Course;
+import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
+import org.dselent.course_load_scheduler.client.view.impl.ModelButton;
+
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
@@ -125,14 +129,19 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	}
 
 	@Override
-	public void selectInstructor() {
-		// TODO Auto-generated method stub
-		
+	public void selectInstructor(ModelButton<Instructor> clickedButton) {
+		if(view.getSelectedInstructorButton()!=null)
+			view.getSelectedInstructorButton().setText(view.getSelectedInstructorButton().getModel().displayText());
+		clickedButton.setText("[[[ "+ clickedButton.getModel().displayText() +" ]]]");
+		view.setSelectedInstructorButton(clickedButton);
 	}
 
 	@Override
-	public void selectCourse() {
-		// TODO Auto-generated method stub
+	public void selectCourse(ModelButton<Course> clickedButton) {
+		if(view.getSelectedCourseButton()!=null)
+			view.getSelectedCourseButton().setText(view.getSelectedCourseButton().getModel().displayText());
+		clickedButton.setText("[[[ "+ clickedButton.getModel().displayText() +" ]]]");
+		view.setSelectedCourseButton(clickedButton);
 		
 	}
 
@@ -221,6 +230,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		
 	}
 	
+
 	@Override
 	public void onInvalidEditSection(InvalidEditSectionEvent evt)
 	{
