@@ -1,32 +1,9 @@
 package org.dselent.course_load_scheduler.client.view.impl;
 
-	import java.util.ArrayList;
-	import java.util.List;
-
-import org.dselent.course_load_scheduler.client.model.Course;
-import org.dselent.course_load_scheduler.client.model.Instructor;
-	import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
-	import org.dselent.course_load_scheduler.client.view.ScheduleView;
-	import com.google.gwt.core.client.GWT;
-	import com.google.gwt.event.dom.client.ClickEvent;
-	import com.google.gwt.event.dom.client.ClickHandler;
-	import com.google.gwt.uibinder.client.UiBinder;
-	import com.google.gwt.uibinder.client.UiField;
-	import com.google.gwt.uibinder.client.UiHandler;
-	import com.google.gwt.uibinder.client.UiTemplate;
-	import com.google.gwt.user.client.ui.Button;
-	import com.google.gwt.user.client.ui.Composite;
-	import com.google.gwt.user.client.ui.Grid;
-	import com.google.gwt.user.client.ui.HasWidgets;
-	import com.google.gwt.user.client.ui.Label;
-	import com.google.gwt.user.client.ui.ListBox;
-	import com.google.gwt.user.client.ui.PopupPanel;
-	import com.google.gwt.user.client.ui.TextBox;
-	import com.google.gwt.user.client.ui.VerticalPanel;
-	import com.google.gwt.user.client.ui.Widget;
-	import com.google.gwt.user.client.ui.HorizontalPanel;
 import java.util.ArrayList;
 import java.util.List;
+import org.dselent.course_load_scheduler.client.model.Course;
+import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
 import com.google.gwt.core.client.GWT;
@@ -48,25 +25,34 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 
-	public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements ScheduleView {
+public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements ScheduleView {
 
-		private static ScheduleViewImplUiBinder uiBinder = GWT.create(ScheduleViewImplUiBinder.class);
+	private static ScheduleViewImplUiBinder uiBinder = GWT.create(ScheduleViewImplUiBinder.class);
 		
-		interface ScheduleViewImplUiBinder extends UiBinder<Widget, ScheduleViewImpl>{}
+	interface ScheduleViewImplUiBinder extends UiBinder<Widget, ScheduleViewImpl>{}
 
-		SchedulePresenter presenter;
+	SchedulePresenter presenter;
 		
-		List<ModelButton<Instructor>> instructorButtons = new ArrayList<ModelButton<Instructor>>();
-		List<ModelButton<Course>> courseButtons = new ArrayList<ModelButton<Course>>();
+	List<ModelButton<Instructor>> instructorButtons = new ArrayList<ModelButton<Instructor>>();
+	List<ModelButton<Course>> courseButtons = new ArrayList<ModelButton<Course>>();
 		
-		ModelButton<Instructor> selectedInstructorButton = null;
-		ModelButton<Course> selectedCourseButton = null;
+	ModelButton<Instructor> selectedInstructorButton = null;
+	ModelButton<Course> selectedCourseButton = null;
 		
-		@UiField
-		VerticalPanel scheduleInstructorsPanel;
+	@UiField VerticalPanel scheduleInstructorsPanel;		
+	@UiField VerticalPanel scheduleCoursesPanel;
+	@UiField Button scheduleAddInstructor;
+	@UiField Button scheduleEditInstructor;
+	@UiField Button scheduleAddCourse;
+	@UiField Button scheduleEditCourse;
+	@UiField Button createSection;
+	@UiField Button editSection;
+	@UiField Button validate;
+	@UiField ListBox yearSelect;
+	@UiField ListBox termSelect;
+	@UiField HorizontalPanel scheduleViewPanel;
 		
-		@UiField
-		VerticalPanel scheduleCoursesPanel;
+	
 		
 		@UiField
 		Button scheduleAddInstructor;
@@ -210,11 +196,33 @@ import com.google.gwt.user.client.ui.PopupPanel;
 			editPopup.center();
 		}
 		
-		/* Getters and Setters for pop-up text boxes */
+		private void makeSectionPopUp(boolean creating) {
+		Grid sectionGrid = new Grid(4, 2);		
+		sectionGrid.setWidget(0, 0, sectionNameLabel);
+		sectionGrid.setWidget(0, 1, sectionNameText);
+		sectionGrid.setWidget(1, 0, sectionIdLabel);
+		sectionGrid.setWidget(1, 1, sectionIdText);
+		sectionGrid.setWidget(2, 0, sectionTypeLabel);
+		sectionGrid.setWidget(2, 1, sectionTypeText);
+		sectionGrid.setWidget(3, 0, populationLabel);
+		sectionGrid.setWidget(3, 1, populationText);
 		
-		public TextBox getPopInstructorTextFirstName() {
-			return popInstructorTextFirstName;
-		}
+		VerticalPanel vertPanel = new VerticalPanel();
+		vertPanel.add(sectionLabel);
+		vertPanel.add(sectionGrid);
+		vertPanel.add(sectionSubmitButton);
+		
+		PopupPanel sectionPopup = new PopupPanel(true);
+		sectionPopup.add(vertPanel);
+		sectionPopup.isGlassEnabled();
+		sectionPopup.center();
+	}
+		
+	/* Getters and Setters for pop-up text boxes */
+		
+	public TextBox getPopInstructorTextFirstName() {
+		return popInstructorTextFirstName;
+	}
 
 		public void setPopInstructorTextFirstName(TextBox popInstructorTextFirstName) {
 			this.popInstructorTextFirstName = popInstructorTextFirstName;
@@ -422,10 +430,10 @@ import com.google.gwt.user.client.ui.PopupPanel;
 			sectionPopup.center();
 		}
 		
-		@UiHandler("validate")
-		void onClickValidate(ClickEvent event) {
-			//presenter.
-		}
+	@UiHandler("validate")
+	void onClickValidate(ClickEvent event) {
+		presenter.validate();
+	}
 		
 		//UiHandlers for select year/term labels and list boxes needed?
 

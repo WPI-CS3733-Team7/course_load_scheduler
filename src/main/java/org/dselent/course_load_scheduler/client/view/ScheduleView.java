@@ -1,13 +1,11 @@
 package org.dselent.course_load_scheduler.client.view;
 
-import org.dselent.course_load_scheduler.client.model.Course;
 import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
-import org.dselent.course_load_scheduler.client.view.BaseView;
-import org.dselent.course_load_scheduler.client.view.impl.ModelButton;
-
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TextBox;
+import org.dselent.course_load_scheduler.client.model.Course;
+import org.dselent.course_load_scheduler.client.view.impl.ModelButton; 
 
 public interface ScheduleView extends BaseView<SchedulePresenter>{
 	
@@ -37,6 +35,7 @@ public interface ScheduleView extends BaseView<SchedulePresenter>{
 	void setSectionTypeText(TextBox sectionTypeTextBox);
 	TextBox getPopulationText();
 	void setPopulationText(TextBox populationTextBox);
+	
 	Button getSectionSubmitButton();
 	Button getInstructorSubmitButton();
 	Button getCourseSubmitButton();

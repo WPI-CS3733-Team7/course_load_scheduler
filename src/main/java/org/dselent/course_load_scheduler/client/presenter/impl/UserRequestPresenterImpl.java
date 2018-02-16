@@ -49,21 +49,21 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 	}
 
 	@Override
-	public BaseView<? extends BasePresenter> getView() {
+	public UserRequestView getView() {
 		// TODO Auto-generated method stub
-		return null;
+		return view;
 	}
 
 	@Override
 	public IndexPresenter getParentPresenter() {
 		// TODO Auto-generated method stub
-		return null;
+		return parentPresenter;
 	}
 
 	@Override
 	public void setParentPresenter(IndexPresenter parentPresenter) {
 		// TODO Auto-generated method stub
-		
+		this.parentPresenter = parentPresenter;
 	}
 
 	@Override
@@ -75,10 +75,15 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			view.getSubmitButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
 			
-			String description = view.getDescriptionTextBox().getText();
+			
+			String description = view.getDescriptionText().getText();
+			String courseType = view.getCourseRdo().getText();
+			String otherType = view.getOtherRdo().getText();
+			
 			
 			boolean validRequest = true;
-
+			boolean validDescription = true;
+			
 			List<String> invalidReasonList = new ArrayList<>();
 			
 			try
@@ -88,6 +93,7 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			catch(EmptyStringException e)
 			{
 				invalidReasonList.add(InvalidRequestStrings.NULL_DESCRIPTION);
+				
 				validDescription = false;
 			}
 			

@@ -1,6 +1,7 @@
 package org.dselent.course_load_scheduler.client.action;
 
 public class SendReplyAction {
+
 	private String response;
 	private String replyType;
 	
@@ -22,4 +23,5 @@ public class SendReplyAction {
 	public String toString() {
 		return "SendReplyAction [response=" + response + ", replyType=" + replyType + "]";
 	}	
+
 }

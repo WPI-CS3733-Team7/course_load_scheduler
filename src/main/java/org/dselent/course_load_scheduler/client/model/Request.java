@@ -9,7 +9,7 @@ public class Request extends Model
 
     private Integer id;
     private Integer requester_id;
-    private Integer request_type_id;
+    private String request_type;
     private String request_details;
     private Integer reply_type_id;
     private Instant createdAt;
@@ -38,14 +38,14 @@ public class Request extends Model
         this.requester_id = requester_id;
     }
 
-    public Integer getRequestTypeId()
+    public String getRequestType()
     {
-        return request_type_id;
+        return request_type;
     }
 
-    public void setRequestTypeId(Integer request_type_id)
+    public void setRequestType(String request_type)
     {
-        this.request_type_id = request_type_id;
+        this.request_type = request_type;
     }
 
     public String getRequestDetails()
@@ -108,7 +108,7 @@ public class Request extends Model
         final int prime = 31;
         int result = 1;
         result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
-        result = prime * result + ((request_type_id == null) ? 0 : request_type_id.hashCode());
+        result = prime * result + ((request_type == null) ? 0 : request_type.hashCode());
         result = prime * result + ((reply_type_id == null) ? 0 : reply_type_id.hashCode());
         result = prime * result + ((request_details == null) ? 0 : request_details.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -220,8 +220,8 @@ public class Request extends Model
         builder.append(id);
         builder.append(", RequesterID=");
         builder.append(requester_id);
-        builder.append(", RequestTypeID=");
-        builder.append(request_type_id);
+        builder.append(", RequestType=");
+        builder.append(request_type);
         builder.append(", RequestDetails=");
         builder.append(request_details);
         builder.append(", ReplyTypeID=");

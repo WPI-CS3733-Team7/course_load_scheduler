@@ -15,10 +15,17 @@ import java.util.List;
 import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
 import org.dselent.course_load_scheduler.client.action.InvalidRegisterAction;
 import org.dselent.course_load_scheduler.client.action.SendRegisterAction;
+import org.dselent.course_load_scheduler.client.action.SendEditSectionAction;
+import org.dselent.course_load_scheduler.client.action.SendValidateAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidEditSectionStrings;
+import org.dselent.course_load_scheduler.client.event.SendEditInstructorEvent;
+import org.dselent.course_load_scheduler.client.event.SendEditCourseEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
+import org.dselent.course_load_scheduler.client.event.SendEditSectionEvent;
+import org.dselent.course_load_scheduler.client.event.SendValidateEvent;
+import org.dselent.course_load_scheduler.client.event_handler.InvalidEditSectionEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.Course;
 import org.dselent.course_load_scheduler.client.model.Instructor;
@@ -31,7 +38,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class SchedulePresenterImpl extends BasePresenterImpl implements SchedulePresenter {
+public class SchedulePresenterImpl extends BasePresenterImpl implements SchedulePresenter, InvalidEditSectionEventHandler {
 	
 	private IndexPresenter parentPresenter;
 	private ScheduleView view;
@@ -77,12 +84,6 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		
 		registration = eventBus.addHandler(InvalidEditSectionEvent.TYPE, this);
 		eventBusRegistration.put(InvalidEditSectionEvent.TYPE, registration);
-		
-		/*registration = eventBus.addHandler(InvalidLoginEvent.TYPE, this);
-		eventBusRegistration.put(InvalidLoginEvent.TYPE, registration);
-		
-		registration = eventBus.addHandler(InvalidRegisterEvent.TYPE, this);
-		eventBusRegistration.put(InvalidRegisterEvent.TYPE, registration);*/
 	}
 
 	@Override
@@ -332,7 +333,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			
 			if(validSectionName && validSectionId && validSectionType && validPopulation)
 			{
-				//sendRegister(userName, firstName, lastName, email, password);
+				sendEditSection(sectionName, sectionId, sectionType, population);
 			}
 			else
 			{
@@ -355,11 +356,32 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		InvalidEditSectionAction iesa = evt.getAction();
 		view.showErrorMessages(iesa.toString());
 	}
+	
+	private void sendEditSection(String sectionName, String sectionId, String sectionType, String population)
+	{
+		SendEditSectionAction sesa = new SendEditSectionAction(sectionName, sectionId, sectionType, population);
+		SendEditSectionEvent sese = new SendEditSectionEvent(sesa);
+		eventBus.fireEvent(sese);
+	}
 
 	@Override
 	public void validate() {
-		// TODO Auto-generated method stub
 		
+		if(!validateClickInProgress)
+		{
+			validateClickInProgress = true;
+			view.getValidateButton().setEnabled(false);
+			parentPresenter.showLoadScreen();
+			
+			sendValidate();
+		}
+	}
+	
+	private void sendValidate()
+	{
+		SendValidateAction sva = new SendValidateAction();
+		SendValidateEvent sve = new SendValidateEvent(sva);
+		eventBus.fireEvent(sve);
 	}
 	
 	private void validateField(String field) throws EmptyStringException
