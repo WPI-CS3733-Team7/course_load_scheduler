@@ -96,6 +96,7 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			catch(EmptyStringException e)
 			{
 				invalidReasonList.add(InvalidSubmitStrings.NULL_REQUESTTYPE);
+				view.showErrorMessages(InvalidSubmitStrings.NULL_REQUESTTYPE);
 				validRequesttype = false;
 			}
 			
