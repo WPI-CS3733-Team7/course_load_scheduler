@@ -98,6 +98,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 		@UiField 
 		HorizontalPanel scheduleViewPanel;
 		
+		boolean isCreating;
 
 		/* Pop-up Widgets for Instructor */
 		Label popInstructorLabelFirstName = new Label("First Name:");
@@ -111,13 +112,14 @@ import com.google.gwt.user.client.ui.PopupPanel;
 		Button popIntructorButtonDelete = new Button("Delete", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				presenter.deleteInstructor();
+				presenter.editInstructor(true);
 			}
 		});
 		Button popInstructorButtonSubmit = new Button("Submit", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				presenter.editInstructor();
+				presenter.editInstructor(false);
+				isCreating=false;
 				addInstructorButton(new Instructor());
 			}
 		});
@@ -129,8 +131,20 @@ import com.google.gwt.user.client.ui.PopupPanel;
 		TextBox popCourseTextName = new TextBox();
 		TextBox popCourseTextNumber = new TextBox();
 		TextBox popCourseTextFrequency = new TextBox();
-		Button popCourseButtonDelete = new Button();
-		Button popCourseButtonSubmit = new Button();
+		Button popCourseButtonDelete = new Button("Delete", new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				presenter.editCourse(true);
+			}
+		});
+		Button popCourseButtonSubmit = new Button("Submit", new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				presenter.editCourse(false);
+				isCreating=false;
+				addCourseButton(new Course());
+			}
+		});
 		
 		/* Pop-up Widgets for Course Sections */
 		Label sectionLabel = new Label("Create/Edit a Section");
@@ -156,7 +170,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 		
 		/* Methods to generate pop-up windows */
 
-		private void makeInstructorPopUp(boolean creating) {
+		private void makeInstructorPopUp() {
 			Grid popGrid = new Grid(5, 2);
 			popGrid.setWidget(0, 0, popInstructorLabelFirstName);
 			popGrid.setWidget(1, 0, popInstructorLabelLastName);
@@ -167,7 +181,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 			popGrid.setWidget(2, 1, popInstructorTextRank);
 			popGrid.setWidget(3, 1, popInstructorTextEmail);
 			popGrid.setWidget(4, 1, popInstructorButtonSubmit);
-			if(!creating) {
+			if(!isCreating) {
 				popGrid.setWidget(4, 0, popIntructorButtonDelete);
 			}
 			
@@ -177,7 +191,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 			editPopup.center();
 		}
 		
-		private void makeCoursePopUp(boolean creating) {
+		private void makeCoursePopUp() {
 			Grid popGrid = new Grid(4, 2);
 			popGrid.setWidget(0, 0, popCourseLabelName);
 			popGrid.setWidget(1, 0, popCourseLabelNumber);
@@ -186,7 +200,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 			popGrid.setWidget(1, 1, popCourseTextNumber);
 			popGrid.setWidget(2, 1, popCourseTextFrequency);
 			popGrid.setWidget(3, 1, popCourseButtonSubmit);
-			if(!creating) {
+			if(!isCreating) {
 				popGrid.setWidget(3, 0, popCourseButtonDelete);
 			}
 			
@@ -340,26 +354,26 @@ import com.google.gwt.user.client.ui.PopupPanel;
 
 		@UiHandler("scheduleAddInstructor")
 		void onClickAddInstructor(ClickEvent event) {
-
-			makeInstructorPopUp(true);
+			isCreating=true;
+			makeInstructorPopUp();
 		}
 		
 		@UiHandler("scheduleEditInstructor")
 		void onClickEditInstructor(ClickEvent event) {
-
-			makeInstructorPopUp(false);
+			isCreating=false;
+			makeInstructorPopUp();
 		}
 		
 		@UiHandler("scheduleAddCourse")
 		void onClickAddCourse(ClickEvent event) {
-
-			makeCoursePopUp(true);
+			isCreating=true;
+			makeCoursePopUp();
 		}
 		
 		@UiHandler("scheduleEditCourse")
 		void onClickEditCourse(ClickEvent event) {
-
-			makeCoursePopUp(false);
+			isCreating=false;
+			makeCoursePopUp();
 		}
 		
 		@UiHandler("createSection")
@@ -565,5 +579,13 @@ import com.google.gwt.user.client.ui.PopupPanel;
 		public void setSelectedCourseButton(ModelButton<Course> selection) {
 			// TODO Auto-generated method stub
 			selectedCourseButton = selection;
+		}
+
+		public boolean isCreating() {
+			return isCreating;
+		}
+
+		public void setCreating(boolean isCreating) {
+			this.isCreating = isCreating;
 		}
 	}

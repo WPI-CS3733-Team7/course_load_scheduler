@@ -40,4 +40,23 @@ public interface ScheduleView extends BaseView<SchedulePresenter>{
 	Button getSectionSubmitButton();
 	Button getInstructorSubmitButton();
 	Button getCourseSubmitButton();
+	
+	public TextBox getPopInstructorTextFirstName();
+	public void setPopInstructorTextFirstName(TextBox popInstructorTextFirstName);
+	public TextBox getPopInstructorTextLastName();
+	public void setPopInstructorTextLastName(TextBox popInstructorTextLastName);
+	public TextBox getPopInstructorTextRank();
+	public void setPopInstructorTextRank(TextBox popInstructorTextRank);
+	public TextBox getPopInstructorTextEmail();
+	public void setPopInstructorTextEmail(TextBox popInstructorTextEmail);
+	public TextBox getPopCourseTextName();
+	public void setPopCourseTextName(TextBox popCourseTextName);
+	public TextBox getPopCourseTextNumber();
+	public void setPopCourseTextNumber(TextBox popCourseTextNumber);
+	public TextBox getPopCourseTextFrequency();
+	public void setPopCourseTextFrequency(TextBox popCourseTextFrequency);
+	
+	
+	boolean isCreating();
+	void setCreating(boolean c);
 }

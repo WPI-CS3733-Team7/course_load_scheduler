@@ -9,10 +9,8 @@ public interface SchedulePresenter extends BasePresenter {
 	IndexPresenter getParentPresenter();
 	void setParentPresenter(IndexPresenter parentPresenter);
 	
-	void deleteInstructor();
-	void editInstructor();
-	void deleteCourse();
-	void editCourse();
+	void editInstructor(boolean deleting);
+	void editCourse(boolean deleting);
 	void selectInstructor(ModelButton<Instructor> clickedButton);
 	void selectCourse(ModelButton<Course> clickedButton);
 	

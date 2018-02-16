@@ -13,8 +13,12 @@ import java.util.List;
 //import org.dselent.course_load_scheduler.client.event.SendLoginEvent;
 //import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
 import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
+import org.dselent.course_load_scheduler.client.action.InvalidRegisterAction;
+import org.dselent.course_load_scheduler.client.action.SendRegisterAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidEditSectionStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
+import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
+import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.Course;
 import org.dselent.course_load_scheduler.client.model.Instructor;
@@ -103,28 +107,139 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		this.parentPresenter = parentPresenter;		
 	}
 
+
 	@Override
-	public void deleteInstructor() {
-		// TODO Auto-generated method stub
+	public void editInstructor(boolean deleting) {
+		if (!submitEditInstructorClickInProgress)
+		{
+			submitEditInstructorClickInProgress = true;
+			String firstName = view.getPopInstructorTextFirstName().getText();
+			String lastName = view.getPopInstructorTextLastName().getText();
+			String rank = view.getPopInstructorTextRank().getText();
+			String email = view.getPopInstructorTextEmail().getText();
+			if(view.isCreating())
+			{
+				boolean validFirstName = true;
+				boolean validLastName = true;
+				boolean validRank = true;
+				boolean validEmail = true;
+				List<String> invalidReasonList = new ArrayList<>();
+				try {
+					validateField(firstName);
+				} catch (EmptyStringException e)
+				{
+					invalidReasonList.add(InvalidEditInstructorStrings.NULL_FIRST_NAME);
+					validFirstName = false;
+				}
+				try {
+					validateField(lastName);
+				} catch (EmptyStringException e)
+				{
+					invalidReasonList.add(InvalidEditInstructorStrings.NULL_LAST_NAME);
+					validLastName = false;
+				}
+				try {
+					validateField(rank);
+				} catch (EmptyStringException e)
+				{
+					invalidReasonList.add(InvalidEditInstructorStrings.NULL_RANK);
+					validRank = false;
+				}
+				try {
+					validateField(email);
+				} catch (EmptyStringException e)
+				{
+					invalidReasonList.add(InvalidEditInstructorStrings.NULL_EMAIL);
+					validEmail = false;
+				}
+				
+				if(validFirstName && validLastName && validRank && validEmail)
+				{
+				sendInstructorEdit(null, firstName, lastName, rank, email, false);
+				}
+				else
+				{
+					InvalidInstructorCreateAction iica = new InvalidInstructorCreateAction(invalidReasonList);
+					InvalidInstructorCreateEvent iice = new InvalidInstructorCreateEvent(iica);
+					eventBus.fireEvent(iice);
+				}
+			} else {
+				sendInstructorEdit(view.getSelectedInstructorButton().getModel().getId(), firstName, lastName, rank, email, deleting);
+			}
+			view.getInstructorSubmitButton().setEnabled(false);
+			
+		}
+		
+	}
+	
+	
+	private void sendInstructorEdit(Integer id, String firstName, String lastName, String rank, String email, boolean deleted)
+	{
+		SendInstructorEditAction siea = new SendInstructorEditAction(firstName, lastName, rank, email, deleted);
+		SendInstructorEditEvent siee = new SendInstructorEditEvent(siea);
+		eventBus.fireEvent(siee);
+	}
+
+
+	@Override
+	public void editCourse(boolean deleting) {
+		if (!submitEditCourseClickInProgress)
+		{
+			submitEditCourseClickInProgress = true;
+			String courseName = view.getPopCourseTextName().getText();
+			String courseNumber = view.getPopCourseTextNumber().getText();
+			String frequency = view.getPopCourseTextFrequency().getText();
+			if(view.isCreating())
+			{
+				boolean validCourseName = true;
+				boolean validCourseNumber = true;
+				boolean validFrequency = true;
+				List<String> invalidReasonList = new ArrayList<>();
+				try {
+					validateField(courseName);
+				} catch (EmptyStringException e)
+				{
+					invalidReasonList.add(InvalidEditCourseStrings.NULL_NAME);
+					validCourseName = false;
+				}
+				try {
+					validateField(courseNumber);
+				} catch (EmptyStringException e)
+				{
+					invalidReasonList.add(InvalidEditCourseStrings.NULL_NUMBER);
+					validCourseNumber = false;
+				}
+				try {
+					validateField(frequency);
+				} catch (EmptyStringException e)
+				{
+					invalidReasonList.add(InvalidEditCourseStrings.NULL_FREQUENCY);
+					validFrequency = false;
+				}
+				
+				if(validCourseName && validCourseNumber && validFrequency)
+				{
+					sendCourseEdit(null, courseName, courseNumber, frequency, false);
+				}
+				else
+				{
+					InvalidCourseCreateAction icca = new InvalidCourseCreateAction(invalidReasonList);
+					InvalidCourseCreateEvent icce = new InvalidCourseCreateEvent(icca);
+					eventBus.fireEvent(icce);
+				}
+			} else {
+				sendInstructorEdit(view.getSelectedInstructorButton().getModel().getId(), courseName, courseNumber, frequency, deleting);
+			}
+			view.getInstructorSubmitButton().setEnabled(false);
+			
+		}
 		
 	}
 
-	@Override
-	public void editInstructor() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteCourse() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void editCourse() {
-		// TODO Auto-generated method stub
-		
+	private void sendCourseEdit(Integer id, String courseName, String courseNumber, String frequency, boolean deleted) {
+		SendCourseEditAction scea = new SendCourseEditAction(id, courseName, courseNumber, frequency, deleted);
+		SendCourseEditEvent scee = new SendCourseEditEvent(scea);
+		eventBus.fireEvent(scee);	
 	}
 
 	@Override
