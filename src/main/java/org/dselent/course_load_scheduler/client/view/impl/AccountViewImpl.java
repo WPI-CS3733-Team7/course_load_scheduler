@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -76,8 +77,8 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	Label editUserTitle = new Label("Edit User");
 	Label editUserRole = new Label("Role");
 	Label editUserLinked = new Label("Linked Instructor");
-	TextBox userRoleText = new TextBox();
-	TextBox linkedInstructorText = new TextBox();
+	ListBox roleDropBox = new ListBox(false);
+	ListBox linkedInstructorDropBox = new ListBox(false);
 	private boolean deleted = false;
 	Button deleteEditUserButton = new Button("Delete", new ClickHandler() {
 		@Override
@@ -127,6 +128,10 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 
 	public AccountViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
+		roleDropBox.addItem("ADMIN");
+		roleDropBox.addItem("LINKED USER");
+		roleDropBox.addItem("USER");
+		linkedInstructorDropBox.addItem("-");
 	}
 
 	public Label getNameLabel() {
@@ -273,9 +278,9 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	{
 		Grid regGrid = new Grid(3, 2);
 		regGrid.setWidget(0, 0, editUserRole);
-		// set 0, 1 to a drop down menu (how about a text box?)
+		regGrid.setWidget(0, 1, roleDropBox);
 		regGrid.setWidget(1, 0, editUserLinked);
-		// set 1, 1 to a drop down menu (how about a text box?)
+		regGrid.setWidget(1, 1, linkedInstructorDropBox);
 		regGrid.setWidget(2, 0, deleteEditUserButton);
 		regGrid.setWidget(2, 1, submitEditUserButton);
 		
@@ -289,16 +294,11 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		registerPopup.center();
 	}
 
-	@Override
-	public TextBox getUserRoleText() {
-		return userRoleText;
+	public ListBox getRoleDropBox() {
+		return roleDropBox;
 	}
 
-	@Override
-	public TextBox getLinkedInstructorText() {
-		return linkedInstructorText;
+	public ListBox getLinkedInstructorDropBox() {
+		return linkedInstructorDropBox;
 	}
-
-
-	
 }

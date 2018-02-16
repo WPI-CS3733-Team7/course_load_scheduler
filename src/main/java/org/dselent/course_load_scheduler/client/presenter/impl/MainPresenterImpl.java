@@ -15,7 +15,6 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 {
 	private IndexPresenter parentPresenter;
 	private MainView view;
-	private boolean logoutClickInProgress;
 	
 	@Inject
 	public MainPresenterImpl(IndexPresenter parentPresenter, MainView view)
@@ -23,7 +22,6 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 		this.view = view;
 		this.parentPresenter = parentPresenter;
 		view.setPresenter(this);
-		logoutClickInProgress = false;
 	}
 	
 	@Override
@@ -59,16 +57,11 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 	@Override
 	public void logout()
 	{
-		if(!logoutClickInProgress)
-		{
-			logoutClickInProgress = true;
-			view.getLogoutButton().setEnabled(false);
-			parentPresenter.showLoadScreen();
+		parentPresenter.showLoadScreen();
 			
-			SendLogoutAction sla = new SendLogoutAction();
-			SendLogoutEvent sle = new SendLogoutEvent(sla);
-			eventBus.fireEvent(sle);
-		}	
+		SendLogoutAction sla = new SendLogoutAction();
+		SendLogoutEvent sle = new SendLogoutEvent(sla);
+		eventBus.fireEvent(sle);	
 	}
 
 	@Override

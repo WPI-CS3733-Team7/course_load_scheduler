@@ -2,6 +2,7 @@ package org.dselent.course_load_scheduler.client.view;
 
 import org.dselent.course_load_scheduler.client.presenter.AccountPresenter;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 
 public interface AccountView extends BaseView<AccountPresenter>{
@@ -15,8 +16,8 @@ public interface AccountView extends BaseView<AccountPresenter>{
 	TextBox getConfirmPasswordText();
 	Button getSubmitChangePasswordButton();
 	//
-	TextBox getUserRoleText();
-	TextBox getLinkedInstructorText();
+	ListBox getRoleDropBox();
+	ListBox getLinkedInstructorDropBox();
 	Button getSubmitEditUserButton();
 	Button getDeleteEditUserButton();
 	boolean isDeleted();

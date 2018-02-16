@@ -11,7 +11,9 @@ import org.dselent.course_load_scheduler.client.errorstring.InvalidRegisterStrin
 import org.dselent.course_load_scheduler.client.event.InvalidLoginEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.SendLoginEvent;
+import org.dselent.course_load_scheduler.client.event.SendLogoutEvent;
 import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
+import org.dselent.course_load_scheduler.client.event_handler.SendLogoutEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.LoginPresenter;
@@ -21,7 +23,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
 
-public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresenter
+public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresenter, SendLogoutEventHandler
 {
 	private IndexPresenter parentPresenter;
 	private LoginView view;
@@ -54,6 +56,9 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 		
 		registration = eventBus.addHandler(InvalidRegisterEvent.TYPE, this);
 		eventBusRegistration.put(InvalidRegisterEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(SendLogoutEvent.TYPE, this);
+		eventBusRegistration.put(SendLogoutEvent.TYPE, registration);
 	}
 		
 	@Override
@@ -276,6 +281,13 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 		SendRegisterAction sra = new SendRegisterAction(userName, firstName, lastName, email, password);
 		SendRegisterEvent sre = new SendRegisterEvent(sra);
 		eventBus.fireEvent(sre);
+	}
+
+	@Override
+	public void onSendLogout(SendLogoutEvent evt)
+	{
+		parentPresenter.hideLoadScreen();
+		this.go(parentPresenter.getView().getViewRootPanel());	
 	}
 
 }
