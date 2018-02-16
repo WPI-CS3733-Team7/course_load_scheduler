@@ -2,9 +2,11 @@ package org.dselent.course_load_scheduler.client.gin;
 
 import org.dselent.course_load_scheduler.client.presenter.impl.IndexPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.LoginPresenterImpl;
+import org.dselent.course_load_scheduler.client.presenter.impl.MainPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.SchedulePresenterImpl;
 import org.dselent.course_load_scheduler.client.view.impl.IndexViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.LoginViewImpl;
+import org.dselent.course_load_scheduler.client.view.impl.MainViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.ScheduleViewImpl;
 
 import com.google.gwt.core.client.GWT;
@@ -35,10 +37,12 @@ public interface Injector extends Ginjector
     // presenters
     public IndexPresenterImpl getIndexPresenter();
     public LoginPresenterImpl getLoginPresenter();
+    public MainPresenterImpl getMainPresenter();
     public SchedulePresenterImpl getSchedulePresenter();
     
     //views
     public IndexViewImpl getIndexView();
     public LoginViewImpl getLoginView();
     public ScheduleViewImpl getScheduleView();
+    public MainViewImpl getMainView();
 }

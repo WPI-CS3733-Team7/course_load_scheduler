@@ -1,8 +1,5 @@
 package org.dselent.course_load_scheduler.client.model;
 
-import java.sql.Timestamp;
-import java.time.Instant;
-
 public class Course extends Model
 {
 	// attributes
@@ -11,8 +8,6 @@ public class Course extends Model
     private String course_name;
     private String course_number;
     private String frequency;
-    private Instant createdAt;
-    private Instant updatedAt;
     private Boolean deleted;
 
     // methods
@@ -48,34 +43,6 @@ public class Course extends Model
         this.frequency = frequency;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        if (createdAt != null) {
-            this.createdAt = createdAt.toInstant();
-        }
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        if (updatedAt != null) {
-            this.updatedAt = updatedAt.toInstant();
-        }
-    }
-
     public Boolean getDeleted() {
         return deleted;
     }
@@ -89,13 +56,10 @@ public class Course extends Model
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((course_name == null) ? 0 : course_name.hashCode());
         result = prime * result + ((course_number == null) ? 0 : course_number.hashCode());
         result = prime * result + ((frequency == null) ? 0 : frequency.hashCode());
-        result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
-        result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
         result = prime * result + ((deleted == null) ? 0 : deleted.hashCode());
         return result;
     }
@@ -160,28 +124,6 @@ public class Course extends Model
         {
             return false;
         }
-        if (updatedAt == null)
-        {
-            if (other.updatedAt != null)
-            {
-                return false;
-            }
-        }
-        else if (!updatedAt.equals(other.updatedAt))
-        {
-            return false;
-        }
-        if (createdAt == null)
-        {
-            if (other.createdAt != null)
-            {
-                return false;
-            }
-        }
-        else if (!createdAt.equals(other.createdAt))
-        {
-            return false;
-        }
         if (deleted == null) {
             if (other.deleted != null)
                 return false;
@@ -206,10 +148,6 @@ public class Course extends Model
         builder.append(course_number);
         builder.append(", Frequency=");
         builder.append(frequency);
-        builder.append(", createdAt=");
-        builder.append(createdAt);
-        builder.append(", updatedAt=");
-        builder.append(updatedAt);
         builder.append(", deleted=");
         builder.append(deleted);
         builder.append("]");

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidRequestAction;
-import org.dselent.course_load_scheduler.client.action.SendRequestAction;
-import org.dselent.course_load_scheduler.client.errorstring.InvalidRequestStrings;
+//import org.dselent.course_load_scheduler.client.action.SendRequestAction;
+//import org.dselent.course_load_scheduler.client.errorstring.InvalidRequestStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
-import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
+//import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
@@ -44,8 +44,8 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 		// TODO Auto-generated method stub
 		HandlerRegistration registration;
 		
-		registration = eventBus.addHandler(InvalidRequestEvent.TYPE, this);
-		eventBusRegistration.put(InvalidRequestEvent.TYPE, registration);
+		//registration = eventBus.addHandler(InvalidRequestEvent.TYPE, this);
+		//eventBusRegistration.put(InvalidRequestEvent.TYPE, registration);
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			}
 			catch(EmptyStringException e)
 			{
-				invalidReasonList.add(InvalidRequestStrings.NULL_DESCRIPTION);
+				//invalidReasonList.add(InvalidRequestStrings.NULL_DESCRIPTION);
 				
 				validDescription = false;
 			}
@@ -111,9 +111,9 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 	}
 	private void sendRequest(String description)
 	{
-		SendRequestAction sra = new SendRequestAction(description);
-		SendRequestEvent sre = new SendRequestEvent(sra);
-		eventBus.fireEvent(sre);
+		//SendRequestAction sra = new SendRequestAction(description);
+		//SendRequestEvent sre = new SendRequestEvent(sra);
+		//eventBus.fireEvent(sre);
 	}
 	
 	private void validateField(String field) throws EmptyStringException
@@ -127,5 +127,11 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 		{
 			throw new EmptyStringException();
 		}
+	}
+
+	@Override
+	public void reply() {
+		// TODO Auto-generated method stub
+		
 	}
 }
