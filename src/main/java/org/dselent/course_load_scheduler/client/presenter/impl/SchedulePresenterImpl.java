@@ -2,22 +2,20 @@ package org.dselent.course_load_scheduler.client.presenter.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-//import org.dselent.course_load_scheduler.client.action.InvalidLoginAction;
-//import org.dselent.course_load_scheduler.client.action.InvalidRegisterAction;
-//import org.dselent.course_load_scheduler.client.action.SendLoginAction;
-//import org.dselent.course_load_scheduler.client.action.SendRegisterAction;
-//import org.dselent.course_load_scheduler.client.errorstring.InvalidLoginStrings;
-//import org.dselent.course_load_scheduler.client.errorstring.InvalidRegisterStrings;
-//import org.dselent.course_load_scheduler.client.event.InvalidLoginEvent;
-//import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
-//import org.dselent.course_load_scheduler.client.event.SendLoginEvent;
-//import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
 import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
+import org.dselent.course_load_scheduler.client.action.InvalidLoginAction;
 import org.dselent.course_load_scheduler.client.action.SendEditSectionAction;
+import org.dselent.course_load_scheduler.client.action.SendLoginAction;
+import org.dselent.course_load_scheduler.client.action.SendValidateAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidEditSectionStrings;
+import org.dselent.course_load_scheduler.client.errorstring.InvalidLoginStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
+import org.dselent.course_load_scheduler.client.event.InvalidLoginEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditSectionEvent;
+import org.dselent.course_load_scheduler.client.event.SendLoginEvent;
+import org.dselent.course_load_scheduler.client.event.SendValidateEvent;
 import org.dselent.course_load_scheduler.client.event_handler.InvalidEditSectionEventHandler;
+import org.dselent.course_load_scheduler.client.event_handler.SendValidateEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.Course;
 import org.dselent.course_load_scheduler.client.model.Instructor;
@@ -76,12 +74,6 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		
 		registration = eventBus.addHandler(InvalidEditSectionEvent.TYPE, this);
 		eventBusRegistration.put(InvalidEditSectionEvent.TYPE, registration);
-		
-		/*registration = eventBus.addHandler(InvalidLoginEvent.TYPE, this);
-		eventBusRegistration.put(InvalidLoginEvent.TYPE, registration);
-		
-		registration = eventBus.addHandler(InvalidRegisterEvent.TYPE, this);
-		eventBusRegistration.put(InvalidRegisterEvent.TYPE, registration);*/
 	}
 
 	@Override
@@ -253,8 +245,22 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 
 	@Override
 	public void validate() {
-		// TODO Auto-generated method stub
 		
+		if(!validateClickInProgress)
+		{
+			validateClickInProgress = true;
+			view.getValidateButton().setEnabled(false);
+			parentPresenter.showLoadScreen();
+			
+			sendValidate();
+		}
+	}
+	
+	private void sendValidate()
+	{
+		SendValidateAction sva = new SendValidateAction();
+		SendValidateEvent sve = new SendValidateEvent(sva);
+		eventBus.fireEvent(sve);
 	}
 	
 	private void validateField(String field) throws EmptyStringException
