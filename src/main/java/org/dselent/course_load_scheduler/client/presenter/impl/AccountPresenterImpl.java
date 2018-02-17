@@ -226,7 +226,6 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			}
 			else
 			{
-				view.showErrorMessages("Hello");
 				InvalidEditUserAction ieua = new InvalidEditUserAction(invalidReasonList);
 				InvalidEditUserEvent ieue = new InvalidEditUserEvent(ieua);
 				eventBus.fireEvent(ieue);
