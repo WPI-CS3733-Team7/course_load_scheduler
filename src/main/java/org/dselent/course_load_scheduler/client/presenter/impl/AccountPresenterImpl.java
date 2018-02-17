@@ -146,7 +146,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			
 			/* if the old password is the same as the new password, 
 			 * inform the user in the error message */
-			if(oldPassword == newPassword) {
+			if(oldPassword == newPassword && oldPassword != "") {
 				invalidReasonList.add(InvalidChangePasswordStrings.BAD_NEW_PASSWORD);
 				validNewPassword = false;
 			}
@@ -203,7 +203,6 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	{
 		if(!editUserClickInProgress)
 		{
-			
 			editUserClickInProgress = true;
 			view.getSubmitEditUserButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
@@ -216,7 +215,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			Boolean deleted = view.isDeleted();
 			
 			List<String> invalidReasonList = new ArrayList<>();
-			
+
 			if(userRole == "LINKED USER" && linkedInstructor == "-" && !deleted)
 			{
 				invalidReasonList.add(InvalidEditUserStrings.LINKED_USER_ERROR);
