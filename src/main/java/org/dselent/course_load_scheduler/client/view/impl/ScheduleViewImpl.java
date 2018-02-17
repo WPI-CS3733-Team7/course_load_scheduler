@@ -1,9 +1,5 @@
 package org.dselent.course_load_scheduler.client.view.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.dselent.course_load_scheduler.client.model.Course;
-import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
 import com.google.gwt.core.client.GWT;
@@ -33,13 +29,15 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 	interface ScheduleViewImplUiBinder extends UiBinder<Widget, ScheduleViewImpl>{}
 
 	SchedulePresenter presenter;
-		
+	
+	/* Removed lists of ModelButtons now that we are using listboxes
 	List<ModelButton<Instructor>> instructorButtons = new ArrayList<ModelButton<Instructor>>();
 	List<ModelButton<Course>> courseButtons = new ArrayList<ModelButton<Course>>();
 		
 	ModelButton<Instructor> selectedInstructorButton = null;
 	ModelButton<Course> selectedCourseButton = null;
-		
+	*/	
+	
 	@UiField VerticalPanel scheduleInstructorsPanel;		
 	@UiField VerticalPanel scheduleCoursesPanel;
 	@UiField Button scheduleAddInstructor;
@@ -52,6 +50,8 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 	@UiField ListBox yearSelect;
 	@UiField ListBox termSelect;
 	@UiField HorizontalPanel scheduleViewPanel;
+	@UiField ListBox instructorBox;
+	@UiField ListBox courseBox;
 		
 		boolean isCreating;
 
@@ -64,18 +64,24 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		TextBox popInstructorTextLastName = new TextBox();
 		TextBox popInstructorTextRank = new TextBox();
 		TextBox popInstructorTextEmail = new TextBox();
-		Button popIntructorButtonDelete = new Button("Delete", new ClickHandler() {
+		Button popInstructorButtonDelete = new Button("Delete", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				presenter.editInstructor(true);
+				presenter.editInstructor(false, true);
 			}
 		});
 		Button popInstructorButtonSubmit = new Button("Submit", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				presenter.editInstructor(false);
-				isCreating=false;
-				addInstructorButton(new Instructor());
+				presenter.editInstructor(false, false);
+				//isCreating=false;
+			}
+		});
+		Button popInstructorButtonCreate = new Button("Submit", new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				presenter.editInstructor(true, false);
+				//isCreating=false;
 			}
 		});
 
@@ -89,15 +95,21 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		Button popCourseButtonDelete = new Button("Delete", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				presenter.editCourse(true);
+				presenter.editCourse(false, true);
 			}
 		});
 		Button popCourseButtonSubmit = new Button("Submit", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				presenter.editCourse(false);
-				isCreating=false;
-				addCourseButton(new Course());
+				presenter.editCourse(false, false);
+				
+			}
+		});
+		Button popCourseButtonCreate = new Button("Submit", new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				presenter.editCourse(true, false);
+				
 			}
 		});
 		
@@ -140,11 +152,32 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		/* Constructor */
 		public ScheduleViewImpl() {
 			initWidget(uiBinder.createAndBindUi(this));
+			
+			yearSelect.addItem("2018");
+			yearSelect.addItem("2017");
+			yearSelect.addItem("2016");
+			yearSelect.addItem("2015");
+			yearSelect.addItem("2014");
+			yearSelect.addItem("2013");
+			yearSelect.addItem("2012");
+			yearSelect.addItem("2011");
+			yearSelect.addItem("2010");			
+			
+			termSelect.addItem("A");
+			termSelect.addItem("B");
+			termSelect.addItem("C");
+			termSelect.addItem("D");
+			termSelect.addItem("E1");
+			termSelect.addItem("E2");
+			
+			sectionTypeListBox.addItem("LECTURE");
+			sectionTypeListBox.addItem("LAB");
+			sectionTypeListBox.addItem("CONFERENCE");
 		}
 		
 		/* Methods to generate pop-up windows */
 
-		private void makeInstructorPopUp() {
+		private void makeInstructorPopUp(boolean creating) {
 			Grid popGrid = new Grid(5, 2);
 			popGrid.setWidget(0, 0, popInstructorLabelFirstName);
 			popGrid.setWidget(1, 0, popInstructorLabelLastName);
@@ -154,18 +187,25 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			popGrid.setWidget(1, 1, popInstructorTextLastName);
 			popGrid.setWidget(2, 1, popInstructorTextRank);
 			popGrid.setWidget(3, 1, popInstructorTextEmail);
-			popGrid.setWidget(4, 1, popInstructorButtonSubmit);
-			if(!isCreating) {
-				popGrid.setWidget(4, 0, popIntructorButtonDelete);
-			}
 			
+			if(!creating) {
+				popGrid.setWidget(4, 1, popInstructorButtonSubmit);
+				popGrid.setWidget(4, 0, popInstructorButtonDelete);
+				presenter.fillInstructorFields();
+			} else {
+				popGrid.setWidget(4, 1, popInstructorButtonCreate);
+				popInstructorTextFirstName.setText("");
+				popInstructorTextLastName.setText("");
+				popInstructorTextRank.setText("");
+				popInstructorTextEmail.setText("");
+			}
 			PopupPanel editPopup = new PopupPanel(true);
 			editPopup.add(popGrid);
 			editPopup.isGlassEnabled();
 			editPopup.center();
 		}
 		
-		private void makeCoursePopUp() {
+		private void makeCoursePopUp(boolean creating) {
 			Grid popGrid = new Grid(4, 2);
 			popGrid.setWidget(0, 0, popCourseLabelName);
 			popGrid.setWidget(1, 0, popCourseLabelNumber);
@@ -173,9 +213,16 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			popGrid.setWidget(0, 1, popCourseTextName);
 			popGrid.setWidget(1, 1, popCourseTextNumber);
 			popGrid.setWidget(2, 1, popCourseTextFrequency);
-			popGrid.setWidget(3, 1, popCourseButtonSubmit);
-			if(!isCreating) {
+			
+			if(!creating) {
+				popGrid.setWidget(3, 1, popCourseButtonSubmit);
 				popGrid.setWidget(3, 0, popCourseButtonDelete);
+				presenter.fillCourseFields();
+			} else {
+				popGrid.setWidget(3, 1, popCourseButtonCreate);
+				popCourseTextName.setText("");
+				popCourseTextNumber.setText("");
+				popCourseTextFrequency.setText("");
 			}
 			
 			PopupPanel editPopup = new PopupPanel(true);
@@ -491,26 +538,28 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 
 		@UiHandler("scheduleAddInstructor")
 		void onClickAddInstructor(ClickEvent event) {
-			isCreating=true;
-			makeInstructorPopUp();
+			popInstructorButtonCreate.setEnabled(true);
+			makeInstructorPopUp(true);
 		}
 		
 		@UiHandler("scheduleEditInstructor")
 		void onClickEditInstructor(ClickEvent event) {
-			isCreating=false;
-			makeInstructorPopUp();
+			popInstructorButtonSubmit.setEnabled(true);
+			popInstructorButtonDelete.setEnabled(true);
+			makeInstructorPopUp(false);
 		}
 		
 		@UiHandler("scheduleAddCourse")
 		void onClickAddCourse(ClickEvent event) {
-			isCreating=true;
-			makeCoursePopUp();
+			popCourseButtonCreate.setEnabled(true);
+			makeCoursePopUp(true);
 		}
 		
 		@UiHandler("scheduleEditCourse")
 		void onClickEditCourse(ClickEvent event) {
-			isCreating=false;
-			makeCoursePopUp();
+			popCourseButtonSubmit.setEnabled(true);
+			popCourseButtonDelete.setEnabled(true);
+			makeCoursePopUp(false);
 		}
 		
 		@UiHandler("createSection")
@@ -525,11 +574,27 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			makeSectionPopUp();
 		}
 		
+		@UiHandler("instructorBox")
+		void onSelectInstructor(ClickEvent event) {
+			scheduleEditInstructor.setEnabled(true);
+		}
+		
+		@UiHandler("courseBox")
+		void onSelectCourse(ClickEvent event) {
+			scheduleEditCourse.setEnabled(true);
+		}
+		
 	@UiHandler("validate")
 	void onClickValidate(ClickEvent event) {
 		presenter.validate();
 	}
 
+/*
+ * DEAD CODE
+ * This code was used when we were trying to use a list of special "ModelButtons" instead of a listbox for selecting instructors and courses.
+ * When we realized the listbox was a better way to do this, we removed references to ModelButtons.
+ * We kept the code related to ModelButtons around in comments in case we might need it later.
+ 
 		private class instructorClickHandler implements ClickHandler{
 			private ModelButton<Instructor> linkedButton;
 			
@@ -610,6 +675,7 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 				}
 			}
 		}
+*/
 
 		@Override
 		public void setPresenter(SchedulePresenter presenter) {
@@ -670,6 +736,10 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			Window.alert(errorMessages);			
 		}
 
+/*
+ * DEAD CODE
+ * See above for more information on "ModelButton" methods
+
 		@Override
 		public void setSelectedInstructorButton(ModelButton<Instructor> selection) {
 			selectedInstructorButton = selection;
@@ -678,9 +748,9 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 
 		@Override
 		public void setSelectedCourseButton(ModelButton<Course> selection) {
-			// TODO Auto-generated method stub
 			selectedCourseButton = selection;
 		}
+*/
 
 		public boolean isCreating() {
 			return isCreating;
@@ -688,5 +758,35 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 
 		public void setCreating(boolean isCreating) {
 			this.isCreating = isCreating;
+		}
+
+		@Override
+		public ListBox getInstructorBox() {
+			return instructorBox;
+		}
+
+		@Override
+		public ListBox getCourseBox() {
+			return courseBox;
+		}
+
+		@Override
+		public Button getInstructorDeleteButton() {
+			return popInstructorButtonDelete;
+		}
+
+		@Override
+		public Button getCourseDeleteButton() {
+			return popInstructorButtonDelete;
+		}
+
+		@Override
+		public Button getInstructorCreateButton() {
+			return popInstructorButtonCreate;
+		}
+
+		@Override
+		public Button getCourseCreateButton() {
+			return popCourseButtonCreate;
 		}
 	}

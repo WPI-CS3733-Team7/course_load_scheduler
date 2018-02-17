@@ -213,6 +213,7 @@ public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> im
 
 	@UiHandler("replyButton")
 	void onReplyButtonClick(ClickEvent event) {
+		presenter.reply();
 	}
 
 	@Override

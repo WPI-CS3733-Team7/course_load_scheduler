@@ -25,16 +25,14 @@
 						<g:Cell width="150px" height="400px">
 							<g:ScrollPanel width="" height="">
 								<g:VerticalPanel width="100%" height="100%" ui:field="scheduleInstructorsPanel">
-									<g:Button text="Instructor 1" width="100%" height="50" ui:field="instructor1"/>
-									<g:Button text="Instructor 2" width="100%" height="50" ui:field="instructor2"/>
-									<g:Button text="Instructor 3" width="100%" height="50" ui:field="instructor3"/>
+									<g:ListBox visibleItemCount="25" width="100%" height="100%" ui:field="instructorBox"/>
 								</g:VerticalPanel>
 							</g:ScrollPanel>
 						</g:Cell>
 						<g:HorizontalPanel spacing="5">
 
 							<g:Button text="Add Instructor" ui:field="scheduleAddInstructor"/>
-							<g:Button text="Edit Instructor" ui:field="scheduleEditInstructor"/>
+							<g:Button text="Edit Instructor" enabled="false" ui:field="scheduleEditInstructor"/>
 
 						</g:HorizontalPanel>
 					</g:VerticalPanel>
@@ -43,16 +41,14 @@
 						<g:Cell width="150px" height="400px">
 							<g:ScrollPanel>
 								<g:VerticalPanel width="100%" height="100%" ui:field="scheduleCoursesPanel">
-									<g:Button text="Course 1" width="100%" height="50" ui:field="course1"/>
-									<g:Button text="Course 2" width="100%" height="50" ui:field="course2"/>
-									<g:Button text="Course 3" width="100%" height="50" ui:field="course3"/>
+									<g:ListBox visibleItemCount="25" width="100%" height="100%" ui:field="courseBox"/>
 								</g:VerticalPanel>
 							</g:ScrollPanel>
 						</g:Cell>
 						<g:HorizontalPanel spacing="5">
 
 							<g:Button text="Add Course" ui:field="scheduleAddCourse"/>
-							<g:Button text="Edit Course" ui:field="scheduleEditCourse"/>
+							<g:Button text="Edit Course" enabled="false" ui:field="scheduleEditCourse"/>
 
 						</g:HorizontalPanel>
 					</g:VerticalPanel>
@@ -62,7 +58,291 @@
 				<g:Label text="Schedule" wordWrap = "false" horizontalAlignment="ALIGN_CENTER" styleName="{style.important}" ui:field="scheduleTitle"/>
 				<g:Cell width="150px" height="400px">
 					<g:SimplePanel height="378px">
-						<g:Grid width="100%" height="100%" ui:field="calendar"/>
+						<g:Grid width="100%" height="100%" ui:field="calendar">
+							<g:row>
+								<g:cell></g:cell>
+								<g:cell>
+									<Label>Monday</Label>
+								</g:cell>
+								<g:cell>
+									<Label>Tuesday</Label>
+								</g:cell>
+								<g:cell>
+									<Label>Wednesday</Label>
+								</g:cell>
+								<g:cell>
+									<Label>Thursday</Label>
+								</g:cell>
+								<g:cell>
+									<Label>Friday</Label>
+								</g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>					
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:cell>
+									<Label></Label>
+								</g:cell>	
+							</g:row>
+						</g:Grid>
 					</g:SimplePanel>
 				</g:Cell>
 			<g:HorizontalPanel spacing="5" height="52px">

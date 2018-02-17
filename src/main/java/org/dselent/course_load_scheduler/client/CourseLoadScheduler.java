@@ -64,19 +64,29 @@ public class CourseLoadScheduler implements EntryPoint
 		
 		//SchedulePresenterImpl schedPresenter = injector.getSchedulePresenter();
 		//schedPresenter.init();
+
 		//MainPresenterImpl mainPresenter = injector.getMainPresenter();
 		//mainPresenter.init();
 		//LoginPresenterImpl loginPresenter = injector.getLoginPresenter();
 		//loginPresenter.init();
 		//AccountPresenterImpl accountPresenter = injector.getAccountPresenter();
 		//accountPresenter.init();
-		//AdminRequestPresenterImpl adminRequestPresenter = injector.getAdminRequestPresenter();
-		//adminRequestPresenter.init();
-		UserRequestPresenterImpl userRequestPresenter = injector.getUserRequestPresenter();
-		userRequestPresenter.init();
+		AdminRequestPresenterImpl adminRequestPresenter = injector.getAdminRequestPresenter();
+		adminRequestPresenter.init();
+		//UserRequestPresenterImpl userRequestPresenter = injector.getUserRequestPresenter();
+		//userRequestPresenter.init();
+		//MainPresenterImpl mainPresenter = injector.getMainPresenter();
+		//mainPresenter.init();
+		//LoginPresenterImpl loginPresenter = injector.getLoginPresenter();
+		//loginPresenter.init();
+		//AccountPresenterImpl accountPresenter = injector.getAccountPresenter();
+		//accountPresenter.init();
 		
 		//indexPresenter.go(RootPanel.get("indexContainer"));
 		indexPresenter.go(root);
-		userRequestPresenter.go(indexView.getViewRootPanel());
+		adminRequestPresenter.go(indexView.getViewRootPanel());
+
+		//mainPresenter.go(indexView.getViewRootPanel());
+
 	}
 }
