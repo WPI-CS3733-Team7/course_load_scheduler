@@ -152,6 +152,27 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		/* Constructor */
 		public ScheduleViewImpl() {
 			initWidget(uiBinder.createAndBindUi(this));
+			
+			yearSelect.addItem("2018");
+			yearSelect.addItem("2017");
+			yearSelect.addItem("2016");
+			yearSelect.addItem("2015");
+			yearSelect.addItem("2014");
+			yearSelect.addItem("2013");
+			yearSelect.addItem("2012");
+			yearSelect.addItem("2011");
+			yearSelect.addItem("2010");			
+			
+			termSelect.addItem("A");
+			termSelect.addItem("B");
+			termSelect.addItem("C");
+			termSelect.addItem("D");
+			termSelect.addItem("E1");
+			termSelect.addItem("E2");
+			
+			sectionTypeListBox.addItem("LECTURE");
+			sectionTypeListBox.addItem("LAB");
+			sectionTypeListBox.addItem("CONFERENCE");
 		}
 		
 		/* Methods to generate pop-up windows */
