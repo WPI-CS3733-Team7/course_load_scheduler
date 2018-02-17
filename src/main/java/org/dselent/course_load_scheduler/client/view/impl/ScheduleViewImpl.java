@@ -184,6 +184,27 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			editPopup.center();
 		}
 		
+		//Creates the grid for the section name, section id, section type, population, year, term
+		
+		private Grid makeFirstGrid() {
+			Grid firstGrid = new Grid(6, 2);
+			firstGrid.setWidget(0, 0, sectionNameLabel);
+			firstGrid.setWidget(0, 1, sectionNameText);
+			firstGrid.setWidget(1, 0, sectionIdLabel);
+			firstGrid.setWidget(1, 1, sectionIdText);
+			firstGrid.setWidget(2, 0, sectionTypeLabel);
+			firstGrid.setWidget(2, 1, sectionTypeListBox);
+			firstGrid.setWidget(3, 0, populationLabel);
+			firstGrid.setWidget(3, 1, populationText);
+			firstGrid.setWidget(4, 0, yearLabel);
+			firstGrid.setWidget(4, 1, yearText);
+			firstGrid.setWidget(5, 0, termLabel);
+			firstGrid.setWidget(5, 1, termText);
+			
+			return firstGrid;
+			
+		}
+		
 		//Creates the grid for the days of the week check boxes in the Course Section pop-up
 		
 		private Grid makeCalendarInfoGrid() {
@@ -204,25 +225,26 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			
 		}
 		
+		// Creates the grid for start time, end time
+		
+		private Grid makeLastGrid() {
+			Grid lastGrid = new Grid(2, 2);
+			lastGrid.setWidget(0, 0, startTimeLabel);
+			lastGrid.setWidget(0, 1, startTimeText);
+			lastGrid.setWidget(1, 0, endTimeLabel);
+			lastGrid.setWidget(1, 1, endTimeText);
+			
+			return lastGrid;
+			
+		}
+		
+		//Combines all 3 grids into one pop-up
+		
 		private void makeSectionPopUp() {
-		Grid sectionGrid = new Grid(9, 2);		
-		sectionGrid.setWidget(0, 0, sectionNameLabel);
-		sectionGrid.setWidget(0, 1, sectionNameText);
-		sectionGrid.setWidget(1, 0, sectionIdLabel);
-		sectionGrid.setWidget(1, 1, sectionIdText);
-		sectionGrid.setWidget(2, 0, sectionTypeLabel);
-		sectionGrid.setWidget(2, 1, sectionTypeListBox);
-		sectionGrid.setWidget(3, 0, populationLabel);
-		sectionGrid.setWidget(3, 1, populationText);
-		sectionGrid.setWidget(4, 0, yearLabel);
-		sectionGrid.setWidget(4, 1, yearText);
-		sectionGrid.setWidget(5, 0, termLabel);
-		sectionGrid.setWidget(5, 1, termText);
-		sectionGrid.setWidget(6, 0, makeCalendarInfoGrid());
-		sectionGrid.setWidget(7, 0, startTimeLabel);
-		sectionGrid.setWidget(7, 1, startTimeText);
-		sectionGrid.setWidget(8, 0, endTimeLabel);
-		sectionGrid.setWidget(8, 1, endTimeText);
+		Grid sectionGrid = new Grid(3, 1);		
+		sectionGrid.setWidget(0, 0, makeFirstGrid());
+		sectionGrid.setWidget(1, 0, makeCalendarInfoGrid());
+		sectionGrid.setWidget(2, 0, makeLastGrid());
 		
 		VerticalPanel vertPanel = new VerticalPanel();
 		vertPanel.add(sectionLabel);
