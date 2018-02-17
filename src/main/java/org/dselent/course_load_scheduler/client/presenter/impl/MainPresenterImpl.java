@@ -14,6 +14,7 @@ import org.dselent.course_load_scheduler.client.view.MainView;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 
 public class MainPresenterImpl extends BasePresenterImpl implements MainPresenter, SendDisplayMessageEventHandler
@@ -81,5 +82,20 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 	@Override
 	public void onSendDisplayMessage(SendDisplayMessageEvent evt) {
 		view.showErrorMessages(evt.getAction().getMessage());
+	}
+
+	@Override
+	public HasWidgets getSchedulePanel() {
+		return view.getSchedulePanel();
+	}
+
+	@Override
+	public HasWidgets getRequestPanel() {
+		return view.getRequestPanel();
+	}
+
+	@Override
+	public HasWidgets getAccountPanel() {
+		return view.getAccountPanel();
 	}
 }

@@ -11,6 +11,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -21,6 +22,9 @@ public class MainViewImpl extends BaseViewImpl<MainPresenter> implements MainVie
 
 	@UiField VerticalPanel mainPanel;
 	@UiField Button logoutButton;
+	@UiField SimplePanel schedulePanel;
+	@UiField SimplePanel requestPanel;
+	@UiField SimplePanel accountPanel;
 
 	interface MainViewImplUiBinder extends UiBinder<Widget, MainViewImpl> {
 	}
@@ -63,5 +67,22 @@ public class MainViewImpl extends BaseViewImpl<MainPresenter> implements MainVie
 	@Override
 	public void showErrorMessages(String errorMessages) {
 		Window.alert(errorMessages);
+	}
+
+	@Override
+	public HasWidgets getSchedulePanel() {
+		return schedulePanel;
+	}
+
+	@Override
+	public HasWidgets getRequestPanel() {
+		// TODO Auto-generated method stub
+		return requestPanel;
+	}
+
+	@Override
+	public HasWidgets getAccountPanel() {
+		// TODO Auto-generated method stub
+		return accountPanel;
 	}
 }

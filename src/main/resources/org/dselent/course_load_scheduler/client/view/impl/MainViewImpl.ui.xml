@@ -18,15 +18,15 @@
 		<g:TabLayoutPanel barHeight="2" barUnit="EM" width="100%" height="550px">
 		<g:tab>
 			<g:header>Scheduler</g:header>
-			<d:ScheduleViewImpl ui:field="schedulePanel"/>
+			<g:SimplePanel ui:field="schedulePanel"/>
 		</g:tab>
 		<g:tab>
 			<g:header>Request</g:header>
-			<d:UserRequestViewImpl ui:field="requestPanel"/>
+			<g:SimplePanel ui:field="requestPanel"/>
 		</g:tab>
 		<g:tab>
 			<g:header>Account</g:header>
-			<d:AccountViewImpl ui:field="accountPanel"/>
+			<g:SimplePanel ui:field="accountPanel"/>
 		</g:tab>
 		</g:TabLayoutPanel>
 		<g:SimplePanel height="100%" width="100%"/>
