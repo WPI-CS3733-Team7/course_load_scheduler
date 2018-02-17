@@ -138,4 +138,6 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			throw new EmptyStringException();
 		}
 	}
+	
+
 }

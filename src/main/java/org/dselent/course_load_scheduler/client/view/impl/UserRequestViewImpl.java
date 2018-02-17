@@ -150,11 +150,10 @@ public class UserRequestViewImpl extends BaseViewImpl<UserRequestPresenter> impl
 	public TextArea getDescriptionTextArea() {
 		return descriptTextArea;
 	}
-
+	
 	@Override
 	public void setDescriptionTextArea(TextArea descriptionTextArea) {
-		// TODO Auto-generated method stub
 		this.descriptTextArea = descriptionTextArea;
 	}
-
+	
 }

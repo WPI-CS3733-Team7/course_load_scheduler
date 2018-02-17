@@ -314,6 +314,8 @@ InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 			String sectionName = view.getSectionNameText().getText();
 			String sectionId = view.getSectionIdText().getText();
 			//String sectionType = view.getSectionTypeListBox().getSelectedItemText();
+			String sectionType = view.getSectionTypeListBox().getItemText(view.getSectionTypeListBox().getSelectedIndex());
+
 			String population = view.getPopulationText().getText();
 			String year = view.getYearText().getText();
 			String term = view.getTermText().getText();
@@ -451,7 +453,7 @@ InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 			
 			if(validSectionName && validSectionId && validSectionType && validPopulation && validYear && validTerm && validDays && validStartTime && validEndTime)
 			{
-				sendEditSection(sectionName, sectionId, sectionType, population, year, term, day, startTime, endTime);
+				//sendEditSection(sectionName, sectionId, sectionType, population, year, term, day, startTime, endTime);
 			}
 			else
 			{

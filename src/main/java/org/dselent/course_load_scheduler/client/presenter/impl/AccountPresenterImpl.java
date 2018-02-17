@@ -25,8 +25,8 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
 
-public class AccountPresenterImpl  extends BasePresenterImpl implements AccountPresenter, InvalidChangePasswordEventHandler, InvalidEditUserEventHandler{	
-	
+public class AccountPresenterImpl  extends BasePresenterImpl implements AccountPresenter, InvalidChangePasswordEventHandler, InvalidEditUserEventHandler
+{	
 	private IndexPresenter parentPresenter;
 	private AccountView view;
 	private boolean changePasswordClickInProgress;
@@ -91,14 +91,14 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		if(!changePasswordClickInProgress)
 		{
 			changePasswordClickInProgress = true;
-			view.getChangePasswordButton().setEnabled(false);
+			view.getSubmitChangePasswordButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
 			
 			// initially assumes valid password
 			boolean validOldPassword = true;
 			boolean validNewPassword = true;
 			boolean validConfirmNewPassword = true;
-
+			
 			String oldPassword = view.getOldPasswordText().getText();
 			String newPassword = view.getNewPasswordText().getText();
 			String confirmNewPassword = view.getConfirmPasswordText().getText();
@@ -158,7 +158,8 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			
 			/* if the confirm new password field is not the same as the new password, 
 			 * inform the user in the error message */
-			if(confirmNewPassword != newPassword) {
+			if(confirmNewPassword != newPassword)
+			{
 				invalidReasonList.add(InvalidChangePasswordStrings.BAD_CONFIRM_NEW_PASSWORD);
 				validConfirmNewPassword = false;
 			}
@@ -184,6 +185,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		eventBus.fireEvent(scpe);
 	}
 	
+	@Override
 	public void onInvalidChangePassword(InvalidChangePasswordEvent evt)
 	{
 		parentPresenter.hideLoadScreen();
@@ -199,35 +201,24 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	{
 		if(!editUserClickInProgress)
 		{
+			
 			editUserClickInProgress = true;
-			view.getChangePasswordButton().setEnabled(false);
+			view.getSubmitEditUserButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
 			
 			boolean validUserRole = true;
 			boolean validLinkedInstructor = true;
-			String userAdmin = "ADMIN";
-			String userUser = "USER";
 			
-			String userRole = view.getUserRoleText().getText();
-			String linkedInstructor = view.getLinkedInstructorText().getText();
+			String userRole = view.getRoleDropBox().getItemText(view.getRoleDropBox().getSelectedIndex());
+			String linkedInstructor = view.getLinkedInstructorDropBox().getItemText(view.getLinkedInstructorDropBox().getSelectedIndex());
 			String deleted = Boolean.toString(view.isDeleted());
 			
 			List<String> invalidReasonList = new ArrayList<>();
 			
-			try
+			if(userRole == "LINKED USER" && linkedInstructor == "-")
 			{
-				validateField(userRole);
-			}
-			catch(EmptyStringException e)
-			{
-				invalidReasonList.add(InvalidEditUserStrings.NULL_USER_ROLE);
-				validUserRole = false;
-			}
-			
-			if(!(userRole == userAdmin && userRole == userUser))
-			{
-				invalidReasonList.add(InvalidEditUserStrings.BAD_USER_ROLE);
-				validUserRole = false;
+				invalidReasonList.add(InvalidEditUserStrings.LINKED_USER_ERROR);
+				validLinkedInstructor = false;
 			}
 			
 			if(validUserRole && validLinkedInstructor)
@@ -243,6 +234,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		}
 	}
 	
+	@Override
 	public void onInvalidEditUser(InvalidEditUserEvent evt)
 	{
 		parentPresenter.hideLoadScreen();
