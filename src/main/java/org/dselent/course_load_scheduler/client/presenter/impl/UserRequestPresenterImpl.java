@@ -8,16 +8,19 @@ import org.dselent.course_load_scheduler.client.action.SendRequestAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidSubmitStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
+import org.dselent.course_load_scheduler.client.event_handler.InvalidRequestEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.UserRequestPresenter;
 import org.dselent.course_load_scheduler.client.view.BaseView;
 import org.dselent.course_load_scheduler.client.view.UserRequestView;
+
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class UserRequestPresenterImpl extends BasePresenterImpl implements UserRequestPresenter{
+public class UserRequestPresenterImpl extends BasePresenterImpl implements UserRequestPresenter, InvalidRequestEventHandler{
 	private IndexPresenter parentPresenter;
 	private UserRequestView view;
 	private boolean submitClickInProgress;
@@ -40,10 +43,10 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 	@Override
 	public void bind()
 	{
-		/*HandlerRegistration registration;
+		HandlerRegistration registration;
 		
 		registration = eventBus.addHandler(InvalidRequestEvent.TYPE, this);
-		eventBusRegistration.put(InvalidRequestEvent.TYPE, registration); */
+		eventBusRegistration.put(InvalidRequestEvent.TYPE, registration); 
 	}
 	
 	@Override
@@ -104,6 +107,7 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			{
 				InvalidRequestAction ira = new InvalidRequestAction(invalidReasonList);
 				InvalidRequestEvent ire = new InvalidRequestEvent(ira);
+				onInvalidRequest(ire);
 				eventBus.fireEvent(ire);
 			}
 		}
