@@ -146,7 +146,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			
 			/* if the old password is the same as the new password, 
 			 * inform the user in the error message */
-			if(oldPassword == newPassword) {
+			if(oldPassword == newPassword && oldPassword != "") {
 				invalidReasonList.add(InvalidChangePasswordStrings.BAD_NEW_PASSWORD);
 				validNewPassword = false;
 			}
@@ -200,10 +200,9 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	
 	@Override
 	public void editUser()
-	{
+	{	
 		if(!editUserClickInProgress)
 		{
-			
 			editUserClickInProgress = true;
 			view.getSubmitEditUserButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
@@ -216,7 +215,6 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			Boolean deleted = view.isDeleted();
 			
 			List<String> invalidReasonList = new ArrayList<>();
-			
 			if(userRole == "LINKED USER" && linkedInstructor == "-" && !deleted)
 			{
 				invalidReasonList.add(InvalidEditUserStrings.LINKED_USER_ERROR);
@@ -242,11 +240,8 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		view.getSubmitEditUserButton().setEnabled(true);
 		editUserClickInProgress = false;
 		
-		InvalidEditUserAction ieua = evt.getAction();
-		
-		SendDisplayMessageAction sdma = new SendDisplayMessageAction(ieua.toString());
-		SendDisplayMessageEvent sdme = new SendDisplayMessageEvent(sdma);
-		eventBus.fireEvent(sdme);
+		InvalidEditUserAction ieau = evt.getAction();
+		view.showErrorMessages(ieau.toString());
 	}
 	
 	private void sendEditUser(String userRole, String linkedInstructor, String deleted)

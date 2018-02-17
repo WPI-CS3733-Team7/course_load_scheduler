@@ -23,6 +23,9 @@ import com.google.gwt.user.client.ui.ListBox;
 public class UserRequestViewImpl extends BaseViewImpl<UserRequestPresenter> implements UserRequestView {
 
 	private static UserRequestViewImplUiBinder uiBinder = GWT.create(UserRequestViewImplUiBinder.class);
+
+	interface UserRequestViewImplUiBinder extends UiBinder<Widget, UserRequestViewImpl>{}
+	
 	@UiField 
 	Label createLabel;
 	
@@ -55,9 +58,6 @@ public class UserRequestViewImpl extends BaseViewImpl<UserRequestPresenter> impl
 	
 	@UiField 
 	ListBox requestHistoryList;
-
-	interface UserRequestViewImplUiBinder extends UiBinder<Widget, UserRequestViewImpl> {
-	}
 
 	public UserRequestViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));

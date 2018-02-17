@@ -168,7 +168,7 @@ public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> im
 	
 	@Override
 	public void setReplyTextArea(String Text) {
-		this.replyTextArea = replyTextArea;
+		this.replyTextArea.setText(Text);
 	}
 	
 	@Override
@@ -213,6 +213,7 @@ public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> im
 
 	@UiHandler("replyButton")
 	void onReplyButtonClick(ClickEvent event) {
+		presenter.reply();
 	}
 
 	@Override

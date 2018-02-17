@@ -434,28 +434,25 @@ InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 			
 			String sectionName = view.getSectionNameText().getText();
 			String sectionId = view.getSectionIdText().getText();
-			//String sectionType = view.getSectionTypeListBox().getSelectedItemText();
 			String sectionType = view.getSectionTypeListBox().getItemText(view.getSectionTypeListBox().getSelectedIndex());
-
 			String population = view.getPopulationText().getText();
 			String year = view.getYearText().getText();
 			String term = view.getTermText().getText();
-			//String days = view.
 			
 			String day = "";
-			if(view.getMonday().isEnabled() == true) {
+			if(view.getMonday().getValue() == true) {
 				day = "Monday";
 			}
-			else if(view.getTuesday().isEnabled() == true) {
+			else if(view.getTuesday().getValue() == true) {
 				day = "Tuesday";
 			}
-			else if(view.getWednesday().isEnabled() == true) {
+			else if(view.getWednesday().getValue() == true) {
 				day = "Wednesday";
 			}
-			else if(view.getThursday().isEnabled() == true) {
+			else if(view.getThursday().getValue() == true) {
 				day = "Thursday";
 			}
-			else if(view.getFriday().isEnabled() == true) {
+			else if(view.getFriday().getValue() == true) {
 				day = "Friday";
 			}
 			
@@ -574,7 +571,7 @@ InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 			
 			if(validSectionName && validSectionId && validSectionType && validPopulation && validYear && validTerm && validDays && validStartTime && validEndTime)
 			{
-				//sendEditSection(sectionName, sectionId, sectionType, population, year, term, day, startTime, endTime);
+				sendEditSection(sectionName, sectionId, sectionType, population, year, term, day, startTime, endTime);
 			}
 			else
 			{

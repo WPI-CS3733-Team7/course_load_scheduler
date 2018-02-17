@@ -46,8 +46,8 @@ public interface Injector extends Ginjector
     public MainPresenterImpl getMainPresenter();
     public SchedulePresenterImpl getSchedulePresenter();
     public AccountPresenterImpl getAccountPresenter();
-    /*public UserRequestPresenterImpl getUserRequestPresenter();
-    public AdminRequestPresenterImpl getAdminRequestPresenter();*/
+    public AdminRequestPresenterImpl getAdminRequestPresenter();
+    public UserRequestPresenterImpl getUserRequestPresenter();
     
     //views
     public IndexViewImpl getIndexView();
@@ -55,6 +55,6 @@ public interface Injector extends Ginjector
     public ScheduleViewImpl getScheduleView();
     public MainViewImpl getMainView();
     public AccountViewImpl getAccountView();
-    public UserRequestViewImpl getUserRequestView();
     public AdminRequestViewImpl getAdminRequestView();
+    public UserRequestViewImpl getUserRequestView();
 }

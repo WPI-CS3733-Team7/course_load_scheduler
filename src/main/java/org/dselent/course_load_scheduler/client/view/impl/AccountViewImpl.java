@@ -54,9 +54,6 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	HorizontalPanel accountViewPanel;
 	@UiField
 	ListBox userList;
-	
-	
-	
 
 	// Change password pop-up widgets
 	Label changePasswordTitle = new Label("Change Password");
@@ -83,7 +80,7 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	Button deleteEditUserButton = new Button("Delete", new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			//change deleted to true
+			// set deleted to true
 			deleted = true;
 			presenter.editUser();
 		}
@@ -91,7 +88,6 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	Button submitEditUserButton = new Button("Submit", new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			// set deleted to false
 			deleted = false;
 			presenter.editUser();
 		}
