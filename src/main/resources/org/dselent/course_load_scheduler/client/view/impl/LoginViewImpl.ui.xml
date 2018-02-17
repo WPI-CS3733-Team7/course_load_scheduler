@@ -177,7 +177,9 @@
 <g:VerticalPanel ui:field="loginPanel" horizontalAlignment="center">
 	<g:HorizontalPanel width="623px" height="86px">
 		<g:Cell width="100%" height="100%">
-			<g:SimplePanel width="100%" height="100%"/>
+			<g:SimplePanel width="100%" height="100%">
+				<g:Image width="100%" height="88px" url="WEB-INF/classes/org/dselent/course_load_scheduler/client/view/images/wpi_logo.png"/>
+			</g:SimplePanel>
 		</g:Cell>
 		<g:Cell width="100%" height="100%">
 			<g:SimplePanel width="100%" height="100%">
