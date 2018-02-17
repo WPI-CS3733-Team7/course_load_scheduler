@@ -3,11 +3,21 @@ package org.dselent.course_load_scheduler.client.presenter.impl;
 import org.dselent.course_load_scheduler.client.presenter.AccountPresenter;
 import java.util.ArrayList;
 import java.util.List;
-import org.dselent.course_load_scheduler.client.action.InvalidLoginAction;
+
+import org.dselent.course_load_scheduler.client.action.InvalidChangePasswordAction;
+import org.dselent.course_load_scheduler.client.action.InvalidEditUserAction;
 import org.dselent.course_load_scheduler.client.action.SendChangePasswordAction;
+import org.dselent.course_load_scheduler.client.action.SendDisplayMessageAction;
+import org.dselent.course_load_scheduler.client.action.SendEditUserAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidChangePasswordStrings;
-import org.dselent.course_load_scheduler.client.event.InvalidLoginEvent;
+import org.dselent.course_load_scheduler.client.errorstring.InvalidEditUserStrings;
+import org.dselent.course_load_scheduler.client.event.InvalidChangePasswordEvent;
+import org.dselent.course_load_scheduler.client.event.InvalidEditUserEvent;
 import org.dselent.course_load_scheduler.client.event.SendChangePasswordEvent;
+import org.dselent.course_load_scheduler.client.event.SendDisplayMessageEvent;
+import org.dselent.course_load_scheduler.client.event.SendEditUserEvent;
+import org.dselent.course_load_scheduler.client.event_handler.InvalidChangePasswordEventHandler;
+import org.dselent.course_load_scheduler.client.event_handler.InvalidEditUserEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.view.AccountView;
@@ -17,8 +27,8 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
 
-public class AccountPresenterImpl  extends BasePresenterImpl implements AccountPresenter{	
-	
+public class AccountPresenterImpl  extends BasePresenterImpl implements AccountPresenter, InvalidChangePasswordEventHandler, InvalidEditUserEventHandler
+{	
 	private IndexPresenter parentPresenter;
 	private AccountView view;
 	private boolean changePasswordClickInProgress;
@@ -45,11 +55,11 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	{
 		HandlerRegistration registration;
 		
-		//registration = eventBus.addHandler(InvalidChangePasswordEvent.TYPE, this);
-		//eventBusRegistration.put(InvalidChangePasswordEvent.TYPE, registration);
+		registration = eventBus.addHandler(InvalidChangePasswordEvent.TYPE, this);
+		eventBusRegistration.put(InvalidChangePasswordEvent.TYPE, registration);
 		
-		//registration = eventBus.addHandler(InvalidEditUserEvent.TYPE, this);
-		//eventBusRegistration.put(InvalidEditUserEvent.TYPE, registration);
+		registration = eventBus.addHandler(InvalidEditUserEvent.TYPE, this);
+		eventBusRegistration.put(InvalidEditUserEvent.TYPE, registration);
 	}
 	
 	@Override
@@ -83,14 +93,14 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		if(!changePasswordClickInProgress)
 		{
 			changePasswordClickInProgress = true;
-			view.getChangePasswordButton().setEnabled(false);
+			view.getSubmitChangePasswordButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
 			
 			// initially assumes valid password
 			boolean validOldPassword = true;
 			boolean validNewPassword = true;
 			boolean validConfirmNewPassword = true;
-
+			
 			String oldPassword = view.getOldPasswordText().getText();
 			String newPassword = view.getNewPasswordText().getText();
 			String confirmNewPassword = view.getConfirmPasswordText().getText();
@@ -150,7 +160,8 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			
 			/* if the confirm new password field is not the same as the new password, 
 			 * inform the user in the error message */
-			if(confirmNewPassword != newPassword) {
+			if(confirmNewPassword != newPassword)
+			{
 				invalidReasonList.add(InvalidChangePasswordStrings.BAD_CONFIRM_NEW_PASSWORD);
 				validConfirmNewPassword = false;
 			}
@@ -162,9 +173,9 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			}
 			else
 			{
-				InvalidLoginAction ila = new InvalidLoginAction(invalidReasonList);
-				InvalidLoginEvent ile = new InvalidLoginEvent(ila);
-				eventBus.fireEvent(ile);
+				InvalidChangePasswordAction icpa = new InvalidChangePasswordAction(invalidReasonList);
+				InvalidChangePasswordEvent icpe = new InvalidChangePasswordEvent(icpa);
+				eventBus.fireEvent(icpe);
 			}
 		}
 	}
@@ -177,19 +188,72 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	}
 	
 	@Override
+	public void onInvalidChangePassword(InvalidChangePasswordEvent evt)
+	{
+		parentPresenter.hideLoadScreen();
+		view.getSubmitChangePasswordButton().setEnabled(true);
+		changePasswordClickInProgress = false;
+		
+		InvalidChangePasswordAction icpa = evt.getAction();
+		view.showErrorMessages(icpa.toString());
+	}
+	
+	@Override
 	public void editUser()
 	{
 		if(!editUserClickInProgress)
 		{
+			
 			editUserClickInProgress = true;
+			view.getSubmitEditUserButton().setEnabled(false);
+			parentPresenter.showLoadScreen();
+			
+			boolean validUserRole = true;
+			boolean validLinkedInstructor = true;
+			
+			String userRole = view.getRoleDropBox().getItemText(view.getRoleDropBox().getSelectedIndex());
+			String linkedInstructor = view.getLinkedInstructorDropBox().getItemText(view.getLinkedInstructorDropBox().getSelectedIndex());
+			Boolean deleted = view.isDeleted();
+			
+			List<String> invalidReasonList = new ArrayList<>();
+			
+			if(userRole == "LINKED USER" && linkedInstructor == "-" && !deleted)
+			{
+				invalidReasonList.add(InvalidEditUserStrings.LINKED_USER_ERROR);
+				validLinkedInstructor = false;
+			}
+			if(validUserRole && validLinkedInstructor)
+			{
+				sendEditUser(userRole, linkedInstructor, deleted.toString());
+			}
+			else
+			{
+				InvalidEditUserAction ieua = new InvalidEditUserAction(invalidReasonList);
+				InvalidEditUserEvent ieue = new InvalidEditUserEvent(ieua);
+				eventBus.fireEvent(ieue);
+			}
 		}
 	}
 	
-	private void sendEditUser()
+	@Override
+	public void onInvalidEditUser(InvalidEditUserEvent evt)
 	{
-		//SendEditUserAction seua = new SendEditUserAction();
-		//SendEditUserEvent seue = new SendEditUserEvent(seue);
-		//eventBus.fireEvent(seue);
+		parentPresenter.hideLoadScreen();
+		view.getSubmitEditUserButton().setEnabled(true);
+		editUserClickInProgress = false;
+		
+		InvalidEditUserAction ieua = evt.getAction();
+		
+		SendDisplayMessageAction sdma = new SendDisplayMessageAction(ieua.toString());
+		SendDisplayMessageEvent sdme = new SendDisplayMessageEvent(sdma);
+		eventBus.fireEvent(sdme);
+	}
+	
+	private void sendEditUser(String userRole, String linkedInstructor, String deleted)
+	{
+		SendEditUserAction seua = new SendEditUserAction(userRole, linkedInstructor, deleted);
+		SendEditUserEvent seue = new SendEditUserEvent(seua);
+		eventBus.fireEvent(seue);
 	}
 	
 	private void validateField(String field) throws EmptyStringException

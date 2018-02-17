@@ -1,6 +1,5 @@
 package org.dselent.course_load_scheduler.client.view.impl;
 
-
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
 import com.google.gwt.core.client.GWT;
@@ -9,8 +8,10 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
@@ -52,6 +53,7 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 	@UiField ListBox instructorBox;
 	@UiField ListBox courseBox;
 		
+		boolean isCreating;
 
 		/* Pop-up Widgets for Instructor */
 		Label popInstructorLabelFirstName = new Label("First Name:");
@@ -117,14 +119,33 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		Label sectionIdLabel = new Label("Section ID (CRN)");
 		Label sectionTypeLabel = new Label("Section Type");
 		Label populationLabel = new Label("Population");
+		Label yearLabel = new Label("Year");
+		Label termLabel = new Label("Term");
+		Label daysLabel = new Label("Days of the Week");
+		Label mondayLabel = new Label("M");
+		Label tuesdayLabel = new Label("T");
+		Label wednesdayLabel = new Label("W");
+		Label thursdayLabel = new Label("R");
+		Label fridayLabel = new Label("F");
+		Label startTimeLabel = new Label("Start Time");
+		Label endTimeLabel = new Label("End Time");
 		TextBox sectionNameText = new TextBox();
 		TextBox sectionIdText = new TextBox();
-		TextBox sectionTypeText = new TextBox();
+		ListBox sectionTypeListBox = new ListBox();
 		TextBox populationText = new TextBox();
+		TextBox yearText = new TextBox();
+		TextBox termText = new TextBox();
+		CheckBox monday = new CheckBox();
+		CheckBox tuesday = new CheckBox();
+		CheckBox wednesday = new CheckBox();
+		CheckBox thursday = new CheckBox();
+		CheckBox friday = new CheckBox();
+		TextBox startTimeText = new TextBox();
+		TextBox endTimeText = new TextBox();
 		Button sectionSubmitButton = new Button("Submit", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				//presenter.();
+				presenter.editSection();
 			}
 		});
 
@@ -189,16 +210,67 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			editPopup.center();
 		}
 		
-		private void makeSectionPopUp(boolean creating) {
-		Grid sectionGrid = new Grid(4, 2);		
-		sectionGrid.setWidget(0, 0, sectionNameLabel);
-		sectionGrid.setWidget(0, 1, sectionNameText);
-		sectionGrid.setWidget(1, 0, sectionIdLabel);
-		sectionGrid.setWidget(1, 1, sectionIdText);
-		sectionGrid.setWidget(2, 0, sectionTypeLabel);
-		sectionGrid.setWidget(2, 1, sectionTypeText);
-		sectionGrid.setWidget(3, 0, populationLabel);
-		sectionGrid.setWidget(3, 1, populationText);
+		//Creates the grid for the section name, section id, section type, population, year, term
+		
+		private Grid makeFirstGrid() {
+			Grid firstGrid = new Grid(6, 2);
+			firstGrid.setWidget(0, 0, sectionNameLabel);
+			firstGrid.setWidget(0, 1, sectionNameText);
+			firstGrid.setWidget(1, 0, sectionIdLabel);
+			firstGrid.setWidget(1, 1, sectionIdText);
+			firstGrid.setWidget(2, 0, sectionTypeLabel);
+			firstGrid.setWidget(2, 1, sectionTypeListBox);
+			firstGrid.setWidget(3, 0, populationLabel);
+			firstGrid.setWidget(3, 1, populationText);
+			firstGrid.setWidget(4, 0, yearLabel);
+			firstGrid.setWidget(4, 1, yearText);
+			firstGrid.setWidget(5, 0, termLabel);
+			firstGrid.setWidget(5, 1, termText);
+			
+			return firstGrid;
+			
+		}
+		
+		//Creates the grid for the days of the week check boxes in the Course Section pop-up
+		
+		private Grid makeCalendarInfoGrid() {
+			Grid calendarInfoGrid = new Grid(1, 10);
+			calendarInfoGrid.setWidget(0, 0, monday);
+			calendarInfoGrid.setWidget(0, 1, mondayLabel);
+			calendarInfoGrid.setWidget(0, 2, tuesday);
+			calendarInfoGrid.setWidget(0, 3, tuesdayLabel);
+			calendarInfoGrid.setWidget(0, 4, wednesday);
+			calendarInfoGrid.setWidget(0, 5, wednesdayLabel);
+			calendarInfoGrid.setWidget(0, 6, thursday);
+			calendarInfoGrid.setWidget(0, 7, thursdayLabel);
+			calendarInfoGrid.setWidget(0, 8, friday);
+			calendarInfoGrid.setWidget(0, 9, fridayLabel);
+			
+			return calendarInfoGrid;
+			
+		}
+		
+		// Creates the grid for start time, end time
+		
+		private Grid makeLastGrid() {
+			Grid lastGrid = new Grid(2, 2);
+			lastGrid.setWidget(0, 0, startTimeLabel);
+			lastGrid.setWidget(0, 1, startTimeText);
+			lastGrid.setWidget(1, 0, endTimeLabel);
+			lastGrid.setWidget(1, 1, endTimeText);
+			
+			return lastGrid;
+			
+		}
+		
+		//Combines all 3 grids into one pop-up
+		
+		private void makeSectionPopUp() {
+		Grid sectionGrid = new Grid(4, 1);		
+		sectionGrid.setWidget(0, 0, makeFirstGrid());
+		sectionGrid.setWidget(1, 0, daysLabel);
+		sectionGrid.setWidget(2, 0, makeCalendarInfoGrid());
+		sectionGrid.setWidget(3, 0, makeLastGrid());
 		
 		VerticalPanel vertPanel = new VerticalPanel();
 		vertPanel.add(sectionLabel);
@@ -290,13 +362,13 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		}
 
 		@Override
-		public TextBox getSectionTypeText() {
-			return sectionTypeText;
+		public ListBox getSectionTypeListBox() {
+			return sectionTypeListBox;
 		}
 
 		@Override
-		public void setSectionTypeText(TextBox sectionTypeTextBox) {
-			this.sectionTypeText = sectionTypeTextBox;			
+		public void setSectionTypeListBox(ListBox sectionTypeListBox) {
+			this.sectionTypeListBox = sectionTypeListBox;			
 		}
 
 		@Override
@@ -309,6 +381,96 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			this.populationText = populationTextBox;			
 		}
 		
+		@Override
+		public TextBox getYearText() {
+			return yearText;
+		}
+
+		@Override
+		public void setYearText(TextBox yearText) {
+			this.yearText = yearText;
+		}
+
+		@Override
+		public TextBox getTermText() {
+			return termText;
+		}
+
+		@Override
+		public void setTermText(TextBox termText) {
+			this.termText = termText;
+		}
+
+		@Override
+		public CheckBox getMonday() {
+			return monday;
+		}
+
+		@Override
+		public void setMonday(CheckBox monday) {
+			this.monday = monday;
+		}
+
+		@Override
+		public CheckBox getTuesday() {
+			return tuesday;
+		}
+
+		@Override
+		public void setTuesday(CheckBox tuesday) {
+			this.tuesday = tuesday;
+		}
+
+		@Override
+		public CheckBox getWednesday() {
+			return wednesday;
+		}
+
+		@Override
+		public void setWednesday(CheckBox wednesday) {
+			this.wednesday = wednesday;
+		}
+
+		@Override
+		public CheckBox getThursday() {
+			return thursday;
+		}
+		
+		@Override
+		public void setThursday(CheckBox thursday) {
+			this.thursday = thursday;
+		}
+
+		@Override
+		public CheckBox getFriday() {
+			return friday;
+		}
+
+		@Override
+		public void setFriday(CheckBox friday) {
+			this.friday = friday;
+		}
+
+		@Override
+		public TextBox getStartTimeText() {
+			return startTimeText;
+		}
+
+		@Override
+		public void setStartTimeText(TextBox startTimeText) {
+			this.startTimeText = startTimeText;
+		}
+
+		@Override
+		public TextBox getEndTimeText() {
+			return endTimeText;
+		}
+
+		@Override
+		public void setEndTimeText(TextBox endTimeText) {
+			this.endTimeText = endTimeText;
+		}
+
 		public Button getInstructorSubmitButton() {
 			return popInstructorButtonSubmit;
 		}
@@ -381,48 +543,14 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		
 		@UiHandler("createSection")
 		void onClickAddSection(ClickEvent event) {
-			Grid sectionGrid = new Grid(4, 2);		
-			sectionGrid.setWidget(0, 0, sectionNameLabel);
-			sectionGrid.setWidget(0, 1, sectionNameText);
-			sectionGrid.setWidget(1, 0, sectionIdLabel);
-			sectionGrid.setWidget(1, 1, sectionIdText);
-			sectionGrid.setWidget(2, 0, sectionTypeLabel);
-			sectionGrid.setWidget(2, 1, sectionTypeText);
-			sectionGrid.setWidget(3, 0, populationLabel);
-			sectionGrid.setWidget(3, 1, populationText);
-			
-			VerticalPanel vertPanel = new VerticalPanel();
-			vertPanel.add(sectionLabel);
-			vertPanel.add(sectionGrid);
-			vertPanel.add(sectionSubmitButton);
-			
-			PopupPanel registerPopup = new PopupPanel(true);
-			registerPopup.add(vertPanel);
-			registerPopup.isGlassEnabled();
-			registerPopup.center();
+			isCreating=true;
+			makeSectionPopUp();
 		}
 		
 		@UiHandler("editSection")
 		void onClickEditSection(ClickEvent event) {
-			Grid sectionGrid = new Grid(4, 2);		
-			sectionGrid.setWidget(0, 0, sectionNameLabel);
-			sectionGrid.setWidget(0, 1, sectionNameText);
-			sectionGrid.setWidget(1, 0, sectionIdLabel);
-			sectionGrid.setWidget(1, 1, sectionIdText);
-			sectionGrid.setWidget(2, 0, sectionTypeLabel);
-			sectionGrid.setWidget(2, 1, sectionTypeText);
-			sectionGrid.setWidget(3, 0, populationLabel);
-			sectionGrid.setWidget(3, 1, populationText);
-			
-			VerticalPanel vertPanel = new VerticalPanel();
-			vertPanel.add(sectionLabel);
-			vertPanel.add(sectionGrid);
-			vertPanel.add(sectionSubmitButton);
-			
-			PopupPanel sectionPopup = new PopupPanel(true);
-			sectionPopup.add(vertPanel);
-			sectionPopup.isGlassEnabled();
-			sectionPopup.center();
+			isCreating=false;
+			makeSectionPopUp();
 		}
 		
 		@UiHandler("instructorBox")
@@ -439,8 +567,6 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 	void onClickValidate(ClickEvent event) {
 		presenter.validate();
 	}
-		
-		//UiHandlers for select year/term labels and list boxes needed?
 
 /*
  * DEAD CODE
@@ -605,6 +731,13 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		}
 */
 
+		public boolean isCreating() {
+			return isCreating;
+		}
+
+		public void setCreating(boolean isCreating) {
+			this.isCreating = isCreating;
+		}
 
 		@Override
 		public ListBox getInstructorBox() {

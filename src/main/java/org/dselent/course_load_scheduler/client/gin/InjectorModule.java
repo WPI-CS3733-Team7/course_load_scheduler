@@ -1,16 +1,24 @@
 package org.dselent.course_load_scheduler.client.gin;
 
+import org.dselent.course_load_scheduler.client.presenter.AccountPresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.LoginPresenter;
+import org.dselent.course_load_scheduler.client.presenter.MainPresenter;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
+import org.dselent.course_load_scheduler.client.presenter.impl.AccountPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.IndexPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.LoginPresenterImpl;
+import org.dselent.course_load_scheduler.client.presenter.impl.MainPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.SchedulePresenterImpl;
+import org.dselent.course_load_scheduler.client.view.AccountView;
 import org.dselent.course_load_scheduler.client.view.IndexView;
 import org.dselent.course_load_scheduler.client.view.LoginView;
+import org.dselent.course_load_scheduler.client.view.MainView;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
+import org.dselent.course_load_scheduler.client.view.impl.AccountViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.IndexViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.LoginViewImpl;
+import org.dselent.course_load_scheduler.client.view.impl.MainViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.ScheduleViewImpl;
 
 import com.google.gwt.event.shared.SimpleEventBus;
@@ -35,11 +43,15 @@ public class InjectorModule extends AbstractGinModule
         bind(IndexPresenter.class).to(IndexPresenterImpl.class).in(Singleton.class);
         bind(LoginPresenter.class).to(LoginPresenterImpl.class).in(Singleton.class);
         bind(SchedulePresenter.class).to(SchedulePresenterImpl.class).in(Singleton.class);
+        bind(MainPresenter.class).to(MainPresenterImpl.class).in(Singleton.class);
+        bind(AccountPresenter.class).to(AccountPresenterImpl.class).in(Singleton.class);
         
         // views
         bind(IndexView.class).to(IndexViewImpl.class).in(Singleton.class);
         bind(LoginView.class).to(LoginViewImpl.class).in(Singleton.class);
         bind(ScheduleView.class).to(ScheduleViewImpl.class).in(Singleton.class);
+        bind(MainView.class).to(MainViewImpl.class).in(Singleton.class);
+        bind(AccountView.class).to(AccountViewImpl.class).in(Singleton.class);
 
     }
 	

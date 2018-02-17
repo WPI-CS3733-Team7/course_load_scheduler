@@ -6,8 +6,11 @@ import java.util.List;
 import org.dselent.course_load_scheduler.client.action.InvalidCreateCourseAction;
 import org.dselent.course_load_scheduler.client.action.InvalidCreateInstructorAction;
 import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
+import org.dselent.course_load_scheduler.client.action.InvalidLoginAction;
+import org.dselent.course_load_scheduler.client.action.InvalidRegisterAction;
 import org.dselent.course_load_scheduler.client.action.SendEditCourseAction;
 import org.dselent.course_load_scheduler.client.action.SendEditInstructorAction;
+import org.dselent.course_load_scheduler.client.action.SendRegisterAction;
 import org.dselent.course_load_scheduler.client.action.SendEditSectionAction;
 import org.dselent.course_load_scheduler.client.action.SendValidateAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidEditCourseStrings;
@@ -18,6 +21,9 @@ import org.dselent.course_load_scheduler.client.event.SendEditCourseEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidCreateCourseEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidCreateInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
+import org.dselent.course_load_scheduler.client.event.InvalidLoginEvent;
+import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
+import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.SendValidateEvent;
 import org.dselent.course_load_scheduler.client.event_handler.InvalidCreateCourseEventHandler;
@@ -29,12 +35,14 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
+import org.dselent.course_load_scheduler.client.view.impl.ModelButton;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class SchedulePresenterImpl extends BasePresenterImpl implements SchedulePresenter, InvalidEditSectionEventHandler, InvalidCreateCourseEventHandler, InvalidCreateInstructorEventHandler {
+public class SchedulePresenterImpl extends BasePresenterImpl implements SchedulePresenter, InvalidCreateInstructorEventHandler,
+InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 	
 	private IndexPresenter parentPresenter;
 	private ScheduleView view;
@@ -108,6 +116,12 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	public void bind()
 	{
 		HandlerRegistration registration;
+		
+		registration = eventBus.addHandler(InvalidCreateInstructorEvent.TYPE, this);
+		eventBusRegistration.put(InvalidCreateInstructorEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(InvalidCreateCourseEvent.TYPE,  this);
+		eventBusRegistration.put(InvalidCreateCourseEvent.TYPE, registration);				
 		
 		registration = eventBus.addHandler(InvalidEditSectionEvent.TYPE, this);
 		eventBusRegistration.put(InvalidEditSectionEvent.TYPE, registration);
@@ -412,11 +426,41 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			boolean validSectionId = true;
 			boolean validSectionType = true;
 			boolean validPopulation = true;
+			boolean validYear = true;
+			boolean validTerm = true;
+			boolean validDays = true;
+			boolean validStartTime = true;
+			boolean validEndTime = true;
 			
 			String sectionName = view.getSectionNameText().getText();
 			String sectionId = view.getSectionIdText().getText();
-			String sectionType = view.getSectionTypeText().getText();
+			//String sectionType = view.getSectionTypeListBox().getSelectedItemText();
+			String sectionType = view.getSectionTypeListBox().getItemText(view.getSectionTypeListBox().getSelectedIndex());
+
 			String population = view.getPopulationText().getText();
+			String year = view.getYearText().getText();
+			String term = view.getTermText().getText();
+			//String days = view.
+			
+			String day = "";
+			if(view.getMonday().isEnabled() == true) {
+				day = "Monday";
+			}
+			else if(view.getTuesday().isEnabled() == true) {
+				day = "Tuesday";
+			}
+			else if(view.getWednesday().isEnabled() == true) {
+				day = "Wednesday";
+			}
+			else if(view.getThursday().isEnabled() == true) {
+				day = "Thursday";
+			}
+			else if(view.getFriday().isEnabled() == true) {
+				day = "Friday";
+			}
+			
+			String startTime = view.getStartTimeText().getText();
+			String endTime = view.getEndTimeText().getText();
 			
 			List<String> invalidReasonList = new ArrayList<>();
 			
@@ -470,9 +514,67 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 
 			//
 			
-			if(validSectionName && validSectionId && validSectionType && validPopulation)
+			try
 			{
-				sendEditSection(sectionName, sectionId, sectionType, population);
+				validateField(year);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.NULL_YEAR);
+				validYear = false;
+			}
+			
+			//
+			
+			try
+			{
+				validateField(term);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.NULL_TERM);
+				validTerm = false;
+			}
+			
+			//
+			
+			try
+			{
+				validateField(day);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.NULL_DAYS);
+				validDays = false;
+			}
+			
+			//
+			
+			try
+			{
+				validateField(startTime);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.NULL_START_TIME);
+				validStartTime = false;
+			}
+			
+			//
+			
+			try
+			{
+				validateField(endTime);
+			}
+			catch(EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.NULL_END_TIME);
+				validEndTime = false;
+			}
+			
+			if(validSectionName && validSectionId && validSectionType && validPopulation && validYear && validTerm && validDays && validStartTime && validEndTime)
+			{
+				//sendEditSection(sectionName, sectionId, sectionType, population, year, term, day, startTime, endTime);
 			}
 			else
 			{
@@ -496,9 +598,10 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		view.showErrorMessages(iesa.toString());
 	}
 	
-	private void sendEditSection(String sectionName, String sectionId, String sectionType, String population)
+	private void sendEditSection(String sectionName, String sectionId, String sectionType, String population, String year, String term, String days, String startTime,
+			String endTime)
 	{
-		SendEditSectionAction sesa = new SendEditSectionAction(sectionName, sectionId, sectionType, population);
+		SendEditSectionAction sesa = new SendEditSectionAction(sectionName, sectionId, sectionType, population, year, term, days, startTime, endTime);
 		SendEditSectionEvent sese = new SendEditSectionEvent(sesa);
 		eventBus.fireEvent(sese);
 	}

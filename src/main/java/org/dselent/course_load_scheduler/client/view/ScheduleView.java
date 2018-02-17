@@ -2,6 +2,8 @@ package org.dselent.course_load_scheduler.client.view;
 
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox; 
 
@@ -31,8 +33,8 @@ public interface ScheduleView extends BaseView<SchedulePresenter>{
 	void setSectionNameText(TextBox sectionNameTextBox);
 	TextBox getSectionIdText();
 	void setSectionIdText(TextBox sectionIdTextBox);
-	TextBox getSectionTypeText();
-	void setSectionTypeText(TextBox sectionTypeTextBox);
+	ListBox getSectionTypeListBox();
+	void setSectionTypeListBox(ListBox sectionTypeListBox);
 	TextBox getPopulationText();
 	void setPopulationText(TextBox populationTextBox);
 	
@@ -63,4 +65,25 @@ public interface ScheduleView extends BaseView<SchedulePresenter>{
 	public Button getCourseDeleteButton();
 	public Button getInstructorCreateButton();
 	public Button getCourseCreateButton();
+	
+	boolean isCreating();
+	void setCreating(boolean c);
+	TextBox getYearText();
+	void setYearText(TextBox yearText);
+	TextBox getTermText();
+	void setTermText(TextBox termText);
+	CheckBox getMonday();
+	void setMonday(CheckBox monday);
+	CheckBox getTuesday();
+	void setTuesday(CheckBox tuesday);
+	CheckBox getWednesday();
+	void setWednesday(CheckBox wednesday);
+	CheckBox getThursday();
+	void setThursday(CheckBox thursday);
+	CheckBox getFriday();
+	void setFriday(CheckBox friday);
+	TextBox getStartTimeText();
+	void setStartTimeText(TextBox startTimeText);
+	TextBox getEndTimeText();
+	void setEndTimeText(TextBox endTimeText);
 }

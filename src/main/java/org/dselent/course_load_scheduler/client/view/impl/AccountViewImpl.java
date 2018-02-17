@@ -2,6 +2,7 @@ package org.dselent.course_load_scheduler.client.view.impl;
 
 import org.dselent.course_load_scheduler.client.presenter.AccountPresenter;
 import org.dselent.course_load_scheduler.client.view.AccountView;
+import org.dselent.course_load_scheduler.client.view.impl.AccountViewImpl;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -14,11 +15,13 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.ListBox;
 
 
 public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements AccountView {
@@ -30,25 +33,30 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	@UiField 
 	Label nameLabel;
 	@UiField 
-	TextBox nameTextBox;
+	Label changingNameLabel;
 	@UiField 
 	Label usernameLabel;
 	@UiField 
-	TextBox usernameTextBox;
+	Label changingUsernameLabel;
 	@UiField 
 	Label accountStateLabel;
 	@UiField 
-	TextBox accountStateTextBox;
+	Label changingAccountStateLabel;
 	@UiField 
 	Label emailLabel;
 	@UiField 
-	TextBox emailTextBox;
+	Label changingEmailLabel;
 	@UiField 
 	Button changePasswordButton;
 	@UiField 
 	Button editUserButton;
 	@UiField 
 	HorizontalPanel accountViewPanel;
+	@UiField
+	ListBox userList;
+	
+	
+	
 
 	// Change password pop-up widgets
 	Label changePasswordTitle = new Label("Change Password");
@@ -61,7 +69,7 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	Button submitChangePasswordButton = new Button("Submit", new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			//presenter.changePassword();
+			presenter.changePassword();
 		}
 	});
 	
@@ -69,18 +77,23 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	Label editUserTitle = new Label("Edit User");
 	Label editUserRole = new Label("Role");
 	Label editUserLinked = new Label("Linked Instructor");
+	ListBox roleDropBox = new ListBox(false);
+	ListBox linkedInstructorDropBox = new ListBox(false);
+	private boolean deleted = false;
 	Button deleteEditUserButton = new Button("Delete", new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
 			//change deleted to true
-			//presenter.editUser()
+			deleted = true;
+			presenter.editUser();
 		}
 	});
 	Button submitEditUserButton = new Button("Submit", new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
 			// set deleted to false
-			//presenter.editUser();
+			deleted = false;
+			presenter.editUser();
 		}
 	});
 
@@ -105,8 +118,20 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		return submitEditUserButton;
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public AccountViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
+		roleDropBox.addItem("ADMIN");
+		roleDropBox.addItem("LINKED USER");
+		roleDropBox.addItem("USER");
+		linkedInstructorDropBox.addItem("-");
 	}
 
 	public Label getNameLabel() {
@@ -117,12 +142,12 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		this.nameLabel = nameLabel;
 	}
 
-	public TextBox getNameTextBox() {
-		return nameTextBox;
+	public Label getChangingNameLabel() {
+		return changingNameLabel;
 	}
 
-	public void setNameTextBox(TextBox nameTextBox) {
-		this.nameTextBox = nameTextBox;
+	public void setChangingNameLabel(Label changingNameLabel) {
+		this.changingNameLabel = changingNameLabel;
 	}
 
 	public Label getUsernameLabel() {
@@ -133,12 +158,12 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		this.usernameLabel = usernameLabel;
 	}
 
-	public TextBox getUsernameTextBox() {
-		return usernameTextBox;
+	public Label getChangingUsernameLabel() {
+		return changingUsernameLabel;
 	}
 
-	public void setUsernameTextBox(TextBox usernameTextBox) {
-		this.usernameTextBox = usernameTextBox;
+	public void setChangingUsernameLabel(Label changingUsernameLabel) {
+		this.changingUsernameLabel = changingUsernameLabel;
 	}
 
 	public Label getAccountStateLabel() {
@@ -149,12 +174,12 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		this.accountStateLabel = accountStateLabel;
 	}
 
-	public TextBox getAccountStateTextBox() {
-		return accountStateTextBox;
+	public Label getChangingAccountStateLabel() {
+		return changingAccountStateLabel;
 	}
 
-	public void setAccountStateTextBox(TextBox accountStateTextBox) {
-		this.accountStateTextBox = accountStateTextBox;
+	public void setChangingAccountStateLabel(Label changingAccountStateLabel) {
+		this.changingAccountStateLabel = changingAccountStateLabel;
 	}
 
 	public Label getEmailLabel() {
@@ -165,12 +190,20 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		this.emailLabel = emailLabel;
 	}
 
-	public TextBox getEmailTextBox() {
-		return emailTextBox;
+	public Label getChangingEmailLabel() {
+		return changingEmailLabel;
 	}
 
-	public void setEmailTextBox(TextBox emailTextBox) {
-		this.emailTextBox = emailTextBox;
+	public void setChangingEmailLabel(Label changingEmailLabel) {
+		this.changingEmailLabel = changingEmailLabel;
+	}
+	
+	public ListBox getUserList() {
+		return userList;
+	}
+
+	public void setUserList(ListBox userList) {
+		this.userList = userList;
 	}
 
 	public Button getChangePasswordButton() {
@@ -245,9 +278,9 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	{
 		Grid regGrid = new Grid(3, 2);
 		regGrid.setWidget(0, 0, editUserRole);
-		// set 0, 1 to a drop down menu
+		regGrid.setWidget(0, 1, roleDropBox);
 		regGrid.setWidget(1, 0, editUserLinked);
-		// set 1, 1 to a drop down menu
+		regGrid.setWidget(1, 1, linkedInstructorDropBox);
 		regGrid.setWidget(2, 0, deleteEditUserButton);
 		regGrid.setWidget(2, 1, submitEditUserButton);
 		
@@ -261,6 +294,11 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		registerPopup.center();
 	}
 
+	public ListBox getRoleDropBox() {
+		return roleDropBox;
+	}
 
-	
+	public ListBox getLinkedInstructorDropBox() {
+		return linkedInstructorDropBox;
+	}
 }

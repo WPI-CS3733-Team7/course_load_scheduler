@@ -1,0 +1,23 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	
+	</ui:style>
+	<g:HorizontalPanel ui:field="requestTabPanel">
+		<g:VerticalPanel width="293px" height="464px" ui:field="createPanel">
+			<g:Label text="Create Request" horizontalAlignment="ALIGN_CENTER" ui:field="createLabel"/>
+			<g:Label text="Request Type" ui:field="requestTypeLabel"/>
+			<g:RadioButton name="new name" text="Course" ui:field="courseRdo"/>
+			<g:RadioButton name="new name" text="Other" ui:field="otherRdo"/>
+			<g:TextArea width="293px" height="130px" ui:field="descriptTextArea"/>
+			<g:Cell horizontalAlignment="ALIGN_CENTER">
+				<g:Button text="Submit" ui:field="submitButton"/>
+			</g:Cell>
+		</g:VerticalPanel>
+		<g:VerticalPanel width="293px" height="464px" ui:field="requestHistoryPanel">
+			<g:Label text="Request History" ui:field="requestHistoryLabel" horizontalAlignment="ALIGN_CENTER"/>
+			<g:ListBox visibleItemCount="5" width="293px" height="201px" ui:field="requestHistoryList"/>
+		</g:VerticalPanel>
+	</g:HorizontalPanel>
+</ui:UiBinder> 

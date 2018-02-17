@@ -1,0 +1,35 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:d="urn:import:org.dselent.course_load_scheduler.client.view.impl">
+	<ui:style>
+	.important {
+		font-weight: bold;
+	}
+	</ui:style>
+	<g:VerticalPanel width="900px" height="20%" ui:field="mainPanel">
+		<g:HorizontalPanel width="100%" height="34px">
+			<g:SimplePanel width="100%" height="100%"/>
+			<g:SimplePanel width="100%" height="100%"/>
+			<g:SimplePanel width="100%" height="100%">
+				<g:Button width="70%" height="100%" ui:field="logoutButton">Logout</g:Button>
+			</g:SimplePanel>
+		</g:HorizontalPanel>
+		<g:TabLayoutPanel barHeight="2" barUnit="EM" width="100%" height="550px">
+		<g:tab>
+			<g:header>Scheduler</g:header>
+			<d:ScheduleViewImpl ui:field="schedulePanel"/>
+		</g:tab>
+		<g:tab>
+			<g:header>Request</g:header>
+			<d:UserRequestViewImpl ui:field="requestPanel"/>
+		</g:tab>
+		<g:tab>
+			<g:header>Account</g:header>
+			<d:AccountViewImpl ui:field="accountPanel"/>
+		</g:tab>
+		</g:TabLayoutPanel>
+		<g:SimplePanel height="100%" width="100%"/>
+		
+	</g:VerticalPanel>
+</ui:UiBinder>

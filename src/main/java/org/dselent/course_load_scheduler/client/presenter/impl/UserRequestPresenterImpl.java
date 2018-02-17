@@ -5,9 +5,10 @@ import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidRequestAction;
 import org.dselent.course_load_scheduler.client.action.SendRequestAction;
-import org.dselent.course_load_scheduler.client.errorstring.InvalidRequestStrings;
+import org.dselent.course_load_scheduler.client.errorstring.InvalidSubmitStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
+import org.dselent.course_load_scheduler.client.event_handler.InvalidRequestEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
@@ -19,7 +20,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class UserRequestPresenterImpl extends BasePresenterImpl implements UserRequestPresenter{
+public class UserRequestPresenterImpl extends BasePresenterImpl implements UserRequestPresenter, InvalidRequestEventHandler{
 	private IndexPresenter parentPresenter;
 	private UserRequestView view;
 	private boolean submitClickInProgress;
@@ -40,16 +41,23 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 	}
 
 	@Override
-	public void go(HasWidgets container) {
-		// TODO Auto-generated method stub
+	public void bind()
+	{
 		HandlerRegistration registration;
 		
 		registration = eventBus.addHandler(InvalidRequestEvent.TYPE, this);
 		eventBusRegistration.put(InvalidRequestEvent.TYPE, registration);
 	}
+	
+	@Override
+	public void go(HasWidgets container) {
+		// TODO Auto-generated method stub
+		container.clear();
+		container.add(view.getWidgetContainer());
+	}
 
 	@Override
-	public UserRequestView getView() {
+	public BaseView<? extends BasePresenter> getView() {
 		// TODO Auto-generated method stub
 		return view;
 	}
@@ -75,15 +83,10 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			view.getSubmitButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
 			
-			
 			String description = view.getDescriptionText().getText();
-			String courseType = view.getCourseRdo().getText();
-			String otherType = view.getOtherRdo().getText();
 			
-			
-			boolean validRequest = true;
-			boolean validDescription = true;
-			
+			boolean validRequesttype = true;
+
 			List<String> invalidReasonList = new ArrayList<>();
 			
 			try
@@ -92,12 +95,11 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			}
 			catch(EmptyStringException e)
 			{
-				invalidReasonList.add(InvalidRequestStrings.NULL_DESCRIPTION);
-				
-				validDescription = false;
+				invalidReasonList.add(InvalidSubmitStrings.NULL_REQUESTTYPE);
+				validRequesttype = false;
 			}
 			
-			if(validDescription)
+			if(validRequesttype)
 			{
 				sendRequest(description);
 			}
@@ -109,9 +111,20 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			}
 		}
 	}
-	private void sendRequest(String description)
+	
+	public void onInvalidRequest(InvalidRequestEvent evt)
 	{
-		SendRequestAction sra = new SendRequestAction(description);
+		parentPresenter.hideLoadScreen();
+		view.getSubmitButton().setEnabled(true);
+		submitClickInProgress = false;
+		
+		InvalidRequestAction ira = evt.getAction();
+		view.showErrorMessages(ira.toString());
+	}
+	
+	private void sendRequest(String Requesttype)
+	{
+		SendRequestAction sra = new SendRequestAction(Requesttype);
 		SendRequestEvent sre = new SendRequestEvent(sra);
 		eventBus.fireEvent(sre);
 	}
@@ -128,4 +141,5 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			throw new EmptyStringException();
 		}
 	}
+
 }
