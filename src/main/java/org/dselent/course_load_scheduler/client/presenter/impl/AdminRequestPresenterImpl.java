@@ -106,7 +106,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			}
 			catch(EmptyStringException e) {
 				invalidReasonList.add(InvalidReplyStrings.NULL_DESCRIPTION);
-				
+				view.showErrorMessages(InvalidReplyStrings.NULL_DESCRIPTION);
 				validDescription = false;
 			}
 			
@@ -138,6 +138,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			else {
 				InvalidReplyAction ira = new InvalidReplyAction(invalidReasonList);
 				InvalidReplyEvent ire = new InvalidReplyEvent(ira);
+				onInvalidReply(ire);
 				eventBus.fireEvent(ire);
 			}
 		}
@@ -160,7 +161,6 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			parentPresenter.showLoadScreen();
 			
 			int selectedIndex = view.getRequestList().getSelectedIndex();
-			//String selectedItem = view.getRequestList().getValue(selectedIndex);
 			Request selectedRequest = view.getRequest(selectedIndex);
 			
 			String requester = String.valueOf(selectedRequest.getRequesterId());
@@ -185,6 +185,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	}
 	
 	private void selectRequestAction(Integer requester, String requestType, String Description) {
+		parentPresenter.hideLoadScreen();
 		SelectRequestAction sra = new SelectRequestAction(requester, requestType, Description);
 		SelectRequestEvent sre = new SelectRequestEvent(sra);
 		eventBus.fireEvent(sre);
@@ -205,7 +206,12 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 
 	@Override
 	public void onInvalidReply(InvalidReplyEvent evt) {
-		// TODO Auto-generated method stub
+		parentPresenter.hideLoadScreen();
+		view.getReplyButton().setEnabled(true);
+		replyClickInProgress = false;
+		
+		InvalidReplyAction ira = evt.getAction();
+		view.showErrorMessages(ira.toString());
 		
 	}
 
