@@ -106,7 +106,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			}
 			catch(EmptyStringException e) {
 				invalidReasonList.add(InvalidReplyStrings.NULL_DESCRIPTION);
-				view.showErrorMessages(InvalidReplyStrings.NULL_DESCRIPTION);
+				//view.showErrorMessages(InvalidReplyStrings.NULL_DESCRIPTION);
 				validDescription = false;
 			}
 			
@@ -128,11 +128,11 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			}
 			catch(EmptyStringException e) {
 				invalidReasonList.add(InvalidReplyStrings.NULL_REPLYTYPE);
-				view.showErrorMessages(InvalidReplyStrings.NULL_REPLYTYPE);
+				//view.showErrorMessages(InvalidReplyStrings.NULL_REPLYTYPE);
 				validReplyType = false;
 			}
 			
-			if(validDescription && validReplyType) {
+			if(validDescription || validReplyType) {
 				sendReply(description, replyType);
 			}
 			else {
@@ -142,12 +142,13 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 				eventBus.fireEvent(ire);
 			}
 		}
-		else {
-			view.setReplyTextArea("");
-		}
+		//else {
+			//view.setReplyTextArea("");
+		//}
 	}
 	
 	private void sendReply(String description, String replyType) {
+		parentPresenter.hideLoadScreen();
 		SendReplyAction sra = new SendReplyAction(description, replyType);
 		SendReplyEvent sre = new SendReplyEvent(sra);
 		eventBus.fireEvent(sre);

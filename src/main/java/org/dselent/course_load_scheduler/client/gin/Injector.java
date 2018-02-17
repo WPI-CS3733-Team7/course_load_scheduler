@@ -1,13 +1,19 @@
 package org.dselent.course_load_scheduler.client.gin;
 
+import org.dselent.course_load_scheduler.client.presenter.impl.AccountPresenterImpl;
+import org.dselent.course_load_scheduler.client.presenter.impl.AdminRequestPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.IndexPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.LoginPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.MainPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.SchedulePresenterImpl;
+import org.dselent.course_load_scheduler.client.presenter.impl.UserRequestPresenterImpl;
+import org.dselent.course_load_scheduler.client.view.impl.AccountViewImpl;
+import org.dselent.course_load_scheduler.client.view.impl.AdminRequestViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.IndexViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.LoginViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.MainViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.ScheduleViewImpl;
+import org.dselent.course_load_scheduler.client.view.impl.UserRequestViewImpl;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
@@ -39,10 +45,16 @@ public interface Injector extends Ginjector
     public LoginPresenterImpl getLoginPresenter();
     public MainPresenterImpl getMainPresenter();
     public SchedulePresenterImpl getSchedulePresenter();
+    public AccountPresenterImpl getAccountPresenter();
+    public AdminRequestPresenterImpl getAdminRequestPresenter();
+    public UserRequestPresenterImpl getUserRequestPresenter();
     
     //views
     public IndexViewImpl getIndexView();
     public LoginViewImpl getLoginView();
     public ScheduleViewImpl getScheduleView();
     public MainViewImpl getMainView();
+    public AccountViewImpl getAccountView();
+    public AdminRequestViewImpl getAdminRequestView();
+    public UserRequestViewImpl getUserRequestView();
 }
