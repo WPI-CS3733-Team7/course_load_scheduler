@@ -46,8 +46,9 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 		HandlerRegistration registration;
 		
 		registration = eventBus.addHandler(InvalidRequestEvent.TYPE, this);
+
 		eventBusRegistration.put(InvalidRequestEvent.TYPE, registration);
-	}
+		}
 	
 	@Override
 	public void go(HasWidgets container) {
@@ -122,6 +123,7 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			{
 				InvalidRequestAction ira = new InvalidRequestAction(invalidReasonList);
 				InvalidRequestEvent ire = new InvalidRequestEvent(ira);
+				onInvalidRequest(ire);
 				eventBus.fireEvent(ire);
 			}
 		}

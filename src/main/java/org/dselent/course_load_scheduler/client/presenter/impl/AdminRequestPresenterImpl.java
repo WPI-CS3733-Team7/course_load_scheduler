@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidReplyAction;
+import org.dselent.course_load_scheduler.client.action.InvalidRequestAction;
 import org.dselent.course_load_scheduler.client.action.SelectRequestAction;
 import org.dselent.course_load_scheduler.client.action.SendReplyAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidReplyStrings;
@@ -99,7 +100,6 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			}
 			catch(EmptyStringException e) {
 				invalidReasonList.add(InvalidReplyStrings.NULL_DESCRIPTION);
-				
 				validDescription = false;
 			}
 			
@@ -123,7 +123,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			}
 			catch(EmptyStringException e) {
 				invalidReasonList.add(InvalidReplyStrings.NULL_REPLYTYPE);
-				view.showErrorMessages(InvalidReplyStrings.NULL_REPLYTYPE);
+				//view.showErrorMessages(InvalidReplyStrings.NULL_REPLYTYPE);
 				validReplyType = false;
 			}*/
 			
@@ -133,12 +133,16 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			else {
 				InvalidReplyAction ira = new InvalidReplyAction(invalidReasonList);
 				InvalidReplyEvent ire = new InvalidReplyEvent(ira);
+				onInvalidReply(ire);
 				eventBus.fireEvent(ire);
 			}
 		}
+
+
 	}
 	
 	private void sendReply(String description, String replyType) {
+		parentPresenter.hideLoadScreen();
 		SendReplyAction sra = new SendReplyAction(description, replyType);
 		SendReplyEvent sre = new SendReplyEvent(sra);
 		eventBus.fireEvent(sre);
@@ -239,8 +243,12 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 
 	@Override
 	public void onInvalidReply(InvalidReplyEvent evt) {
-		// TODO Auto-generated method stub
+		parentPresenter.hideLoadScreen();
+		view.getReplyButton().setEnabled(true);
+		replyClickInProgress = false;
 		
+		InvalidReplyAction ira = evt.getAction();
+		view.showErrorMessages(ira.toString());
 	}
 
 	

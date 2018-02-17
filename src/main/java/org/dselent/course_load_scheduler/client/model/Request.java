@@ -1,7 +1,7 @@
 package org.dselent.course_load_scheduler.client.model;
 
-import java.sql.Timestamp;
-import java.time.Instant;
+//import java.sql.Timestamp;
+//import java.time.Instant;
 
 public class Request extends Model
 {
@@ -12,8 +12,8 @@ public class Request extends Model
     private String request_type;
     private String request_details;
     private Integer reply_type_id;
-    private Instant createdAt;
-    private Instant updatedAt;
+   // private Instant createdAt;
+   // private Instant updatedAt;
     private Boolean deleted;
 
     // methods
@@ -68,7 +68,7 @@ public class Request extends Model
         this.reply_type_id = reply_type_id;
     }
 
-    public Instant getCreatedAt()
+   /* public Instant getCreatedAt()
     {
         return createdAt;
     }
@@ -92,7 +92,7 @@ public class Request extends Model
         {
             this.updatedAt = updatedAt.toInstant();
         }
-    }
+    }*/
 
     public Boolean getDeleted() {
         return deleted;
@@ -107,13 +107,13 @@ public class Request extends Model
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
+        //result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
         result = prime * result + ((request_type == null) ? 0 : request_type.hashCode());
         result = prime * result + ((reply_type_id == null) ? 0 : reply_type_id.hashCode());
         result = prime * result + ((request_details == null) ? 0 : request_details.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((requester_id == null) ? 0 : requester_id.hashCode());
-        result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
+        //result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
         result = prime * result + ((deleted == null) ? 0 : deleted.hashCode());
         return result;
     }
@@ -134,7 +134,7 @@ public class Request extends Model
             return false;
         }
         Request other = (Request) obj;
-        if (createdAt == null)
+       /* if (createdAt == null)
         {
             if (other.createdAt != null)
             {
@@ -144,7 +144,7 @@ public class Request extends Model
         else if (!createdAt.equals(other.createdAt))
         {
             return false;
-        }
+        }*/
         if (requester_id == null)
         {
             if (other.requester_id != null)
@@ -189,7 +189,7 @@ public class Request extends Model
         {
             return false;
         }
-        if (updatedAt == null)
+        /*if (updatedAt == null)
         {
             if (other.updatedAt != null)
             {
@@ -199,7 +199,7 @@ public class Request extends Model
         else if (!updatedAt.equals(other.updatedAt))
         {
             return false;
-        }
+        }*/
         if (deleted == null) {
             if (other.deleted != null)
                 return false;
@@ -226,10 +226,10 @@ public class Request extends Model
         builder.append(request_details);
         builder.append(", ReplyTypeID=");
         builder.append(reply_type_id);
-        builder.append(", createdAt=");
-        builder.append(createdAt);
-        builder.append(", updatedAt=");
-        builder.append(updatedAt);
+        //builder.append(", createdAt=");
+        //builder.append(createdAt);
+        //builder.append(", updatedAt=");
+        //builder.append(updatedAt);
         builder.append(", deleted=");
         builder.append(deleted);
         builder.append("]");
