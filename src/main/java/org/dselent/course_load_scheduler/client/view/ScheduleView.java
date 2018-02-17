@@ -1,14 +1,14 @@
 package org.dselent.course_load_scheduler.client.view;
 
-import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.TextBox;
-import org.dselent.course_load_scheduler.client.model.Course;
-import org.dselent.course_load_scheduler.client.view.impl.ModelButton; 
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextBox; 
 
 public interface ScheduleView extends BaseView<SchedulePresenter>{
 	
+
+	/* Removed ModelButton methods
 	public void addInstructorButton(Instructor instructor);
 	public void addCourseButton(Course course);
 	public void removeInstructorButton(Instructor instructor);
@@ -16,7 +16,7 @@ public interface ScheduleView extends BaseView<SchedulePresenter>{
 	public ModelButton<Instructor> getSelectedInstructorButton();
 	public ModelButton<Course> getSelectedCourseButton();
 	public void setSelectedInstructorButton(ModelButton<Instructor> selection);
-	public void setSelectedCourseButton(ModelButton<Course> selection);
+	public void setSelectedCourseButton(ModelButton<Course> selection);*/
 	
 	Button getAddInstructorButton();
 	Button getEditInstructorButton();
@@ -55,7 +55,12 @@ public interface ScheduleView extends BaseView<SchedulePresenter>{
 	public TextBox getPopCourseTextFrequency();
 	public void setPopCourseTextFrequency(TextBox popCourseTextFrequency);
 	
+	public ListBox getInstructorBox();
+	public ListBox getCourseBox();
 	
-	boolean isCreating();
-	void setCreating(boolean c);
+	
+	public Button getInstructorDeleteButton();
+	public Button getCourseDeleteButton();
+	public Button getInstructorCreateButton();
+	public Button getCourseCreateButton();
 }

@@ -5,21 +5,9 @@ import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidCreateCourseAction;
 import org.dselent.course_load_scheduler.client.action.InvalidCreateInstructorAction;
-//import org.dselent.course_load_scheduler.client.action.InvalidLoginAction;
-//import org.dselent.course_load_scheduler.client.action.InvalidRegisterAction;
-//import org.dselent.course_load_scheduler.client.action.SendLoginAction;
-//import org.dselent.course_load_scheduler.client.action.SendRegisterAction;
-//import org.dselent.course_load_scheduler.client.errorstring.InvalidLoginStrings;
-//import org.dselent.course_load_scheduler.client.errorstring.InvalidRegisterStrings;
-//import org.dselent.course_load_scheduler.client.event.InvalidLoginEvent;
-//import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
-//import org.dselent.course_load_scheduler.client.event.SendLoginEvent;
-//import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
 import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
-import org.dselent.course_load_scheduler.client.action.InvalidRegisterAction;
 import org.dselent.course_load_scheduler.client.action.SendEditCourseAction;
 import org.dselent.course_load_scheduler.client.action.SendEditInstructorAction;
-import org.dselent.course_load_scheduler.client.action.SendRegisterAction;
 import org.dselent.course_load_scheduler.client.action.SendEditSectionAction;
 import org.dselent.course_load_scheduler.client.action.SendValidateAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidEditCourseStrings;
@@ -30,10 +18,10 @@ import org.dselent.course_load_scheduler.client.event.SendEditCourseEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidCreateCourseEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidCreateInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
-import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
-import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.SendValidateEvent;
+import org.dselent.course_load_scheduler.client.event_handler.InvalidCreateCourseEventHandler;
+import org.dselent.course_load_scheduler.client.event_handler.InvalidCreateInstructorEventHandler;
 import org.dselent.course_load_scheduler.client.event_handler.InvalidEditSectionEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.Course;
@@ -41,13 +29,12 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
-import org.dselent.course_load_scheduler.client.view.impl.ModelButton;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class SchedulePresenterImpl extends BasePresenterImpl implements SchedulePresenter, InvalidEditSectionEventHandler {
+public class SchedulePresenterImpl extends BasePresenterImpl implements SchedulePresenter, InvalidEditSectionEventHandler, InvalidCreateCourseEventHandler, InvalidCreateInstructorEventHandler {
 	
 	private IndexPresenter parentPresenter;
 	private ScheduleView view;
@@ -61,6 +48,11 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	private boolean submitEditInstructorClickInProgress;
 	private boolean submitEditCourseClickInProgress;
 	private boolean submitEditSectionClickInProgress;
+	
+	List<Instructor> instructorList = new ArrayList<Instructor>();
+	List<Course> courseList = new ArrayList<Course>();
+	int selectedInstructor = -1;
+	int selectedCourse = -1;
 	
 	@Inject
 	public SchedulePresenterImpl(IndexPresenter parentPresenter, ScheduleView view)
@@ -84,6 +76,32 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	public void init()
 	{
 		bind();
+		
+		/* These are placeholders for testing and will need to be passed from the server to the
+		 * populateInstructorList and populateCourseList functions when loading up this view */
+		Instructor placeholderInstructor = new Instructor();
+		Course placeholderCourse = new Course();
+		
+		placeholderInstructor.setId(0);
+		placeholderInstructor.setFirstName("Place");
+		placeholderInstructor.setLastName("Holder");
+		placeholderInstructor.setRank("Holder of Places");
+		placeholderInstructor.setEmail("place@holder.com");
+		placeholderInstructor.setDeleted(false);
+		
+		placeholderCourse.setId(0);
+		placeholderCourse.setCourseName("Placeholder");
+		placeholderCourse.setCourseNumber("PH1000");
+		placeholderCourse.setFrequency("place/holder");
+		placeholderCourse.setDeleted(false);
+		
+		List<Instructor> placeholderInstList = new ArrayList<Instructor>();
+		placeholderInstList.add(placeholderInstructor);
+		List<Course> placeholderCourseList = new ArrayList<Course>();
+		placeholderCourseList.add(placeholderCourse);
+		
+		populateInstructorList(placeholderInstList);
+		populateCourseList(placeholderCourseList);
 	}
 	
 	@Override
@@ -99,6 +117,22 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(view.getWidgetContainer());		
+	}
+	
+	public void populateInstructorList(List<Instructor> iList) {
+		instructorList = iList;
+		view.getInstructorBox().clear();
+		for(Instructor i : instructorList) {
+			view.getInstructorBox().addItem(i.displayText());
+		}
+	}
+	
+	public void populateCourseList(List<Course> cList) {
+		courseList = cList;
+		view.getCourseBox().clear();
+		for(Course c : courseList) {
+			view.getCourseBox().addItem(c.displayText());
+		}
 	}
 	
 	@Override
@@ -119,7 +153,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 
 
 	@Override
-	public void editInstructor(boolean deleting) {
+	public void editInstructor(boolean creating, boolean deleting) {
 		if (!submitEditInstructorClickInProgress)
 		{
 			submitEditInstructorClickInProgress = true;
@@ -127,147 +161,243 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			String lastName = view.getPopInstructorTextLastName().getText();
 			String rank = view.getPopInstructorTextRank().getText();
 			String email = view.getPopInstructorTextEmail().getText();
-			if(view.isCreating())
+			boolean validFirstName = true;
+			boolean validLastName = true;
+			boolean validRank = true;
+			boolean validEmail = true;
+			List<String> invalidReasonList = new ArrayList<>();
+			try {
+				validateField(firstName);
+			} catch (EmptyStringException e)
 			{
-				boolean validFirstName = true;
-				boolean validLastName = true;
-				boolean validRank = true;
-				boolean validEmail = true;
-				List<String> invalidReasonList = new ArrayList<>();
-				try {
-					validateField(firstName);
-				} catch (EmptyStringException e)
-				{
-					invalidReasonList.add(InvalidEditInstructorStrings.NULL_FIRST_NAME);
-					validFirstName = false;
-				}
-				try {
-					validateField(lastName);
-				} catch (EmptyStringException e)
-				{
-					invalidReasonList.add(InvalidEditInstructorStrings.NULL_LAST_NAME);
-					validLastName = false;
-				}
-				try {
-					validateField(rank);
-				} catch (EmptyStringException e)
-				{
-					invalidReasonList.add(InvalidEditInstructorStrings.NULL_RANK);
-					validRank = false;
-				}
-				try {
-					validateField(email);
-				} catch (EmptyStringException e)
-				{
-					invalidReasonList.add(InvalidEditInstructorStrings.NULL_EMAIL);
-					validEmail = false;
+				invalidReasonList.add(InvalidEditInstructorStrings.NULL_FIRST_NAME);
+				validFirstName = false;
+			}
+			try {
+				validateField(lastName);
+			} catch (EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditInstructorStrings.NULL_LAST_NAME);
+				validLastName = false;
+			}
+			try {
+				validateField(rank);
+			} catch (EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditInstructorStrings.NULL_RANK);
+				validRank = false;
+			}
+			try {
+				validateField(email);
+			} catch (EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditInstructorStrings.NULL_EMAIL);
+				validEmail = false;
+			}
+			if(validFirstName && validLastName && validRank && validEmail)
+			{
+				view.getInstructorCreateButton().setEnabled(false);
+				view.getInstructorSubmitButton().setEnabled(false);
+				view.getInstructorDeleteButton().setEnabled(false);
+				if(creating) {
+					sendInstructorEdit(null, firstName, lastName, rank, email, false);
+					
+					/* The new instructor created here would be sent back from the server instead of being created here */
+					Instructor inst = new Instructor();
+					inst.setId(0);
+					inst.setFirstName(firstName);
+					inst.setLastName(lastName);
+					inst.setRank(rank);
+					inst.setEmail(email);
+					
+					String instFullName = inst.displayText();
+					int begin = 0;
+					int end = instructorList.size();
+					while(begin<end) {
+						if(instFullName.compareToIgnoreCase(instructorList.get((begin+end)/2).displayText())<0) {
+							end = (begin+end)/2;
+						} else {
+							begin = (begin+end)/2+1;
+						}		
+					}
+					if(end>=instructorList.size())
+						instructorList.add(inst);
+					else
+						instructorList.add(end, inst);
+					view.getInstructorBox().insertItem(inst.displayText(), end);
+				} else {
+					sendInstructorEdit(instructorList.get(selectedInstructor).getId(), firstName, lastName, rank, email, deleting);
+					
+					if(deleting) {
+						instructorList.remove(selectedInstructor);
+						view.getInstructorBox().removeItem(selectedInstructor);
+					} else {
+					
+						/* The new instructor created here would be sent back from the server instead of being created here */
+						Instructor inst = new Instructor();
+						inst.setId(instructorList.get(selectedInstructor).getId());
+						inst.setFirstName(firstName);
+						inst.setLastName(lastName);
+						inst.setRank(rank);
+						inst.setEmail(email);
+						
+						instructorList.set(selectedInstructor, inst);
+						view.getInstructorBox().setItemText(selectedInstructor, inst.displayText());
+					}
 				}
 				
-				if(validFirstName && validLastName && validRank && validEmail)
-				{
-				sendInstructorEdit(null, firstName, lastName, rank, email, false);
-				}
-				else
-				{
-					InvalidCreateInstructorAction iica = new InvalidCreateInstructorAction(invalidReasonList);
-					InvalidCreateInstructorEvent iice = new InvalidCreateInstructorEvent(iica);
-					eventBus.fireEvent(iice);
-				}
-			} else {
-				sendInstructorEdit(view.getSelectedInstructorButton().getModel().getId(), firstName, lastName, rank, email, deleting);
 			}
-			view.getInstructorSubmitButton().setEnabled(false);
+			else
+			{
+				InvalidCreateInstructorAction iica = new InvalidCreateInstructorAction(invalidReasonList);
+				InvalidCreateInstructorEvent iice = new InvalidCreateInstructorEvent(iica);
+				eventBus.fireEvent(iice);
+			}
+
 			
 		}
 		
 	}
 	
+	@Override
+	public void onInvalidCreateInstructor(InvalidCreateInstructorEvent evt)
+	{
+		view.getInstructorSubmitButton().setEnabled(true);
+		submitEditInstructorClickInProgress = false;
+		
+		InvalidCreateInstructorAction icia = evt.getAction();
+		view.showErrorMessages(icia.toString());
+	}
 	
 	private void sendInstructorEdit(Integer id, String firstName, String lastName, String rank, String email, boolean deleted)
 	{
-		SendEditInstructorAction siea = new SendEditInstructorAction(id.toString(), firstName, lastName, rank, email, Boolean.toString(deleted));
+		String idString = null;
+		if(id!=null)
+			idString = id.toString();
+		SendEditInstructorAction siea = new SendEditInstructorAction(idString, firstName, lastName, rank, email, Boolean.toString(deleted));
 		SendEditInstructorEvent siee = new SendEditInstructorEvent(siea);
+		submitEditInstructorClickInProgress = false;
 		eventBus.fireEvent(siee);
 	}
 
 
 	@Override
-	public void editCourse(boolean deleting) {
+	public void editCourse(boolean creating, boolean deleting) {
 		if (!submitEditCourseClickInProgress)
 		{
 			submitEditCourseClickInProgress = true;
 			String courseName = view.getPopCourseTextName().getText();
 			String courseNumber = view.getPopCourseTextNumber().getText();
 			String frequency = view.getPopCourseTextFrequency().getText();
-			if(view.isCreating())
+			boolean validCourseName = true;
+			boolean validCourseNumber = true;
+			boolean validFrequency = true;
+			List<String> invalidReasonList = new ArrayList<>();
+			try {
+				validateField(courseName);
+			} catch (EmptyStringException e)
 			{
-				boolean validCourseName = true;
-				boolean validCourseNumber = true;
-				boolean validFrequency = true;
-				List<String> invalidReasonList = new ArrayList<>();
-				try {
-					validateField(courseName);
-				} catch (EmptyStringException e)
-				{
-					invalidReasonList.add(InvalidEditCourseStrings.NULL_NAME);
-					validCourseName = false;
-				}
-				try {
-					validateField(courseNumber);
-				} catch (EmptyStringException e)
-				{
-					invalidReasonList.add(InvalidEditCourseStrings.NULL_NUMBER);
-					validCourseNumber = false;
-				}
-				try {
-					validateField(frequency);
-				} catch (EmptyStringException e)
-				{
-					invalidReasonList.add(InvalidEditCourseStrings.NULL_FREQUENCY);
-					validFrequency = false;
-				}
-				
-				if(validCourseName && validCourseNumber && validFrequency)
-				{
-					sendCourseEdit(null, courseName, courseNumber, frequency, false);
-				}
-				else
-				{
-					InvalidCreateCourseAction icca = new InvalidCreateCourseAction(invalidReasonList);
-					InvalidCreateCourseEvent icce = new InvalidCreateCourseEvent(icca);
-					eventBus.fireEvent(icce);
-				}
-			} else {
-				sendCourseEdit(view.getSelectedInstructorButton().getModel().getId(), courseName, courseNumber, frequency, deleting);
+				invalidReasonList.add(InvalidEditCourseStrings.NULL_NAME);
+				validCourseName = false;
 			}
-			view.getCourseSubmitButton().setEnabled(false);
+			try {
+				validateField(courseNumber);
+			} catch (EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditCourseStrings.NULL_NUMBER);
+				validCourseNumber = false;
+			}
+			try {
+				validateField(frequency);
+			} catch (EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditCourseStrings.NULL_FREQUENCY);
+				validFrequency = false;
+			}
+			
+			if(validCourseName && validCourseNumber && validFrequency)
+			{
+				view.getCourseCreateButton().setEnabled(false);
+				view.getCourseSubmitButton().setEnabled(false);
+				view.getCourseDeleteButton().setEnabled(false);
+				if(creating) {
+					sendCourseEdit(null, courseName, courseNumber, frequency, false);
+					
+					/* The new course created here would be sent back from the server instead of being created here */
+					Course course = new Course();
+					course.setId(0);
+					course.setCourseName(courseName);
+					course.setCourseNumber(courseNumber);
+					course.setFrequency(frequency);
+					
+					String courseNum = course.displayText();
+					int begin = 0;
+					int end = courseList.size();
+					while(begin<end) {
+						if(courseNum.compareToIgnoreCase(courseList.get((begin+end)/2).displayText())<0) {
+							end = (begin+end)/2;
+						} else {
+							begin = (begin+end)/2+1;
+						}		
+					}
+					/*if(end>=courseList.size())
+						courseList.add(course);
+					else*/
+						courseList.add(end, course);
+					view.getCourseBox().insertItem(course.displayText(), end);
+					
+				} else {
+					
+					sendCourseEdit(courseList.get(selectedCourse).getId(), courseName, courseNumber, frequency, deleting);
+					
+					if(deleting) {
+						courseList.remove(selectedInstructor);
+						view.getCourseBox().removeItem(selectedCourse);
+					} else {
+					
+						/* The new course created here would be sent back from the server instead of being created here */
+						Course course = new Course();
+						course.setId(courseList.get(selectedCourse).getId());
+						course.setCourseName(courseName);
+						course.setCourseNumber(courseNumber);
+						course.setFrequency(frequency);
+	
+						courseList.set(selectedCourse, course);
+						view.getCourseBox().setItemText(selectedCourse, course.displayText());
+					}
+				}
+			}
+			else
+			{
+				InvalidCreateCourseAction icca = new InvalidCreateCourseAction(invalidReasonList);
+				InvalidCreateCourseEvent icce = new InvalidCreateCourseEvent(icca);
+				eventBus.fireEvent(icce);
+			}
 			
 		}
 		
 	}
 
+	@Override
+	public void onInvalidCreateCourse(InvalidCreateCourseEvent evt)
+	{
+		view.getCourseSubmitButton().setEnabled(true);
+		submitEditCourseClickInProgress = false;
+		
+		InvalidCreateCourseAction icca = evt.getAction();
+		view.showErrorMessages(icca.toString());
+	}
+	
 	private void sendCourseEdit(Integer id, String courseName, String courseNumber, String frequency, boolean deleted) {
-		SendEditCourseAction scea = new SendEditCourseAction(id.toString(), courseName, courseNumber, frequency, Boolean.toString(deleted));
+		String idString = null;
+		if(id!=null)
+			idString = id.toString();
+		SendEditCourseAction scea = new SendEditCourseAction(idString, courseName, courseNumber, frequency, Boolean.toString(deleted));
 		SendEditCourseEvent scee = new SendEditCourseEvent(scea);
+		submitEditCourseClickInProgress = false;
 		eventBus.fireEvent(scee);	
 	}
 
-	@Override
-	public void selectInstructor(ModelButton<Instructor> clickedButton) {
-		if(view.getSelectedInstructorButton()!=null)
-			view.getSelectedInstructorButton().setText(view.getSelectedInstructorButton().getModel().displayText());
-		clickedButton.setText("[[[ "+ clickedButton.getModel().displayText() +" ]]]");
-		view.setSelectedInstructorButton(clickedButton);
-	}
-
-	@Override
-	public void selectCourse(ModelButton<Course> clickedButton) {
-		if(view.getSelectedCourseButton()!=null)
-			view.getSelectedCourseButton().setText(view.getSelectedCourseButton().getModel().displayText());
-		clickedButton.setText("[[[ "+ clickedButton.getModel().displayText() +" ]]]");
-		view.setSelectedCourseButton(clickedButton);
-		
-	}
 
 	@Override
 	public void editSection() {
@@ -404,5 +534,27 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		{
 			throw new EmptyStringException();
 		}
+	}
+
+	@Override
+	public void fillInstructorFields() {
+		selectedInstructor = view.getInstructorBox().getSelectedIndex();
+		Instructor selected = instructorList.get(selectedInstructor);
+		view.getPopInstructorTextFirstName().setText(selected.getFirstName());
+		view.getPopInstructorTextLastName().setText(selected.getLastName());
+		view.getPopInstructorTextRank().setText(selected.getRank());
+		view.getPopInstructorTextEmail().setText(selected.getEmail());
+		
+		
+	}
+
+	@Override
+	public void fillCourseFields() {
+		selectedCourse = view.getCourseBox().getSelectedIndex();
+		Course selected = courseList.get(selectedCourse);
+		view.getPopCourseTextName().setText(selected.getCourseName());
+		view.getPopCourseTextNumber().setText(selected.getCourseNumber());
+		view.getPopCourseTextFrequency().setText(selected.getFrequency());
+		
 	}
 }

@@ -11,8 +11,8 @@ public class Course extends Model
     private String course_name;
     private String course_number;
     private String frequency;
-    private Instant createdAt;
-    private Instant updatedAt;
+    //private Instant createdAt;
+    //private Instant updatedAt;
     private Boolean deleted;
 
     // methods
@@ -48,7 +48,7 @@ public class Course extends Model
         this.frequency = frequency;
     }
 
-    public Instant getCreatedAt() {
+   /* public Instant getCreatedAt() {
         return createdAt;
     }
 
@@ -74,7 +74,7 @@ public class Course extends Model
         if (updatedAt != null) {
             this.updatedAt = updatedAt.toInstant();
         }
-    }
+    }*/
 
     public Boolean getDeleted() {
         return deleted;
@@ -84,7 +84,7 @@ public class Course extends Model
         this.deleted = deleted;
     }
 
-    @Override
+   /* @Override
     public int hashCode()
     {
         final int prime = 31;
@@ -98,7 +98,7 @@ public class Course extends Model
         result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
         result = prime * result + ((deleted == null) ? 0 : deleted.hashCode());
         return result;
-    }
+    }*/
 
     @Override
     public boolean equals(Object obj)
@@ -160,7 +160,7 @@ public class Course extends Model
         {
             return false;
         }
-        if (updatedAt == null)
+        /*if (updatedAt == null)
         {
             if (other.updatedAt != null)
             {
@@ -181,7 +181,7 @@ public class Course extends Model
         else if (!createdAt.equals(other.createdAt))
         {
             return false;
-        }
+        }*/
         if (deleted == null) {
             if (other.deleted != null)
                 return false;
@@ -194,7 +194,7 @@ public class Course extends Model
     }
 
 
-    @Override
+    /*@Override
     public String toString()
     {
         StringBuilder builder = new StringBuilder();
@@ -214,7 +214,7 @@ public class Course extends Model
         builder.append(deleted);
         builder.append("]");
         return builder.toString();
-    }
+    }*/
 
 	@Override
 	public String displayText() {
