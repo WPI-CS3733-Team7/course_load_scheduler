@@ -6,4 +6,5 @@ import com.google.gwt.user.client.ui.Button;
 public interface MainView extends BaseView<MainPresenter>
 {
 	Button getLogoutButton();
+	void showErrorMessages(String errorMessages);
 }

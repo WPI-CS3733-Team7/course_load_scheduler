@@ -7,12 +7,14 @@ import java.util.List;
 import org.dselent.course_load_scheduler.client.action.InvalidChangePasswordAction;
 import org.dselent.course_load_scheduler.client.action.InvalidEditUserAction;
 import org.dselent.course_load_scheduler.client.action.SendChangePasswordAction;
+import org.dselent.course_load_scheduler.client.action.SendDisplayMessageAction;
 import org.dselent.course_load_scheduler.client.action.SendEditUserAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidChangePasswordStrings;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidEditUserStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidEditUserEvent;
 import org.dselent.course_load_scheduler.client.event.SendChangePasswordEvent;
+import org.dselent.course_load_scheduler.client.event.SendDisplayMessageEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditUserEvent;
 import org.dselent.course_load_scheduler.client.event_handler.InvalidChangePasswordEventHandler;
 import org.dselent.course_load_scheduler.client.event_handler.InvalidEditUserEventHandler;
@@ -211,19 +213,18 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			
 			String userRole = view.getRoleDropBox().getItemText(view.getRoleDropBox().getSelectedIndex());
 			String linkedInstructor = view.getLinkedInstructorDropBox().getItemText(view.getLinkedInstructorDropBox().getSelectedIndex());
-			String deleted = Boolean.toString(view.isDeleted());
+			Boolean deleted = view.isDeleted();
 			
 			List<String> invalidReasonList = new ArrayList<>();
 			
-			if(userRole == "LINKED USER" && linkedInstructor == "-")
+			if(userRole == "LINKED USER" && linkedInstructor == "-" && !deleted)
 			{
 				invalidReasonList.add(InvalidEditUserStrings.LINKED_USER_ERROR);
 				validLinkedInstructor = false;
 			}
-			
 			if(validUserRole && validLinkedInstructor)
 			{
-				sendEditUser(userRole, linkedInstructor, deleted);
+				sendEditUser(userRole, linkedInstructor, deleted.toString());
 			}
 			else
 			{
@@ -242,7 +243,10 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		editUserClickInProgress = false;
 		
 		InvalidEditUserAction ieua = evt.getAction();
-		view.showErrorMessages(ieua.toString());
+		
+		SendDisplayMessageAction sdma = new SendDisplayMessageAction(ieua.toString());
+		SendDisplayMessageEvent sdme = new SendDisplayMessageEvent(sdma);
+		eventBus.fireEvent(sdme);
 	}
 	
 	private void sendEditUser(String userRole, String linkedInstructor, String deleted)
