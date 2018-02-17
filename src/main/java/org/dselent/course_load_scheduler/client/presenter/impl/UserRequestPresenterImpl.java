@@ -82,10 +82,14 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			submitClickInProgress = true;
 			view.getSubmitButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
+			boolean courses = view.getCourseRdo().getValue(); //Check click or not on radio button course
+			boolean other = view.getOtherRdo().getValue(); ////Check click or not on radio button other
+			String requestType = "";
 			
-			String description = view.getDescriptionText().getText();
+			String description = view.getDescriptionTextArea().getText();
 			
-			boolean validRequesttype = true;
+			boolean validRequesttype = true; //Manage request type
+			boolean validDescription = true; //Manage description
 
 			List<String> invalidReasonList = new ArrayList<>();
 			
@@ -93,17 +97,28 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			{
 				validateField(description);
 			}
-			catch(EmptyStringException e)
+			catch(EmptyStringException e) //Empty description
 			{
-				invalidReasonList.add(InvalidSubmitStrings.NULL_REQUESTTYPE);
+				invalidReasonList.add(InvalidSubmitStrings.NULL_DESCRIPTION); //Null description error message
+				validDescription = false;
+			}
+			
+			if(courses) {
+				requestType = "courses"; //return courses if clicked course radio button
+			}
+			else if(other){
+				requestType = "others"; ////return other if clicked other radio button
+			}
+			else {
+				requestType = null; //None of radio button selected
+				invalidReasonList.add(InvalidSubmitStrings.NULL_REQUESTTYPE); //Null request Type error message
 				validRequesttype = false;
 			}
 			
-			if(validRequesttype)
-			{
-				sendRequest(description);
+			if(validRequesttype && validDescription) { //Both True
+				sendRequest(description, requestType); //Show both informations
 			}
-			else
+			else									//Return error messages
 			{
 				InvalidRequestAction ira = new InvalidRequestAction(invalidReasonList);
 				InvalidRequestEvent ire = new InvalidRequestEvent(ira);
@@ -122,9 +137,9 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 		view.showErrorMessages(ira.toString());
 	}
 	
-	private void sendRequest(String Requesttype)
+	private void sendRequest(String Description, String Requesttype)
 	{
-		SendRequestAction sra = new SendRequestAction(Requesttype);
+		SendRequestAction sra = new SendRequestAction(Description, Requesttype);
 		SendRequestEvent sre = new SendRequestEvent(sra);
 		eventBus.fireEvent(sre);
 	}
