@@ -200,7 +200,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	
 	@Override
 	public void editUser()
-	{
+	{	
 		if(!editUserClickInProgress)
 		{
 			editUserClickInProgress = true;
@@ -215,7 +215,6 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			Boolean deleted = view.isDeleted();
 			
 			List<String> invalidReasonList = new ArrayList<>();
-
 			if(userRole == "LINKED USER" && linkedInstructor == "-" && !deleted)
 			{
 				invalidReasonList.add(InvalidEditUserStrings.LINKED_USER_ERROR);
@@ -227,6 +226,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			}
 			else
 			{
+				view.showErrorMessages("Hello");
 				InvalidEditUserAction ieua = new InvalidEditUserAction(invalidReasonList);
 				InvalidEditUserEvent ieue = new InvalidEditUserEvent(ieua);
 				eventBus.fireEvent(ieue);
@@ -241,11 +241,8 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		view.getSubmitEditUserButton().setEnabled(true);
 		editUserClickInProgress = false;
 		
-		InvalidEditUserAction ieua = evt.getAction();
-		
-		SendDisplayMessageAction sdma = new SendDisplayMessageAction(ieua.toString());
-		SendDisplayMessageEvent sdme = new SendDisplayMessageEvent(sdma);
-		eventBus.fireEvent(sdme);
+		InvalidEditUserAction ieau = evt.getAction();
+		view.showErrorMessages(ieau.toString());
 	}
 	
 	private void sendEditUser(String userRole, String linkedInstructor, String deleted)

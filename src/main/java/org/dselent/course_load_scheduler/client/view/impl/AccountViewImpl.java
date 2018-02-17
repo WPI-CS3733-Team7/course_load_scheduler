@@ -88,7 +88,6 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	Button submitEditUserButton = new Button("Submit", new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			// set deleted to false
 			deleted = false;
 			presenter.editUser();
 		}
