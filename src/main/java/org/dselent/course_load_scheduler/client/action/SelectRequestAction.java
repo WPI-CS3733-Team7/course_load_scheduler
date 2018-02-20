@@ -1,6 +1,7 @@
 package org.dselent.course_load_scheduler.client.action;
 
-public class SelectRequestAction {
+public class SelectRequestAction extends Action
+{
 	private String requestType;
 	private Integer requester;
 	private String description;

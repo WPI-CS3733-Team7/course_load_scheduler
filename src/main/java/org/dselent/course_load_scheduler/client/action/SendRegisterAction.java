@@ -1,6 +1,7 @@
 package org.dselent.course_load_scheduler.client.action;
 
-public class SendRegisterAction {
+public class SendRegisterAction extends Action
+{
 
 	private String userName;
 	private String firstName;

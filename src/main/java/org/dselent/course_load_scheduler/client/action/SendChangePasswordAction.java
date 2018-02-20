@@ -1,6 +1,6 @@
 package org.dselent.course_load_scheduler.client.action;
 
-public class SendChangePasswordAction
+public class SendChangePasswordAction extends Action
 {
 	String oldPassword;
 	String newPassword;

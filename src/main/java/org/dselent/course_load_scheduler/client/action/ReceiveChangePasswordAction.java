@@ -2,7 +2,7 @@ package org.dselent.course_load_scheduler.client.action;
 
 import org.dselent.course_load_scheduler.client.model.User;
 
-public class ReceiveChangePasswordAction 
+public class ReceiveChangePasswordAction extends Action
 {
 	private User model;
 

@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
 
-public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresenter, SendLogoutEventHandler
+public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresenter
 {
 	private IndexPresenter parentPresenter;
 	private LoginView view;

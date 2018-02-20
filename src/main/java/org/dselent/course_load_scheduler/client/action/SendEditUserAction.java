@@ -1,6 +1,7 @@
 package org.dselent.course_load_scheduler.client.action;
 
-public class SendEditUserAction {
+public class SendEditUserAction extends Action
+{
 	
 	String userRole;
 	String linkedInstructor;

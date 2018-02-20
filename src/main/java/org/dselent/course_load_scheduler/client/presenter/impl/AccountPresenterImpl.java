@@ -7,17 +7,13 @@ import java.util.List;
 import org.dselent.course_load_scheduler.client.action.InvalidChangePasswordAction;
 import org.dselent.course_load_scheduler.client.action.InvalidEditUserAction;
 import org.dselent.course_load_scheduler.client.action.SendChangePasswordAction;
-import org.dselent.course_load_scheduler.client.action.SendDisplayMessageAction;
 import org.dselent.course_load_scheduler.client.action.SendEditUserAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidChangePasswordStrings;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidEditUserStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidEditUserEvent;
 import org.dselent.course_load_scheduler.client.event.SendChangePasswordEvent;
-import org.dselent.course_load_scheduler.client.event.SendDisplayMessageEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditUserEvent;
-import org.dselent.course_load_scheduler.client.event_handler.InvalidChangePasswordEventHandler;
-import org.dselent.course_load_scheduler.client.event_handler.InvalidEditUserEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.view.AccountView;
@@ -27,7 +23,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
 
-public class AccountPresenterImpl  extends BasePresenterImpl implements AccountPresenter, InvalidChangePasswordEventHandler, InvalidEditUserEventHandler
+public class AccountPresenterImpl  extends BasePresenterImpl implements AccountPresenter
 {	
 	private IndexPresenter parentPresenter;
 	private AccountView view;

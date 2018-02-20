@@ -20,7 +20,8 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class UserRequestPresenterImpl extends BasePresenterImpl implements UserRequestPresenter, InvalidRequestEventHandler{
+public class UserRequestPresenterImpl extends BasePresenterImpl implements UserRequestPresenter
+{
 	private IndexPresenter parentPresenter;
 	private UserRequestView view;
 	private boolean submitClickInProgress;

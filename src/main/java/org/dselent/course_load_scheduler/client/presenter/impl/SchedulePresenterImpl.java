@@ -41,8 +41,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class SchedulePresenterImpl extends BasePresenterImpl implements SchedulePresenter, InvalidCreateInstructorEventHandler,
-InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
+public class SchedulePresenterImpl extends BasePresenterImpl implements SchedulePresenter {
 	
 	private IndexPresenter parentPresenter;
 	private ScheduleView view;

@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidReplyAction;
-import org.dselent.course_load_scheduler.client.action.InvalidRequestAction;
 import org.dselent.course_load_scheduler.client.action.SelectRequestAction;
 import org.dselent.course_load_scheduler.client.action.SendReplyAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidReplyStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidReplyEvent;
 import org.dselent.course_load_scheduler.client.event.SelectRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendReplyEvent;
-import org.dselent.course_load_scheduler.client.event_handler.InvalidReplyEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.Request;
 import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
@@ -21,7 +19,8 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class AdminRequestPresenterImpl extends BasePresenterImpl implements AdminRequestPresenter, InvalidReplyEventHandler{
+public class AdminRequestPresenterImpl extends BasePresenterImpl implements AdminRequestPresenter
+{
 	private IndexPresenter parentPresenter;
 	private AdminRequestView view;
 	private boolean replyClickInProgress;
@@ -177,7 +176,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	private void selectRequestAction(Integer requester, String requestType, String Description) {
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SelectRequestAction sra = new SelectRequestAction(requester, requestType, Description);
-		SelectRequestEvent sre = new SelectRequestEvent(sra, container);
+		SelectRequestEvent sre = new SelectRequestEvent(sra);
 		eventBus.fireEvent(sre);
 	}
 	/*@Override

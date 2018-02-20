@@ -1,6 +1,6 @@
 package org.dselent.course_load_scheduler.client.action;
 
-public class SendEditInstructorAction
+public class SendEditInstructorAction extends Action
 {
 	String id;
 	String rank;
