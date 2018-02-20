@@ -55,6 +55,8 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	@Override
 	public void go(HasWidgets container)
 	{
+		// need to make changes here
+		
 		container.clear();
 		container.add(view.getWidgetContainer());
 	}
