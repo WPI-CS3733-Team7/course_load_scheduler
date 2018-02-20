@@ -11,6 +11,7 @@ import org.dselent.course_load_scheduler.client.event.InvalidReplyEvent;
 import org.dselent.course_load_scheduler.client.event.SelectRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendReplyEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
+import org.dselent.course_load_scheduler.client.model.GlobalData;
 import org.dselent.course_load_scheduler.client.model.Request;
 import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
@@ -23,14 +24,16 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 {
 	private IndexPresenter parentPresenter;
 	private AdminRequestView view;
+	private GlobalData globalData;
 	private boolean replyClickInProgress;
 	private boolean selectClickInProgress;
 	
 	@Inject
-	public AdminRequestPresenterImpl(IndexPresenter parentPresenter, AdminRequestView view)
+	public AdminRequestPresenterImpl(IndexPresenter parentPresenter, AdminRequestView view, GlobalData globalData)
 	{
 		this.view = view;
 		this.parentPresenter = parentPresenter;
+		this.globalData = globalData;
 		view.setPresenter(this);
 		replyClickInProgress = false;
 		selectClickInProgress = false;

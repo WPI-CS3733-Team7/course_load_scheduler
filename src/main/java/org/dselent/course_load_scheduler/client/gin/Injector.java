@@ -65,4 +65,6 @@ public interface Injector extends Ginjector
  
     // services
     public UserServiceImpl getUserService();
+    
+    // might need to add it here
 }

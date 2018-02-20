@@ -31,6 +31,7 @@ import org.dselent.course_load_scheduler.client.event_handler.InvalidCreateInstr
 import org.dselent.course_load_scheduler.client.event_handler.InvalidEditSectionEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.Course;
+import org.dselent.course_load_scheduler.client.model.GlobalData;
 import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
@@ -45,6 +46,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	
 	private IndexPresenter parentPresenter;
 	private ScheduleView view;
+	private GlobalData globalData;
 	private boolean addInstructorClickInProgress;
 	private boolean editInstructorClickInProgress;
 	private boolean addCourseClickInProgress;
@@ -62,10 +64,11 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	int selectedCourse = -1;
 	
 	@Inject
-	public SchedulePresenterImpl(IndexPresenter parentPresenter, ScheduleView view)
+	public SchedulePresenterImpl(IndexPresenter parentPresenter, ScheduleView view, GlobalData globalData)
 	{
 		this.view = view;
 		this.parentPresenter = parentPresenter;
+		this.globalData = globalData;
 		view.setPresenter(this);
 		addInstructorClickInProgress = false;
 		editInstructorClickInProgress = false;

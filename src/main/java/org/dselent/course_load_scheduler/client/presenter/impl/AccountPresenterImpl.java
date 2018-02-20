@@ -15,6 +15,7 @@ import org.dselent.course_load_scheduler.client.event.InvalidEditUserEvent;
 import org.dselent.course_load_scheduler.client.event.SendChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditUserEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
+import org.dselent.course_load_scheduler.client.model.GlobalData;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.view.AccountView;
 
@@ -27,14 +28,16 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 {	
 	private IndexPresenter parentPresenter;
 	private AccountView view;
+	private GlobalData globalData;
 	private boolean changePasswordClickInProgress;
 	private boolean editUserClickInProgress;
 
 	@Inject
-	public AccountPresenterImpl(IndexPresenter parentPresenter, AccountView view)
+	public AccountPresenterImpl(IndexPresenter parentPresenter, AccountView view, GlobalData globalData)
 	{
 		this.view = view;
 		this.parentPresenter = parentPresenter;
+		this.globalData = globalData;
 		view.setPresenter(this);
 		changePasswordClickInProgress = false;
 		editUserClickInProgress = false;
