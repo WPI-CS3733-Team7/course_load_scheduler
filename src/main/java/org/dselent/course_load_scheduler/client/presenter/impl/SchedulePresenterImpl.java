@@ -292,8 +292,9 @@ InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 		String idString = null;
 		if(id!=null)
 			idString = id.toString();
+		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SendEditInstructorAction siea = new SendEditInstructorAction(idString, firstName, lastName, rank, email, Boolean.toString(deleted));
-		SendEditInstructorEvent siee = new SendEditInstructorEvent(siea);
+		SendEditInstructorEvent siee = new SendEditInstructorEvent(siea, container);
 		submitEditInstructorClickInProgress = false;
 		eventBus.fireEvent(siee);
 	}
@@ -410,8 +411,9 @@ InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 		String idString = null;
 		if(id!=null)
 			idString = id.toString();
+		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SendEditCourseAction scea = new SendEditCourseAction(idString, courseName, courseNumber, frequency, Boolean.toString(deleted));
-		SendEditCourseEvent scee = new SendEditCourseEvent(scea);
+		SendEditCourseEvent scee = new SendEditCourseEvent(scea, container);
 		submitEditCourseClickInProgress = false;
 		eventBus.fireEvent(scee);	
 	}
@@ -602,8 +604,9 @@ InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 	private void sendEditSection(String sectionName, String sectionId, String sectionType, String population, String year, String term, String days, String startTime,
 			String endTime)
 	{
+		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SendEditSectionAction sesa = new SendEditSectionAction(sectionName, sectionId, sectionType, population, year, term, days, startTime, endTime);
-		SendEditSectionEvent sese = new SendEditSectionEvent(sesa);
+		SendEditSectionEvent sese = new SendEditSectionEvent(sesa,container);
 		eventBus.fireEvent(sese);
 	}
 
@@ -622,8 +625,9 @@ InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 	
 	private void sendValidate()
 	{
+		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SendValidateAction sva = new SendValidateAction();
-		SendValidateEvent sve = new SendValidateEvent(sva);
+		SendValidateEvent sve = new SendValidateEvent(sva, container);
 		eventBus.fireEvent(sve);
 	}
 	
