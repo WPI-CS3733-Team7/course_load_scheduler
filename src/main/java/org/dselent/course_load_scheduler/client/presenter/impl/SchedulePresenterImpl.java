@@ -129,6 +129,10 @@ InvalidCreateCourseEventHandler, InvalidEditSectionEventHandler {
 
 	@Override
 	public void go(HasWidgets container) {
+		// one handler will populate data into models for this view
+		// and then will call go (this function)
+		// go will use that data to determine the visibility
+		// in views with potentially hidden fields, create .defaul css styling
 		container.clear();
 		container.add(view.getWidgetContainer());		
 	}
