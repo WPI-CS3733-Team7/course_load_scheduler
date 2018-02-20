@@ -1,23 +1,21 @@
 package org.dselent.course_load_scheduler.client.model;
 
-import java.sql.Timestamp;
-import java.time.Instant;
-
+import java.util.Date;
 
 public class User extends Model
 {	
 	// attributes
+	// changed instant data types to string
+	// was too lazy to convert the json strings to instants
 	
 	private Integer id;
 	private String userName;
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String encryptedPassword;
-	private String salt;
 	private Integer userStateId;
-	private Instant createdAt;
-	private Instant updatedAt;
+	private Date createdAt;
+	private Date updatedAt;
 
 	// methods
 		
@@ -73,26 +71,6 @@ public class User extends Model
 		this.email = email;
 	}
 
-	public String getEncryptedPassword()
-	{
-		return encryptedPassword;
-	}
-
-	public void setEncryptedPassword(String encryptedPassword)
-	{
-		this.encryptedPassword = encryptedPassword;
-	}
-
-	public String getSalt()
-	{
-		return salt;
-	}
-
-	public void setSalt(String salt)
-	{
-		this.salt = salt;
-	}
-
 	public Integer getUserStateId()
 	{
 		return userStateId;
@@ -103,40 +81,24 @@ public class User extends Model
 		this.userStateId = userStateId;
 	}
 
-	public Instant getCreatedAt()
+	public Date getCreatedAt()
 	{
 		return createdAt;
 	}
 
-	public void setCreatedAt(Instant createdAt)
+	public void setCreatedAt(Date createdAt)
 	{
 		this.createdAt = createdAt;
 	}
-	
-	public void setCreatedAt(Timestamp createdAt)
-	{
-		if(createdAt != null)
-		{
-			this.createdAt = createdAt.toInstant();
-		}
-	}
 
-	public Instant getUpdatedAt()
+	public Date getUpdatedAt()
 	{
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(Instant updatedAt)
+	public void setUpdatedAt(Date updatedAt)
 	{
 		this.updatedAt = updatedAt;
-	}
-	
-	public void setUpdatedAt(Timestamp updatedAt)
-	{
-		if(updatedAt != null)
-		{
-			this.updatedAt = updatedAt.toInstant();
-		}
 	}
 
 	@Override
@@ -146,11 +108,9 @@ public class User extends Model
 		int result = 1;
 		result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((encryptedPassword == null) ? 0 : encryptedPassword.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((salt == null) ? 0 : salt.hashCode());
 		result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		result = prime * result + ((userStateId == null) ? 0 : userStateId.hashCode());
@@ -195,17 +155,6 @@ public class User extends Model
 		{
 			return false;
 		}
-		if (encryptedPassword == null)
-		{
-			if (other.encryptedPassword != null)
-			{
-				return false;
-			}
-		}
-		else if (!encryptedPassword.equals(other.encryptedPassword))
-		{
-			return false;
-		}
 		if (firstName == null)
 		{
 			if (other.firstName != null)
@@ -236,17 +185,6 @@ public class User extends Model
 			}
 		}
 		else if (!lastName.equals(other.lastName))
-		{
-			return false;
-		}
-		if (salt == null)
-		{
-			if (other.salt != null)
-			{
-				return false;
-			}
-		}
-		else if (!salt.equals(other.salt))
 		{
 			return false;
 		}
@@ -302,9 +240,7 @@ public class User extends Model
 		builder.append(", email=");
 		builder.append(email);
 		builder.append(", encryptedPassword=");
-		builder.append(encryptedPassword);
 		builder.append(", salt=");
-		builder.append(salt);
 		builder.append(", userStateId=");
 		builder.append(userStateId);
 		builder.append(", createdAt=");
@@ -313,11 +249,6 @@ public class User extends Model
 		builder.append(updatedAt);
 		builder.append("]");
 		return builder.toString();
-	}
-
-	@Override
-	public String displayText() {
-		return userName;
 	}
 	
 }

@@ -1,7 +1,6 @@
 package org.dselent.course_load_scheduler.client.model;
 
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.util.Date;
 
 public class CourseHistory extends Model
 {
@@ -12,7 +11,7 @@ public class CourseHistory extends Model
     private String course_name;
     private String course_number;
     private String frequency;
-    private Instant createdAt;
+    private Date createdAt;
 
     // methods
     public Integer getId() {
@@ -55,18 +54,12 @@ public class CourseHistory extends Model
         this.frequency = frequency;
     }
 
-    public Instant getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        if (createdAt != null) {
-            this.createdAt = createdAt.toInstant();
-        }
     }
 
     @Override

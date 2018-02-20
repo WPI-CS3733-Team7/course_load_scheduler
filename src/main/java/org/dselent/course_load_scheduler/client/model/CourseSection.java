@@ -1,7 +1,6 @@
 package org.dselent.course_load_scheduler.client.model;
 
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.util.Date;
 
 public class CourseSection extends Model
 {
@@ -15,8 +14,8 @@ public class CourseSection extends Model
 		private Integer courseId;
 		private Integer instructorId;
 		private Integer calendarInfoId;
-		private Instant createdAt;
-		private Instant updatedAt;
+		private Date createdAt;
+		private Date updatedAt;
 		private Boolean deleted;
 
 		// methods
@@ -85,22 +84,22 @@ public class CourseSection extends Model
 			this.calendarInfoId = calendarInfoId;
 		}
 
-		public Instant getCreatedAt() {
+		public Date getCreatedAt() {
 			return createdAt;
 		}
 
-		public void setCreatedAt(Timestamp createdAt) {
+		public void setCreatedAt(Date createdAt) {
 			if (createdAt != null)
-			this.createdAt = createdAt.toInstant();
+			this.createdAt = createdAt;
 		}
 
-		public Instant getUpdatedAt() {
+		public Date getUpdatedAt() {
 			return updatedAt;
 		}
 
-		public void setUpdatedAt(Timestamp updatedAt) {
+		public void setUpdatedAt(Date updatedAt) {
 			if (updatedAt != null)
-			this.updatedAt = updatedAt.toInstant();
+			this.updatedAt = updatedAt;
 		}
 
 		public Boolean getDeleted() {

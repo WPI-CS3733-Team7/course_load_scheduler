@@ -1,8 +1,6 @@
 package org.dselent.course_load_scheduler.client.model;
 
-import java.sql.Timestamp;
-import java.time.Instant;
-
+import java.util.Date;
 
 public class UserState extends Model
 {	
@@ -10,8 +8,8 @@ public class UserState extends Model
 	
 	private Integer id;
 	private String state;
-	private Instant createdAt;
-	private Instant updatedAt;
+	private Date createdAt;
+	private Date updatedAt;
 	private Boolean deleted;
 
 	// methods
@@ -36,39 +34,29 @@ public class UserState extends Model
 		this.state = state;
 	}
 
-	public Instant getCreatedAt()
+	public Date getCreatedAt()
 	{
 		return createdAt;
 	}
 
-	public void setCreatedAt(Instant createdAt)
-	{
-		this.createdAt = createdAt;
-	}
-	
-	public void setCreatedAt(Timestamp createdAt)
+	public void setCreatedAt(Date createdAt)
 	{
 		if(createdAt != null)
 		{
-			this.createdAt = createdAt.toInstant();
+			this.createdAt = createdAt;
 		}
 	}
 
-	public Instant getUpdatedAt()
+	public Date getUpdatedAt()
 	{
 		return updatedAt;
 	}
-
-	public void setUpdatedAt(Instant updatedAt)
-	{
-		this.updatedAt = updatedAt;
-	}
 	
-	public void setUpdatedAt(Timestamp updatedAt)
+	public void setUpdatedAt(Date updatedAt)
 	{
 		if(updatedAt != null)
 		{
-			this.updatedAt = updatedAt.toInstant();
+			this.updatedAt = updatedAt;
 		}
 	}
 	
