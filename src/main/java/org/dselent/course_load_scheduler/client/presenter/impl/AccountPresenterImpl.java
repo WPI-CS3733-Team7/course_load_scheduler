@@ -182,8 +182,9 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 
 	private void sendChangePassword(String oldPassword, String newPassword, String confirmNewPassword)
 	{
+		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SendChangePasswordAction scpa = new SendChangePasswordAction(oldPassword, newPassword);
-		SendChangePasswordEvent scpe = new SendChangePasswordEvent(scpa);
+		SendChangePasswordEvent scpe = new SendChangePasswordEvent(scpa, container);
 		eventBus.fireEvent(scpe);
 	}
 	
@@ -246,8 +247,9 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	
 	private void sendEditUser(String userRole, String linkedInstructor, String deleted)
 	{
+		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SendEditUserAction seua = new SendEditUserAction(userRole, linkedInstructor, deleted);
-		SendEditUserEvent seue = new SendEditUserEvent(seua);
+		SendEditUserEvent seue = new SendEditUserEvent(seua, container);
 		eventBus.fireEvent(seue);
 	}
 	

@@ -1,7 +1,6 @@
 package org.dselent.course_load_scheduler.client.model;
 
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.util.Date;
 
 public class CalendarInfoHistory extends Model
 {
@@ -14,7 +13,7 @@ public class CalendarInfoHistory extends Model
 	private String days;
 	private Integer start_time;
 	private Integer end_time;
-	private Instant createdAt;
+	private Date createdAt;
 	
 	// methods
 	
@@ -74,13 +73,13 @@ public class CalendarInfoHistory extends Model
 		this.end_time = end_time;
 	}
 
-	public Instant getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Timestamp createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		if (createdAt != null)
-			this.createdAt = createdAt.toInstant();
+			this.createdAt = createdAt;
 	}
 
 	//

@@ -1,7 +1,6 @@
 package org.dselent.course_load_scheduler.client.model;
 
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.util.Date;
 
 
 public class InstructorUserLinkHistory extends Model
@@ -12,7 +11,7 @@ public class InstructorUserLinkHistory extends Model
 	private Integer former_id;
 	private Integer instructor_id;
 	private Integer linked_user_id;
-	private Instant createdAt;
+	private Date createdAt;
 	
 	// methods
 	
@@ -48,13 +47,13 @@ public class InstructorUserLinkHistory extends Model
 		this.linked_user_id = linked_user_id;
 	}
 
-	public Instant getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Timestamp createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		if (createdAt != null)
-		this.createdAt = createdAt.toInstant();
+		this.createdAt = createdAt;
 	}
 
 	//
