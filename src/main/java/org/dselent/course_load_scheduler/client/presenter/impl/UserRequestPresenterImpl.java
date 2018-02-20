@@ -141,8 +141,9 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 	
 	private void sendRequest(String Description, String Requesttype)
 	{
+		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SendRequestAction sra = new SendRequestAction(Description, Requesttype);
-		SendRequestEvent sre = new SendRequestEvent(sra);
+		SendRequestEvent sre = new SendRequestEvent(sra, container);
 		eventBus.fireEvent(sre);
 	}
 	

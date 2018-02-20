@@ -3,23 +3,15 @@ package org.dselent.course_load_scheduler.client.event;
 import org.dselent.course_load_scheduler.client.action.SendRequestAction;
 import org.dselent.course_load_scheduler.client.event_handler.SendRequestEventHandler;
 
-import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.user.client.ui.HasWidgets;
 
-public class SendRequestEvent extends GwtEvent<SendRequestEventHandler>{
+public class SendRequestEvent extends DisplayEvent<SendRequestAction, SendRequestEventHandler>{
 	public static Type<SendRequestEventHandler> TYPE = new Type<SendRequestEventHandler>();
 	
-	private SendRequestAction action;
-	
-	public SendRequestEvent(SendRequestAction action)
+	public SendRequestEvent(SendRequestAction action, HasWidgets container)
 	{
-		this.action = action;
-	}
-	
-	public SendRequestAction getAction()
-	{
-		return action;
-	}
-	
+		super(action, container);
+	}	
 	
 	@Override
 	public Type<SendRequestEventHandler> getAssociatedType()

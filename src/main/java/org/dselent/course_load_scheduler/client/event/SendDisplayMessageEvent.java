@@ -3,37 +3,24 @@ package org.dselent.course_load_scheduler.client.event;
 import org.dselent.course_load_scheduler.client.action.SendDisplayMessageAction;
 import org.dselent.course_load_scheduler.client.event_handler.SendDisplayMessageEventHandler;
 
-import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.user.client.ui.HasWidgets;
 
-public class SendDisplayMessageEvent extends GwtEvent<SendDisplayMessageEventHandler>
+public class SendDisplayMessageEvent extends DisplayEvent<SendDisplayMessageAction, SendDisplayMessageEventHandler>
 {
 
 	public static Type<SendDisplayMessageEventHandler> TYPE = new Type<SendDisplayMessageEventHandler>();
 	
-	private SendDisplayMessageAction action;
-	
-	public SendDisplayMessageEvent(SendDisplayMessageAction action)
+	public SendDisplayMessageEvent(SendDisplayMessageAction action, HasWidgets container)
 	{
-		this.action = action;
+		super(action, container);
 	}
 	
-	public SendDisplayMessageAction getAction()
-	{
-		return action;
-	}
-	
-	/*
-	 * 
-	 */
 	@Override
 	public Type<SendDisplayMessageEventHandler> getAssociatedType()
 	{
 		return TYPE;
 	}
 
-	/*
-	 * 
-	 */
 	@Override
 	protected void dispatch(SendDisplayMessageEventHandler handler)
 	{

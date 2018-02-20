@@ -1,28 +1,18 @@
 package org.dselent.course_load_scheduler.client.event;
 
 import org.dselent.course_load_scheduler.client.action.SendReplyAction;
-import org.dselent.course_load_scheduler.client.event_handler.SelectRequestEventHandler;
 import org.dselent.course_load_scheduler.client.event_handler.SendReplyEventHandler;
 
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.user.client.ui.HasWidgets;
 
-public class SendReplyEvent extends GwtEvent<SendReplyEventHandler>{
+public class SendReplyEvent extends DisplayEvent<SendReplyAction, SendReplyEventHandler>{
 	
 	public static Type<SendReplyEventHandler> TYPE = new Type<SendReplyEventHandler>();
 	
-	private SendReplyAction action;
-	
-	public SendReplyEvent(SendReplyAction action)
+	public SendReplyEvent(SendReplyAction action, HasWidgets container)
 	{
-		this.action = action;
-	}
-	
-	public SendReplyAction getAction()
-	{
-		return action;
-	}
-	
+		super(action, container);
+	}	
 	
 	@Override
 	public Type<SendReplyEventHandler> getAssociatedType()

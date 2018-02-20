@@ -3,38 +3,25 @@ package org.dselent.course_load_scheduler.client.event;
 import org.dselent.course_load_scheduler.client.action.SendEditUserAction;
 import org.dselent.course_load_scheduler.client.event_handler.SendEditUserEventHandler;
 
-import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.user.client.ui.HasWidgets;
 
 
-public class SendEditUserEvent extends GwtEvent<SendEditUserEventHandler>
+public class SendEditUserEvent extends DisplayEvent<SendEditUserAction, SendEditUserEventHandler>
 {
 	
 	public static Type<SendEditUserEventHandler> TYPE = new Type<SendEditUserEventHandler>();
 	
-	private SendEditUserAction action;
-	
-	public SendEditUserEvent(SendEditUserAction action)
+	public SendEditUserEvent(SendEditUserAction action, HasWidgets container)
 	{
-		this.action = action;
+		super(action, container);
 	}
-	
-	public SendEditUserAction getAction()
-	{
-		return action;
-	}
-	
-	/*
-	 * 
-	 */
+
 	@Override
 	public Type<SendEditUserEventHandler> getAssociatedType()
 	{
 		return TYPE;
 	}
 
-	/*
-	 * 
-	 */
 	@Override
 	protected void dispatch(SendEditUserEventHandler handler)
 	{

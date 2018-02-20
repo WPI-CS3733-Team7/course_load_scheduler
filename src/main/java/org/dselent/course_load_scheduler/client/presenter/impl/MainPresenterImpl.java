@@ -68,8 +68,9 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 	{
 		parentPresenter.showLoadScreen();
 			
+		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SendLogoutAction sla = new SendLogoutAction();
-		SendLogoutEvent sle = new SendLogoutEvent(sla);
+		SendLogoutEvent sle = new SendLogoutEvent(sla, container);
 		eventBus.fireEvent(sle);	
 	}
 

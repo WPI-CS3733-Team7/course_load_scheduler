@@ -145,8 +145,9 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	
 	private void sendReply(String description, String replyType) {
 		parentPresenter.hideLoadScreen();
+		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SendReplyAction sra = new SendReplyAction(description, replyType);
-		SendReplyEvent sre = new SendReplyEvent(sra);
+		SendReplyEvent sre = new SendReplyEvent(sra, container);
 		eventBus.fireEvent(sre);
 	}
 
@@ -176,8 +177,9 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	}
 	
 	private void selectRequestAction(Integer requester, String requestType, String Description) {
+		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SelectRequestAction sra = new SelectRequestAction(requester, requestType, Description);
-		SelectRequestEvent sre = new SelectRequestEvent(sra);
+		SelectRequestEvent sre = new SelectRequestEvent(sra, container);
 		eventBus.fireEvent(sre);
 	}
 	/*@Override
