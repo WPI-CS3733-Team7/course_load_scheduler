@@ -1,6 +1,7 @@
 package org.dselent.course_load_scheduler.client;
 
 import org.dselent.course_load_scheduler.client.gin.Injector;
+import org.dselent.course_load_scheduler.client.presenter.impl.ExamplePresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.AccountPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.AdminRequestPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.IndexPresenterImpl;
@@ -8,6 +9,7 @@ import org.dselent.course_load_scheduler.client.presenter.impl.LoginPresenterImp
 import org.dselent.course_load_scheduler.client.presenter.impl.MainPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.SchedulePresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.UserRequestPresenterImpl;
+import org.dselent.course_load_scheduler.client.service.impl.UserServiceImpl;
 import org.dselent.course_load_scheduler.client.view.IndexView;
 import org.dselent.course_load_scheduler.client.view.MainView;
 
@@ -26,36 +28,6 @@ public class CourseLoadScheduler implements EntryPoint
 	public void onModuleLoad()
 	{
 		RootLayoutPanel root = RootLayoutPanel.get();
-		
-		//SimplePanelExample simplePanelExample = new SimplePanelExample();
-		//root.add(simplePanelExample);
-		
-		//SimplePanelExample2 simplePanelExample2 = new SimplePanelExample2();
-		//root.add(simplePanelExample2);
-		
-		//HTMLPanelExample htmlPanelExample = new HTMLPanelExample();
-		//root.add(htmlPanelExample);
-		
-		//FlowPanelExample flowPanelExample = new FlowPanelExample();
-		//root.add(flowPanelExample);
-		
-		//VerticalPanelExample verticalPanelExample = new VerticalPanelExample();
-		//root.add(verticalPanelExample);
-		
-		//HorizontalPanelExample horizontalPanelExample = new HorizontalPanelExample();
-		//root.add(horizontalPanelExample);
-		
-		//DockLayoutPanelExample dockLayoutPanelExample = new DockLayoutPanelExample();
-		//root.add(dockLayoutPanelExample);
-		
-		//GridExample gridExample = new GridExample();
-		//root.add(gridExample);
-
-		//TabLayoutPanelExample tabLayoutPanelExample = new TabLayoutPanelExample();
-		//root.add(tabLayoutPanelExample);
-		
-		//ExamplesPanel examplesPanel = new ExamplesPanel();
-		//root.add(examplesPanel);
 
 		// Get the injector, which injected objects can be retrieved from
 		final Injector injector = Injector.INSTANCE;
@@ -75,7 +47,11 @@ public class CourseLoadScheduler implements EntryPoint
 		AdminRequestPresenterImpl requestPresenter = injector.getAdminRequestPresenter();
 		requestPresenter.init();
 		
-		//indexPresenter.go(RootPanel.get("indexContainer"));
+		ExamplePresenterImpl examplePresenter = injector.getExamplePresenter();
+		examplePresenter.init();
+		UserServiceImpl userService = injector.getUserService();
+		userService.init();
+		
 		indexPresenter.go(root);
 		mainPresenter.go(indexView.getViewRootPanel());
 		schedulePresenter.go(mainPresenter.getSchedulePanel());
