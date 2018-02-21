@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidChangePasswordAction;
 import org.dselent.course_load_scheduler.client.action.InvalidEditUserAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveClickAccountTabAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveEditUserAction;
 import org.dselent.course_load_scheduler.client.action.SendChangePasswordAction;
 import org.dselent.course_load_scheduler.client.action.SendEditUserAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidChangePasswordStrings;
@@ -13,6 +15,8 @@ import org.dselent.course_load_scheduler.client.errorstring.InvalidEditUserStrin
 import org.dselent.course_load_scheduler.client.event.InvalidChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidEditUserEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveChangePasswordEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveClickAccountTabEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveEditUserEvent;
 import org.dselent.course_load_scheduler.client.event.SendChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditUserEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
@@ -42,7 +46,6 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	List<InstructorUserLink> instructorUserLinkList = new ArrayList<InstructorUserLink>();
 	List<Instructor> instructorList = new ArrayList<Instructor>();
 	int selectedUser = -1;
-	
 
 	@Inject
 	public AccountPresenterImpl(IndexPresenter parentPresenter, AccountView view, GlobalData globalData)
@@ -363,12 +366,41 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		SendEditUserEvent seue = new SendEditUserEvent(seua, container);
 		eventBus.fireEvent(seue);
 	}
+
+	/*---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----*/
 	
 	@Override
 	public void onReceiveChangePassword(ReceiveChangePasswordEvent evt)
 	{
 		String message = evt.getAction().getMessage();
 		view.showErrorMessages(message);
+	}
+	
+	@Override
+	public void onReceiveClickAccountTab(ReceiveClickAccountTabEvent evt)
+	{
+		ReceiveClickAccountTabAction action = evt.getAction();
+		view.setChangingUsernameLabelText(action.getUserName());
+		view.setChangingNameLabelText(action.getFirstName() + " " + action.getLastName());
+		view.setChangingAccountStateLabelText(action.getUserRole());
+		view.setChangingEmailLabelText(action.getEmail());
+		
+		populateUserList(action.getUserList());
+		populateInstructorList(action.getInstructorList());
+		//populateUserRoleList(action.getUserRoleLinkList());
+		//populateInstructorUserLinkList(action.getInstructorUserLinkList());
+		parentPresenter.hideLoadScreen();
+	}
+	
+	@Override
+	public void onReceiveEditUser(ReceiveEditUserEvent evt)
+	{
+		ReceiveEditUserAction action = evt.getAction();
+		populateUserList(action.getUserList());
+		populateInstructorList(action.getInstructorList());
+		//populateUserRoleList(action.getUserRoleLinkList());
+		//populateInstructorUserLinkList(action.getInstructorUserLinkList());
+		parentPresenter.hideLoadScreen();
 	}
 	
 	/*---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----*/

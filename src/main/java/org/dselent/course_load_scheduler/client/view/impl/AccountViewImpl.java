@@ -294,4 +294,24 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		presenter.fillEditUserFields();
 		registerPopup.center();
 	}
+
+	@Override
+	public void setChangingNameLabelText(String text) {
+		changingNameLabel.setText(text);
+	}
+
+	@Override
+	public void setChangingUsernameLabelText(String text) {
+		changingUsernameLabel.setText(text);
+	}
+
+	@Override
+	public void setChangingAccountStateLabelText(String text) {
+		changingAccountStateLabel.setText(text);
+	}
+
+	@Override
+	public void setChangingEmailLabelText(String text) {
+		changingEmailLabel.setText(text);
+	}
 }

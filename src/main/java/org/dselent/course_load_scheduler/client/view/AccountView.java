@@ -7,6 +7,11 @@ import com.google.gwt.user.client.ui.TextBox;
 
 public interface AccountView extends BaseView<AccountPresenter>{
 	
+	void setChangingNameLabelText(String text);
+	void setChangingUsernameLabelText(String text);
+	void setChangingAccountStateLabelText(String text);
+	void setChangingEmailLabelText(String text);
+	//
 	Button getChangePasswordButton();
 	Button getEditUserButton();
 	void showErrorMessages(String errorMessages);

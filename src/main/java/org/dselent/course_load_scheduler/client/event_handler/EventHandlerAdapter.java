@@ -11,6 +11,7 @@ import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidReplyEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveChangePasswordEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveClickAccountTabEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveEditCourseEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveEditInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveEditSectionEvent;
@@ -56,6 +57,7 @@ InvalidRegisterEventHandler,
 InvalidReplyEventHandler,
 InvalidRequestEventHandler,
 ReceiveChangePasswordEventHandler,
+ReceiveClickAccountTabEventHandler,
 ReceiveEditCourseEventHandler,
 ReceiveEditInstructorEventHandler,
 ReceiveEditSectionEventHandler,
@@ -111,6 +113,9 @@ SendValidateEventHandler
 	
 	@Override
 	public void onReceiveChangePassword(ReceiveChangePasswordEvent evt) {}
+	
+	@Override
+	public void onReceiveClickAccountTab(ReceiveClickAccountTabEvent evt) {}
 	
 	@Override
 	public void onReceiveEditCourse(ReceiveEditCourseEvent evt) {}
