@@ -198,7 +198,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			{
 				if (instructorList.get(i).getId() == userLink.getInstructorId())
 				{
-					instructorIndex = i;
+					instructorIndex = i + 1;
 					break;
 				}
 			}
