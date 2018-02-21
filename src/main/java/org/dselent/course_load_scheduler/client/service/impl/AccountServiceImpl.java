@@ -50,7 +50,7 @@ public class AccountServiceImpl extends BaseServiceImpl implements AccountServic
 		JSONObject json = changePasswordActionTranslator.translateToJson(action);
 		SendChangePasswordCallback changePasswordCallback = new SendChangePasswordCallback(eventBus, evt.getContainer());
 		
-		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.REGISTER, changePasswordCallback, json);
+		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.CHANGE_PASSWORD, changePasswordCallback, json);
 		request.send();
 	}
 		
