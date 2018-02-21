@@ -1,5 +1,7 @@
 package org.dselent.course_load_scheduler.client.service.impl;
 
+import org.dselent.course_load_scheduler.client.action.SendChangePasswordAction;
+import org.dselent.course_load_scheduler.client.callback.SendChangePasswordCallback;
 import org.dselent.course_load_scheduler.client.action.SendEditUserAction;
 import org.dselent.course_load_scheduler.client.callback.SendLoginCallback;
 import org.dselent.course_load_scheduler.client.event.SendChangePasswordEvent;
@@ -7,6 +9,7 @@ import org.dselent.course_load_scheduler.client.event.SendEditUserEvent;
 import org.dselent.course_load_scheduler.client.network.NetworkRequest;
 import org.dselent.course_load_scheduler.client.network.NetworkRequestStrings;
 import org.dselent.course_load_scheduler.client.service.AccountService;
+import org.dselent.course_load_scheduler.client.translator.impl.ChangePasswordActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.translator.impl.EditUserActionTranslatorImpl;
 
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -40,9 +43,17 @@ public class AccountServiceImpl extends BaseServiceImpl implements AccountServic
 	@Override
 	public void onSendChangePassword(SendChangePasswordEvent evt)
 	{
+		SendChangePasswordAction action = evt.getAction();
+		ChangePasswordActionTranslatorImpl changePasswordActionTranslator = new ChangePasswordActionTranslatorImpl();
+		JSONObject json = changePasswordActionTranslator.translateToJson(action);
+		SendChangePasswordCallback changePasswordCallback = new SendChangePasswordCallback(eventBus, evt.getContainer());
 		
+		String uri = action.getUserId() + NetworkRequestStrings.CHANGE_PASSWORD;
+		
+		NetworkRequest request = new NetworkRequest(uri, changePasswordCallback, json);
+		request.send();
 	}
-	
+		
 	@Override
 	public void onSendEditUser(SendEditUserEvent evt)
 	{

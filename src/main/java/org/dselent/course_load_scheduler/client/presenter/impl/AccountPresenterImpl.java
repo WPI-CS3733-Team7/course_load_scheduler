@@ -12,6 +12,7 @@ import org.dselent.course_load_scheduler.client.errorstring.InvalidChangePasswor
 import org.dselent.course_load_scheduler.client.errorstring.InvalidEditUserStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidEditUserEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.SendChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditUserEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
@@ -198,6 +199,8 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		view.showErrorMessages(icpa.toString());
 	}
 	
+	
+	
 	@Override
 	public void editUser()
 	{	
@@ -250,6 +253,13 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		SendEditUserAction seua = new SendEditUserAction(globalData.getUserId(), null, userRole, /*linkedInstructor*/ -1, deleted);
 		SendEditUserEvent seue = new SendEditUserEvent(seua, container);
 		eventBus.fireEvent(seue);
+	}
+	
+	@Override
+	public void onReceiveChangePassword(ReceiveChangePasswordEvent evt)
+	{
+		String message = evt.getAction().getMessage();
+		view.showErrorMessages(message);
 	}
 	
 	private void validateField(String field) throws EmptyStringException
