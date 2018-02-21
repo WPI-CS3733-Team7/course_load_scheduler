@@ -110,14 +110,17 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		}
 	}
 	
-	public void populateInstructorList()
+	public void populateInstructorList(List<Instructor> iList)
 	{
+		instructorList = iList;
 		view.getLinkedInstructorDropBox().clear();
 		view.getLinkedInstructorDropBox().addItem("-");
 		for (Instructor i : instructorList) {
 			view.getLinkedInstructorDropBox().addItem(i.displayText());
 		}
 	}
+	
+	
 	
 	public void populateRoleList()
 	{

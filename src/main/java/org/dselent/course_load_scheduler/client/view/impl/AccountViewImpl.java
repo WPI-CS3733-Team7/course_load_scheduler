@@ -291,6 +291,7 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		PopupPanel registerPopup = new PopupPanel(true);
 		registerPopup.add(vertPanel);
 		registerPopup.isGlassEnabled();
+		presenter.fillEditUserFields();
 		registerPopup.center();
 	}
 }
