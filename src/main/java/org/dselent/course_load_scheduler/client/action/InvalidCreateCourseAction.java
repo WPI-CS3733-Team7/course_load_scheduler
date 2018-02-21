@@ -17,6 +17,12 @@ private List<String> reasonList;
 	{
 		this.reasonList = reasonList;
 	}
+	
+	public InvalidCreateCourseAction(String reason)
+	{
+		reasonList = new ArrayList<>();
+		reasonList.add(reason);
+	}
 
 	public boolean addReasons(List<String> reasonList)
 	{
