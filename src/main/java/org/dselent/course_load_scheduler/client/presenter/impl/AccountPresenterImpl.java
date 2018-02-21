@@ -222,7 +222,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			}
 			if(validUserRole && validLinkedInstructor)
 			{
-				sendEditUser(userRole, linkedInstructor, deleted.toString());
+				sendEditUser(userRole, linkedInstructor, deleted);
 			}
 			else
 			{
@@ -244,10 +244,10 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		view.showErrorMessages(ieau.toString());
 	}
 	
-	private void sendEditUser(String userRole, String linkedInstructor, String deleted)
+	private void sendEditUser(String userRole, String linkedInstructor, Boolean deleted)
 	{
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendEditUserAction seua = new SendEditUserAction(globalData.getUserId(), null, userRole, linkedInstructor, deleted);
+		SendEditUserAction seua = new SendEditUserAction(globalData.getUserId(), null, userRole, /*linkedInstructor*/ -1, deleted);
 		SendEditUserEvent seue = new SendEditUserEvent(seua, container);
 		eventBus.fireEvent(seue);
 	}

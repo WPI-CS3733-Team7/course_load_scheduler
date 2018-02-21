@@ -5,10 +5,10 @@ public class SendEditUserAction extends Action
 	Integer userId;
 	Integer editId;
 	String userRole;
-	String linkedInstructor;
-	String deleted;
+	Integer linkedInstructor;
+	Boolean deleted;
 	
-	public SendEditUserAction(Integer userId, Integer editId, String userRole, String linkedInstructor, String deleted)
+	public SendEditUserAction(Integer userId, Integer editId, String userRole, Integer linkedInstructor, Boolean deleted)
 	{
 		this.userId = userId;
 		this.editId = editId;
@@ -21,7 +21,7 @@ public class SendEditUserAction extends Action
 		return userRole;
 	}
 
-	public String getLinkedInstructor() {
+	public Integer getLinkedInstructor() {
 		return linkedInstructor;
 	}
 
@@ -33,7 +33,7 @@ public class SendEditUserAction extends Action
 		return editId;
 	}
 
-	public String getDeleted() {
+	public Boolean getDeleted() {
 		return deleted;
 	}
 }

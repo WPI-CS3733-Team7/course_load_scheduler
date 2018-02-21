@@ -1,7 +1,5 @@
 package org.dselent.course_load_scheduler.client.model;
 
-import java.util.Date;
-
 public class User extends Model
 {	
 	// attributes
@@ -14,8 +12,6 @@ public class User extends Model
 	private String lastName;
 	private String email;
 	private Integer userStateId;
-	private Date createdAt;
-	private Date updatedAt;
 
 	// methods
 		
@@ -81,37 +77,15 @@ public class User extends Model
 		this.userStateId = userStateId;
 	}
 
-	public Date getCreatedAt()
-	{
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt)
-	{
-		this.createdAt = createdAt;
-	}
-
-	public Date getUpdatedAt()
-	{
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Date updatedAt)
-	{
-		this.updatedAt = updatedAt;
-	}
-
 	@Override
 	public int hashCode()
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		result = prime * result + ((userStateId == null) ? 0 : userStateId.hashCode());
 		return result;
@@ -133,25 +107,7 @@ public class User extends Model
 			return false;
 		}
 		User other = (User) obj;
-		if (createdAt == null)
-		{
-			if (other.createdAt != null)
-			{
-				return false;
-			}
-		}
-		else if (!createdAt.equals(other.createdAt))
-		{
-			return false;
-		}
-		if (email == null)
-		{
-			if (other.email != null)
-			{
-				return false;
-			}
-		}
-		else if (!email.equals(other.email))
+		if (!email.equals(other.email))
 		{
 			return false;
 		}
@@ -185,17 +141,6 @@ public class User extends Model
 			}
 		}
 		else if (!lastName.equals(other.lastName))
-		{
-			return false;
-		}
-		if (updatedAt == null)
-		{
-			if (other.updatedAt != null)
-			{
-				return false;
-			}
-		}
-		else if (!updatedAt.equals(other.updatedAt))
 		{
 			return false;
 		}
@@ -244,9 +189,6 @@ public class User extends Model
 		builder.append(", userStateId=");
 		builder.append(userStateId);
 		builder.append(", createdAt=");
-		builder.append(createdAt);
-		builder.append(", updatedAt=");
-		builder.append(updatedAt);
 		builder.append("]");
 		return builder.toString();
 	}
