@@ -123,7 +123,17 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		}
 	}
 	
+	public void populateUserRolesLinkList(List<UsersRolesLink> urlList)
+	{
+		userRoleLinkList = urlList;
+
+	}
 	
+	public void populateInstructorUserLinkList(List<InstructorUserLink> iulList)
+	{
+		instructorUserLinkList = iulList;
+
+	}
 	
 	public void populateRoleList()
 	{
