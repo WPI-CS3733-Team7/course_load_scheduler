@@ -10,6 +10,7 @@ import org.dselent.course_load_scheduler.client.errorstring.InvalidLoginStrings;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidRegisterStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidLoginEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.SendLoginEvent;
 import org.dselent.course_load_scheduler.client.event.SendLogoutEvent;
 import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
@@ -23,7 +24,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
 
-public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresenter, SendLogoutEventHandler
+public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresenter
 {
 	private IndexPresenter parentPresenter;
 	private LoginView view;
@@ -283,6 +284,13 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 		SendRegisterAction sra = new SendRegisterAction(userName, firstName, lastName, email, password);
 		SendRegisterEvent sre = new SendRegisterEvent(sra, container);
 		eventBus.fireEvent(sre);
+	}
+	
+	@Override
+	public void onReceiveRegister(ReceiveRegisterEvent evt)
+	{
+		String message = evt.getAction().getMessage();
+		view.showErrorMessages(message);
 	}
 
 	@Override

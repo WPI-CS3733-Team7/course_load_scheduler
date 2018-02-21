@@ -1,5 +1,5 @@
 package org.dselent.course_load_scheduler.client.action;
 
-public class Action {
+public abstract class Action {
 
 }

@@ -3,7 +3,8 @@ package org.dselent.course_load_scheduler.client.action;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvalidCreateInstructorAction {
+public class InvalidCreateInstructorAction extends Action
+{
 
 private List<String> reasonList;
 	
@@ -15,6 +16,12 @@ private List<String> reasonList;
 	public InvalidCreateInstructorAction(List<String> reasonList)
 	{
 		this.reasonList = reasonList;
+	}
+	
+	public InvalidCreateInstructorAction(String reason)
+	{
+		reasonList = new ArrayList<>();
+		reasonList.add(reason);
 	}
 
 	public boolean addReasons(List<String> reasonList)

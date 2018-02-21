@@ -1,5 +1,6 @@
 package org.dselent.course_load_scheduler.client.gin;
 
+import org.dselent.course_load_scheduler.client.model.GlobalData;
 import org.dselent.course_load_scheduler.client.presenter.AccountPresenter;
 import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
@@ -50,6 +51,9 @@ public class InjectorModule extends AbstractGinModule
 	@Override
     protected void configure()
     {
+		//global data
+        bind(GlobalData.class).in(Singleton.class);
+		
 		// event bus
         bind(SimpleEventBus.class).in(Singleton.class);
         
@@ -74,8 +78,7 @@ public class InjectorModule extends AbstractGinModule
         bind(ExampleView.class).to(ExampleViewImpl.class).in(Singleton.class);
         
         //services
-        bind(UserService.class).to(UserServiceImpl.class).in(Singleton.class);
-
+        bind(UserService.class).to(UserServiceImpl.class).in(Singleton.class); 
     }
 	
 	/*

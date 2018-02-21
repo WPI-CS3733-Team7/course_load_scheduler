@@ -1,32 +1,30 @@
 package org.dselent.course_load_scheduler.client.action;
 
-import org.dselent.course_load_scheduler.client.model.User;
-
-public class ReceiveChangePasswordAction 
+public class ReceiveChangePasswordAction extends Action
 {
-	private User model;
+	private String message;
 
-	public ReceiveChangePasswordAction(User model)
+	public ReceiveChangePasswordAction(String message)
 	{
-		this.model = model;
+		this.message = message;
 	}
 
-	public User getModel()
+	public String getMessage()
 	{
-		return model;
+		return message;
 	}
 
-	public void setModel(User model)
+	public void setMessage(String message)
 	{
-		this.model = model;
+		this.message = message;
 	}
 
 	@Override
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append("ReceiveChangePasswordAction [model=");
-		builder.append(model);
+		builder.append("ReceiveChangePasswordAction [message=");
+		builder.append(message);
 		builder.append("]");
 		return builder.toString();
 	}

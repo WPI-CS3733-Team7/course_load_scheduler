@@ -3,7 +3,8 @@ package org.dselent.course_load_scheduler.client.action;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvalidEditSectionAction {
+public class InvalidEditSectionAction extends Action
+{
 
 private List<String> reasonList;
 	
@@ -15,6 +16,12 @@ private List<String> reasonList;
 	public InvalidEditSectionAction(List<String> reasonList)
 	{
 		this.reasonList = reasonList;
+	}
+	
+	public InvalidEditSectionAction(String reason)
+	{
+		reasonList = new ArrayList<>();
+		reasonList.add(reason);
 	}
 
 	public boolean addReasons(List<String> reasonList)

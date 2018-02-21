@@ -21,4 +21,5 @@ public interface AccountView extends BaseView<AccountPresenter>{
 	Button getSubmitEditUserButton();
 	Button getDeleteEditUserButton();
 	boolean isDeleted();
+	ListBox getUserBox();
 }

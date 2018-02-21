@@ -1,6 +1,7 @@
 package org.dselent.course_load_scheduler.client.action;
 
-public class SendReplyAction {
+public class SendReplyAction extends Action
+{
 
 	private String response;
 	private String replyType;

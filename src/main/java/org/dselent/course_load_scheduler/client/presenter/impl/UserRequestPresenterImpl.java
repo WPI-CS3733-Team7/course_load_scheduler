@@ -10,6 +10,7 @@ import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
 import org.dselent.course_load_scheduler.client.event_handler.InvalidRequestEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
+import org.dselent.course_load_scheduler.client.model.GlobalData;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.UserRequestPresenter;
@@ -20,16 +21,19 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class UserRequestPresenterImpl extends BasePresenterImpl implements UserRequestPresenter, InvalidRequestEventHandler{
+public class UserRequestPresenterImpl extends BasePresenterImpl implements UserRequestPresenter
+{
 	private IndexPresenter parentPresenter;
 	private UserRequestView view;
+	private GlobalData globalData;
 	private boolean submitClickInProgress;
 	
 	@Inject
-	public UserRequestPresenterImpl(IndexPresenter parentPresenter, UserRequestView view)
+	public UserRequestPresenterImpl(IndexPresenter parentPresenter, UserRequestView view, GlobalData globalData)
 	{
 		this.view = view;
 		this.parentPresenter = parentPresenter;
+		this.globalData = globalData;
 		view.setPresenter(this);
 		submitClickInProgress = false;
 	}

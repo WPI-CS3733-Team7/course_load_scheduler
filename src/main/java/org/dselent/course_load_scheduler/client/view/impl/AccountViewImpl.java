@@ -53,7 +53,7 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	@UiField 
 	HorizontalPanel accountViewPanel;
 	@UiField
-	ListBox userList;
+	ListBox userBox;
 
 	// Change password pop-up widgets
 	Label changePasswordTitle = new Label("Change Password");
@@ -194,12 +194,8 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		this.changingEmailLabel = changingEmailLabel;
 	}
 	
-	public ListBox getUserList() {
-		return userList;
-	}
-
-	public void setUserList(ListBox userList) {
-		this.userList = userList;
+	public ListBox getUserBox() {
+		return userBox;
 	}
 
 	public Button getChangePasswordButton() {
@@ -221,6 +217,14 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	@Override
 	public Button getDeleteEditUserButton() {
 		return deleteEditUserButton;
+	}
+	
+	public ListBox getRoleDropBox() {
+		return roleDropBox;
+	}
+
+	public ListBox getLinkedInstructorDropBox() {
+		return linkedInstructorDropBox;
 	}
 	
 	@Override
@@ -288,13 +292,5 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 		registerPopup.add(vertPanel);
 		registerPopup.isGlassEnabled();
 		registerPopup.center();
-	}
-
-	public ListBox getRoleDropBox() {
-		return roleDropBox;
-	}
-
-	public ListBox getLinkedInstructorDropBox() {
-		return linkedInstructorDropBox;
 	}
 }

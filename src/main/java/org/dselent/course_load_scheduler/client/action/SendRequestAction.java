@@ -1,6 +1,7 @@
 package org.dselent.course_load_scheduler.client.action;
 
-public class SendRequestAction {
+public class SendRequestAction extends Action
+{
 	private String RequestType;
 	private String Description;
 	

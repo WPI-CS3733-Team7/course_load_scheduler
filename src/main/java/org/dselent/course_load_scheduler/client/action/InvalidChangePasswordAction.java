@@ -3,7 +3,7 @@ package org.dselent.course_load_scheduler.client.action;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvalidChangePasswordAction
+public class InvalidChangePasswordAction extends Action
 {
 	private List<String> reasonList;
 	
@@ -15,6 +15,12 @@ public class InvalidChangePasswordAction
 	public InvalidChangePasswordAction(List<String> reasonList)
 	{
 		this.reasonList = reasonList;
+	}
+	
+	public InvalidChangePasswordAction(String reason)
+	{
+		reasonList = new ArrayList<>();
+		reasonList.add(reason);
 	}
 
 	public boolean addReasons(List<String> reasonList)

@@ -1,23 +1,17 @@
 package org.dselent.course_load_scheduler.client.presenter.impl;
 
 import org.dselent.course_load_scheduler.client.action.SendLogoutAction;
-import org.dselent.course_load_scheduler.client.event.InvalidLoginEvent;
-import org.dselent.course_load_scheduler.client.event.SendDisplayMessageEvent;
 import org.dselent.course_load_scheduler.client.event.SendLogoutEvent;
-import org.dselent.course_load_scheduler.client.event_handler.SendDisplayMessageEventHandler;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.MainPresenter;
 import org.dselent.course_load_scheduler.client.view.BaseView;
 import org.dselent.course_load_scheduler.client.view.MainView;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 
-public class MainPresenterImpl extends BasePresenterImpl implements MainPresenter, SendDisplayMessageEventHandler
+public class MainPresenterImpl extends BasePresenterImpl implements MainPresenter
 {
 	private IndexPresenter parentPresenter;
 	private MainView view;
@@ -39,10 +33,7 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 	@Override
 	public void bind()
 	{
-		HandlerRegistration registration;
-		
-		registration = eventBus.addHandler(SendDisplayMessageEvent.TYPE, this);
-		eventBusRegistration.put(SendDisplayMessageEvent.TYPE, registration);
+
 	}
 	
 	@Override
@@ -78,11 +69,6 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 	public BaseView<? extends BasePresenter> getView() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void onSendDisplayMessage(SendDisplayMessageEvent evt) {
-		view.showErrorMessages(evt.getAction().getMessage());
 	}
 
 	@Override

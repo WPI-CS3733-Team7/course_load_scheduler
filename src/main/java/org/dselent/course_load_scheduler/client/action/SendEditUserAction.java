@@ -1,32 +1,39 @@
 package org.dselent.course_load_scheduler.client.action;
 
-public class SendEditUserAction {
-	
+public class SendEditUserAction extends Action
+{
+	Integer userId;
+	Integer editId;
 	String userRole;
-	String linkedInstructor;
-	String deleted;
+	Integer linkedInstructor;
+	Boolean deleted;
 	
-	public SendEditUserAction(String userRole, String linkedInstructor, String deleted)
+	public SendEditUserAction(Integer userId, Integer editId, String userRole, Integer linkedInstructor, Boolean deleted)
 	{
+		this.userId = userId;
+		this.editId = editId;
 		this.userRole = userRole;
 		this.linkedInstructor = linkedInstructor;
+		this.deleted = deleted;
 	}
 
 	public String getUserRole() {
 		return userRole;
 	}
 
-	public String getLinkedInstructor() {
+	public Integer getLinkedInstructor() {
 		return linkedInstructor;
 	}
 
-	public String getDeleted() {
-		return deleted;
-	}
-	
-	@Override
-	public String toString() {
-		return "SendEditUserAction [userRole=" + userRole + ", linkedInstructor=" + linkedInstructor + ", deleted=" + deleted + "]";
+	public Integer getUserId() {
+		return userId;
 	}
 
+	public Integer getEditId() {
+		return editId;
+	}
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
 }

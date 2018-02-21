@@ -7,7 +7,7 @@ public class InvalidCreateCourseEvent extends BaseEvent<InvalidCreateCourseActio
 
 public static Type<InvalidCreateCourseEventHandler> TYPE = new Type<InvalidCreateCourseEventHandler>();
 	
-	public InvalidCreateCourseEvent(InvalidCreateCourseAction icca)
+	public InvalidCreateCourseEvent(InvalidCreateCourseAction action)
 	{
 		super(action);
 	}

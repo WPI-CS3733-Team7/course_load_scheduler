@@ -1,7 +1,7 @@
 package org.dselent.course_load_scheduler.client.action;
 
-public class SendValidateAction {
-	
+public class SendValidateAction extends Action
+{
 	public SendValidateAction(){}
 
 	@Override

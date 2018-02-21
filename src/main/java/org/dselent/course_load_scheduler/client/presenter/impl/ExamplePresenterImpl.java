@@ -47,8 +47,6 @@ public class ExamplePresenterImpl extends BasePresenterImpl implements ExamplePr
 		view.getLastNameField().setText(userModel.getLastName());
 		view.getEmailField().setText(userModel.getEmail());
 		view.getUserStateIdField().setText(Integer.toString(userModel.getUserStateId()));
-		view.getCreatedAtField().setText(userModel.getCreatedAt().toString());
-		view.getUpdatedAtField().setText(userModel.getUpdatedAt().toString());
 		
 		container.clear();
 		container.add(view.getWidgetContainer());

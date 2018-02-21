@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class InvalidEditUserAction
+public class InvalidEditUserAction extends Action
 {	
 	private List<String> reasonList;
 	

@@ -7,7 +7,7 @@ public class InvalidCreateInstructorEvent extends BaseEvent<InvalidCreateInstruc
 
 public static Type<InvalidCreateInstructorEventHandler> TYPE = new Type<InvalidCreateInstructorEventHandler>();
 	
-	public InvalidCreateInstructorEvent(InvalidCreateInstructorAction iica)
+	public InvalidCreateInstructorEvent(InvalidCreateInstructorAction action)
 	{
 		super(action);
 	}
