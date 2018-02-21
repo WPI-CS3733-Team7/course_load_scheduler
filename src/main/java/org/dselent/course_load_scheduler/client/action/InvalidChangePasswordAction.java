@@ -16,6 +16,12 @@ public class InvalidChangePasswordAction extends Action
 	{
 		this.reasonList = reasonList;
 	}
+	
+	public InvalidChangePasswordAction(String reason)
+	{
+		reasonList = new ArrayList<>();
+		reasonList.add(reason);
+	}
 
 	public boolean addReasons(List<String> reasonList)
 	{
