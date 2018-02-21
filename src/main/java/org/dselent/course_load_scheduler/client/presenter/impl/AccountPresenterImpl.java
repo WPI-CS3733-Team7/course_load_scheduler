@@ -132,8 +132,6 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 
 	}
 	
-	
-	
 	public void populateRoleList()
 	{
 		view.getRoleDropBox().clear();
