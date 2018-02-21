@@ -250,7 +250,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	private void sendEditUser(String userRole, String linkedInstructor, String deleted)
 	{
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendEditUserAction seua = new SendEditUserAction(userRole, linkedInstructor, deleted);
+		SendEditUserAction seua = new SendEditUserAction(globalData.getUserId(), null, userRole, linkedInstructor, deleted);
 		SendEditUserEvent seue = new SendEditUserEvent(seua, container);
 		eventBus.fireEvent(seue);
 	}

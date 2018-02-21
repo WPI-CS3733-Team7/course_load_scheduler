@@ -3,6 +3,8 @@ package org.dselent.course_load_scheduler.client.service.impl;
 import org.dselent.course_load_scheduler.client.action.SendChangePasswordAction;
 import org.dselent.course_load_scheduler.client.callback.SendChangePasswordCallback;
 import org.dselent.course_load_scheduler.client.callback.SendRegisterCallback;
+import org.dselent.course_load_scheduler.client.action.SendEditUserAction;
+import org.dselent.course_load_scheduler.client.callback.SendLoginCallback;
 import org.dselent.course_load_scheduler.client.event.SendChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditUserEvent;
 import org.dselent.course_load_scheduler.client.network.NetworkRequest;
@@ -10,6 +12,7 @@ import org.dselent.course_load_scheduler.client.network.NetworkRequestStrings;
 import org.dselent.course_load_scheduler.client.service.AccountService;
 import org.dselent.course_load_scheduler.client.translator.impl.ChangePasswordActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.translator.impl.RegisterActionTranslatorImpl;
+import org.dselent.course_load_scheduler.client.translator.impl.EditUserActionTranslatorImpl;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.json.client.JSONObject;
@@ -54,6 +57,14 @@ public class AccountServiceImpl extends BaseServiceImpl implements AccountServic
 	@Override
 	public void onSendEditUser(SendEditUserEvent evt)
 	{
+		SendEditUserAction action = evt.getAction();
+		EditUserActionTranslatorImpl editUserActionTranslator = new EditUserActionTranslatorImpl();
+		JSONObject json = editUserActionTranslator.translateToJson(action);
+		SendLoginCallback editUserCallback = new SendLoginCallback(eventBus, evt.getContainer());
 		
+		String uri = action.getUserId() + NetworkRequestStrings.EDIT_USER;
+		
+		NetworkRequest request = new NetworkRequest(uri, editUserCallback, json);
+		request.send();
 	}
 }
