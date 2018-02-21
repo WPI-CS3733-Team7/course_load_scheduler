@@ -3,15 +3,10 @@ package org.dselent.course_load_scheduler.client.translator.impl;
 import java.util.Date;
 
 import org.dselent.course_load_scheduler.client.action.ReceiveEditCourseAction;
-import org.dselent.course_load_scheduler.client.action.ReceiveEditInstructorAction;
 import org.dselent.course_load_scheduler.client.action.SendEditCourseAction;
-import org.dselent.course_load_scheduler.client.action.SendEditInstructorAction;
 import org.dselent.course_load_scheduler.client.model.Course;
-import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveEditCourseKeys;
-import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveEditInstructorKeys;
 import org.dselent.course_load_scheduler.client.send.jsonkeys.SendEditCourseKeys;
-import org.dselent.course_load_scheduler.client.send.jsonkeys.SendEditInstructorKeys;
 import org.dselent.course_load_scheduler.client.translator.ActionTranslator;
 import org.dselent.course_load_scheduler.client.utils.JSONHelper;
 
