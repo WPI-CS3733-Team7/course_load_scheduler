@@ -2,18 +2,18 @@ package org.dselent.course_load_scheduler.client.model;
 
 public class GlobalData extends Model
 {
-	String password;
-	String role;
-	Integer linkedInstructorId;
+	private Integer userId;
+	private String role;
+	private Integer linkedInstructorId;
 	
-	public String getPassword() 
+	public Integer getUserId()
 	{
-		return password;
+		return userId;
 	}
-	
-	public void setPassword(String password) 
+
+	public void setUserId(Integer userId)
 	{
-		this.password = password;
+		this.userId = userId;
 	}
 	
 	public String getRole()
@@ -41,7 +41,6 @@ public class GlobalData extends Model
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((linkedInstructorId == null) ? 0 : linkedInstructorId.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		return result;
 	}
@@ -60,11 +59,6 @@ public class GlobalData extends Model
 				return false;
 		} else if (!linkedInstructorId.equals(other.linkedInstructorId))
 			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
 		if (role == null) {
 			if (other.role != null)
 				return false;
@@ -76,7 +70,7 @@ public class GlobalData extends Model
 	@Override
 	public String toString()
 	{
-		return "GlobalData [password=" + password + ", role=" + role + ", linkedInstructorId=" + linkedInstructorId
+		return "GlobalData [role=" + role + ", linkedInstructorId=" + linkedInstructorId
 				+ "]";
 	}	
 }

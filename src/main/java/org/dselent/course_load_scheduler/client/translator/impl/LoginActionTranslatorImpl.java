@@ -65,6 +65,4 @@ public class LoginActionTranslatorImpl implements ActionTranslator<SendLoginActi
 	
 		return action;
 	}
-
-
 }
