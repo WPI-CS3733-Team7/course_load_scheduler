@@ -17,6 +17,10 @@ import org.dselent.course_load_scheduler.client.event.SendChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditUserEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
+import org.dselent.course_load_scheduler.client.model.Instructor;
+import org.dselent.course_load_scheduler.client.model.InstructorUserLink;
+import org.dselent.course_load_scheduler.client.model.User;
+import org.dselent.course_load_scheduler.client.model.UsersRolesLink;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.view.AccountView;
 
@@ -32,6 +36,13 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	private GlobalData globalData;
 	private boolean changePasswordClickInProgress;
 	private boolean editUserClickInProgress;
+	
+	List<User> userList = new ArrayList<User>();
+	List<UsersRolesLink> userRoleLinkList = new ArrayList<UsersRolesLink>();
+	List<InstructorUserLink> instructorUserLinkList = new ArrayList<InstructorUserLink>();
+	List<Instructor> instructorList = new ArrayList<Instructor>();
+	int selectedUser = -1;
+	
 
 	@Inject
 	public AccountPresenterImpl(IndexPresenter parentPresenter, AccountView view, GlobalData globalData)
@@ -86,6 +97,101 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	{
 		this.parentPresenter = parentPresenter;
 	}
+	
+	/*---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----*/
+	
+	public void populateUserList(List<User> uList)
+	{
+		userList = uList;
+		view.getUserBox().clear();
+		for (User u : userList)
+		{
+			view.getUserBox().addItem(u.displayText());
+		}
+	}
+	
+	public void populateInstructorList()
+	{
+		view.getLinkedInstructorDropBox().clear();
+		view.getLinkedInstructorDropBox().addItem("-");
+		for (Instructor i : instructorList) {
+			view.getLinkedInstructorDropBox().addItem(i.displayText());
+		}
+	}
+	
+	public void populateRoleList()
+	{
+		view.getRoleDropBox().clear();
+		view.getRoleDropBox().addItem("USER");
+		view.getRoleDropBox().addItem("LINKED USER");
+		view.getRoleDropBox().addItem("ADMIN");
+	}
+	
+	public void fillEditUserFields()
+	{
+		// find which user is selected
+		selectedUser = view.getUserBox().getSelectedIndex();
+		User selected = userList.get(selectedUser);
+		int userId = selected.getId();
+		
+		//
+		
+		// get that user's role
+		UsersRolesLink userRole = null;
+		for (UsersRolesLink u : userRoleLinkList)
+		{
+			if (u.getUserId() == userId)
+			{
+				userRole = u;
+				break;
+			}
+		}
+		// user role entry was not found (should never happen if user was not manually entered in database)
+		if (userRole == null) {
+			view.getRoleDropBox().setSelectedIndex(0);
+		} 
+		else 
+		{
+			// get corresponding user role
+			if (userRole.getRoleId() == 1) {
+				view.getRoleDropBox().setSelectedIndex(2);
+			} else if (userRole.getRoleId() == 2) {
+				view.getRoleDropBox().setSelectedIndex(0);
+			} else if (userRole.getRoleId() == 3) {
+				view.getRoleDropBox().setSelectedIndex(1);
+			}
+		}
+		
+		//
+		
+		// get the user's instructor link
+		InstructorUserLink userLink = null;
+		for (InstructorUserLink u : instructorUserLinkList)
+		{
+			if (u.getLinkedUserId() == userId)
+			{
+				userLink = u;
+				break;
+			}
+		}
+		
+		int instructorIndex = 0;
+		// if the user has a link to an instructor, find the corresponding instructor
+		if (userLink != null)
+		{
+			for (int i = 0; i < instructorList.size(); i++)
+			{
+				if (instructorList.get(i).getId() == userLink.getInstructorId())
+				{
+					instructorIndex = i;
+					break;
+				}
+			}
+		}
+		view.getLinkedInstructorDropBox().setSelectedIndex(instructorIndex);
+	}
+	
+	/*---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----*/
 	
 	@Override
 	public void changePassword()
@@ -183,7 +289,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	private void sendChangePassword(String oldPassword, String newPassword, String confirmNewPassword)
 	{
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendChangePasswordAction scpa = new SendChangePasswordAction(oldPassword, newPassword);
+		SendChangePasswordAction scpa = new SendChangePasswordAction(globalData.getUserId(), oldPassword, newPassword);
 		SendChangePasswordEvent scpe = new SendChangePasswordEvent(scpa, container);
 		eventBus.fireEvent(scpe);
 	}
@@ -199,7 +305,7 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		view.showErrorMessages(icpa.toString());
 	}
 	
-	
+	/*---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----*/
 	
 	@Override
 	public void editUser()
@@ -261,6 +367,8 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		String message = evt.getAction().getMessage();
 		view.showErrorMessages(message);
 	}
+	
+	/*---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----*/
 	
 	private void validateField(String field) throws EmptyStringException
 	{

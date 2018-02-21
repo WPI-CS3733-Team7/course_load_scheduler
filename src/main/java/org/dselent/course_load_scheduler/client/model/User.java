@@ -193,4 +193,8 @@ public class User extends Model
 		return builder.toString();
 	}
 	
+	@Override
+	public String displayText() {
+		return userName + ": " + firstName + " " + lastName;
+	}
 }

@@ -654,8 +654,6 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		view.getPopInstructorTextLastName().setText(selected.getLastName());
 		view.getPopInstructorTextRank().setText(selected.getRank());
 		view.getPopInstructorTextEmail().setText(selected.getEmail());
-		
-		
 	}
 
 	@Override
