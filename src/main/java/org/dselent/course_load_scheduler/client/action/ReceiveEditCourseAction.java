@@ -1,22 +1,23 @@
 package org.dselent.course_load_scheduler.client.action;
 
+import org.dselent.course_load_scheduler.client.model.Course;
 import org.dselent.course_load_scheduler.client.model.User;
 
 public class ReceiveEditCourseAction extends Action
 {
-	private User model;
+	private Course model;
 
-	public ReceiveEditCourseAction(User model)
+	public ReceiveEditCourseAction(Course model)
 	{
 		this.model = model;
 	}
 
-	public User getModel()
+	public Course getModel()
 	{
 		return model;
 	}
 
-	public void setModel(User model)
+	public void setModel(Course model)
 	{
 		this.model = model;
 	}
