@@ -5,15 +5,29 @@ import org.dselent.course_load_scheduler.client.model.CalendarInfo;
 
 public class ReceiveEditSectionAction extends Action
 {
+	private String message;
 	private CourseSection courseSection;
 	private CalendarInfo calendarInfo;
 	
-	public ReceiveEditSectionAction(CourseSection courseSection, CalendarInfo calendarInfo) {
+	public ReceiveEditSectionAction(String message, CourseSection courseSection, CalendarInfo calendarInfo) {
 		super();
+		this.message = message;
 		this.courseSection = courseSection;
 		this.calendarInfo = calendarInfo;
 	}
 	
+	public String getMessage() {
+		return message;
+	}
+
+
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+
+
 	public CourseSection getCourseSection() {
 		return courseSection;
 	}
@@ -38,6 +52,7 @@ public class ReceiveEditSectionAction extends Action
 
 	@Override
 	public String toString() {
-		return "ReceiveEditSectionAction [courseSection=" + courseSection + ", calendarInfo=" + calendarInfo + "]";
+		return "ReceiveEditSectionAction [message=" + message + ", courseSection=" + courseSection + ", calendarInfo="
+				+ calendarInfo + "]";
 	}
 }

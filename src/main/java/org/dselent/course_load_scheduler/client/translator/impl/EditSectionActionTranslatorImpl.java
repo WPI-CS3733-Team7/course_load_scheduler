@@ -45,6 +45,12 @@ public class EditSectionActionTranslatorImpl implements ActionTranslator<SendEdi
 		JSONValue jsonObject = json.get("success");
 		JSONObject returnObject = jsonObject.isArray().get(0).isObject();
 		
+		// Extracts message
+		
+		JSONValue messageObject = returnObject.get("message");
+		
+		String message = JSONHelper.getStringValue(messageObject);		
+		
 		//CourseSection object
 		
 		JSONValue courseSectionObjectStart = returnObject.get("courseSection");
@@ -64,6 +70,8 @@ public class EditSectionActionTranslatorImpl implements ActionTranslator<SendEdi
 			Integer courseId = JSONHelper.getIntValue(courseSectionObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.COURSE_ID));
 			Integer instructorId = JSONHelper.getIntValue(courseSectionObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.INSTRUCTOR_ID));
 			Integer calendarInfoId = JSONHelper.getIntValue(courseSectionObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.CALENDAR_INFO_ID));
+			
+			//Add checks for null values?
 		
 			// TODO look into time conversion more
 			// put into JSONHelper?
@@ -109,7 +117,7 @@ public class EditSectionActionTranslatorImpl implements ActionTranslator<SendEdi
 		
 		// possibly use builder pattern if it is a lot of data
 		
-		ReceiveEditSectionAction action = new ReceiveEditSectionAction(courseSection, calendarInfo);	
+		ReceiveEditSectionAction action = new ReceiveEditSectionAction(message, courseSection, calendarInfo);	
 	
 		return action;
 	}
