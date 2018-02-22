@@ -1,35 +1,43 @@
 package org.dselent.course_load_scheduler.client.action;
 
-import org.dselent.course_load_scheduler.client.model.User;
+import org.dselent.course_load_scheduler.client.model.CourseSection;
+import org.dselent.course_load_scheduler.client.model.CalendarInfo;
 
 public class ReceiveEditSectionAction extends Action
 {
-	private User model;
-
-	public ReceiveEditSectionAction(User model)
-	{
-		this.model = model;
+	private CourseSection courseSection;
+	private CalendarInfo calendarInfo;
+	
+	public ReceiveEditSectionAction(CourseSection courseSection, CalendarInfo calendarInfo) {
+		super();
+		this.courseSection = courseSection;
+		this.calendarInfo = calendarInfo;
+	}
+	
+	public CourseSection getCourseSection() {
+		return courseSection;
 	}
 
-	public User getModel()
-	{
-		return model;
+
+
+	public void setCourseSection(CourseSection courseSection) {
+		this.courseSection = courseSection;
 	}
 
-	public void setModel(User model)
-	{
-		this.model = model;
+
+
+	public CalendarInfo getCalendarInfo() {
+		return calendarInfo;
+	}
+
+
+
+	public void setCalendarInfo(CalendarInfo calendarInfo) {
+		this.calendarInfo = calendarInfo;
 	}
 
 	@Override
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder();
-		builder.append("ReceiveEditSectionAction [model=");
-		builder.append(model);
-		builder.append("]");
-		return builder.toString();
+	public String toString() {
+		return "ReceiveEditSectionAction [courseSection=" + courseSection + ", calendarInfo=" + calendarInfo + "]";
 	}
-
-
 }
