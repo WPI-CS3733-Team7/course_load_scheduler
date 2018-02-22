@@ -1,35 +1,38 @@
 package org.dselent.course_load_scheduler.client.action;
 
-import org.dselent.course_load_scheduler.client.model.User;
+import java.util.List;
+
+import org.dselent.course_load_scheduler.client.model.Request;
 
 public class ReceiveRequestAction extends Action
 {
-	private User model;
-
-	public ReceiveRequestAction(User model)
-	{
-		this.model = model;
+	private List<Request> requestList;
+	private String message;
+	
+	public ReceiveRequestAction(List<Request> requestList) {
+		this.requestList = requestList;
 	}
 
-	public User getModel()
+	public List<Request> getRequestList() {
+		return requestList;
+	}
+	
+	public ReceiveRequestAction(String message)
 	{
-		return model;
+		this.message = message;
 	}
 
-	public void setModel(User model)
+	public String getMessage()
 	{
-		this.model = model;
+		return message;
 	}
 
-	@Override
-	public String toString()
+	public void setMessage(String message)
 	{
-		StringBuilder builder = new StringBuilder();
-		builder.append("ReceiveRequestAction [model=");
-		builder.append(model);
-		builder.append("]");
-		return builder.toString();
+		this.message = message;
 	}
-
-
+	
+	public String toString() {
+		return "ReceiveRequestAction [requestList=" + requestList + " message= " + message + "]";
+	}
 }

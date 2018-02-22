@@ -6,8 +6,8 @@ public class SendRequestAction extends Action
 	String RequestType;
 	String Description;
 	
-	public SendRequestAction (Integer userId, String Description, String RequestType) {
-		this.userId = userId;
+	public SendRequestAction (String Description, String RequestType) {
+		//this.userId = userId;
 		this.RequestType = RequestType;
 		this.Description = Description;
 	}

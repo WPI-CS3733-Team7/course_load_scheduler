@@ -5,7 +5,7 @@ import java.util.List;
 
 public class InvalidRequestAction extends Action
 {
-private List<String> reasonList;
+	private List<String> reasonList;
 	
 	public InvalidRequestAction()
 	{
@@ -17,6 +17,12 @@ private List<String> reasonList;
 		this.reasonList = reasonList;
 	}
 
+	public InvalidRequestAction(String reason)
+	{
+		reasonList = new ArrayList<>();
+		reasonList.add(reason);
+	}
+	
 	public boolean addReasons(List<String> reasonList)
 	{
 		return reasonList.addAll(reasonList);
