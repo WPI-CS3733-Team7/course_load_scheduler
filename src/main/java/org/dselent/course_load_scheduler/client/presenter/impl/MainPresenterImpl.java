@@ -1,6 +1,7 @@
 package org.dselent.course_load_scheduler.client.presenter.impl;
 
 import org.dselent.course_load_scheduler.client.action.SendLogoutAction;
+import org.dselent.course_load_scheduler.client.event.ReceiveLoginEvent;
 import org.dselent.course_load_scheduler.client.event.SendLogoutEvent;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
@@ -85,4 +86,12 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 	public HasWidgets getAccountPanel() {
 		return view.getAccountPanel();
 	}
+
+	@Override
+	public void onReceiveLogin(ReceiveLoginEvent evt)
+	{
+		parentPresenter.hideLoadScreen();
+		this.go(parentPresenter.getView().getViewRootPanel());
+	}
+	
 }

@@ -45,20 +45,9 @@ public class LoginActionTranslatorImpl implements ActionTranslator<SendLoginActi
 		String email = JSONHelper.getStringValue(userObject, JSONHelper.convertKeyName(ReceiveLoginKeys.EMAIL));
 		Integer userStateId = JSONHelper.getIntValue(userObject, JSONHelper.convertKeyName(ReceiveLoginKeys.USER_STATE_ID));
 		
-		// TODO look into time conversion more
-		// put into JSONHelper?
-		
-		User user = new User();
-		user.setId(id);
-		user.setUserName(userName);
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
-		user.setEmail(email);
-		user.setUserStateId(userStateId);
-		
 		// possibly use builder pattern if it is a lot of data
-		ReceiveLoginAction action = new ReceiveLoginAction(user);	
+		//ReceiveLoginAction action = new ReceiveLoginAction();	
 	
-		return action;
+		return null;
 	}
 }
