@@ -74,6 +74,15 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		
 		registration = eventBus.addHandler(InvalidEditUserEvent.TYPE, this);
 		eventBusRegistration.put(InvalidEditUserEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(ReceiveClickAccountTabEvent.TYPE, this);
+		eventBusRegistration.put(ReceiveClickAccountTabEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(ReceiveChangePasswordEvent.TYPE, this);
+		eventBusRegistration.put(ReceiveChangePasswordEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(ReceiveEditUserEvent.TYPE, this);
+		eventBusRegistration.put(ReceiveEditUserEvent.TYPE, registration);
 	}
 	
 	@Override
@@ -126,13 +135,11 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	public void populateUserRolesLinkList(List<UsersRolesLink> urlList)
 	{
 		userRoleLinkList = urlList;
-
 	}
 	
 	public void populateInstructorUserLinkList(List<InstructorUserLink> iulList)
 	{
 		instructorUserLinkList = iulList;
-
 	}
 	
 	public void populateRoleList()
@@ -382,13 +389,17 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	@Override
 	public void onReceiveChangePassword(ReceiveChangePasswordEvent evt)
 	{
+		parentPresenter.hideLoadScreen();
+		view.getSubmitChangePasswordButton().setEnabled(true);
+		changePasswordClickInProgress = false;
+		
 		String message = evt.getAction().getMessage();
 		view.showErrorMessages(message);
 	}
 	
 	@Override
 	public void onReceiveClickAccountTab(ReceiveClickAccountTabEvent evt)
-	{
+	{	
 		ReceiveClickAccountTabAction action = evt.getAction();
 		view.setChangingUsernameLabelText(action.getUserName());
 		view.setChangingNameLabelText(action.getFirstName() + " " + action.getLastName());
@@ -397,8 +408,9 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		
 		populateUserList(action.getUserList());
 		populateInstructorList(action.getInstructorList());
-		//populateUserRoleList(action.getUserRoleLinkList());
-		//populateInstructorUserLinkList(action.getInstructorUserLinkList());
+		populateUserRolesLinkList(action.getUserRoleLinkList());
+		populateInstructorUserLinkList(action.getInstructorUserLinkList());
+		
 		parentPresenter.hideLoadScreen();
 	}
 	
@@ -408,9 +420,12 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		ReceiveEditUserAction action = evt.getAction();
 		populateUserList(action.getUserList());
 		populateInstructorList(action.getInstructorList());
-		//populateUserRoleList(action.getUserRoleLinkList());
-		//populateInstructorUserLinkList(action.getInstructorUserLinkList());
+		populateUserRolesLinkList(action.getUserRoleLinkList());
+		populateInstructorUserLinkList(action.getInstructorUserLinkList());
+		
 		parentPresenter.hideLoadScreen();
+		view.getSubmitEditUserButton().setEnabled(true);
+		editUserClickInProgress = false;
 	}
 	
 	/*---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----*/
