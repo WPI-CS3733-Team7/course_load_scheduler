@@ -1,16 +1,16 @@
 package org.dselent.course_load_scheduler.client.translator.impl;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
-import org.dselent.course_load_scheduler.client.action.ReceiveEditUserAction;
-import org.dselent.course_load_scheduler.client.action.SendEditUserAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveClickAccountTabAction;
+import org.dselent.course_load_scheduler.client.action.SendClickAccountTabAction;
 import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.model.InstructorUserLink;
 import org.dselent.course_load_scheduler.client.model.User;
 import org.dselent.course_load_scheduler.client.model.UsersRolesLink;
+import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveClickAccountTabKeys;
 import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveEditUserKeys;
-import org.dselent.course_load_scheduler.client.send.jsonkeys.SendEditUserKeys;
 import org.dselent.course_load_scheduler.client.translator.ActionTranslator;
 import org.dselent.course_load_scheduler.client.utils.JSONHelper;
 
@@ -18,28 +18,27 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 
-public class EditUserActionTranslatorImpl implements ActionTranslator<SendEditUserAction, ReceiveEditUserAction>
+public class ClickAccountTabActionTranslatorImpl implements ActionTranslator<SendClickAccountTabAction, ReceiveClickAccountTabAction>
 {
 	@Override
-	public JSONObject translateToJson(SendEditUserAction action)
-	{
-		JSONObject jsonObject = new JSONObject();
-		
-		JSONHelper.putIntValue(jsonObject, JSONHelper.convertKeyName(SendEditUserKeys.EDIT_ID), action.getEditId());
-		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditUserKeys.USER_ROLE), action.getUserRole());
-		JSONHelper.putIntValue(jsonObject, JSONHelper.convertKeyName(SendEditUserKeys.LINKED_INSTRUCTOR), action.getLinkedInstructor());
-		JSONHelper.putBooleanValue(jsonObject, JSONHelper.convertKeyName(SendEditUserKeys.DELETED), action.getDeleted());
-		
+	public JSONObject translateToJson(SendClickAccountTabAction object)
+	{	
+		JSONObject jsonObject = new JSONObject();		
 		return jsonObject;
 	}
 
 	@Override
-	public ReceiveEditUserAction translateToAction(JSONObject json) {
-		
+	public ReceiveClickAccountTabAction translateToAction(JSONObject json)
+	{
 		JSONValue jsonObject = json.get("success");
 		JSONObject returnObject = jsonObject.isArray().get(0).isObject();
+
+		String uFirstName = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveClickAccountTabKeys.FIRST_NAME));
+		String uLastName = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveClickAccountTabKeys.LAST_NAME));
+		String username = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveClickAccountTabKeys.USER_NAME));;
+		String userRole = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveClickAccountTabKeys.ROLE_ID));;
+		String email = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveClickAccountTabKeys.EMAIL));;
 		
-		// extract user list
 		JSONValue userListObjectStart = returnObject.get("userList");
 		JSONArray userListObject = userListObjectStart.isArray();
 		List<User> userList = new ArrayList<User>();
@@ -121,6 +120,7 @@ public class EditUserActionTranslatorImpl implements ActionTranslator<SendEditUs
 			instructorLinkList.add(instructorUserLink);
 		}
 		
-		return new ReceiveEditUserAction(userList, userRoleLinkList, instructorList, instructorLinkList);
+		ReceiveClickAccountTabAction action = new ReceiveClickAccountTabAction(uFirstName, uLastName, username, userRole, email, userList, userRoleLinkList, instructorLinkList, instructorList);
+		return action;
 	}
 }

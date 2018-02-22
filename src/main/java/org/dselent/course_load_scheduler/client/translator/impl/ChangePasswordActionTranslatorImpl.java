@@ -27,7 +27,6 @@ public class ChangePasswordActionTranslatorImpl implements ActionTranslator<Send
 	@Override
 	public ReceiveChangePasswordAction translateToAction(JSONObject json) 
 	{
-				
 		JSONValue jsonObject = json.get("success");
 		JSONObject changePasswordObject = jsonObject.isArray().get(0).isObject();
 		
@@ -35,7 +34,6 @@ public class ChangePasswordActionTranslatorImpl implements ActionTranslator<Send
 
 		ReceiveChangePasswordAction action = new ReceiveChangePasswordAction(message);	
 		return action;
-
 	}
 
 }

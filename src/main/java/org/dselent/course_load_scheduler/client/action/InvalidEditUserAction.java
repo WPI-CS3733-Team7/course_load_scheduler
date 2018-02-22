@@ -17,6 +17,12 @@ public class InvalidEditUserAction extends Action
 	{
 		this.reasonList = reasonList;
 	}
+	
+	public InvalidEditUserAction(String reason)
+	{
+		reasonList = new ArrayList<>();
+		reasonList.add(reason);
+	}
 
 	public boolean addReasons(List<String> reasonList)
 	{

@@ -5,6 +5,8 @@ import org.dselent.course_load_scheduler.client.view.MainView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.BeforeSelectionEvent;
+import com.google.gwt.event.logical.shared.BeforeSelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -14,6 +16,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 
 public class MainViewImpl extends BaseViewImpl<MainPresenter> implements MainView
 {
@@ -25,12 +28,20 @@ public class MainViewImpl extends BaseViewImpl<MainPresenter> implements MainVie
 	@UiField SimplePanel schedulePanel;
 	@UiField SimplePanel requestPanel;
 	@UiField SimplePanel accountPanel;
+	@UiField TabLayoutPanel tabPanel;
 
 	interface MainViewImplUiBinder extends UiBinder<Widget, MainViewImpl> {
 	}
 
 	public MainViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
+		tabPanel.addBeforeSelectionHandler(new BeforeSelectionHandler<Integer>(){
+			@Override
+			public void onBeforeSelection(BeforeSelectionEvent<Integer> event) {
+				// needs to allow each tab to send a request when clicked
+				// does integer correspond to each tab?
+			}
+		});
 	}
 
 	@Override
