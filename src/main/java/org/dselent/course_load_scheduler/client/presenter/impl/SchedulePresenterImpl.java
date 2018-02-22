@@ -6,11 +6,8 @@ import java.util.List;
 import org.dselent.course_load_scheduler.client.action.InvalidCreateCourseAction;
 import org.dselent.course_load_scheduler.client.action.InvalidCreateInstructorAction;
 import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
-import org.dselent.course_load_scheduler.client.action.InvalidLoginAction;
-import org.dselent.course_load_scheduler.client.action.InvalidRegisterAction;
 import org.dselent.course_load_scheduler.client.action.SendEditCourseAction;
 import org.dselent.course_load_scheduler.client.action.SendEditInstructorAction;
-import org.dselent.course_load_scheduler.client.action.SendRegisterAction;
 import org.dselent.course_load_scheduler.client.action.SendEditSectionAction;
 import org.dselent.course_load_scheduler.client.action.SendValidateAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidEditCourseStrings;
@@ -21,14 +18,10 @@ import org.dselent.course_load_scheduler.client.event.SendEditCourseEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidCreateCourseEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidCreateInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
-import org.dselent.course_load_scheduler.client.event.InvalidLoginEvent;
-import org.dselent.course_load_scheduler.client.event.InvalidRegisterEvent;
-import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveEditCourseEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveEditInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.SendValidateEvent;
-import org.dselent.course_load_scheduler.client.event_handler.InvalidCreateCourseEventHandler;
-import org.dselent.course_load_scheduler.client.event_handler.InvalidCreateInstructorEventHandler;
-import org.dselent.course_load_scheduler.client.event_handler.InvalidEditSectionEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.Course;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
@@ -36,8 +29,6 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
-import org.dselent.course_load_scheduler.client.view.impl.ModelButton;
-
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
@@ -177,6 +168,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		if (!submitEditInstructorClickInProgress)
 		{
 			submitEditInstructorClickInProgress = true;
+			parentPresenter.showLoadScreen();
 			String firstName = view.getPopInstructorTextFirstName().getText();
 			String lastName = view.getPopInstructorTextLastName().getText();
 			String rank = view.getPopInstructorTextRank().getText();
@@ -222,48 +214,9 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 				if(creating) {
 					sendInstructorEdit(null, firstName, lastName, rank, email, false);
 					
-					/* The new instructor created here would be sent back from the server instead of being created here */
-					Instructor inst = new Instructor();
-					inst.setId(0);
-					inst.setFirstName(firstName);
-					inst.setLastName(lastName);
-					inst.setRank(rank);
-					inst.setEmail(email);
-					
-					String instFullName = inst.displayText();
-					int begin = 0;
-					int end = instructorList.size();
-					while(begin<end) {
-						if(instFullName.compareToIgnoreCase(instructorList.get((begin+end)/2).displayText())<0) {
-							end = (begin+end)/2;
-						} else {
-							begin = (begin+end)/2+1;
-						}		
-					}
-					if(end>=instructorList.size())
-						instructorList.add(inst);
-					else
-						instructorList.add(end, inst);
-					view.getInstructorBox().insertItem(inst.displayText(), end);
 				} else {
 					sendInstructorEdit(instructorList.get(selectedInstructor).getId(), firstName, lastName, rank, email, deleting);
 					
-					if(deleting) {
-						instructorList.remove(selectedInstructor);
-						view.getInstructorBox().removeItem(selectedInstructor);
-					} else {
-					
-						/* The new instructor created here would be sent back from the server instead of being created here */
-						Instructor inst = new Instructor();
-						inst.setId(instructorList.get(selectedInstructor).getId());
-						inst.setFirstName(firstName);
-						inst.setLastName(lastName);
-						inst.setRank(rank);
-						inst.setEmail(email);
-						
-						instructorList.set(selectedInstructor, inst);
-						view.getInstructorBox().setItemText(selectedInstructor, inst.displayText());
-					}
 				}
 				
 			}
@@ -280,8 +233,47 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	}
 	
 	@Override
+	public void onReceiveEditInstructor(ReceiveEditInstructorEvent evt)
+	{
+		Instructor editedInstructor = evt.getAction().getModel();
+		int match = -1;
+		for(int i=0; i<instructorList.size(); i++)
+		{
+			if(instructorList.get(i).getId()==editedInstructor.getId())
+				match = i;
+		}
+		if(match<0) {
+			String instFullName = editedInstructor.displayText();
+			int begin = 0;
+			int end = instructorList.size();
+			while(begin<end) {
+				if(instFullName.compareToIgnoreCase(instructorList.get((begin+end)/2).displayText())<0) {
+					end = (begin+end)/2;
+				} else {
+					begin = (begin+end)/2+1;
+				}		
+			}
+			if(end>=instructorList.size())
+				instructorList.add(editedInstructor);
+			else
+				instructorList.add(end, editedInstructor);
+			view.getInstructorBox().insertItem(editedInstructor.displayText(), end);
+		} else {
+			if(editedInstructor.getDeleted()) {
+				instructorList.remove(match);
+				view.getInstructorBox().removeItem(match);
+			} else {
+				instructorList.set(match, editedInstructor);
+				view.getInstructorBox().setItemText(match, editedInstructor.displayText());
+			}
+		}
+		parentPresenter.hideLoadScreen();
+	}
+	
+	@Override
 	public void onInvalidCreateInstructor(InvalidCreateInstructorEvent evt)
 	{
+		parentPresenter.hideLoadScreen();
 		view.getInstructorSubmitButton().setEnabled(true);
 		submitEditInstructorClickInProgress = false;
 		
@@ -307,6 +299,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		if (!submitEditCourseClickInProgress)
 		{
 			submitEditCourseClickInProgress = true;
+			parentPresenter.showLoadScreen();
 			String courseName = view.getPopCourseTextName().getText();
 			String courseNumber = view.getPopCourseTextNumber().getText();
 			String frequency = view.getPopCourseTextFrequency().getText();
@@ -344,48 +337,9 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 				if(creating) {
 					sendCourseEdit(null, courseName, courseNumber, frequency, false);
 					
-					/* The new course created here would be sent back from the server instead of being created here */
-					Course course = new Course();
-					course.setId(0);
-					course.setCourseName(courseName);
-					course.setCourseNumber(courseNumber);
-					course.setFrequency(frequency);
-					
-					String courseNum = course.displayText();
-					int begin = 0;
-					int end = courseList.size();
-					while(begin<end) {
-						if(courseNum.compareToIgnoreCase(courseList.get((begin+end)/2).displayText())<0) {
-							end = (begin+end)/2;
-						} else {
-							begin = (begin+end)/2+1;
-						}		
-					}
-					/*if(end>=courseList.size())
-						courseList.add(course);
-					else*/
-						courseList.add(end, course);
-					view.getCourseBox().insertItem(course.displayText(), end);
-					
 				} else {
-					
 					sendCourseEdit(courseList.get(selectedCourse).getId(), courseName, courseNumber, frequency, deleting);
 					
-					if(deleting) {
-						courseList.remove(selectedInstructor);
-						view.getCourseBox().removeItem(selectedCourse);
-					} else {
-					
-						/* The new course created here would be sent back from the server instead of being created here */
-						Course course = new Course();
-						course.setId(courseList.get(selectedCourse).getId());
-						course.setCourseName(courseName);
-						course.setCourseNumber(courseNumber);
-						course.setFrequency(frequency);
-	
-						courseList.set(selectedCourse, course);
-						view.getCourseBox().setItemText(selectedCourse, course.displayText());
-					}
 				}
 			}
 			else
@@ -400,8 +354,47 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	}
 
 	@Override
+	public void onReceiveEditCourse(ReceiveEditCourseEvent evt)
+	{
+		Course editedCourse = evt.getAction().getModel();
+		int match = -1;
+		for(int i=0; i<courseList.size(); i++)
+		{
+			if(courseList.get(i).getId()==editedCourse.getId())
+				match = i;
+		}
+		if(match<0) {
+			String displayText = editedCourse.displayText();
+			int begin = 0;
+			int end = courseList.size();
+			while(begin<end) {
+				if(displayText.compareToIgnoreCase(courseList.get((begin+end)/2).displayText())<0) {
+					end = (begin+end)/2;
+				} else {
+					begin = (begin+end)/2+1;
+				}		
+			}
+			if(end>=courseList.size())
+				courseList.add(editedCourse);
+			else
+				courseList.add(end, editedCourse);
+			view.getInstructorBox().insertItem(editedCourse.displayText(), end);
+		} else {
+			if(editedCourse.getDeleted()) {
+				courseList.remove(match);
+				view.getInstructorBox().removeItem(match);
+			} else {
+				courseList.set(match, editedCourse);
+				view.getInstructorBox().setItemText(match, editedCourse.displayText());
+			}
+		}
+		parentPresenter.hideLoadScreen();
+	}
+	
+	@Override
 	public void onInvalidCreateCourse(InvalidCreateCourseEvent evt)
 	{
+		parentPresenter.hideLoadScreen();
 		view.getCourseSubmitButton().setEnabled(true);
 		submitEditCourseClickInProgress = false;
 		

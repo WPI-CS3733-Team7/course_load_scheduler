@@ -14,6 +14,7 @@ public final class NetworkRequestStrings
 	public static String CHANGE_PASSWORD = "account/change/password";
 	public static String CLICK_ACCOUNT_TAB = "account/page";
 	public static String EDIT_USER = "account/user/edit";
+	public static String SUBMIT_USER_REQUEST = "/requests/submit/request";
 	
 	private NetworkRequestStrings() {};
 }
