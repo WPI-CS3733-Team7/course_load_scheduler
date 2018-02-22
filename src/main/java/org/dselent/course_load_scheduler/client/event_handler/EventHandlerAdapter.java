@@ -33,6 +33,8 @@ import org.dselent.course_load_scheduler.client.event.SendLogoutEvent;
 import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.SendReplyEvent;
 import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
+import org.dselent.course_load_scheduler.client.event.SendSelectCourseEvent;
+import org.dselent.course_load_scheduler.client.event.SendSelectInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.SendValidateEvent;
 
 /**
@@ -79,7 +81,9 @@ SendLogoutEventHandler,
 SendRegisterEventHandler,
 SendReplyEventHandler,
 SendRequestEventHandler,
-SendValidateEventHandler
+SendValidateEventHandler,
+SendSelectInstructorEventHandler,
+SendSelectCourseEventHandler
 {
 	@Override
 	public void onCreateRequest(CreateRequestEvent evt) {}
@@ -182,4 +186,10 @@ SendValidateEventHandler
 	
 	@Override
 	public void onSendValidate(SendValidateEvent evt) {}
+	
+	@Override
+	public void onSendSelectInstructor(SendSelectInstructorEvent evt) {}
+	
+	@Override
+	public void onSendSelectCourse(SendSelectCourseEvent evt) {}
 }

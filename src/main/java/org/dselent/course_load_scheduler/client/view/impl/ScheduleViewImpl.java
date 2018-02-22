@@ -576,12 +576,12 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		
 		@UiHandler("instructorBox")
 		void onSelectInstructor(ClickEvent event) {
-			scheduleEditInstructor.setEnabled(true);
+			presenter.selectInstructor();
 		}
 		
 		@UiHandler("courseBox")
 		void onSelectCourse(ClickEvent event) {
-			scheduleEditCourse.setEnabled(true);
+			presenter.selectCourse();
 		}
 		
 	@UiHandler("validate")

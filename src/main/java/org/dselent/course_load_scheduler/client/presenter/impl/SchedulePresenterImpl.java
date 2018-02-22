@@ -9,6 +9,8 @@ import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
 import org.dselent.course_load_scheduler.client.action.SendEditCourseAction;
 import org.dselent.course_load_scheduler.client.action.SendEditInstructorAction;
 import org.dselent.course_load_scheduler.client.action.SendEditSectionAction;
+import org.dselent.course_load_scheduler.client.action.SendSelectCourseAction;
+import org.dselent.course_load_scheduler.client.action.SendSelectInstructorAction;
 import org.dselent.course_load_scheduler.client.action.SendValidateAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidEditCourseStrings;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidEditInstructorStrings;
@@ -21,6 +23,8 @@ import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveEditCourseEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveEditInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditSectionEvent;
+import org.dselent.course_load_scheduler.client.event.SendSelectCourseEvent;
+import org.dselent.course_load_scheduler.client.event.SendSelectInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.SendValidateEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.Course;
@@ -657,5 +661,25 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		view.getPopCourseTextNumber().setText(selected.getCourseNumber());
 		view.getPopCourseTextFrequency().setText(selected.getFrequency());
 		
+	}
+	
+	@Override
+	public void selectInstructor() {
+		view.getEditInstructorButton().setEnabled(true);
+
+		HasWidgets container = parentPresenter.getView().getViewRootPanel();
+		SendSelectInstructorAction ssia = new SendSelectInstructorAction(instructorList.get(view.getInstructorBox().getSelectedIndex()));
+		SendSelectInstructorEvent ssie = new SendSelectInstructorEvent(ssia, container);
+		eventBus.fireEvent(ssie);
+	}
+	
+	@Override
+	public void selectCourse() {
+		view.getEditCourseButton().setEnabled(true);
+
+		HasWidgets container = parentPresenter.getView().getViewRootPanel();
+		SendSelectCourseAction ssca = new SendSelectCourseAction(courseList.get(view.getCourseBox().getSelectedIndex()));
+		SendSelectCourseEvent ssce = new SendSelectCourseEvent(ssca, container);
+		eventBus.fireEvent(ssce);
 	}
 }
