@@ -5,22 +5,16 @@ import org.dselent.course_load_scheduler.client.event_handler.SelectRequestEvent
 
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.user.client.ui.HasWidgets;
 
-public class SelectRequestEvent extends GwtEvent<SelectRequestEventHandler>{
+public class SelectRequestEvent extends DisplayEvent<SelectRequestAction, SelectRequestEventHandler>{
 	public static Type<SelectRequestEventHandler> TYPE = new Type<SelectRequestEventHandler>();
+
 	
-	private SelectRequestAction action;
-	
-	public SelectRequestEvent(SelectRequestAction action)
+	public SelectRequestEvent(SelectRequestAction action, HasWidgets container)
 	{
-		this.action = action;
+		super(action, container);
 	}
-	
-	public SelectRequestAction getAction()
-	{
-		return action;
-	}
-	
 	
 	@Override
 	public Type<SelectRequestEventHandler> getAssociatedType()

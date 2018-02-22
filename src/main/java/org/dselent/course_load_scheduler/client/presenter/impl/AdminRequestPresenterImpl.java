@@ -88,6 +88,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			view.getReplyButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
 			
+			Integer requestId = Integer.parseInt(view.getUserRequestLabel().getText());
 			String description = view.getReplyTextArea().getText();
 			boolean approved = view.getApproved().getValue();
 			boolean tentative = view.getTentative().getValue();
@@ -122,17 +123,8 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 				validReplyType = false;
 			}
 			
-			/*try {
-				validateField(replyType);
-			}
-			catch(EmptyStringException e) {
-				invalidReasonList.add(InvalidReplyStrings.NULL_REPLYTYPE);
-				//view.showErrorMessages(InvalidReplyStrings.NULL_REPLYTYPE);
-				validReplyType = false;
-			}*/
-			
 			if(validDescription && validReplyType) {
-				sendReply(description, replyType);
+				sendReply(requestId, description, replyType);
 			}
 			else {
 				InvalidReplyAction ira = new InvalidReplyAction(invalidReasonList);
@@ -145,10 +137,10 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 
 	}
 	
-	private void sendReply(String description, String replyType) {
+	private void sendReply(Integer requestId, String description, String replyType) {
 		parentPresenter.hideLoadScreen();
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendReplyAction sra = new SendReplyAction(description, replyType);
+		SendReplyAction sra = new SendReplyAction(requestId, description, replyType);
 		SendReplyEvent sre = new SendReplyEvent(sra, container);
 		eventBus.fireEvent(sre);
 	}
@@ -179,60 +171,12 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	}
 	
 	private void selectRequestAction(Integer requester, String requestType, String Description) {
+		parentPresenter.hideLoadScreen();
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SelectRequestAction sra = new SelectRequestAction(requester, requestType, Description);
-		SelectRequestEvent sre = new SelectRequestEvent(sra);
+		SelectRequestEvent sre = new SelectRequestEvent(sra, container);
 		eventBus.fireEvent(sre);
 	}
-	/*@Override
-	public void submit() {
-		// TODO Auto-generated method stub
-		if(!submitClickInProgress)
-		{
-			submitClickInProgress = true;
-			view.getSubmitButton().setEnabled(false);
-			parentPresenter.showLoadScreen();
-			
-			
-			String description = view.getDescriptionText().getText();
-			String courseType = view.getCourseRdo().getText();
-			String otherType = view.getOtherRdo().getText();
-			
-			
-			boolean validRequest = true;
-			boolean validDescription = true;
-			
-			List<String> invalidReasonList = new ArrayList<>();
-			
-			try
-			{
-				validateField(description);
-			}
-			catch(EmptyStringException e)
-			{
-				invalidReasonList.add(InvalidRequestStrings.NULL_DESCRIPTION);
-				
-				validDescription = false;
-			}
-			
-			if(validDescription)
-			{
-				sendRequest(description);
-			}
-			else
-			{
-				InvalidRequestAction ira = new InvalidRequestAction(invalidReasonList);
-				InvalidRequestEvent ire = new InvalidRequestEvent(ira);
-				eventBus.fireEvent(ire);
-			}
-		}
-	}
-	private void sendRequest(String description)
-	{
-		SendRequestAction sra = new SendRequestAction(description);
-		SendRequestEvent sre = new SendRequestEvent(sra);
-		eventBus.fireEvent(sre);
-	}*/
 	
 	private void validateField(String field) throws EmptyStringException
 	{

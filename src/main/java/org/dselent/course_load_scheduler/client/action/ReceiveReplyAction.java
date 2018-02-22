@@ -1,32 +1,32 @@
 package org.dselent.course_load_scheduler.client.action;
 
-import org.dselent.course_load_scheduler.client.model.User;
+import org.dselent.course_load_scheduler.client.model.Request;
 
 public class ReceiveReplyAction extends Action
 {
-	private User model;
+	private Request request;
 
-	public ReceiveReplyAction(User model)
+	public ReceiveReplyAction(Request request)
 	{
-		this.model = model;
+		this.request = request;
 	}
 
-	public User getModel()
+	public Request getRequest()
 	{
-		return model;
+		return request;
 	}
 
-	public void setModel(User model)
+	public void setModel(Request request)
 	{
-		this.model = model;
+		this.request = request;
 	}
 
 	@Override
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append("ReceiveReplyAction [model=");
-		builder.append(model);
+		builder.append("ReceiveReplyAction [request=");
+		builder.append(request);
 		builder.append("]");
 		return builder.toString();
 	}

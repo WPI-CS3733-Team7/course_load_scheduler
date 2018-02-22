@@ -9,7 +9,8 @@ public class Request extends Model
     private Integer requester_id;
     private String request_type;
     private String request_details;
-    private Integer reply_type_id;
+    private String reply;
+    private String reply_type;
     private Boolean deleted;
 
     // methods
@@ -53,15 +54,24 @@ public class Request extends Model
     {
         this.request_details = request_details;
     }
-
-    public Integer getReplyTypeId()
+    
+    public String getReply()
     {
-        return reply_type_id;
+    		return reply;
+    }
+    
+    public void setReply(String reply) {
+    		this.reply = reply;
+    }
+    
+    public String getReplyType()
+    {
+        return reply_type;
     }
 
-    public void setReplyTypeId(Integer reply_type_id)
+    public void setReplyType(String reply_type)
     {
-        this.reply_type_id = reply_type_id;
+        this.reply_type = reply_type;
     }
 
     public Boolean getDeleted() {
@@ -78,10 +88,11 @@ public class Request extends Model
         final int prime = 31;
         int result = 1;
         result = prime * result + ((request_type == null) ? 0 : request_type.hashCode());
-        result = prime * result + ((reply_type_id == null) ? 0 : reply_type_id.hashCode());
+        result = prime * result + ((reply_type == null) ? 0 : reply_type.hashCode());
         result = prime * result + ((request_details == null) ? 0 : request_details.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((requester_id == null) ? 0 : requester_id.hashCode());
+        result = prime * result + ((reply == null) ? 0 : reply.hashCode());
         result = prime * result + ((deleted == null) ? 0 : deleted.hashCode());
         return result;
     }
@@ -124,14 +135,25 @@ public class Request extends Model
         {
             return false;
         }
-        if (reply_type_id == null)
+        if(reply == null)
         {
-            if (other.reply_type_id != null)
+        		if(other.reply != null)
+        		{
+        			return false;
+        		}
+        }
+        else if (!reply.equals(other.reply))
+        {
+        		return false;
+        }
+        if (reply_type == null)
+        {
+            if (other.reply_type != null)
             {
                 return false;
             }
         }
-        else if (!reply_type_id.equals(other.reply_type_id))
+        else if (!reply_type.equals(other.reply_type))
         {
             return false;
         }
@@ -170,8 +192,10 @@ public class Request extends Model
         builder.append(request_type);
         builder.append(", RequestDetails=");
         builder.append(request_details);
-        builder.append(", ReplyTypeID=");
-        builder.append(reply_type_id);
+        builder.append(", Reply =");
+        builder.append(reply);
+        builder.append(", ReplyType=");
+        builder.append(reply_type);
         builder.append(", deleted=");
         builder.append(deleted);
         builder.append("]");
