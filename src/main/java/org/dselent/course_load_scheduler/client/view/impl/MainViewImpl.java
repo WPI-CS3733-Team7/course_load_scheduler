@@ -7,6 +7,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.BeforeSelectionEvent;
 import com.google.gwt.event.logical.shared.BeforeSelectionHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -35,13 +36,6 @@ public class MainViewImpl extends BaseViewImpl<MainPresenter> implements MainVie
 
 	public MainViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		tabPanel.addBeforeSelectionHandler(new BeforeSelectionHandler<Integer>(){
-			@Override
-			public void onBeforeSelection(BeforeSelectionEvent<Integer> event) {
-				// needs to allow each tab to send a request when clicked
-				// does integer correspond to each tab?
-			}
-		});
 	}
 
 	@Override
@@ -95,5 +89,11 @@ public class MainViewImpl extends BaseViewImpl<MainPresenter> implements MainVie
 	public HasWidgets getAccountPanel() {
 		// TODO Auto-generated method stub
 		return accountPanel;
+	}
+	
+	@UiHandler("tabPanel")
+	void onTabClicked(BeforeSelectionEvent<Integer> evt)
+	{
+		Window.alert("TEST");
 	}
 }
