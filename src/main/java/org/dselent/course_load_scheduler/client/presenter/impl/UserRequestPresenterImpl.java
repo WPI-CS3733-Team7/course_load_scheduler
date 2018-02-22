@@ -8,7 +8,6 @@ import org.dselent.course_load_scheduler.client.action.SendRequestAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidSubmitStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
-import org.dselent.course_load_scheduler.client.event_handler.InvalidRequestEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
@@ -89,10 +88,12 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			parentPresenter.showLoadScreen();
 			boolean courses = view.getCourseRdo().getValue(); //Check click or not on radio button course
 			boolean other = view.getOtherRdo().getValue(); ////Check click or not on radio button other
+			Integer userId = 0;
 			String requestType = "";
 			
 			String description = view.getDescriptionTextArea().getText();
 			
+			boolean validUserId = true;
 			boolean validRequesttype = true; //Manage request type
 			boolean validDescription = true; //Manage description
 
@@ -120,8 +121,8 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 				validRequesttype = false;
 			}
 			
-			if(validRequesttype && validDescription) { //Both True
-				sendRequest(description, requestType); //Show both informations
+			if(validUserId && validRequesttype && validDescription) { //Both True
+				sendRequest(userId, description, requestType); //Show both informations
 			}
 			else									//Return error messages
 			{
@@ -143,10 +144,10 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 		view.showErrorMessages(ira.toString());
 	}
 	
-	private void sendRequest(String Description, String Requesttype)
+	private void sendRequest(Integer userId, String Description, String Requesttype)
 	{
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendRequestAction sra = new SendRequestAction(Description, Requesttype);
+		SendRequestAction sra = new SendRequestAction(userId, Description, Requesttype);
 		SendRequestEvent sre = new SendRequestEvent(sra, container);
 		eventBus.fireEvent(sre);
 	}
