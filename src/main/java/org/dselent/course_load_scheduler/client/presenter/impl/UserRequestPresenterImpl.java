@@ -88,12 +88,10 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			parentPresenter.showLoadScreen();
 			boolean courses = view.getCourseRdo().getValue(); //Check click or not on radio button course
 			boolean other = view.getOtherRdo().getValue(); ////Check click or not on radio button other
-			Integer userId = 0;
 			String requestType = "";
 			
 			String description = view.getDescriptionTextArea().getText();
 			
-			boolean validUserId = true;
 			boolean validRequesttype = true; //Manage request type
 			boolean validDescription = true; //Manage description
 
@@ -121,8 +119,8 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 				validRequesttype = false;
 			}
 			
-			if(validUserId && validRequesttype && validDescription) { //Both True
-				sendRequest(userId, description, requestType); //Show both informations
+			if(validRequesttype && validDescription) { //Both True
+				sendRequest(description, requestType); //Show both informations
 			}
 			else									//Return error messages
 			{
@@ -144,10 +142,10 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 		view.showErrorMessages(ira.toString());
 	}
 	
-	private void sendRequest(Integer userId, String Description, String Requesttype)
+	private void sendRequest(String Description, String Requesttype)
 	{
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendRequestAction sra = new SendRequestAction(userId, Description, Requesttype);
+		SendRequestAction sra = new SendRequestAction(Description, Requesttype);
 		SendRequestEvent sre = new SendRequestEvent(sra, container);
 		eventBus.fireEvent(sre);
 	}

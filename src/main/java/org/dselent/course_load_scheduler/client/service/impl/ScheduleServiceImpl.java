@@ -7,6 +7,7 @@ import org.dselent.course_load_scheduler.client.action.SendSelectCourseAction;
 import org.dselent.course_load_scheduler.client.action.SendSelectInstructorAction;
 import org.dselent.course_load_scheduler.client.action.SendValidateAction;
 import org.dselent.course_load_scheduler.client.action.SendClickScheduleTabAction;
+import org.dselent.course_load_scheduler.client.callback.SendClickScheduleTabCallback;
 import org.dselent.course_load_scheduler.client.callback.SendEditInstructorCallback;
 import org.dselent.course_load_scheduler.client.callback.SendEditCourseCallback;
 import org.dselent.course_load_scheduler.client.callback.SendEditSectionCallback;
@@ -52,6 +53,9 @@ public class ScheduleServiceImpl extends BaseServiceImpl implements ScheduleServ
 	{
 		HandlerRegistration registration;
 		
+		registration = eventBus.addHandler(SendClickScheduleTabEvent.TYPE, this);
+		eventBusRegistration.put(SendClickScheduleTabEvent.TYPE, registration);
+		
 		registration = eventBus.addHandler(SendEditInstructorEvent.TYPE, this);
 		eventBusRegistration.put(SendEditInstructorEvent.TYPE, registration);
 		
@@ -63,6 +67,20 @@ public class ScheduleServiceImpl extends BaseServiceImpl implements ScheduleServ
 		
 		registration = eventBus.addHandler(SendValidateEvent.TYPE, this);
 		eventBusRegistration.put(SendValidateEvent.TYPE, registration);
+	}
+	
+	@Override
+	public void onSendClickScheduleTab(SendClickScheduleTabEvent evt)
+	{
+		SendClickScheduleTabAction action = evt.getAction();
+		ClickScheduleTabActionTranslatorImpl clickScheduleTabActionTranslator = new ClickScheduleTabActionTranslatorImpl();
+		JSONObject json = clickScheduleTabActionTranslator.translateToJson(action);
+		SendClickScheduleTabCallback clickScheduleTabCallback = new SendClickScheduleTabCallback(eventBus, evt.getContainer());
+		
+		String uri = action.getUserId() + NetworkRequestStrings.CLICK_SCHEDULE_TAB;
+		
+		NetworkRequest request = new NetworkRequest(uri, clickScheduleTabCallback, json);
+		request.send();
 	}
 	
 	@Override
@@ -97,7 +115,7 @@ public class ScheduleServiceImpl extends BaseServiceImpl implements ScheduleServ
 		JSONObject json = editSectionActionTranslator.translateToJson(action);
 		SendEditSectionCallback editSectionCallback = new SendEditSectionCallback(eventBus, evt.getContainer());
 		
-		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.REGISTER, editSectionCallback, json);
+		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.EDIT_SECTION, editSectionCallback, json);
 		request.send();
 	}
 	
@@ -131,7 +149,7 @@ public class ScheduleServiceImpl extends BaseServiceImpl implements ScheduleServ
 		JSONObject json = validateActionTranslator.translateToJson(action);
 		SendValidateCallback validateCallback = new SendValidateCallback(eventBus, evt.getContainer());
 		
-		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.REGISTER, validateCallback, json);
+		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.VALIDATE, validateCallback, json);
 		request.send();
 	}
 	

@@ -12,6 +12,7 @@ import org.dselent.course_load_scheduler.client.event.InvalidReplyEvent;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveClickAccountTabEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveClickScheduleTabEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveEditCourseEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveEditInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveEditSectionEvent;
@@ -24,6 +25,7 @@ import org.dselent.course_load_scheduler.client.event.ReceiveValidateEvent;
 import org.dselent.course_load_scheduler.client.event.SelectRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickAccountTabEvent;
+import org.dselent.course_load_scheduler.client.event.SendClickScheduleTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditCourseEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditSectionEvent;
@@ -60,6 +62,7 @@ InvalidReplyEventHandler,
 InvalidRequestEventHandler,
 ReceiveChangePasswordEventHandler,
 ReceiveClickAccountTabEventHandler,
+ReceiveClickScheduleTabEventHandler,
 ReceiveEditCourseEventHandler,
 ReceiveEditInstructorEventHandler,
 ReceiveEditSectionEventHandler,
@@ -72,6 +75,7 @@ ReceiveValidateEventHandler,
 SelectRequestEventHandler,
 SendChangePasswordEventHandler,
 SendClickAccountTabEventHandler,
+SendClickScheduleTabEventHandler,
 SendEditCourseEventHandler,
 SendEditInstructorEventHandler,
 SendEditSectionEventHandler,
@@ -122,6 +126,9 @@ SendSelectCourseEventHandler
 	public void onReceiveClickAccountTab(ReceiveClickAccountTabEvent evt) {}
 	
 	@Override
+	public void onReceiveClickScheduleTab(ReceiveClickScheduleTabEvent evt) {}
+	
+	@Override
 	public void onReceiveEditCourse(ReceiveEditCourseEvent evt) {}
 	
 	@Override
@@ -153,6 +160,9 @@ SendSelectCourseEventHandler
 	
 	@Override
 	public void onSendClickAccountTab(SendClickAccountTabEvent evt) {}
+	
+	@Override
+	public void onSendClickScheduleTab(SendClickScheduleTabEvent evt) {}
 	
 	@Override
 	public void onSendChangePassword(SendChangePasswordEvent evt) {}
