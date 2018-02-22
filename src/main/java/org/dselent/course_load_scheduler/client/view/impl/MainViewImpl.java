@@ -93,7 +93,7 @@ public class MainViewImpl extends BaseViewImpl<MainPresenter> implements MainVie
 	
 	@UiHandler("tabPanel")
 	void onTabClicked(BeforeSelectionEvent<Integer> evt)
-	{
+	{ 
 		Window.alert("TEST");
 	}
 }
