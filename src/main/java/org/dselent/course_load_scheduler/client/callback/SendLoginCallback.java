@@ -26,8 +26,19 @@ public class SendLoginCallback extends DisplayCallback<JSONValue>
 		LoginActionTranslatorImpl loginActionTranslator = new LoginActionTranslatorImpl();
 		ReceiveLoginAction action = loginActionTranslator.translateToAction(json);
 		
-		ReceiveLoginEvent event = new ReceiveLoginEvent(action, getContainer());
-		eventBus.fireEvent(event);
+		// if userId equals -1, the login attempt failed, display failure message
+		if (action.getUserId() == -1)
+		{
+			InvalidLoginAction invalidLoginAction = new InvalidLoginAction(action.getMessage());
+			InvalidLoginEvent invalidLoginEvent = new InvalidLoginEvent(invalidLoginAction);
+			eventBus.fireEvent(invalidLoginEvent);
+		}
+		// if userId > -1, successful login, fire receive login event to be handled by main presenter
+		else
+		{
+			ReceiveLoginEvent event = new ReceiveLoginEvent(action, getContainer());
+			eventBus.fireEvent(event);	
+		}
 	}
 	  
 	@Override

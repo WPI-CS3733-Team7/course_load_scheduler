@@ -86,4 +86,8 @@ public interface ScheduleView extends BaseView<SchedulePresenter>{
 	void setStartTimeText(TextBox startTimeText);
 	TextBox getEndTimeText();
 	void setEndTimeText(TextBox endTimeText);
+	ListBox getYearSelect();
+	void setYearSelect(ListBox yearSelect);
+	ListBox getTermSelect();
+	void setTermSelect(ListBox termSelect);
 }

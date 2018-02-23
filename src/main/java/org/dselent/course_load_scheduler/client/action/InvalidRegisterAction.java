@@ -16,6 +16,12 @@ public class InvalidRegisterAction extends Action
 	{
 		this.reasonList = reasonList;
 	}
+	
+	public InvalidRegisterAction(String reason)
+	{
+		reasonList = new ArrayList<>();
+		reasonList.add(reason);
+	}
 
 	public boolean addReasons(List<String> reasonList)
 	{

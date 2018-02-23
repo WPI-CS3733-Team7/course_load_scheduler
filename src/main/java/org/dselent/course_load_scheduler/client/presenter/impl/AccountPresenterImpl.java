@@ -29,8 +29,10 @@ import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.view.AccountView;
 
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.thirdparty.javascript.jscomp.CssRenamingMap.Style;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
+import com.google.gwt.dom.client.Style.Visibility;
 
 
 public class AccountPresenterImpl  extends BasePresenterImpl implements AccountPresenter
@@ -400,6 +402,14 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 	@Override
 	public void onReceiveClickAccountTab(ReceiveClickAccountTabEvent evt)
 	{	
+		if (globalData.getRole() != "ADMIN")
+		{
+			view.getAdminTable().getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		} else 
+		{
+			view.getAdminTable().getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}
+		
 		ReceiveClickAccountTabAction action = evt.getAction();
 		view.setChangingUsernameLabelText(action.getUserName());
 		view.setChangingNameLabelText(action.getFirstName() + " " + action.getLastName());

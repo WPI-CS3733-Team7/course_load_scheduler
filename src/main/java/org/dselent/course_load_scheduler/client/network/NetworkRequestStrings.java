@@ -10,6 +10,8 @@ public final class NetworkRequestStrings
 	public static String EDIT_INSTRUCTOR = "scheduler/instructors/edit";
 	public static String EDIT_COURSE = "scheduler/courses/edit";
 	public static String EDIT_SECTION = "scheduler/sections/edit";
+	public static String SELECT_INSTRUCTOR = "scheduler/instructors/select";
+	public static String SELECT_COURSE = "scheduler/courses/select";
 	public static String VALIDATE = "scheduler/schedule/validate";
 	public static String CHANGE_PASSWORD = "account/change/password";
 	public static String CLICK_ACCOUNT_TAB = "account/page";

@@ -21,7 +21,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.ListBox;
 
 
 public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements AccountView {
@@ -54,6 +53,8 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	HorizontalPanel accountViewPanel;
 	@UiField
 	ListBox userBox;
+	@UiField
+	VerticalPanel adminTable;
 
 	// Change password pop-up widgets
 	Label changePasswordTitle = new Label("Change Password");
@@ -313,5 +314,10 @@ public class AccountViewImpl extends BaseViewImpl<AccountPresenter> implements A
 	@Override
 	public void setChangingEmailLabelText(String text) {
 		changingEmailLabel.setText(text);
+	}
+
+	@Override
+	public VerticalPanel getAdminTable() {
+		return adminTable;
 	}
 }
