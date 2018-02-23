@@ -101,7 +101,7 @@ public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> im
 	
 	public void addRequest(Request r) {
 		this.requests.add(r);
-		this.requestList.addItem(r.getRequestDetails());
+		this.requestList.addItem(String.valueOf(r.getId()));
 	}
 	
 	@Override

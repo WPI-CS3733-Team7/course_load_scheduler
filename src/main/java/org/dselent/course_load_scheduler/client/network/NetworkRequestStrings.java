@@ -16,6 +16,7 @@ public final class NetworkRequestStrings
 	public static String EDIT_USER = "account/user/edit";
 	public static String SUBMIT_RESPONSE = "requests/submit/response";
 	public static String SUBMIT_USER_REQUEST = "/requests/submit/request";
+	public static String SELECT_REQUEST = "/requests/select/request";
 
 	
 	private NetworkRequestStrings() {};
