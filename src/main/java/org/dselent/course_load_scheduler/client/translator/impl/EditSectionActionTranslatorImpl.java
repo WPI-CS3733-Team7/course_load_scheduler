@@ -45,11 +45,9 @@ public class EditSectionActionTranslatorImpl implements ActionTranslator<SendEdi
 		JSONValue jsonObject = json.get("success");
 		JSONObject returnObject = jsonObject.isArray().get(0).isObject();
 		
-		// Extracts message
+		//Message to display
 		
-		JSONValue messageObject = returnObject.get("message");
-		
-		String message = JSONHelper.getStringValue(messageObject);		
+		String message = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.MESSAGE));
 		
 		//CourseSection object
 		
