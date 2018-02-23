@@ -5,6 +5,7 @@ import org.dselent.course_load_scheduler.client.action.ReceiveEditCourseAction;
 import org.dselent.course_load_scheduler.client.event.InvalidCreateCourseEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveEditCourseEvent;
 import org.dselent.course_load_scheduler.client.translator.impl.EditCourseActionTranslatorImpl;
+import org.dselent.course_load_scheduler.client.translator.impl.SelectCourseActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.utils.JSONHelper;
 
 import com.google.gwt.event.shared.SimpleEventBus;
@@ -23,10 +24,10 @@ public class SendSelectCourseCallback extends DisplayCallback<JSONValue> {
 	public void onSuccess(JSONValue result)
 	{
 		JSONObject json = JSONHelper.getObjectValue(result);
-		EditCourseActionTranslatorImpl editCourseActionTranslator = new EditCourseActionTranslatorImpl();
-		ReceiveEditCourseAction action = editCourseActionTranslator.translateToAction(json);
+		SelectCourseActionTranslatorImpl selectCourseActionTranslator = new SelectCourseActionTranslatorImpl();
+		ReceiveSelectCourseAction action = selectCourseActionTranslator.translateToAction(json);
 		
-		ReceiveEditCourseEvent event = new ReceiveEditCourseEvent(action, getContainer());
+		ReceiveSelectCourseEvent event = new ReceiveSelectCourseEvent(action, getContainer());
 		eventBus.fireEvent(event);
 	}
 	  

@@ -5,6 +5,7 @@ import org.dselent.course_load_scheduler.client.action.ReceiveEditInstructorActi
 import org.dselent.course_load_scheduler.client.event.InvalidCreateInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveEditInstructorEvent;
 import org.dselent.course_load_scheduler.client.translator.impl.EditInstructorActionTranslatorImpl;
+import org.dselent.course_load_scheduler.client.translator.impl.SelectInstructorActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.utils.JSONHelper;
 
 import com.google.gwt.event.shared.SimpleEventBus;
@@ -24,10 +25,10 @@ public class SendSelectInstructorCallback extends DisplayCallback<JSONValue>
 	public void onSuccess(JSONValue result)
 	{
 		JSONObject json = JSONHelper.getObjectValue(result);
-		EditInstructorActionTranslatorImpl editInstructorActionTranslator = new EditInstructorActionTranslatorImpl();
-		ReceiveEditInstructorAction action = editInstructorActionTranslator.translateToAction(json);
+		SelectInstructorActionTranslatorImpl selectInstructorActionTranslator = new SelectInstructorActionTranslatorImpl();
+		ReceiveSelectInstructorAction action = selectInstructorActionTranslator.translateToAction(json);
 		
-		ReceiveEditInstructorEvent event = new ReceiveEditInstructorEvent(action, getContainer());
+		ReceiveSelectInstructorEvent event = new ReceiveSelectInstructorEvent(action, getContainer());
 		eventBus.fireEvent(event);
 	}
 	  

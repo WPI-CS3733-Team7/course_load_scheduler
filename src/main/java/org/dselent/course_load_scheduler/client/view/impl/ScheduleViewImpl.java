@@ -518,18 +518,22 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 
 		/* Getters and Setters for year and term dropdowns */
 		
+		@Override
 		public ListBox getYearSelect() {
 			return yearSelect;
 		}
 
+		@Override
 		public void setYearSelect(ListBox yearSelect) {
 			this.yearSelect = yearSelect;
 		}
 
+		@Override
 		public ListBox getTermSelect() {
 			return termSelect;
 		}
 
+		@Override
 		public void setTermSelect(ListBox termSelect) {
 			this.termSelect = termSelect;
 		}

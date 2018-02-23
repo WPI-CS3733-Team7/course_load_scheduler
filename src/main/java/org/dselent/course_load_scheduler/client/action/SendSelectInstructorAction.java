@@ -1,22 +1,39 @@
 package org.dselent.course_load_scheduler.client.action;
 
-import org.dselent.course_load_scheduler.client.model.Instructor;
-
 public class SendSelectInstructorAction extends Action
 {
-	private Instructor instructor;
-	
-	public SendSelectInstructorAction(Instructor selected)
-	{
-		this.instructor = selected;
+	private Integer instructorId;
+	private String term;
+	private Integer year;
+
+	public SendSelectInstructorAction(Integer id, String term, Integer year) {
+		instructorId = id;
+		this.term = term;
+		this.year = year;
 	}
 
-	public Instructor getInstructor() {
-		return instructor;
+	public Integer getId() {
+		return instructorId;
+	}
+	
+	public String getTerm() {
+		return term;
+	}
+
+	public Integer getYear() {
+		return year;
 	}
 
 	@Override
 	public String toString() {
-		return "SendSelectInstructorAction [instructor=" + instructor + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("SendSelectInstructorAction [instructorId=");
+		builder.append(instructorId);
+		builder.append(", term=");
+		builder.append(term);
+		builder.append(", year=");
+		builder.append(year);
+		builder.append("]");
+		return builder.toString();
 	}
 }

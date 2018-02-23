@@ -668,7 +668,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		view.getEditInstructorButton().setEnabled(true);
 
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendSelectInstructorAction ssia = new SendSelectInstructorAction(instructorList.get(view.getInstructorBox().getSelectedIndex()));
+		SendSelectInstructorAction ssia = new SendSelectInstructorAction(instructorList.get(view.getInstructorBox().getSelectedIndex()).getId(), view.getTermSelect().getItemText(view.getTermSelect().getSelectedIndex()), Integer.parseInt(view.getYearSelect().getItemText(view.getYearSelect().getSelectedIndex())));
 		SendSelectInstructorEvent ssie = new SendSelectInstructorEvent(ssia, container);
 		eventBus.fireEvent(ssie);
 	}
@@ -678,7 +678,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		view.getEditCourseButton().setEnabled(true);
 
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendSelectCourseAction ssca = new SendSelectCourseAction(courseList.get(view.getCourseBox().getSelectedIndex()));
+		SendSelectCourseAction ssca = new SendSelectCourseAction(courseList.get(view.getCourseBox().getSelectedIndex()).getId(), view.getTermSelect().getItemText(view.getTermSelect().getSelectedIndex()), Integer.parseInt(view.getYearSelect().getItemText(view.getYearSelect().getSelectedIndex())));
 		SendSelectCourseEvent ssce = new SendSelectCourseEvent(ssca, container);
 		eventBus.fireEvent(ssce);
 	}

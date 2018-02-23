@@ -1,16 +1,27 @@
 package org.dselent.course_load_scheduler.client.translator.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.ReceiveEditInstructorAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveSelectInstructorAction;
 import org.dselent.course_load_scheduler.client.action.SendEditInstructorAction;
 import org.dselent.course_load_scheduler.client.action.SendSelectInstructorAction;
+import org.dselent.course_load_scheduler.client.model.CalendarInfo;
+import org.dselent.course_load_scheduler.client.model.CourseSection;
 import org.dselent.course_load_scheduler.client.model.Instructor;
+import org.dselent.course_load_scheduler.client.model.User;
+import org.dselent.course_load_scheduler.client.model.UsersRolesLink;
 import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveEditInstructorKeys;
+import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveEditUserKeys;
+import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveSelectInstructorKeys;
 import org.dselent.course_load_scheduler.client.send.jsonkeys.SendEditInstructorKeys;
+import org.dselent.course_load_scheduler.client.send.jsonkeys.SendSelectKeys;
 import org.dselent.course_load_scheduler.client.translator.ActionTranslator;
 import org.dselent.course_load_scheduler.client.utils.JSONHelper;
 
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 
@@ -21,18 +32,15 @@ public class SelectInstructorActionTranslatorImpl implements ActionTranslator<Se
 	{
 		JSONObject jsonObject = new JSONObject();
 		
-		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditInstructorKeys.ID), action.getId());
-		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditInstructorKeys.RANK), action.getRank());
-		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditInstructorKeys.FIRST_NAME), action.getFirstName());
-		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditInstructorKeys.LAST_NAME), action.getLastName());
-		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditInstructorKeys.EMAIL), action.getEmail());
-		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditInstructorKeys.DELETED), action.getDeleted());
+		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendSelectKeys.ID), action.getId().toString());
+		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendSelectKeys.TERM), action.getTerm());
+		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendSelectKeys.YEAR), action.getYear().toString());
 		
 		return jsonObject;
 	}
 	
 	@Override
-	public ReceiveEditInstructorAction translateToAction(JSONObject json)
+	public ReceiveSelectInstructorAction translateToAction(JSONObject json)
 	{		
 		// null values will not have their keys sent back from the sever
 		// this will throw an exception here
@@ -41,32 +49,52 @@ public class SelectInstructorActionTranslatorImpl implements ActionTranslator<Se
 		// sent timestamps as epoch seconds (long)
 		
 		JSONValue jsonObject = json.get("success");
-		JSONObject instructorObject = jsonObject.isArray().get(0).isObject();
+		JSONObject returnObject = jsonObject.isArray().get(0).isObject();
 		
-		Integer id = JSONHelper.getIntValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.ID));
-		String rank = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.RANK));
-		String firstName = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.FIRST_NAME));
-		String lastName = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.LAST_NAME));
-		String email = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.EMAIL));
-		Long createdAt = JSONHelper.getLongValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.CREATED_AT));
-		Long updatedAt = JSONHelper.getLongValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.UPDATED_AT));
-		Boolean deleted = JSONHelper.getBooleanValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.DELETED));
+		// extract course section list
+		JSONValue sectionListObjectStart = returnObject.get("sectionList");
+		JSONArray sectionListObject = sectionListObjectStart.isArray();
+		List<CourseSection> sectionList = new ArrayList<CourseSection>();
+		for (int i = 0; i < sectionListObject.size(); i++) {
+			
+			JSONObject sectionObject = sectionListObject.get(i).isObject();
+			
+			Integer id = JSONHelper.getIntValue(sectionObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.ID));
+			String userName = JSONHelper.getStringValue(sectionObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.USER_NAME));
+			String firstName = JSONHelper.getStringValue(sectionObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.FIRST_NAME));
+			String lastName = JSONHelper.getStringValue(sectionObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.LAST_NAME));
+			
+			CourseSection section = new CourseSection();
+			section.setId(id);
+			section.setUserName(userName);
+			section.setFirstName(firstName);
+			section.setLastName(lastName);
+			
+			userList.add(section);
+		}
 		
-		// TODO look into time conversion more
-		// put into JSONHelper?
-		
-		Instructor instructor = new Instructor();
-		instructor.setId(id);
-		instructor.setRank(rank);
-		instructor.setFirstName(firstName);
-		instructor.setLastName(lastName);
-		instructor.setEmail(email);
-		instructor.setCreatedAt(new Date(createdAt));
-		instructor.setUpdatedAt(new Date(updatedAt));
-		instructor.setDeleted(deleted);
+		// extract calendar info list
+		JSONValue calInfoListObjectStart = returnObject.get("calendarInfoList");
+		JSONArray calInfoListObject = calInfoListObjectStart.isArray();
+		List<CalendarInfo> calInfoList = new ArrayList<CalendarInfo>();
+		for (int i = 0; i < calInfoListObject.size(); i++) 
+		{
+			JSONObject calInfoObject = calInfoListObject.get(i).isObject();
+			
+			Integer id = JSONHelper.getIntValue(calInfoObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.ID));
+			Integer userId = JSONHelper.getIntValue(calInfoObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.USER_ID));
+			Integer roleId = JSONHelper.getIntValue(calInfoObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.ROLE_ID));
+			
+			CalendarInfo calInfo = new CalendarInfo();
+			calInfo.setId(id);
+			calInfo.setUserId(userId);
+			calInfo.setRoleId(roleId);
+			
+			calInfoList.add(calInfo);
+		}
 		
 		// possibly use builder pattern if it is a lot of data
-		ReceiveEditInstructorAction action = new ReceiveEditInstructorAction(instructor);	
+		ReceiveSelectInstructorAction action = new ReceiveSelectInstructorAction(sectionList, calInfoList);	
 	
 		return action;
 	}
