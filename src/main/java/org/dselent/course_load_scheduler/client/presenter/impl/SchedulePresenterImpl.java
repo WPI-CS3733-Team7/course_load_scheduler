@@ -7,7 +7,10 @@ import org.dselent.course_load_scheduler.client.action.InvalidCreateCourseAction
 import org.dselent.course_load_scheduler.client.action.InvalidCreateInstructorAction;
 import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
 import org.dselent.course_load_scheduler.client.action.ReceiveClickScheduleTabAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveEditSectionAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveEditUserAction;
 import org.dselent.course_load_scheduler.client.action.ReceiveLoginAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveValidateAction;
 import org.dselent.course_load_scheduler.client.action.SendEditCourseAction;
 import org.dselent.course_load_scheduler.client.action.SendEditInstructorAction;
 import org.dselent.course_load_scheduler.client.action.SendEditSectionAction;
@@ -26,14 +29,19 @@ import org.dselent.course_load_scheduler.client.event.ReceiveClickScheduleTabEve
 import org.dselent.course_load_scheduler.client.event.ReceiveEditCourseEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveEditInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveLoginEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveSelectCourseEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveSelectInstructorEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveValidateEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.SendSelectCourseEvent;
 import org.dselent.course_load_scheduler.client.event.SendSelectInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.SendValidateEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
+import org.dselent.course_load_scheduler.client.model.CalendarInfo;
 import org.dselent.course_load_scheduler.client.model.Course;
+import org.dselent.course_load_scheduler.client.model.CourseSection;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
 import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
@@ -148,6 +156,9 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		
 		registration = eventBus.addHandler(ReceiveEditCourseEvent.TYPE, this);
 		eventBusRegistration.put(ReceiveEditCourseEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(ReceiveEditSectionEvent.TYPE, this);
+		eventBusRegistration.put(ReceiveEditSectionEvent.TYPE, registration);
 	}
 
 	@Override
@@ -714,6 +725,33 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		SendEditSectionEvent sese = new SendEditSectionEvent(sesa,container);
 		eventBus.fireEvent(sese);
 	}
+	
+	@Override
+	public void onReceiveEditSection(ReceiveEditSectionEvent evt)
+	{
+		ReceiveEditSectionAction action = evt.getAction();
+		
+		CourseSection courseSection = action.getCourseSection();
+		CalendarInfo calendarInfo = action.getCalendarInfo();
+		
+		Integer courseId = courseSection.getCourseId();
+		Integer instructorId = courseSection.getInstructorId();
+		
+		String days = calendarInfo.getDays();
+		Integer startTime = calendarInfo.getStartTime();
+		Integer endTime = calendarInfo.getEndTime();
+		
+		// view.setCalendar(calendarInfo); -> want something along these lines, to display course sections in calendar in ScheduleView
+		
+		// display 
+		
+		parentPresenter.hideLoadScreen();
+		
+		String message = action.getMessage();
+		view.showErrorMessages(message);
+		
+		
+	}
 
 	@Override
 	public void validate() {
@@ -734,6 +772,21 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		SendValidateAction sva = new SendValidateAction();
 		SendValidateEvent sve = new SendValidateEvent(sva, container);
 		eventBus.fireEvent(sve);
+	}
+	
+	@Override
+	public void onReceiveValidate(ReceiveValidateEvent evt) {
+		
+		ReceiveValidateAction action = evt.getAction();
+		populateInstructorList(action.getInstructorList());
+		populateCourseList(action.getCourseList());
+		
+		parentPresenter.hideLoadScreen();
+		view.getValidateButton().setEnabled(true);
+		validateClickInProgress = false;
+		
+		String message = action.getMessage();
+		view.showErrorMessages(message);
 	}
 	
 	private void validateField(String field) throws EmptyStringException

@@ -52,6 +52,7 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 	@UiField HorizontalPanel scheduleViewPanel;
 	@UiField ListBox instructorBox;
 	@UiField ListBox courseBox;
+	@UiField Grid calendar;
 		
 		boolean isCreating;
 
@@ -696,6 +697,18 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		public HasWidgets getViewRootPanel() {
 			
 			return scheduleViewPanel;
+		}
+		
+		/* Getters/setters for calendar */
+		
+		@Override
+		public Grid getCalendar() {
+			return calendar;
+		}
+		
+		@Override
+		public void setCalendar(Grid calendar) {
+			this.calendar = calendar;
 		}
 		
 		/* Getters for buttons */
