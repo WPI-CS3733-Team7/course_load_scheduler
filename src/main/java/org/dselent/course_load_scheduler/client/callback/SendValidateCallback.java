@@ -42,5 +42,7 @@ public class SendValidateCallback extends DisplayCallback<JSONValue> {
 	}
 
 	@Override
-	public void onFailure(Throwable caught) {}
+	public void onFailure(Throwable caught) {
+		// THIS SHOULD NEVER FAIL
+	}
 }

@@ -20,7 +20,8 @@ public class ValidateActionTranslatorImpl implements ActionTranslator<SendValida
 	@Override
 	public JSONObject translateToJson(SendValidateAction action)
 	{		
-		return null;
+		JSONObject jsonObject = new JSONObject();		
+		return jsonObject;
 	}
 	
 	@Override
@@ -62,7 +63,7 @@ public class ValidateActionTranslatorImpl implements ActionTranslator<SendValida
 			instructorList.add(instructor);
 		}
 		
-		// extract user role link list
+		//courseList
 		JSONValue courseListObjectStart = returnObject.get("courseList");
 		JSONArray courseListObject = courseListObjectStart.isArray();
 		List<Course> courseList = new ArrayList<Course>();
