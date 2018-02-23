@@ -1,8 +1,14 @@
 package org.dselent.course_load_scheduler.client.presenter.impl;
 
+import org.dselent.course_load_scheduler.client.action.ReceiveLoginAction;
+import org.dselent.course_load_scheduler.client.action.SendClickAccountTabAction;
+import org.dselent.course_load_scheduler.client.action.SendClickScheduleTabAction;
 import org.dselent.course_load_scheduler.client.action.SendLogoutAction;
 import org.dselent.course_load_scheduler.client.event.ReceiveLoginEvent;
+import org.dselent.course_load_scheduler.client.event.SendClickAccountTabEvent;
+import org.dselent.course_load_scheduler.client.event.SendClickScheduleTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendLogoutEvent;
+import org.dselent.course_load_scheduler.client.model.GlobalData;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.MainPresenter;
@@ -16,12 +22,14 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 {
 	private IndexPresenter parentPresenter;
 	private MainView view;
+	private GlobalData globalData;
 	
 	@Inject
-	public MainPresenterImpl(IndexPresenter parentPresenter, MainView view)
+	public MainPresenterImpl(IndexPresenter parentPresenter, MainView view, GlobalData globalData)
 	{
 		this.view = view;
 		this.parentPresenter = parentPresenter;
+		this.globalData = globalData;
 		view.setPresenter(this);
 	}
 	
@@ -41,6 +49,12 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(view.getWidgetContainer());
+	}
+	
+	@Override
+	public GlobalData getGlobalData() 
+	{
+		return globalData;
 	}
 
 	@Override
@@ -90,8 +104,39 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 	@Override
 	public void onReceiveLogin(ReceiveLoginEvent evt)
 	{
+		ReceiveLoginAction action = evt.getAction();
+		globalData.setRole(action.getUserRole());
+		
+		if (globalData.getRole() == "USER") {
+			
+		}
+		
 		parentPresenter.hideLoadScreen();
 		this.go(parentPresenter.getView().getViewRootPanel());
 	}
 	
+	@Override
+	public void onTabClicked(Integer index)
+	{
+		String role = globalData.getRole();
+		HasWidgets container = parentPresenter.getView().getViewRootPanel();
+		if (role == "ADMIN" || role == "LINKED USER") {
+			switch (index)
+			{
+			case 0: 
+				SendClickScheduleTabAction scheduleAction = new SendClickScheduleTabAction(globalData.getUserId());
+				SendClickScheduleTabEvent scheduleEvent = new SendClickScheduleTabEvent(scheduleAction, container);
+				eventBus.fireEvent(scheduleEvent);
+				break;
+			case 1: 
+				//SendClickRequestTabAction requestAction = new SendClickAccountTabAction(presenter.getGlobalData().getUserId());
+				break;
+			case 2:
+				SendClickAccountTabAction requestAction = new SendClickAccountTabAction(globalData.getUserId());
+				SendClickAccountTabEvent  accountEvent = new SendClickAccountTabEvent(requestAction, container);
+				eventBus.fireEvent(accountEvent);
+				break;
+			}
+		}
+	}
 }

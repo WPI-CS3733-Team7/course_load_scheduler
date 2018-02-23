@@ -4,6 +4,7 @@ import org.dselent.course_load_scheduler.client.presenter.AccountPresenter;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public interface AccountView extends BaseView<AccountPresenter>{
 	
@@ -16,6 +17,7 @@ public interface AccountView extends BaseView<AccountPresenter>{
 	Button getEditUserButton();
 	void showErrorMessages(String errorMessages);
 	//
+	VerticalPanel getAdminTable();
 	TextBox getOldPasswordText();
 	TextBox getNewPasswordText();
 	TextBox getConfirmPasswordText();

@@ -1,5 +1,9 @@
 package org.dselent.course_load_scheduler.client.view.impl;
 
+import org.dselent.course_load_scheduler.client.action.SendClickAccountTabAction;
+import org.dselent.course_load_scheduler.client.action.SendClickScheduleTabAction;
+import org.dselent.course_load_scheduler.client.event.SendClickAccountTabEvent;
+import org.dselent.course_load_scheduler.client.event.SendClickScheduleTabEvent;
 import org.dselent.course_load_scheduler.client.presenter.MainPresenter;
 import org.dselent.course_load_scheduler.client.view.MainView;
 
@@ -15,6 +19,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.TabBar;
+import com.google.gwt.user.client.ui.TabBar.Tab;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
@@ -94,6 +100,6 @@ public class MainViewImpl extends BaseViewImpl<MainPresenter> implements MainVie
 	@UiHandler("tabPanel")
 	void onTabClicked(BeforeSelectionEvent<Integer> evt)
 	{ 
-		Window.alert("TEST");
+		presenter.onTabClicked(evt.getItem());
 	}
 }
