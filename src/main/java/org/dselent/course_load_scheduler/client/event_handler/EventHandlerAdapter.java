@@ -21,6 +21,8 @@ import org.dselent.course_load_scheduler.client.event.ReceiveLoginEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveReplyEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveRequestEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveSelectCourseEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveSelectInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveValidateEvent;
 import org.dselent.course_load_scheduler.client.event.SelectRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendChangePasswordEvent;
@@ -72,6 +74,8 @@ ReceiveRegisterEventHandler,
 ReceiveReplyEventHandler,
 ReceiveRequestEventHandler,
 ReceiveValidateEventHandler,
+ReceiveSelectInstructorEventHandler,
+ReceiveSelectCourseEventHandler,
 SelectRequestEventHandler,
 SendChangePasswordEventHandler,
 SendClickAccountTabEventHandler,
@@ -154,6 +158,12 @@ SendSelectCourseEventHandler
 	
 	@Override
 	public void onReceiveValidate(ReceiveValidateEvent evt) {}
+	
+	@Override
+	public void onReceiveSelectInstructor(ReceiveSelectInstructorEvent evt) {}
+	
+	@Override
+	public void onReceiveSelectCourse(ReceiveSelectCourseEvent evt) {}
 	
 	@Override
 	public void onSelectRequest(SelectRequestEvent evt) {}

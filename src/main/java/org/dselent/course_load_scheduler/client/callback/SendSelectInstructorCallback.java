@@ -1,10 +1,9 @@
 package org.dselent.course_load_scheduler.client.callback;
 
 import org.dselent.course_load_scheduler.client.action.InvalidCreateInstructorAction;
-import org.dselent.course_load_scheduler.client.action.ReceiveEditInstructorAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveSelectInstructorAction;
 import org.dselent.course_load_scheduler.client.event.InvalidCreateInstructorEvent;
-import org.dselent.course_load_scheduler.client.event.ReceiveEditInstructorEvent;
-import org.dselent.course_load_scheduler.client.translator.impl.EditInstructorActionTranslatorImpl;
+import org.dselent.course_load_scheduler.client.event.ReceiveSelectInstructorEvent;
 import org.dselent.course_load_scheduler.client.translator.impl.SelectInstructorActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.utils.JSONHelper;
 
