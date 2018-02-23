@@ -6,8 +6,8 @@
 		font-weight: bold;
 	}
 	</ui:style>
-	<g:VerticalPanel>
-		<g:HorizontalPanel spacing="15" ui:field="scheduleViewPanel" width="900px" height="563px">
+	<g:VerticalPanel width="900px" height="20%">
+		<g:HorizontalPanel spacing="15" ui:field="scheduleViewPanel" width="912px" height="750px">
 			<g:VerticalPanel>
 				<g:VerticalPanel width="391px">
 					<g:HorizontalPanel width="391px">
@@ -59,105 +59,178 @@
 				<g:Cell width="150px" height="400px">
 					<g:SimplePanel height="450px" width="450px">
 						<g:Grid width="450px" height="450px" ui:field="calendar" borderWidth="1">
-							<g:row>								
+							<g:row>
 								<g:cell></g:cell>
+								<g:customCell>
+									<g:Label text="Monday" horizontalAlignment="ALIGN_CENTER"/>
+								</g:customCell>
+								<g:customCell>
+									<g:Label text="Tuesday" horizontalAlignment="ALIGN_CENTER"/>
+								</g:customCell>
+								<g:customCell>
+									<g:Label text="Wednesday" horizontalAlignment="ALIGN_CENTER"/>
+								</g:customCell>
+								<g:customCell>
+									<g:Label text="Thursday" horizontalAlignment="ALIGN_CENTER"/>
+								</g:customCell>
+								<g:customCell>
+									<g:Label text="Friday" horizontalAlignment="ALIGN_CENTER"/>
+								</g:customCell>					
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="8:00 AM"/>
+								</g:customCell>
+								<g:cell></g:cell>								
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>					
 							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
+							<g:row>
+								<g:customCell>
+									<g:Label text="8:30 AM"/>
+								</g:customCell>
+								<g:cell></g:cell>								
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
+							<g:row>
+								<g:customCell>
+									<g:Label text="9:00 AM"/>
+								</g:customCell>
+								<g:cell></g:cell>								
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
+							<g:row>
+								<g:customCell>
+									<g:Label text="9:30 AM"/>
+								</g:customCell>	
+								<g:cell></g:cell>							
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
+							<g:row>
+								<g:customCell>
+									<g:Label text="10:00 AM"/>
+								</g:customCell>	
+								<g:cell></g:cell>							
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
+							<g:row>
+								<g:customCell>
+									<g:Label text="10:30 AM"/>
+								</g:customCell>	
+								<g:cell></g:cell>							
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 							</g:row>
-							<g:row>								
+							<g:row>
+								<g:customCell>
+									<g:Label text="11:00 AM"/>
+								</g:customCell>	
+								<g:cell></g:cell>							
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="11:30 AM"/>
+								</g:customCell>	
+								<g:cell></g:cell>						
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="12:00 PM"/>
+								</g:customCell>	
+								<g:cell></g:cell>						
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="12:30 PM"/>
+								</g:customCell>	
+								<g:cell></g:cell>						
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="1:00 PM"/>
+								</g:customCell>	
+								<g:cell></g:cell>							
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="1:30 PM"/>
+								</g:customCell>	
+								<g:cell></g:cell>						
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="2:00 PM"/>
+								</g:customCell>	
+								<g:cell></g:cell>						
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="2:30 PM"/>
+								</g:customCell>	
+								<g:cell></g:cell>						
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="3:00 PM"/>
+								</g:customCell>		
+								<g:cell></g:cell>					
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="3:30 PM"/>
+								</g:customCell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
@@ -165,84 +238,110 @@
 								<g:cell></g:cell>
 							</g:row>
 							<g:row>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
+								<g:customCell>
+									<g:Label text="4:00 PM"/>
+								</g:customCell>		
+								<g:cell></g:cell>					
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
+							<g:row>
+								<g:customCell>
+									<g:Label text="4:30 PM"/>
+								</g:customCell>	
+								<g:cell></g:cell>						
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-								<g:cell></g:cell>
-							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
+							<g:row>
+								<g:customCell>
+									<g:Label text="5:00 PM"/>
+								</g:customCell>	
+								<g:cell></g:cell>						
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
+							<g:row>
+								<g:customCell>
+									<g:Label text="5:30 PM"/>
+								</g:customCell>	
+								<g:cell></g:cell>						
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 							</g:row>
-							<g:row>								
-								<g:cell></g:cell>
+							<g:row>
+								<g:customCell>
+									<g:Label text="6:00 PM"/>
+								</g:customCell>		
+								<g:cell></g:cell>					
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 							</g:row>
-							<g:row>								
+							<g:row>
+								<g:customCell>
+									<g:Label text="6:30 PM"/>
+								</g:customCell>		
+								<g:cell></g:cell>					
 								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="7:00 PM"/>
+								</g:customCell>	
+								<g:cell></g:cell>						
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="7:30 PM"/>
+								</g:customCell>	
+								<g:cell></g:cell>						
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="8:00 PM"/>
+								</g:customCell>		
+								<g:cell></g:cell>					
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="8:30 PM"/>
+								</g:customCell>	
+								<g:cell></g:cell>						
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+								<g:cell></g:cell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="9:00 PM"/>
+								</g:customCell>	
+								<g:cell></g:cell>						
 								<g:cell></g:cell>
 								<g:cell></g:cell>
 								<g:cell></g:cell>
