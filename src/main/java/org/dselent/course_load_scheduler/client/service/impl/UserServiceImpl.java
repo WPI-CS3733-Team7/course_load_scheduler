@@ -35,6 +35,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService
 		
 		registration = eventBus.addHandler(SendLoginEvent.TYPE, this);
 		eventBusRegistration.put(SendLoginEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(SendRegisterEvent.TYPE, this);
+		eventBusRegistration.put(SendLoginEvent.TYPE, registration);
 	}
 	
 	@Override

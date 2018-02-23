@@ -24,29 +24,25 @@ public class SendValidateCallback extends DisplayCallback<JSONValue> {
 		ValidateActionTranslatorImpl validateActionTranslator = new ValidateActionTranslatorImpl();
 		ReceiveValidateAction action = validateActionTranslator.translateToAction(json);
 		
-		ReceiveValidateEvent event = new ReceiveValidateEvent(action, getContainer());
-		eventBus.fireEvent(event);
-	}
-	  
-	@Override
-	public void onFailure(Throwable caught)
-	{ /*
-		// TODO
-		// give better exception information
-		// these stack traces are not helpful
-		
-		StringBuilder sb = new StringBuilder();
-		
-		StackTraceElement[] stackTraceElements = caught.getStackTrace();
-		for(StackTraceElement stackTraceElement : stackTraceElements)
-		{
-			sb.append(stackTraceElement.toString());
-			sb.append("\n");
+		if(action.getInstructorList().isEmpty() == true && action.getCourseList().isEmpty() == true) {
+			action.setMessage("Success!");
+			ReceiveValidateEvent event = new ReceiveValidateEvent(action, getContainer());
+			eventBus.fireEvent(event);
 		}
 		
-		InvalidLoginAction ila = new InvalidLoginAction(sb.toString());
-		InvalidLoginEvent ile = new InvalidLoginEvent(ila);
-		eventBus.fireEvent(ile); */
+		else if(action.getInstructorList().isEmpty() == false) {
+			action.setMessage("ERROR: the selected instructor is not valid.");
+		}
+		else if(action.getCourseList().isEmpty() == false) {
+			action.setMessage("ERROR: the selected course is not valid.");
+		}
+		else if(action.getInstructorList().isEmpty() == false && action.getCourseList().isEmpty() == false) {
+			action.setMessage("ERROR: neither the selected instructor nor the selected course are valid.");
+		}
 	}
 
+	@Override
+	public void onFailure(Throwable caught) {
+		// THIS SHOULD NEVER FAIL
+	}
 }

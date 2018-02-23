@@ -26,8 +26,21 @@ public class SendEditSectionCallback extends DisplayCallback<JSONValue> {
 		EditSectionActionTranslatorImpl editSectionActionTranslator = new EditSectionActionTranslatorImpl();
 		ReceiveEditSectionAction action = editSectionActionTranslator.translateToAction(json);
 		
+		// If courseSection or calendarInfo are null, fire InvalidEditSectionEvent and display error message
+		
+		if(action.getCourseSection() == null || action.getCalendarInfo() == null) {
+			
+			InvalidEditSectionAction iesa = new InvalidEditSectionAction(action.getMessage());
+			InvalidEditSectionEvent iese = new InvalidEditSectionEvent(iesa);
+			eventBus.fireEvent(iese);			
+		}
+		
+		else { // Successful connection to the network, proceed with successful ReceiveEditSectionEvent firing
+		
 		ReceiveEditSectionEvent event = new ReceiveEditSectionEvent(action, getContainer());
 		eventBus.fireEvent(event);
+		
+		}
 	}
 	  
 	@Override

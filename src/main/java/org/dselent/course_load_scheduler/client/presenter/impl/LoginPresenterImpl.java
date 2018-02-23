@@ -14,11 +14,11 @@ import org.dselent.course_load_scheduler.client.event.ReceiveRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.SendLoginEvent;
 import org.dselent.course_load_scheduler.client.event.SendLogoutEvent;
 import org.dselent.course_load_scheduler.client.event.SendRegisterEvent;
-import org.dselent.course_load_scheduler.client.event_handler.SendLogoutEventHandler;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.LoginPresenter;
 import org.dselent.course_load_scheduler.client.view.LoginView;
+
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
@@ -60,6 +60,9 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 		
 		registration = eventBus.addHandler(SendLogoutEvent.TYPE, this);
 		eventBusRegistration.put(SendLogoutEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(ReceiveRegisterEvent.TYPE, this);
+		eventBusRegistration.put(ReceiveRegisterEvent.TYPE, registration);
 	}
 		
 	@Override
@@ -289,6 +292,10 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 	@Override
 	public void onReceiveRegister(ReceiveRegisterEvent evt)
 	{
+		parentPresenter.hideLoadScreen();
+		view.getSubmitButton().setEnabled(true);
+		submitClickInProgress = false;
+		
 		String message = evt.getAction().getMessage();
 		view.showErrorMessages(message);
 	}

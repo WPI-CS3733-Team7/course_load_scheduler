@@ -6,6 +6,7 @@ import java.util.List;
 import org.dselent.course_load_scheduler.client.action.InvalidCreateCourseAction;
 import org.dselent.course_load_scheduler.client.action.InvalidCreateInstructorAction;
 import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveLoginAction;
 import org.dselent.course_load_scheduler.client.action.SendEditCourseAction;
 import org.dselent.course_load_scheduler.client.action.SendEditInstructorAction;
 import org.dselent.course_load_scheduler.client.action.SendEditSectionAction;
@@ -22,6 +23,7 @@ import org.dselent.course_load_scheduler.client.event.InvalidCreateInstructorEve
 import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveEditCourseEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveEditInstructorEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveLoginEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.SendSelectCourseEvent;
 import org.dselent.course_load_scheduler.client.event.SendSelectInstructorEvent;
@@ -33,6 +35,8 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
+
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
@@ -122,6 +126,9 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		
 		registration = eventBus.addHandler(InvalidEditSectionEvent.TYPE, this);
 		eventBusRegistration.put(InvalidEditSectionEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(ReceiveLoginEvent.TYPE, this);
+		eventBusRegistration.put(ReceiveLoginEvent.TYPE, registration);
 	}
 
 	@Override
@@ -682,4 +689,32 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		SendSelectCourseEvent ssce = new SendSelectCourseEvent(ssca, container);
 		eventBus.fireEvent(ssce);
 	}
+	
+	@Override
+	public void onReceiveLogin(ReceiveLoginEvent evt)
+	{
+		ReceiveLoginAction action = evt.getAction();
+		globalData.setLinkedInstructorId(action.getLinkedInstructorId());
+		globalData.setRole(action.getUserRole());
+		globalData.setUserId(action.getUserId());
+		
+		populateInstructorList(action.getInstructorList());
+		populateCourseList(action.getCourseList());
+		// need to populate course load list with this action
+		
+		// default selected instructor to linked instructor if possible
+		int linkedInstructorId = action.getLinkedInstructorId();
+		if (linkedInstructorId != -1)
+		{
+			for (int i = 0; i < instructorList.size(); i++)
+			{
+				if (instructorList.get(i).getId() == linkedInstructorId)
+				{
+					view.getInstructorBox().setSelectedIndex(i);
+					break;
+				}
+			}
+		}
+	}
+	
 }

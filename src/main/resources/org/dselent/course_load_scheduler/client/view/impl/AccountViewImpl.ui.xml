@@ -45,7 +45,7 @@
 			<g:Button width="192px" ui:field="changePasswordButton" height="80px">Change Password</g:Button>
 		</g:VerticalPanel>
 		<g:VerticalPanel width="170px" height="100%"
-			horizontalAlignment="ALIGN_CENTER">
+			horizontalAlignment="ALIGN_CENTER" ui:field="adminTable">
 			<g:ListBox visibleItemCount="5" width="164px" height="234px" ui:field="userBox"/>
 			<g:Button height="29px" ui:field="editUserButton">Edit</g:Button>
 		</g:VerticalPanel>

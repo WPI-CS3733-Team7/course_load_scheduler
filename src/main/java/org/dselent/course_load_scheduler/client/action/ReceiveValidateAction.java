@@ -1,35 +1,60 @@
 package org.dselent.course_load_scheduler.client.action;
 
-import org.dselent.course_load_scheduler.client.model.User;
+import java.util.List;
+
+import org.dselent.course_load_scheduler.client.model.Course;
+import org.dselent.course_load_scheduler.client.model.Instructor;
 
 public class ReceiveValidateAction extends Action
 {
-	private User model;
+	private String message;
+	private List<Instructor> instructorList;
+	private List<Course> courseList;
 
-	public ReceiveValidateAction(User model)
+	public ReceiveValidateAction(String message, List<Instructor> instructorList, List<Course> courseList)
 	{
-		this.model = model;
+		this.message = message;
+		this.instructorList = instructorList;
+		this.courseList = courseList;
 	}
 
-	public User getModel()
-	{
-		return model;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setModel(User model)
-	{
-		this.model = model;
+
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+
+
+	public List<Instructor> getInstructorList() {
+		return instructorList;
+	}
+
+
+
+	public void setInstructorList(List<Instructor> instructorList) {
+		this.instructorList = instructorList;
+	}
+
+
+
+	public List<Course> getCourseList() {
+		return courseList;
+	}
+
+
+
+	public void setCourseList(List<Course> courseList) {
+		this.courseList = courseList;
 	}
 
 	@Override
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder();
-		builder.append("ReceiveValidateAction [model=");
-		builder.append(model);
-		builder.append("]");
-		return builder.toString();
+	public String toString() {
+		return "ReceiveValidateAction [message=" + message + ", instructorList=" + instructorList + ", courseList="
+				+ courseList + "]";
 	}
-
-
 }
