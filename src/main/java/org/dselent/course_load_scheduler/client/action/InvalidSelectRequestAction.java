@@ -3,26 +3,26 @@ package org.dselent.course_load_scheduler.client.action;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvalidReplyAction extends Action
+public class InvalidSelectRequestAction extends Action
 {
 	private List<String> reasonList;
 	
-	public InvalidReplyAction()
+	public InvalidSelectRequestAction()
 	{
 		reasonList = new ArrayList<>();
 	}
 	
-	public InvalidReplyAction(List<String> reasonList)
+	public InvalidSelectRequestAction(List<String> reasonList)
 	{
 		this.reasonList = reasonList;
 	}
-	
-	public InvalidReplyAction(String reason)
+
+	public InvalidSelectRequestAction(String reason)
 	{
 		reasonList = new ArrayList<>();
 		reasonList.add(reason);
 	}
-
+	
 	public boolean addReasons(List<String> reasonList)
 	{
 		return reasonList.addAll(reasonList);
