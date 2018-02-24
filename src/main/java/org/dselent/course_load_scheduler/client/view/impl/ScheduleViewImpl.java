@@ -55,6 +55,8 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 	@UiField Grid calendar;
 		
 		boolean isCreating;
+		
+		Button selectedCourseSection;
 
 		/* Pop-up Widgets for Instructor */
 		Label popInstructorLabelFirstName = new Label("First Name:");
@@ -711,8 +713,42 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			this.calendar = calendar;
 		}
 		
+		/* Adding and removing stuff from calendar */
+		
+		@Override
+		public void addToCalendar(int row, int column, String text) {
+			Button courseSectionButton = new Button(text);
+			courseSectionButton.addClickHandler(new sectionButtonClickHandler());
+			calendar.setWidget(row, column, courseSectionButton);
+		}
+		
+		@Override
+		public void removeFromCalendar(int row, int column) {
+			calendar.clearCell(row, column);
+		}
+		
+		private class sectionButtonClickHandler implements ClickHandler{
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				selectedCourseSection.setEnabled(true);
+				selectedCourseSection = (Button)event.getSource(); // may be errors
+				selectedCourseSection.setEnabled(false);
+			}
+		}
+		
 		/* Getters for buttons */
 
+		@Override
+		public Button getSelectedCourseSection() {
+			return selectedCourseSection;
+		}
+
+		@Override
+		public void setSelectedCourseSection(Button selectedCourseSection) {
+			this.selectedCourseSection = selectedCourseSection;
+		}
+		
 		@Override
 		public Button getAddInstructorButton() {
 			return scheduleAddInstructor;

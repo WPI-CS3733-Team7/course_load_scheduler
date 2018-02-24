@@ -8,7 +8,6 @@ import org.dselent.course_load_scheduler.client.action.InvalidCreateInstructorAc
 import org.dselent.course_load_scheduler.client.action.InvalidEditSectionAction;
 import org.dselent.course_load_scheduler.client.action.ReceiveClickScheduleTabAction;
 import org.dselent.course_load_scheduler.client.action.ReceiveEditSectionAction;
-import org.dselent.course_load_scheduler.client.action.ReceiveEditUserAction;
 import org.dselent.course_load_scheduler.client.action.ReceiveLoginAction;
 import org.dselent.course_load_scheduler.client.action.ReceiveValidateAction;
 import org.dselent.course_load_scheduler.client.action.SendEditCourseAction;
@@ -29,7 +28,6 @@ import org.dselent.course_load_scheduler.client.event.ReceiveClickScheduleTabEve
 import org.dselent.course_load_scheduler.client.event.ReceiveEditCourseEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveEditInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveLoginEvent;
-import org.dselent.course_load_scheduler.client.event.ReceiveRegisterEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveSelectCourseEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveSelectInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveValidateEvent;
@@ -49,6 +47,7 @@ import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
 
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
@@ -70,6 +69,8 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	
 	List<Instructor> instructorList = new ArrayList<Instructor>();
 	List<Course> courseList = new ArrayList<Course>();
+	List<CourseSection> courseSectionList = new ArrayList<CourseSection>();
+	List<CalendarInfo> calendarInfoList = new ArrayList<CalendarInfo>();
 	
 	@Inject
 	public SchedulePresenterImpl(IndexPresenter parentPresenter, ScheduleView view, GlobalData globalData)
@@ -225,6 +226,79 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		view.getPopCourseTextFrequency().setText(selected.getFrequency());
 		
 	}
+	
+	@Override
+	public void fillCourseSectionFields() {
+		Button selectedCourseSection = view.getSelectedCourseSection();
+		for(int i = 0; i < courseSectionList.size(); i++) {
+			if(courseSectionList.get(i).displayText().equals(selectedCourseSection.getText())) {
+				view.getSectionNameText().setText(courseSectionList.get(i).getSectionName());
+				view.getSectionIdText().setText(courseSectionList.get(i).getSectionId().toString());
+				
+				int index;
+				if(courseSectionList.get(i).getSectionType() == "LECTURE") {
+					index = 0;
+				}
+				else if(courseSectionList.get(i).getSectionType() == "LAB") {
+					index = 1;
+				}
+				else if(courseSectionList.get(i).getSectionType() == "CONFERENCE") {
+					index = 2;
+				}
+				else {
+					index = -1;
+				}
+				view.getSectionTypeListBox().setItemSelected(index, true);
+				view.getPopulationText().setText(courseSectionList.get(i).getPopulation().toString());
+				
+				for(int j = 0; j < calendarInfoList.size(); j++) {
+					if(courseSectionList.get(i).getCalendarInfoId() == calendarInfoList.get(j).getId()) {
+						view.getYearText().setText(calendarInfoList.get(j).getCalYear().toString());
+						view.getTermText().setText(calendarInfoList.get(j).getCalTerm());
+						
+						if(calendarInfoList.get(j).getDays().contains("M")) {
+							view.getMonday().setValue(true);
+						}
+						else {
+							view.getMonday().setValue(false);
+						}
+						if(calendarInfoList.get(j).getDays().contains("T")) {
+							view.getTuesday().setValue(true);
+						}
+						else {
+							view.getTuesday().setValue(false);
+						}
+						if(calendarInfoList.get(j).getDays().contains("W")) {
+							view.getWednesday().setValue(true);
+						}
+						else {
+							view.getWednesday().setValue(false);
+						}
+						if(calendarInfoList.get(j).getDays().contains("R")) {
+							view.getThursday().setValue(true);
+						}
+						else {
+							view.getThursday().setValue(false);
+						}
+						if(calendarInfoList.get(j).getDays().contains("F")) {
+							view.getFriday().setValue(true);
+						}
+						else {
+							view.getFriday().setValue(false);
+						}
+						
+						view.getStartTimeText().setText(calendarInfoList.get(j).getStartTime().toString());
+						view.getEndTimeText().setText(calendarInfoList.get(j).getEndTime().toString());						
+						
+						break;
+					}
+				}
+				break;
+			}
+		}		
+	}
+	
+	
 
 	/* Primary methods for courses and instructors */
 	
@@ -578,21 +652,21 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			String year = view.getYearText().getText();
 			String term = view.getTermText().getText();
 			
-			String day = "";
+			String days = "";
 			if(view.getMonday().getValue() == true) {
-				day = "Monday";
+				days += "M";
 			}
-			else if(view.getTuesday().getValue() == true) {
-				day = "Tuesday";
+			if(view.getTuesday().getValue() == true) {
+				days += "T";
 			}
-			else if(view.getWednesday().getValue() == true) {
-				day = "Wednesday";
+			if(view.getWednesday().getValue() == true) {
+				days += "W";
 			}
-			else if(view.getThursday().getValue() == true) {
-				day = "Thursday";
+			if(view.getThursday().getValue() == true) {
+				days += "R";
 			}
-			else if(view.getFriday().getValue() == true) {
-				day = "Friday";
+			if(view.getFriday().getValue() == true) {
+				days += "F";
 			}
 			
 			String startTime = view.getStartTimeText().getText();
@@ -676,7 +750,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			
 			try
 			{
-				validateField(day);
+				validateField(days);
 			}
 			catch(EmptyStringException e)
 			{
@@ -710,7 +784,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			
 			if(validSectionName && validSectionId && validSectionType && validPopulation && validYear && validTerm && validDays && validStartTime && validEndTime)
 			{
-				sendEditSection(sectionName, sectionId, sectionType, population, year, term, day, startTime, endTime);
+				sendEditSection(sectionName, sectionId, sectionType, population, year, term, days, startTime, endTime);
 			}
 			else
 			{
@@ -743,6 +817,41 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		eventBus.fireEvent(sese);
 	}
 	
+	private void createCourseSection(CourseSection courseSection, CalendarInfo calendarInfo) {
+	
+		String calInfoDays = calendarInfo.getDays();
+		Integer calInfoStartTime = calendarInfo.getStartTime();
+		Integer calInfoEndTime = calendarInfo.getEndTime();
+				
+		List<Integer> columnList = new ArrayList<Integer>();
+				
+		if(calInfoDays.contains("M")) {
+			columnList.add(1);
+		}
+		if(calInfoDays.contains("T")) {
+			columnList.add(2);
+		}
+		if(calInfoDays.contains("W")) {
+			columnList.add(3);
+		}
+		if(calInfoDays.contains("R")) {
+			columnList.add(4);
+		}
+		if(calInfoDays.contains("F")) {
+			columnList.add(5);
+		}
+				
+		Integer startTimeIndex = (int)Math.ceil(calInfoStartTime/50.0) - 15;
+		Integer endTimeIndex = (int)Math.ceil(calInfoEndTime/50.0) - 15;
+				
+		for(; startTimeIndex < endTimeIndex; startTimeIndex++) {
+			for(Integer n: columnList) {
+				view.addToCalendar(startTimeIndex, n, courseSection.displayText());
+						
+			}
+		}		
+	}
+	
 	@Override
 	public void onReceiveEditSection(ReceiveEditSectionEvent evt)
 	{
@@ -751,16 +860,66 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		CourseSection courseSection = action.getCourseSection();
 		CalendarInfo calendarInfo = action.getCalendarInfo();
 		
-		Integer courseId = courseSection.getCourseId();
-		Integer instructorId = courseSection.getInstructorId();
+		boolean found = false;
 		
-		String days = calendarInfo.getDays();
-		Integer startTime = calendarInfo.getStartTime();
-		Integer endTime = calendarInfo.getEndTime();
+		for(int i = 0; i < courseSectionList.size(); i++) {
 		
-		// view.setCalendar(calendarInfo); -> want something along these lines, to display course sections in calendar in ScheduleView
+			if(courseSection.getId() == courseSectionList.get(i).getId()) {
+				// something
+				found = true;
+				Integer calInfoId = courseSectionList.get(i).getCalendarInfoId();
+				for(int j = 0; j < calendarInfoList.size(); j++) {
+					if(calendarInfoList.get(j).getId() == calInfoId) {
+						
+						String calInfoDays = calendarInfoList.get(j).getDays();
+						Integer calInfoStartTime = calendarInfoList.get(j).getStartTime();
+						Integer calInfoEndTime = calendarInfoList.get(j).getEndTime();
+						
+						List<Integer> columnList = new ArrayList<Integer>();
+						
+						if(calInfoDays.contains("M")) {
+							columnList.add(1);
+						}
+						if(calInfoDays.contains("T")) {
+							columnList.add(2);
+						}
+						if(calInfoDays.contains("W")) {
+							columnList.add(3);
+						}
+						if(calInfoDays.contains("R")) {
+							columnList.add(4);
+						}
+						if(calInfoDays.contains("F")) {
+							columnList.add(5);
+						}
+						
+						Integer startTimeIndex = (int)Math.ceil(calInfoStartTime/50.0) - 15;
+						Integer endTimeIndex = (int)Math.ceil(calInfoEndTime/50.0) - 15;
+						
+						for(; startTimeIndex < endTimeIndex; startTimeIndex++) {
+							for(Integer n: columnList) {
+								view.removeFromCalendar(startTimeIndex, n);
+								
+							}
+						}
+						calendarInfoList.set(j, calendarInfo);
+						break;
+					}
+				}
+				courseSectionList.set(i, courseSection);
+				break;
+			}
+			
+		}
 		
-		// display 
+		if(found) {
+			courseSectionList.add(courseSection);
+			calendarInfoList.add(calendarInfo);
+		}
+		
+		createCourseSection(courseSection, calendarInfo);
+		
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		parentPresenter.hideLoadScreen();
 		
