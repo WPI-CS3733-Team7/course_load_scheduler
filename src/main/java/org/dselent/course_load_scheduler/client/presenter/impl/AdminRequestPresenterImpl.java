@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidReplyAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveClickRequestTabAction;
 import org.dselent.course_load_scheduler.client.action.SelectRequestAction;
 import org.dselent.course_load_scheduler.client.action.SendReplyAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidReplyStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidReplyEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveChangePasswordEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveReplyEvent;
 import org.dselent.course_load_scheduler.client.event.SelectRequestEvent;
@@ -19,6 +22,8 @@ import org.dselent.course_load_scheduler.client.model.User;
 import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.view.AdminRequestView;
+
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
@@ -182,9 +187,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			selectRequestAction(selectedRequest.getRequesterId(), requestType, requestDetail);
 			view.setUserRequestLabel(requester);
 			view.setTypeLabel(requestType);
-			view.setRequesterDescriptLabel(requestDetail);
-			
-			
+			view.setRequesterDescriptLabel(requestDetail);			
 		}		
 	}
 	
@@ -219,6 +222,33 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		view.showErrorMessages(ira.toString());
 	}
 
+	public void onReceiveReply(ReceiveReplyEvent evt)
+	{
+		parentPresenter.hideLoadScreen();
+		view.getReplyButton().setEnabled(true);
+		replyClickInProgress = false;
+	}
+	
+	public void onReceiveClickRequestTab(ReceiveClickRequestTabEvent evt)
+	{	
+		if (globalData.getRole() != "ADMIN")
+		{
+			view.getAdminTable().getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		} else 
+		{
+			view.getAdminTable().getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}
+		
+		ReceiveClickRequestTabAction action = evt.getAction();
+		view.setChangingUsernameLabelText(action.getUserName());
+		view.setChangingNameLabelText(action.getFirstName() + " " + action.getLastName());
+		view.setChangingRequestStateLabelText(action.getUserRole());
+		view.setChangingEmailLabelText(action.getEmail());
+		
+		populateRequestList(action.getRequestList());
+		
+		parentPresenter.hideLoadScreen();
+	}
 	@Override
 	public void fillRequestFields() {
 		// TODO Auto-generated method stub
