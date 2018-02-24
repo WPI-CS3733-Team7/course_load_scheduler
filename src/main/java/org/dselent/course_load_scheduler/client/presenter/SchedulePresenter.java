@@ -20,6 +20,7 @@ public interface SchedulePresenter extends BasePresenter {
 	void validate();
 	void fillInstructorFields();
 	void fillCourseFields();
+	void fillCourseSectionFields();
 	void selectInstructor();
 	void selectCourse();	
 }

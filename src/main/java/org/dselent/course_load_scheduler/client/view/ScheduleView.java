@@ -93,4 +93,9 @@ public interface ScheduleView extends BaseView<SchedulePresenter>{
 	void setYearSelect(ListBox yearSelect);
 	ListBox getTermSelect();
 	void setTermSelect(ListBox termSelect);
+	void addToCalendar(int row, int column, String text);
+	void removeFromCalendar(int row, int column);
+	
+	Button getSelectedCourseSection();
+	void setSelectedCourseSection(Button selectedCourseSection);
 }
