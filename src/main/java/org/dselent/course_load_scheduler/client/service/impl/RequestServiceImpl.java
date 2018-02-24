@@ -5,6 +5,7 @@ import org.dselent.course_load_scheduler.client.action.SelectRequestAction;
 import org.dselent.course_load_scheduler.client.callback.SendReplyCallback;
 import org.dselent.course_load_scheduler.client.callback.SendSelectRequestCallback;
 import org.dselent.course_load_scheduler.client.event.SelectRequestEvent;
+import org.dselent.course_load_scheduler.client.event.SendClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.SendReplyEvent;
 import org.dselent.course_load_scheduler.client.network.NetworkRequest;
@@ -60,6 +61,11 @@ public class RequestServiceImpl extends BaseServiceImpl implements RequestServic
 		
 		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.SELECT_REQUEST, selectRequestCallback, json);
 		request.send();
+	}
+	
+	@Override
+	public void onSendClickRequestTab(SendClickRequestTabEvent evt) {
+		
 	}
 	
 	
