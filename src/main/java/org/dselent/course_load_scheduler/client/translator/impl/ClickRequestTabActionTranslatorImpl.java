@@ -1,5 +1,10 @@
 package org.dselent.course_load_scheduler.client.translator.impl;
 
+
+import org.dselent.course_load_scheduler.client.action.ReceiveClickAccountTabAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveClickRequestTabAction;
+import org.dselent.course_load_scheduler.client.action.SendClickAccountTabAction;
+import org.dselent.course_load_scheduler.client.action.SendClickRequestTabAction;
 import java.util.ArrayList;
 import java.util.List;
 
