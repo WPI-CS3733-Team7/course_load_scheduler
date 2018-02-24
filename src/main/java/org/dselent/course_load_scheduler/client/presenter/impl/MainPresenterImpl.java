@@ -121,7 +121,6 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 		if (globalData.getRole() == "USER") {
 			
 		}
-		
 		parentPresenter.hideLoadScreen();
 		this.go(parentPresenter.getView().getViewRootPanel());
 	}

@@ -203,7 +203,7 @@
 								<g:Label text="Username" horizontalAlignment="ALIGN_RIGHT" ui:field="loginUserLabel"/>
 							</g:customCell>
 							<g:customCell>
-								<g:TextBox alignment="CENTER" ui:field="loginUserTextBox"/>
+								<g:TextBox alignment="LEFT" ui:field="loginUserTextBox"/>
 							</g:customCell>
 						</g:row>
 						<g:row>
@@ -211,7 +211,7 @@
 								<g:Label text="Password" horizontalAlignment="ALIGN_RIGHT" ui:field="loginPasswordLabel"/>
 							</g:customCell>
 							<g:customCell>
-								<g:TextBox alignment="RIGHT" ui:field="loginPasswordTextBox"/>
+								<g:TextBox alignment="LEFT" ui:field="loginPasswordTextBox"/>
 							</g:customCell>
 						</g:row>
 					</g:Grid>
