@@ -64,7 +64,7 @@ public class ExamplePresenterImpl extends BasePresenterImpl implements ExamplePr
 		HasWidgets container = evt.getContainer();
 		ReceiveLoginAction rla = evt.getAction();
 
-		userModel = rla.getModel();
+		//userModel = rla.getModel();
 		
 		// show myself
 		go(container);
