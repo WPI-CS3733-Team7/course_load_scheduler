@@ -2,6 +2,8 @@ package org.dselent.course_load_scheduler.client.service.impl;
 
 import org.dselent.course_load_scheduler.client.action.SendReplyAction;
 import org.dselent.course_load_scheduler.client.action.SelectRequestAction;
+import org.dselent.course_load_scheduler.client.action.SendClickAccountTabAction;
+import org.dselent.course_load_scheduler.client.callback.SendClickAccountTabCallback;
 import org.dselent.course_load_scheduler.client.callback.SendReplyCallback;
 import org.dselent.course_load_scheduler.client.callback.SendSelectRequestCallback;
 import org.dselent.course_load_scheduler.client.event.SelectRequestEvent;
@@ -11,6 +13,7 @@ import org.dselent.course_load_scheduler.client.event.SendReplyEvent;
 import org.dselent.course_load_scheduler.client.network.NetworkRequest;
 import org.dselent.course_load_scheduler.client.network.NetworkRequestStrings;
 import org.dselent.course_load_scheduler.client.service.RequestService;
+import org.dselent.course_load_scheduler.client.translator.impl.ClickAccountTabActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.translator.impl.SelectRequestActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.translator.impl.SendReplyActionTranslatorImpl;
 
@@ -65,7 +68,15 @@ public class RequestServiceImpl extends BaseServiceImpl implements RequestServic
 	
 	@Override
 	public void onSendClickRequestTab(SendClickRequestTabEvent evt) {
+		SendClickAccountTabAction action = evt.getAction();
+		ClickAccountTabActionTranslatorImpl clickAccountTabActionTranslator = new ClickAccountTabActionTranslatorImpl();
+		JSONObject json = clickAccountTabActionTranslator.translateToJson(action);
+		SendClickAccountTabCallback clickAccountTabCallback = new SendClickAccountTabCallback(eventBus, evt.getContainer());
 		
+		String uri = action.getUserId() + NetworkRequestStrings.CLICK_REQUEST_TAB;
+		
+		NetworkRequest request = new NetworkRequest(uri, clickAccountTabCallback, json);
+		request.send();
 	}
 	
 	
