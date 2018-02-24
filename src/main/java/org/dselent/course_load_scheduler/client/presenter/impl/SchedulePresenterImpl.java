@@ -366,13 +366,25 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		eventBus.fireEvent(ssie);
 	}
 	
+	private void clearCalendar() {
+		for(int i=1; i<view.getCalendar().getColumnCount(); i++) {
+			for(int j=1; j<view.getCalendar().getRowCount(); j++) {
+				view.getCalendar().clearCell(j, i);
+			}
+		}
+	}
+	
 	@Override
 	public void onReceiveSelectInstructor(ReceiveSelectInstructorEvent evt) {
-		/* TODO
-		 * Insert code here for what to do when an instructor is selected
-		 * display their course sections, etc.
-		 */
-		evt.getAction().getSectionList();
+		clearCalendar();
+		List<CalendarInfo> calInfoList = evt.getAction().getCalInfoList();
+		List<CourseSection> sectionList = evt.getAction().getSectionList();
+		for(CourseSection section : sectionList) {
+			for(CalendarInfo calInfo : calInfoList) {
+				if(section.getCalendarInfoId()==calInfo.getId())
+					createCourseSection(section, calInfo);
+			}
+		}
 	}
 	
 	@Override
@@ -515,10 +527,15 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	
 	@Override
 	public void onReceiveSelectCourse(ReceiveSelectCourseEvent evt) {
-		/* TODO
-		 * Insert code here for what to do when an course is selected
-		 * display its course sections, etc.
-		 */
+		clearCalendar();
+		List<CalendarInfo> calInfoList = evt.getAction().getCalInfoList();
+		List<CourseSection> sectionList = evt.getAction().getSectionList();
+		for(CourseSection section : sectionList) {
+			for(CalendarInfo calInfo : calInfoList) {
+				if(section.getCalendarInfoId()==calInfo.getId())
+					createCourseSection(section, calInfo);
+			}
+		}
 	}
 	
 	@Override
