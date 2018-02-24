@@ -201,5 +201,17 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		view.showErrorMessages(ira.toString());
 	}
 
+	@Override
+	public void populateRequestList(List<Request> requestList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fillRequestFields() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }
