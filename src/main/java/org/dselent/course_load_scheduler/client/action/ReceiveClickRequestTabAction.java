@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.dselent.course_load_scheduler.client.model.Request;
 
+
 public class ReceiveClickRequestTabAction extends Action
 {
 	List<Request> requestList;
