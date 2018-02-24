@@ -1,6 +1,5 @@
 package org.dselent.course_load_scheduler.client.gin;
 
-import org.dselent.course_load_scheduler.client.presenter.impl.ExamplePresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.AccountPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.AdminRequestPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.IndexPresenterImpl;
@@ -8,8 +7,9 @@ import org.dselent.course_load_scheduler.client.presenter.impl.LoginPresenterImp
 import org.dselent.course_load_scheduler.client.presenter.impl.MainPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.SchedulePresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.UserRequestPresenterImpl;
+import org.dselent.course_load_scheduler.client.service.impl.AccountServiceImpl;
+import org.dselent.course_load_scheduler.client.service.impl.ScheduleServiceImpl;
 import org.dselent.course_load_scheduler.client.service.impl.UserServiceImpl;
-import org.dselent.course_load_scheduler.client.view.impl.ExampleViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.AccountViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.AdminRequestViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.IndexViewImpl;
@@ -51,7 +51,6 @@ public interface Injector extends Ginjector
     public AccountPresenterImpl getAccountPresenter();
     public AdminRequestPresenterImpl getAdminRequestPresenter();
     public UserRequestPresenterImpl getUserRequestPresenter();
-    public ExamplePresenterImpl getExamplePresenter();
     
     //views
     public IndexViewImpl getIndexView();
@@ -61,10 +60,11 @@ public interface Injector extends Ginjector
     public AccountViewImpl getAccountView();
     public AdminRequestViewImpl getAdminRequestView();
     public UserRequestViewImpl getUserRequestView();
-    public ExampleViewImpl geExampleView();
  
     // services
     public UserServiceImpl getUserService();
+    public AccountServiceImpl getAccountService();
+    public ScheduleServiceImpl getScheduleService();
     
     // might need to add it here
 }

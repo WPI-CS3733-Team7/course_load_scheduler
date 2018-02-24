@@ -278,7 +278,7 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 		submitClickInProgress = false;
 		
 		InvalidRegisterAction ira = evt.getAction();
-		view.showErrorMessages(ira.toString());
+		view.showErrorMessages(ira.toString() + "invalid");
 	}
 	
 	private void sendRegister(String userName, String firstName, String lastName, String email, String password)

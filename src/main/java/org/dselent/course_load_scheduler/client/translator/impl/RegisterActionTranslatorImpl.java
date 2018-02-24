@@ -31,7 +31,7 @@ public class RegisterActionTranslatorImpl implements ActionTranslator<SendRegist
 	public ReceiveRegisterAction translateToAction(JSONObject json)
 	{
 		JSONValue jsonObject = json.get("success");
-		JSONObject registerObject = jsonObject.isArray().get(0).isObject();
+		JSONObject registerObject = jsonObject.isObject();
 		
 		String message = JSONHelper.getStringValue(registerObject, JSONHelper.convertKeyName(ReceiveRegisterKeys.MESSAGE));
 		

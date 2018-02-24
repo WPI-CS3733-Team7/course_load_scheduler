@@ -4,6 +4,9 @@ import org.dselent.course_load_scheduler.client.action.ReceiveLoginAction;
 import org.dselent.course_load_scheduler.client.action.SendClickAccountTabAction;
 import org.dselent.course_load_scheduler.client.action.SendClickScheduleTabAction;
 import org.dselent.course_load_scheduler.client.action.SendLogoutAction;
+import org.dselent.course_load_scheduler.client.event.InvalidCreateCourseEvent;
+import org.dselent.course_load_scheduler.client.event.InvalidCreateInstructorEvent;
+import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveLoginEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickAccountTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickScheduleTabEvent;
@@ -15,6 +18,7 @@ import org.dselent.course_load_scheduler.client.presenter.MainPresenter;
 import org.dselent.course_load_scheduler.client.view.BaseView;
 import org.dselent.course_load_scheduler.client.view.MainView;
 
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
@@ -42,7 +46,10 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 	@Override
 	public void bind()
 	{
-
+		HandlerRegistration registration;
+		
+		registration = eventBus.addHandler(ReceiveLoginEvent.TYPE, this);
+		eventBusRegistration.put(ReceiveLoginEvent.TYPE, registration);
 	}
 	
 	@Override

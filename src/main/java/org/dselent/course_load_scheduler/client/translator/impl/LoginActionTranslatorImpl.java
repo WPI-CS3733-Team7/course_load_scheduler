@@ -9,6 +9,7 @@ import org.dselent.course_load_scheduler.client.model.Course;
 import org.dselent.course_load_scheduler.client.model.CourseLoad;
 import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveLoginKeys;
+import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveRegisterKeys;
 import org.dselent.course_load_scheduler.client.send.jsonkeys.SendLoginKeys;
 import org.dselent.course_load_scheduler.client.translator.ActionTranslator;
 import org.dselent.course_load_scheduler.client.utils.JSONHelper;
@@ -40,7 +41,10 @@ public class LoginActionTranslatorImpl implements ActionTranslator<SendLoginActi
 		// sent timestamps as epoch seconds (long)
 		
 		JSONValue jsonObject = json.get("success");
-		JSONObject returnLoginObject = jsonObject.isArray().get(0).isObject();
+		JSONObject jsonReturnLoginObject = jsonObject.isObject();
+		
+		JSONValue returnLogin = jsonReturnLoginObject.get("returnObject");
+		JSONObject returnLoginObject = returnLogin.isObject();
 		
 		// message, userId, userRole, linkedInstructorId, instructorList, courseList, courseLoadList
 		
@@ -60,7 +64,7 @@ public class LoginActionTranslatorImpl implements ActionTranslator<SendLoginActi
 			String firstName = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveLoginKeys.FIRST_NAME));
 			String lastName = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveLoginKeys.LAST_NAME));
 			String email = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveLoginKeys.EMAIL));
-			Boolean deleted = JSONHelper.getBooleanValue(instructorObject, JSONHelper.convertKeyName(ReceiveLoginKeys.DELETED));
+			//Boolean deleted = JSONHelper.getBooleanValue(instructorObject, JSONHelper.convertKeyName(ReceiveLoginKeys.DELETED));
 			
 			Instructor instructor = new Instructor();
 			instructor.setId(id);
@@ -68,7 +72,7 @@ public class LoginActionTranslatorImpl implements ActionTranslator<SendLoginActi
 			instructor.setFirstName(firstName);
 			instructor.setLastName(lastName);
 			instructor.setEmail(email);
-			instructor.setDeleted(deleted);
+			//instructor.setDeleted(deleted);
 			
 			instructorList.add(instructor);
 		}
@@ -83,14 +87,14 @@ public class LoginActionTranslatorImpl implements ActionTranslator<SendLoginActi
 			String course_name = JSONHelper.getStringValue(courseObject, JSONHelper.convertKeyName(ReceiveLoginKeys.COURSE_NAME));
 			String course_number = JSONHelper.getStringValue(courseObject, JSONHelper.convertKeyName(ReceiveLoginKeys.COURSE_NUMBER));
 			String frequency = JSONHelper.getStringValue(courseObject, JSONHelper.convertKeyName(ReceiveLoginKeys.FREQUENCY));
-			Boolean deleted = JSONHelper.getBooleanValue(courseObject, JSONHelper.convertKeyName(ReceiveLoginKeys.DELETED));
+			//Boolean deleted = JSONHelper.getBooleanValue(courseObject, JSONHelper.convertKeyName(ReceiveLoginKeys.DELETED));
 			
 			Course course = new Course();
 			course.setId(id);
 			course.setCourseName(course_name);
 			course.setCourseNumber(course_number);
 			course.setFrequency(frequency);
-			course.setDeleted(deleted);
+			//course.setDeleted(deleted);
 			
 			courseList.add(course);
 		}
@@ -106,14 +110,14 @@ public class LoginActionTranslatorImpl implements ActionTranslator<SendLoginActi
 			String loadType = JSONHelper.getStringValue(courseLoadObject, JSONHelper.convertKeyName(ReceiveLoginKeys.LOAD_TYPE));
 			String loadDescription = JSONHelper.getStringValue(courseLoadObject, JSONHelper.convertKeyName(ReceiveLoginKeys.LOAD_DESCRIPTION));
 			Integer instructorId = JSONHelper.getIntValue(courseLoadObject, JSONHelper.convertKeyName(ReceiveLoginKeys.INSTRUCTOR_ID));
-			Boolean deleted = JSONHelper.getBooleanValue(courseLoadObject, JSONHelper.convertKeyName(ReceiveLoginKeys.DELETED));
+			//Boolean deleted = JSONHelper.getBooleanValue(courseLoadObject, JSONHelper.convertKeyName(ReceiveLoginKeys.DELETED));
 		
 			CourseLoad courseLoad = new CourseLoad();
 			courseLoad.setId(id);
 			courseLoad.setLoadType(loadType);
 			courseLoad.setLoadDescription(loadDescription);
 			courseLoad.setInstructorId(instructorId);
-			courseLoad.setDeleted(deleted);
+			//courseLoad.setDeleted(deleted);
 			
 			courseLoadList.add(courseLoad);
 		
