@@ -52,8 +52,11 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 	@UiField HorizontalPanel scheduleViewPanel;
 	@UiField ListBox instructorBox;
 	@UiField ListBox courseBox;
+	@UiField Grid calendar;
 		
 		boolean isCreating;
+		
+		Button selectedCourseSection;
 
 		/* Pop-up Widgets for Instructor */
 		Label popInstructorLabelFirstName = new Label("First Name:");
@@ -153,15 +156,18 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		public ScheduleViewImpl() {
 			initWidget(uiBinder.createAndBindUi(this));
 			
+			//yearSelect.addItem("2021");
+			//yearSelect.addItem("2020");
+			//yearSelect.addItem("2019");
 			yearSelect.addItem("2018");
-			yearSelect.addItem("2017");
+			/*yearSelect.addItem("2017");
 			yearSelect.addItem("2016");
 			yearSelect.addItem("2015");
 			yearSelect.addItem("2014");
 			yearSelect.addItem("2013");
 			yearSelect.addItem("2012");
 			yearSelect.addItem("2011");
-			yearSelect.addItem("2010");			
+			yearSelect.addItem("2010");	*/		
 			
 			termSelect.addItem("A");
 			termSelect.addItem("B");
@@ -518,18 +524,22 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 
 		/* Getters and Setters for year and term dropdowns */
 		
+		@Override
 		public ListBox getYearSelect() {
 			return yearSelect;
 		}
 
+		@Override
 		public void setYearSelect(ListBox yearSelect) {
 			this.yearSelect = yearSelect;
 		}
 
+		@Override
 		public ListBox getTermSelect() {
 			return termSelect;
 		}
 
+		@Override
 		public void setTermSelect(ListBox termSelect) {
 			this.termSelect = termSelect;
 		}
@@ -576,12 +586,12 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		
 		@UiHandler("instructorBox")
 		void onSelectInstructor(ClickEvent event) {
-			scheduleEditInstructor.setEnabled(true);
+			presenter.selectInstructor();
 		}
 		
 		@UiHandler("courseBox")
 		void onSelectCourse(ClickEvent event) {
-			scheduleEditCourse.setEnabled(true);
+			presenter.selectCourse();
 		}
 		
 	@UiHandler("validate")
@@ -694,8 +704,54 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			return scheduleViewPanel;
 		}
 		
+		/* Getters/setters for calendar */
+		
+		@Override
+		public Grid getCalendar() {
+			return calendar;
+		}
+		
+		@Override
+		public void setCalendar(Grid calendar) {
+			this.calendar = calendar;
+		}
+		
+		/* Adding and removing stuff from calendar */
+		
+		@Override
+		public void addToCalendar(int row, int column, String text) {
+			Button courseSectionButton = new Button(text);
+			courseSectionButton.addClickHandler(new sectionButtonClickHandler());
+			calendar.setWidget(row, column, courseSectionButton);
+		}
+		
+		@Override
+		public void removeFromCalendar(int row, int column) {
+			calendar.clearCell(row, column);
+		}
+		
+		private class sectionButtonClickHandler implements ClickHandler{
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				selectedCourseSection.setEnabled(true);
+				selectedCourseSection = (Button)event.getSource(); // may be errors
+				selectedCourseSection.setEnabled(false);
+			}
+		}
+		
 		/* Getters for buttons */
 
+		@Override
+		public Button getSelectedCourseSection() {
+			return selectedCourseSection;
+		}
+
+		@Override
+		public void setSelectedCourseSection(Button selectedCourseSection) {
+			this.selectedCourseSection = selectedCourseSection;
+		}
+		
 		@Override
 		public Button getAddInstructorButton() {
 			return scheduleAddInstructor;

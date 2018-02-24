@@ -11,8 +11,8 @@ public enum ReceiveEditSectionKeys {
 	POPULATION,
 	COURSE_ID,
 	INSTRUCTOR_ID,
-	CALENDAR_INFO_ID,
 	
+	CALENDAR_INFO_ID,	
 	CAL_YEAR,
 	CAL_TERM,
 	DAYS,

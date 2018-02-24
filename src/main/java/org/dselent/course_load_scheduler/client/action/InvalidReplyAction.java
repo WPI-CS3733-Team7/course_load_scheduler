@@ -16,6 +16,12 @@ public class InvalidReplyAction extends Action
 	{
 		this.reasonList = reasonList;
 	}
+	
+	public InvalidReplyAction(String reason)
+	{
+		reasonList = new ArrayList<>();
+		reasonList.add(reason);
+	}
 
 	public boolean addReasons(List<String> reasonList)
 	{

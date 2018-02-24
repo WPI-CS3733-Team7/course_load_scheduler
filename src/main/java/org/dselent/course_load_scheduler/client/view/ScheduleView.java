@@ -3,7 +3,7 @@ package org.dselent.course_load_scheduler.client.view;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox; 
 
@@ -28,6 +28,9 @@ public interface ScheduleView extends BaseView<SchedulePresenter>{
 	Button getEditSectionButton();
 	Button getValidateButton();
 	void showErrorMessages(String errorMessages);
+	
+	public Grid getCalendar();
+	public void setCalendar(Grid calendar);
 	
 	TextBox getSectionNameText();
 	void setSectionNameText(TextBox sectionNameTextBox);
@@ -86,4 +89,13 @@ public interface ScheduleView extends BaseView<SchedulePresenter>{
 	void setStartTimeText(TextBox startTimeText);
 	TextBox getEndTimeText();
 	void setEndTimeText(TextBox endTimeText);
+	ListBox getYearSelect();
+	void setYearSelect(ListBox yearSelect);
+	ListBox getTermSelect();
+	void setTermSelect(ListBox termSelect);
+	void addToCalendar(int row, int column, String text);
+	void removeFromCalendar(int row, int column);
+	
+	Button getSelectedCourseSection();
+	void setSelectedCourseSection(Button selectedCourseSection);
 }

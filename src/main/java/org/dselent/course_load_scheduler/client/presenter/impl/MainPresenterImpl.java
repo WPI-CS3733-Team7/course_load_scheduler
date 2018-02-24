@@ -1,7 +1,10 @@
 package org.dselent.course_load_scheduler.client.presenter.impl;
 
+import javax.swing.text.View;
+
 import org.dselent.course_load_scheduler.client.action.ReceiveLoginAction;
 import org.dselent.course_load_scheduler.client.action.SendClickAccountTabAction;
+import org.dselent.course_load_scheduler.client.action.SendClickRequestTabAction;
 import org.dselent.course_load_scheduler.client.action.SendClickScheduleTabAction;
 import org.dselent.course_load_scheduler.client.action.SendLogoutAction;
 import org.dselent.course_load_scheduler.client.event.InvalidCreateCourseEvent;
@@ -9,6 +12,7 @@ import org.dselent.course_load_scheduler.client.event.InvalidCreateInstructorEve
 import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveLoginEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickAccountTabEvent;
+import org.dselent.course_load_scheduler.client.event.SendClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickScheduleTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendLogoutEvent;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
@@ -136,11 +140,13 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 				eventBus.fireEvent(scheduleEvent);
 				break;
 			case 1: 
-				//SendClickRequestTabAction requestAction = new SendClickAccountTabAction(presenter.getGlobalData().getUserId());
+				SendClickRequestTabAction requestAction = new SendClickRequestTabAction(globalData.getUserId());
+				SendClickRequestTabEvent requestEvent = new SendClickRequestTabEvent(requestAction, container);
+				eventBus.fireEvent(requestEvent);
 				break;
 			case 2:
-				SendClickAccountTabAction requestAction = new SendClickAccountTabAction(globalData.getUserId());
-				SendClickAccountTabEvent  accountEvent = new SendClickAccountTabEvent(requestAction, container);
+				SendClickAccountTabAction accountAction = new SendClickAccountTabAction(globalData.getUserId());
+				SendClickAccountTabEvent  accountEvent = new SendClickAccountTabEvent(accountAction, container);
 				eventBus.fireEvent(accountEvent);
 				break;
 			}

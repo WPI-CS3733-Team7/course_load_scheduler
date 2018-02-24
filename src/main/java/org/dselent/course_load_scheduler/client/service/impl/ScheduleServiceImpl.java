@@ -3,16 +3,22 @@ package org.dselent.course_load_scheduler.client.service.impl;
 import org.dselent.course_load_scheduler.client.action.SendEditInstructorAction;
 import org.dselent.course_load_scheduler.client.action.SendEditCourseAction;
 import org.dselent.course_load_scheduler.client.action.SendEditSectionAction;
+import org.dselent.course_load_scheduler.client.action.SendSelectCourseAction;
+import org.dselent.course_load_scheduler.client.action.SendSelectInstructorAction;
 import org.dselent.course_load_scheduler.client.action.SendValidateAction;
 import org.dselent.course_load_scheduler.client.action.SendClickScheduleTabAction;
 import org.dselent.course_load_scheduler.client.callback.SendClickScheduleTabCallback;
 import org.dselent.course_load_scheduler.client.callback.SendEditInstructorCallback;
 import org.dselent.course_load_scheduler.client.callback.SendEditCourseCallback;
 import org.dselent.course_load_scheduler.client.callback.SendEditSectionCallback;
+import org.dselent.course_load_scheduler.client.callback.SendSelectCourseCallback;
+import org.dselent.course_load_scheduler.client.callback.SendSelectInstructorCallback;
 import org.dselent.course_load_scheduler.client.callback.SendValidateCallback;
 import org.dselent.course_load_scheduler.client.event.SendEditInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditCourseEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditSectionEvent;
+import org.dselent.course_load_scheduler.client.event.SendSelectCourseEvent;
+import org.dselent.course_load_scheduler.client.event.SendSelectInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.SendValidateEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickScheduleTabEvent;
 import org.dselent.course_load_scheduler.client.network.NetworkRequest;
@@ -22,6 +28,8 @@ import org.dselent.course_load_scheduler.client.translator.impl.ClickScheduleTab
 import org.dselent.course_load_scheduler.client.translator.impl.EditInstructorActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.translator.impl.EditCourseActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.translator.impl.EditSectionActionTranslatorImpl;
+import org.dselent.course_load_scheduler.client.translator.impl.SelectCourseActionTranslatorImpl;
+import org.dselent.course_load_scheduler.client.translator.impl.SelectInstructorActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.translator.impl.ValidateActionTranslatorImpl;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.json.client.JSONObject;
@@ -108,6 +116,28 @@ public class ScheduleServiceImpl extends BaseServiceImpl implements ScheduleServ
 		SendEditSectionCallback editSectionCallback = new SendEditSectionCallback(eventBus, evt.getContainer());
 		
 		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.EDIT_SECTION, editSectionCallback, json);
+		request.send();
+	}
+	
+	@Override
+	public void onSendSelectInstructor(SendSelectInstructorEvent evt) {
+		SendSelectInstructorAction action = evt.getAction();
+		SelectInstructorActionTranslatorImpl selectInstructorActionTranslator = new SelectInstructorActionTranslatorImpl();
+		JSONObject json = selectInstructorActionTranslator.translateToJson(action);
+		SendSelectInstructorCallback selectInstructorCallback = new SendSelectInstructorCallback(eventBus, evt.getContainer());
+		
+		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.SELECT_INSTRUCTOR, selectInstructorCallback, json);
+		request.send();
+	}
+	
+	@Override
+	public void onSendSelectCourse(SendSelectCourseEvent evt) {
+		SendSelectCourseAction action = evt.getAction();
+		SelectCourseActionTranslatorImpl selectCourseActionTranslator = new SelectCourseActionTranslatorImpl();
+		JSONObject json = selectCourseActionTranslator.translateToJson(action);
+		SendSelectCourseCallback selectCourseCallback = new SendSelectCourseCallback(eventBus, evt.getContainer());
+		
+		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.SELECT_COURSE, selectCourseCallback, json);
 		request.send();
 	}
 	
