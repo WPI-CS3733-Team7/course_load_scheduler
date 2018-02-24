@@ -41,6 +41,9 @@ public class RequestServiceImpl extends BaseServiceImpl implements RequestServic
 		
 		registration = eventBus.addHandler(SelectRequestEvent.TYPE, this);
 		eventBusRegistration.put(SelectRequestEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(SendClickRequestTabEvent.TYPE, this);
+		eventBusRegistration.put(SendClickRequestTabEvent.TYPE, registration);
 	}
 	
 	@Override

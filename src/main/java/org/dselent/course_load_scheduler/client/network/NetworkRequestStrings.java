@@ -21,6 +21,5 @@ public final class NetworkRequestStrings
 	public static String SELECT_REQUEST = "/requests/select/request";
 	public static String CLICK_REQUEST_TAB = "/requests/click/request";
 
-	
 	private NetworkRequestStrings() {};
 }

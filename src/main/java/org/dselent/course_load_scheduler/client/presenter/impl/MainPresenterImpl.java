@@ -1,5 +1,7 @@
 package org.dselent.course_load_scheduler.client.presenter.impl;
 
+import javax.swing.text.View;
+
 import org.dselent.course_load_scheduler.client.action.ReceiveLoginAction;
 import org.dselent.course_load_scheduler.client.action.SendClickAccountTabAction;
 import org.dselent.course_load_scheduler.client.action.SendClickRequestTabAction;

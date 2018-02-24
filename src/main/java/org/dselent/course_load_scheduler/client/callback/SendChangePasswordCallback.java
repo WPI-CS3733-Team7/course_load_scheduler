@@ -4,6 +4,7 @@ import org.dselent.course_load_scheduler.client.action.InvalidChangePasswordActi
 import org.dselent.course_load_scheduler.client.action.ReceiveChangePasswordAction;
 import org.dselent.course_load_scheduler.client.event.InvalidChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveChangePasswordEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.translator.impl.ChangePasswordActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.utils.JSONHelper;
 

@@ -11,14 +11,12 @@ import org.dselent.course_load_scheduler.client.errorstring.InvalidReplyStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidReplyEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveClickRequestTabEvent;
-import org.dselent.course_load_scheduler.client.event.ReceiveClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveReplyEvent;
 import org.dselent.course_load_scheduler.client.event.SelectRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendReplyEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
 import org.dselent.course_load_scheduler.client.model.Request;
-import org.dselent.course_load_scheduler.client.model.User;
 import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.view.AdminRequestView;
@@ -35,8 +33,6 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	private GlobalData globalData;
 	private boolean replyClickInProgress;
 	private boolean selectClickInProgress;
-	
-	List<Request> requestList = new ArrayList<Request>();
 	
 	@Inject
 	public AdminRequestPresenterImpl(IndexPresenter parentPresenter, AdminRequestView view, GlobalData globalData)
@@ -62,12 +58,6 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		
 		registration = eventBus.addHandler(InvalidReplyEvent.TYPE, this);
 		eventBusRegistration.put(InvalidReplyEvent.TYPE, registration);
-		
-		registration = eventBus.addHandler(ReceiveClickRequestTabEvent.TYPE, this);
-		eventBusRegistration.put(ReceiveClickRequestTabEvent.TYPE, registration);
-		
-		registration = eventBus.addHandler(ReceiveReplyEvent.TYPE, this);
-		eventBusRegistration.put(ReceiveReplyEvent.TYPE, registration);
 	}
 	
 	@Override
@@ -95,16 +85,6 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	public void setParentPresenter(IndexPresenter parentPresenter) {
 		// TODO Auto-generated method stub
 		this.parentPresenter = parentPresenter;
-	}
-	
-	public void populateRequestList(List<Request> rList)
-	{
-		requestList = rList;
-		view.getRequestList().clear();
-		for (Request r : requestList)
-		{
-			view.getRequestList().addItem(r.displayText());
-		}
 	}
 	
 	@Override
@@ -189,6 +169,8 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			view.setTypeLabel(requestType);
 			view.setRequesterDescriptLabel(requestDetail);			
 		}		
+		
+		
 	}
 	
 	private void selectRequestAction(Integer requester, String requestType, String Description) {
@@ -249,6 +231,12 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		
 		parentPresenter.hideLoadScreen();
 	}
+	@Override
+	public void populateRequestList(List<Request> requestList) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	@Override
 	public void fillRequestFields() {
 		// TODO Auto-generated method stub
