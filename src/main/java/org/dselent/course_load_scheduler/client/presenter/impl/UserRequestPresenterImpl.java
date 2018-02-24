@@ -10,6 +10,7 @@ import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
+import org.dselent.course_load_scheduler.client.model.Request;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.UserRequestPresenter;
@@ -161,6 +162,12 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 		{
 			throw new EmptyStringException();
 		}
+	}
+
+	@Override
+	public void populateRequestList(List<Request> requestList) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

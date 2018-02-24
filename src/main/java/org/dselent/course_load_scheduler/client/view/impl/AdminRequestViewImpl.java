@@ -1,12 +1,10 @@
 package org.dselent.course_load_scheduler.client.view.impl;
 
 import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
-import org.dselent.course_load_scheduler.client.presenter.UserRequestPresenter;
 import org.dselent.course_load_scheduler.client.view.AdminRequestView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiField;
@@ -214,6 +212,11 @@ public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> im
 	@UiHandler("replyButton")
 	void onReplyButtonClick(ClickEvent event) {
 		presenter.reply();
+	}
+	
+	@UiHandler("requestList")
+	void onSelectRequestList(ClickEvent evt) {
+		presenter.selectRequest();
 	}
 
 	@Override
