@@ -24,6 +24,7 @@ import org.dselent.course_load_scheduler.client.event.ReceiveReplyEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveRequestEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveSelectCourseEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveSelectInstructorEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveUserClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveValidateEvent;
 import org.dselent.course_load_scheduler.client.event.SelectRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendChangePasswordEvent;
@@ -41,6 +42,7 @@ import org.dselent.course_load_scheduler.client.event.SendReplyEvent;
 import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendSelectCourseEvent;
 import org.dselent.course_load_scheduler.client.event.SendSelectInstructorEvent;
+import org.dselent.course_load_scheduler.client.event.SendUserClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendValidateEvent;
 
 /**
@@ -79,6 +81,7 @@ ReceiveRequestEventHandler,
 ReceiveValidateEventHandler,
 ReceiveSelectInstructorEventHandler,
 ReceiveSelectCourseEventHandler,
+ReceiveUserClickRequestTabEventHandler,
 SelectRequestEventHandler,
 SendChangePasswordEventHandler,
 SendClickAccountTabEventHandler,
@@ -95,7 +98,8 @@ SendReplyEventHandler,
 SendRequestEventHandler,
 SendValidateEventHandler,
 SendSelectInstructorEventHandler,
-SendSelectCourseEventHandler
+SendSelectCourseEventHandler,
+SendUserClickRequestTabEventHandler
 {
 	@Override
 	public void onCreateRequest(CreateRequestEvent evt) {}
@@ -173,6 +177,9 @@ SendSelectCourseEventHandler
 	public void onReceiveSelectCourse(ReceiveSelectCourseEvent evt) {}
 	
 	@Override
+	public void onReceiveUserClickRequestTab(ReceiveUserClickRequestTabEvent evt) {}
+	
+	@Override
 	public void onSelectRequest(SelectRequestEvent evt) {}
 	
 	@Override
@@ -222,4 +229,7 @@ SendSelectCourseEventHandler
 	
 	@Override
 	public void onSendSelectCourse(SendSelectCourseEvent evt) {}
+	
+	@Override
+	public void onSendUserClickRequestTab(SendUserClickRequestTabEvent evt) {}
 }

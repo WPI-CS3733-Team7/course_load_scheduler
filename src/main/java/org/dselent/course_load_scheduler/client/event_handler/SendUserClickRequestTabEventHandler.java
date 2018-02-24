@@ -1,7 +1,10 @@
 package org.dselent.course_load_scheduler.client.event_handler;
 
-import org.dselent.course_load_scheduler.client.event.SendClickRequestTabEvent;
+import org.dselent.course_load_scheduler.client.event.SendUserClickRequestTabEvent;
 
-public interface SendUserClickRequestTabEventHandler {
-	void onSendClickRequestTab(SendClickRequestTabEvent evt);
+import com.google.gwt.event.shared.EventHandler;
+
+public interface SendUserClickRequestTabEventHandler extends EventHandler{
+	void onSendUserClickRequestTab(SendUserClickRequestTabEvent evt);
+
 }

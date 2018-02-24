@@ -1,7 +1,9 @@
 package org.dselent.course_load_scheduler.client.callback;
 
 import org.dselent.course_load_scheduler.client.action.ReceiveClickRequestTabAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveClickUserRequestTabAction;
 import org.dselent.course_load_scheduler.client.event.ReceiveClickRequestTabEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveUserClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.translator.impl.ClickRequestTabActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.utils.JSONHelper;
 
@@ -30,7 +32,7 @@ public class SendClickUserRequestTabCallback extends DisplayCallback<JSONValue>{
 		ClickUserRequestTabActionTranslatorImpl ClickUserRequestTabActionTranslator = new ClickUserRequestTabActionTranslatorImpl();
 		ReceiveClickUserRequestTabAction action = ClickUserRequestTabActionTranslator.translateToAction(json);
 		
-		ReceiveClickUserRequestTabEvent event = new ReceiveClickUserRequestTabEvent(action, getContainer());
+		ReceiveUserClickRequestTabEvent event = new ReceiveUserClickRequestTabEvent(action, getContainer());
 		eventBus.fireEvent(event);
 	}
 	
