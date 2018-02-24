@@ -19,6 +19,8 @@ public final class NetworkRequestStrings
 	public static String SUBMIT_RESPONSE = "requests/submit/response";
 	public static String SUBMIT_USER_REQUEST = "/requests/submit/request";
 	public static String SELECT_REQUEST = "/requests/submit/request";
+	public static String CLICK_REQUEST_TAB = "/requests/select/request";
+
 
 	
 	private NetworkRequestStrings() {};
