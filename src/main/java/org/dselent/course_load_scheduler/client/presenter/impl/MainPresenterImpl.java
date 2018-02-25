@@ -144,6 +144,7 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 				eventBus.fireEvent(requestEvent);
 				break;
 			case 2:
+				parentPresenter.showLoadScreen();
 				SendClickAccountTabAction accountAction = new SendClickAccountTabAction(globalData.getUserId());
 				SendClickAccountTabEvent  accountEvent = new SendClickAccountTabEvent(accountAction, container);
 				eventBus.fireEvent(accountEvent);

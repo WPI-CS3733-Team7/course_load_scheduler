@@ -31,12 +31,15 @@ public class ClickAccountTabActionTranslatorImpl implements ActionTranslator<Sen
 	public ReceiveClickAccountTabAction translateToAction(JSONObject json)
 	{
 		JSONValue jsonObject = json.get("success");
-		JSONObject returnObject = jsonObject.isArray().get(0).isObject();
+		JSONObject jsonReturnClickAccountObject = jsonObject.isObject();
+		
+		JSONValue returnClickAccount = jsonReturnClickAccountObject.get("returnObject");
+		JSONObject returnObject = returnClickAccount.isObject();
 
 		String uFirstName = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveClickAccountTabKeys.FIRST_NAME));
 		String uLastName = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveClickAccountTabKeys.LAST_NAME));
 		String username = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveClickAccountTabKeys.USER_NAME));;
-		String userRole = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveClickAccountTabKeys.ROLE_ID));;
+		String userRole = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveClickAccountTabKeys.USER_ROLE));;
 		String email = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveClickAccountTabKeys.EMAIL));;
 		
 		JSONValue userListObjectStart = returnObject.get("userList");

@@ -178,7 +178,7 @@
 	<g:HorizontalPanel width="623px" height="86px">
 		<g:Cell width="100%" height="100%">
 			<g:SimplePanel width="100%" height="100%">
-				<g:Image width="100%" height="78px" url="WEB-INF/classes/org/dselent/course_load_scheduler/client/view/images/wpi_logo.png"/>
+				<g:Image width="100%" height="78px" url="wpi_logo.png"/>
 			</g:SimplePanel>
 		</g:Cell>
 		<g:Cell width="100%" height="100%">

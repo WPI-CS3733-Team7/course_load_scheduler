@@ -14,7 +14,7 @@
 						<g:Label text="Name" ui:field="nameLabel" />
 					</g:customCell>
 					<g:customCell>
-						<g:Label text="xxxxxxx" ui:field="changingNameLabel"/>
+						<g:Label ui:field="changingNameLabel"/>
 					</g:customCell>
 				</g:row>
 				<g:row>
@@ -22,7 +22,7 @@
 						<g:Label text="Username" ui:field="usernameLabel" />
 					</g:customCell>
 					<g:customCell>
-						<g:Label text="xxxxxxx" ui:field="changingUsernameLabel"/>
+						<g:Label ui:field="changingUsernameLabel"/>
 					</g:customCell>
 				</g:row>
 				<g:row>
@@ -30,7 +30,7 @@
 						<g:Label text="Account State" ui:field="accountStateLabel" />
 					</g:customCell>
 					<g:customCell>
-						<g:Label text="xxxxxxx" ui:field="changingAccountStateLabel"/>
+						<g:Label ui:field="changingAccountStateLabel"/>
 					</g:customCell>
 				</g:row>
 				<g:row>
@@ -38,7 +38,7 @@
 						<g:Label text="Email" ui:field="emailLabel" />
 					</g:customCell>
 					<g:customCell>
-						<g:Label text="xxxxxxx" ui:field="changingEmailLabel"/>
+						<g:Label ui:field="changingEmailLabel"/>
 					</g:customCell>
 				</g:row>
 			</g:Grid>
