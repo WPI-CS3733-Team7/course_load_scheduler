@@ -43,15 +43,18 @@ public class EditSectionActionTranslatorImpl implements ActionTranslator<SendEdi
 		// sent timestamps as epoch seconds (long)
 		
 		JSONValue jsonObject = json.get("success");
-		JSONObject returnObject = jsonObject.isArray().get(0).isObject();
+		JSONObject jsonReturnEditSectionObject = jsonObject.isObject();
+		
+		JSONValue returnEditSection = jsonReturnEditSectionObject.get("returnObject");
+		JSONObject returnEditSectionObject = returnEditSection.isObject();
 		
 		//Message to display
 		
-		String message = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.MESSAGE));
+		String message = JSONHelper.getStringValue(returnEditSectionObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.MESSAGE));
 		
 		//CourseSection object
 		
-		JSONValue courseSectionObjectStart = returnObject.get("courseSection");
+		JSONValue courseSectionObjectStart = returnEditSectionObject.get("courseSection");
 		JSONArray courseSectionListObject = courseSectionObjectStart.isArray();
 		
 		CourseSection courseSection = new CourseSection();
@@ -86,7 +89,7 @@ public class EditSectionActionTranslatorImpl implements ActionTranslator<SendEdi
 		
 		//CalendarInfo object
 		
-		JSONValue calendarInfoObjectStart = returnObject.get("calendarInfo");
+		JSONValue calendarInfoObjectStart = returnEditSectionObject.get("calendarInfo");
 		JSONArray calendarInfoListObject = calendarInfoObjectStart.isArray();
 		
 		CalendarInfo calendarInfo = new CalendarInfo();

@@ -1,7 +1,6 @@
 package org.dselent.course_load_scheduler.client;
 
 import org.dselent.course_load_scheduler.client.gin.Injector;
-import org.dselent.course_load_scheduler.client.presenter.impl.ExamplePresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.AccountPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.AdminRequestPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.IndexPresenterImpl;
@@ -9,6 +8,10 @@ import org.dselent.course_load_scheduler.client.presenter.impl.LoginPresenterImp
 import org.dselent.course_load_scheduler.client.presenter.impl.MainPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.SchedulePresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.UserRequestPresenterImpl;
+import org.dselent.course_load_scheduler.client.service.impl.AccountServiceImpl;
+import org.dselent.course_load_scheduler.client.service.impl.RequestServiceImpl;
+import org.dselent.course_load_scheduler.client.service.impl.ScheduleServiceImpl;
+import org.dselent.course_load_scheduler.client.service.impl.UserRequestServiceImpl;
 import org.dselent.course_load_scheduler.client.service.impl.UserServiceImpl;
 import org.dselent.course_load_scheduler.client.view.IndexView;
 import org.dselent.course_load_scheduler.client.view.MainView;
@@ -46,14 +49,24 @@ public class CourseLoadScheduler implements EntryPoint
 		schedulePresenter.init();
 		AdminRequestPresenterImpl requestPresenter = injector.getAdminRequestPresenter();
 		requestPresenter.init();
+		UserRequestPresenterImpl userRequestPresenter = injector.getUserRequestPresenter();
+		userRequestPresenter.init();
 		
-		ExamplePresenterImpl examplePresenter = injector.getExamplePresenter();
-		examplePresenter.init();
 		UserServiceImpl userService = injector.getUserService();
 		userService.init();
+		ScheduleServiceImpl scheduleService = injector.getScheduleService();
+		scheduleService.init();
+		AccountServiceImpl accountService = injector.getAccountService();
+		accountService.init();
+		RequestServiceImpl requestService = injector.getRequestService();
+		requestService.init();
+		UserRequestServiceImpl userRequestService = injector.getUserRequestService();
+		userRequestService.init();
+		
 		
 		indexPresenter.go(root);
-		mainPresenter.go(indexView.getViewRootPanel());
+		loginPresenter.go(indexView.getViewRootPanel());
+		//mainPresenter.go(indexView.getViewRootPanel());
 		schedulePresenter.go(mainPresenter.getSchedulePanel());
 		requestPresenter.go(mainPresenter.getRequestPanel());
 		accountPresenter.go(mainPresenter.getAccountPanel());

@@ -7,7 +7,6 @@ import org.dselent.course_load_scheduler.client.action.ReceiveClickScheduleTabAc
 import org.dselent.course_load_scheduler.client.action.SendClickScheduleTabAction;
 import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.model.Course;
-import org.dselent.course_load_scheduler.client.model.CalendarInfo;
 import org.dselent.course_load_scheduler.client.model.CourseLoad;
 import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveClickScheduleTabKeys;
 import org.dselent.course_load_scheduler.client.translator.ActionTranslator;
@@ -30,13 +29,16 @@ public class ClickScheduleTabActionTranslatorImpl implements ActionTranslator<Se
 	public ReceiveClickScheduleTabAction translateToAction(JSONObject json)
 	{
 		JSONValue jsonObject = json.get("success");
-		JSONObject returnObject = jsonObject.isArray().get(0).isObject();
+		JSONObject jsonReturnClickScheduleTabObject = jsonObject.isObject();
+		
+		JSONValue returnClickScheduleTab = jsonReturnClickScheduleTabObject.get("returnObject");
+		JSONObject returnClickScheduleTabObject = returnClickScheduleTab.isObject();
 		
 		//Linked instructor id		
-		Integer linkedInstructorId = JSONHelper.getIntValue(returnObject, JSONHelper.convertKeyName(ReceiveClickScheduleTabKeys.LINKED_INSTRUCTOR_ID));
+		Integer linkedInstructorId = JSONHelper.getIntValue(returnClickScheduleTabObject, JSONHelper.convertKeyName(ReceiveClickScheduleTabKeys.LINKED_INSTRUCTOR_ID));
 		
 		//Extract instructor list
-		JSONValue instructorListObjectStart = returnObject.get("instructorList");
+		JSONValue instructorListObjectStart = returnClickScheduleTabObject.get("instructorList");
 		JSONArray instructorListObject = instructorListObjectStart.isArray();
 		List<Instructor> instructorList = new ArrayList<Instructor>();
 		for (int i = 0; i < instructorListObject.size(); i++) 
@@ -60,7 +62,7 @@ public class ClickScheduleTabActionTranslatorImpl implements ActionTranslator<Se
 		}
 		
 		// Extract course list
-		JSONValue courseListObjectStart = returnObject.get("courseList");
+		JSONValue courseListObjectStart = returnClickScheduleTabObject.get("courseList");
 		JSONArray courseListObject = courseListObjectStart.isArray();
 		List<Course> courseList = new ArrayList<Course>();
 		for (int i = 0; i < courseListObject.size(); i++) 
@@ -82,34 +84,8 @@ public class ClickScheduleTabActionTranslatorImpl implements ActionTranslator<Se
 			courseList.add(course);
 		}
 		
-		// extract user role link list
-		JSONValue calendarInfoListObjectStart = returnObject.get("calendarInfoList");
-		JSONArray calendarInfoListObject = calendarInfoListObjectStart.isArray();
-		List<CalendarInfo> calendarInfoList = new ArrayList<CalendarInfo>();
-		for (int i = 0; i < calendarInfoListObject.size(); i++) 
-		{
-			JSONObject calendarInfoObject = calendarInfoListObject.get(i).isObject();
-			
-			Integer id = JSONHelper.getIntValue(calendarInfoObject, JSONHelper.convertKeyName(ReceiveClickScheduleTabKeys.CALENDAR_INFO_ID));
-			Integer calYear = JSONHelper.getIntValue(calendarInfoObject, JSONHelper.convertKeyName(ReceiveClickScheduleTabKeys.CAL_YEAR));
-			String calTerm = JSONHelper.getStringValue(calendarInfoObject, JSONHelper.convertKeyName(ReceiveClickScheduleTabKeys.CAL_TERM));
-			String days = JSONHelper.getStringValue(calendarInfoObject, JSONHelper.convertKeyName(ReceiveClickScheduleTabKeys.DAYS));
-			Integer startTime = JSONHelper.getIntValue(calendarInfoObject, JSONHelper.convertKeyName(ReceiveClickScheduleTabKeys.START_TIME));
-			Integer endTime = JSONHelper.getIntValue(calendarInfoObject, JSONHelper.convertKeyName(ReceiveClickScheduleTabKeys.END_TIME));
-			
-			CalendarInfo calendarInfo = new CalendarInfo();
-			calendarInfo.setId(id);
-			calendarInfo.setCalYear(calYear);
-			calendarInfo.setCalTerm(calTerm);
-			calendarInfo.setDays(days);
-			calendarInfo.setStartTime(startTime);
-			calendarInfo.setEndTime(endTime);
-			
-			calendarInfoList.add(calendarInfo);
-		}
-		
-		// instructorList
-		JSONValue courseLoadListObjectStart = returnObject.get("courseLoadList");
+		// Extract course load list
+		JSONValue courseLoadListObjectStart = returnClickScheduleTabObject.get("courseLoadList");
 		JSONArray courseLoadListObject = courseLoadListObjectStart.isArray();
 		List<CourseLoad> courseLoadList = new ArrayList<CourseLoad>();
 		for (int i = 0; i < courseLoadListObject.size(); i++) 
@@ -130,8 +106,7 @@ public class ClickScheduleTabActionTranslatorImpl implements ActionTranslator<Se
 			courseLoadList.add(courseLoad);
 		}
 		
-		ReceiveClickScheduleTabAction action = new ReceiveClickScheduleTabAction(linkedInstructorId, instructorList, courseList, calendarInfoList, 
-				courseLoadList);
+		ReceiveClickScheduleTabAction action = new ReceiveClickScheduleTabAction(linkedInstructorId, instructorList, courseList, courseLoadList);
 		
 		return action;
 	}

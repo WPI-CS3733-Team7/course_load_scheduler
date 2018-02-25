@@ -156,15 +156,18 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		public ScheduleViewImpl() {
 			initWidget(uiBinder.createAndBindUi(this));
 			
+			//yearSelect.addItem("2021");
+			//yearSelect.addItem("2020");
+			//yearSelect.addItem("2019");
 			yearSelect.addItem("2018");
-			yearSelect.addItem("2017");
+			/*yearSelect.addItem("2017");
 			yearSelect.addItem("2016");
 			yearSelect.addItem("2015");
 			yearSelect.addItem("2014");
 			yearSelect.addItem("2013");
 			yearSelect.addItem("2012");
 			yearSelect.addItem("2011");
-			yearSelect.addItem("2010");			
+			yearSelect.addItem("2010");	*/		
 			
 			termSelect.addItem("A");
 			termSelect.addItem("B");

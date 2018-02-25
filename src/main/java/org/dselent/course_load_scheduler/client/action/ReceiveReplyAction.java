@@ -30,6 +30,4 @@ public class ReceiveReplyAction extends Action
 		builder.append("]");
 		return builder.toString();
 	}
-
-
 }

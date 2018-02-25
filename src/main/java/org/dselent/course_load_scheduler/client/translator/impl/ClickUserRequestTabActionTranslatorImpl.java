@@ -1,15 +1,10 @@
 package org.dselent.course_load_scheduler.client.translator.impl;
 
-
-import org.dselent.course_load_scheduler.client.action.ReceiveClickAccountTabAction;
-import org.dselent.course_load_scheduler.client.action.ReceiveClickRequestTabAction;
-import org.dselent.course_load_scheduler.client.action.SendClickAccountTabAction;
-import org.dselent.course_load_scheduler.client.action.SendClickRequestTabAction;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dselent.course_load_scheduler.client.action.ReceiveClickRequestTabAction;
-import org.dselent.course_load_scheduler.client.action.SendClickRequestTabAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveClickUserRequestTabAction;
+import org.dselent.course_load_scheduler.client.action.SendClickUserRequestTabAction;
 import org.dselent.course_load_scheduler.client.model.Request;
 import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveRequestKeys;
 import org.dselent.course_load_scheduler.client.translator.ActionTranslator;
@@ -19,17 +14,17 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 
-public class ClickRequestTabActionTranslatorImpl implements ActionTranslator<SendClickRequestTabAction, ReceiveClickRequestTabAction>{
+public class ClickUserRequestTabActionTranslatorImpl implements ActionTranslator<SendClickUserRequestTabAction, ReceiveClickUserRequestTabAction>{
+
 	@Override
-	public JSONObject translateToJson(SendClickRequestTabAction object)
-	{	
+	public JSONObject translateToJson(SendClickUserRequestTabAction object) {
 		JSONObject jsonObject = new JSONObject();		
 		return jsonObject;
 	}
 
 	@Override
-	public ReceiveClickRequestTabAction translateToAction(JSONObject json)
-	{
+	public ReceiveClickUserRequestTabAction translateToAction(JSONObject json) {
+		// TODO Auto-generated method stub
 		JSONValue jsonObject = json.get("success");
 		JSONObject returnObject = jsonObject.isArray().get(0).isObject();
 		
@@ -54,7 +49,8 @@ public class ClickRequestTabActionTranslatorImpl implements ActionTranslator<Sen
 			requestList.add(request);
 		}
 		
-		ReceiveClickRequestTabAction action = new ReceiveClickRequestTabAction(requestList);
+		ReceiveClickUserRequestTabAction action = new ReceiveClickUserRequestTabAction(requestList);
 		return action;
 	}
+	
 }

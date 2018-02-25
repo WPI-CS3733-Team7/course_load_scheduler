@@ -6,6 +6,7 @@ public enum ReceiveClickAccountTabKeys
 	USER_NAME,
 	FIRST_NAME,
 	LAST_NAME,
+	USER_ROLE,
 	EMAIL,
 	USER_STATE_ID,
 	

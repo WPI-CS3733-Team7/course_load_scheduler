@@ -7,7 +7,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public class SendClickRequestTabEvent extends DisplayEvent<SendClickRequestTabAction, SendClickRequestTabEventHandler> {
 	
-public static Type<SendClickRequestTabEventHandler> TYPE = new Type<SendClickRequestTabEventHandler>();
+	public static Type<SendClickRequestTabEventHandler> TYPE = new Type<SendClickRequestTabEventHandler>();
 	
 	public SendClickRequestTabEvent(SendClickRequestTabAction action, HasWidgets container)
 	{
