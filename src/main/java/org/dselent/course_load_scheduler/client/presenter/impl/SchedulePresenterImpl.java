@@ -385,6 +385,8 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		String idString = null;
 		if(id!=null)
 			idString = id.toString();
+		else
+			idString = "-1";
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SendEditInstructorAction siea = new SendEditInstructorAction(idString, firstName, lastName, rank, email, Boolean.toString(deleted));
 		SendEditInstructorEvent siee = new SendEditInstructorEvent(siea, container);
@@ -544,6 +546,8 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		String idString = null;
 		if(id!=null)
 			idString = id.toString();
+		else
+			idString = "-1";
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SendEditCourseAction scea = new SendEditCourseAction(idString, courseName, courseNumber, frequency, Boolean.toString(deleted));
 		SendEditCourseEvent scee = new SendEditCourseEvent(scea, container);

@@ -40,16 +40,19 @@ public class EditInstructorActionTranslatorImpl implements ActionTranslator<Send
 		// sent timestamps as epoch seconds (long)
 		
 		JSONValue jsonObject = json.get("success");
-		JSONObject instructorObject = jsonObject.isArray().get(0).isObject();
+		JSONObject jsonReturnInstructorObject = jsonObject.isObject();
 		
-		Integer id = JSONHelper.getIntValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.ID));
-		String rank = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.RANK));
-		String firstName = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.FIRST_NAME));
-		String lastName = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.LAST_NAME));
-		String email = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.EMAIL));
-		Long createdAt = JSONHelper.getLongValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.CREATED_AT));
-		Long updatedAt = JSONHelper.getLongValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.UPDATED_AT));
-		Boolean deleted = JSONHelper.getBooleanValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.DELETED));
+		JSONValue returnInstructor = jsonReturnInstructorObject.get("returnObject");
+		JSONObject returnInstructorObject = returnInstructor.isObject();
+		
+		Integer id = JSONHelper.getIntValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.ID));
+		String rank = JSONHelper.getStringValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.RANK));
+		String firstName = JSONHelper.getStringValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.FIRST_NAME));
+		String lastName = JSONHelper.getStringValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.LAST_NAME));
+		String email = JSONHelper.getStringValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.EMAIL));
+		//Long createdAt = JSONHelper.getLongValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.CREATED_AT));
+		//Long updatedAt = JSONHelper.getLongValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.UPDATED_AT));
+		Boolean deleted = JSONHelper.getBooleanValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.DELETED));
 		
 		// TODO look into time conversion more
 		// put into JSONHelper?
@@ -60,8 +63,8 @@ public class EditInstructorActionTranslatorImpl implements ActionTranslator<Send
 		instructor.setFirstName(firstName);
 		instructor.setLastName(lastName);
 		instructor.setEmail(email);
-		instructor.setCreatedAt(new Date(createdAt));
-		instructor.setUpdatedAt(new Date(updatedAt));
+		//instructor.setCreatedAt(new Date(createdAt));
+		//instructor.setUpdatedAt(new Date(updatedAt));
 		instructor.setDeleted(deleted);
 		
 		// possibly use builder pattern if it is a lot of data

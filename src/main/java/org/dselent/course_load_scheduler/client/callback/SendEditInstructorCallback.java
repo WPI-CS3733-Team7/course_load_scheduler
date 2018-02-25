@@ -14,7 +14,6 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public class SendEditInstructorCallback extends DisplayCallback<JSONValue>
 {
-
 	public SendEditInstructorCallback(SimpleEventBus eventBus, HasWidgets container)
 	{
 		super(eventBus, container);
