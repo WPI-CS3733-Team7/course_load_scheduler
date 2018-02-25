@@ -456,6 +456,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		{
 			if(instructorList.get(i).getId()==editedInstructor.getId()) {
 				match = i;
+				break;
 			}
 		}
 		Window.alert(instructorList.toString());
