@@ -7,6 +7,8 @@ import org.dselent.course_load_scheduler.client.action.InvalidRequestAction;
 import org.dselent.course_load_scheduler.client.action.SendRequestAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidSubmitStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveClickAccountTabEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveUserClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
@@ -50,9 +52,11 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 		HandlerRegistration registration;
 		
 		registration = eventBus.addHandler(InvalidRequestEvent.TYPE, this);
-
 		eventBusRegistration.put(InvalidRequestEvent.TYPE, registration);
-		}
+		
+		registration = eventBus.addHandler(ReceiveUserClickRequestTabEvent.TYPE, this);
+		eventBusRegistration.put(ReceiveUserClickRequestTabEvent.TYPE, registration);
+	}
 	
 	@Override
 	public void go(HasWidgets container) {
