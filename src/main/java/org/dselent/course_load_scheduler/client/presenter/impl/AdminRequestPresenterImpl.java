@@ -159,7 +159,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		if(!selectClickInProgress) {
 			selectClickInProgress = true;
 			view.getRequestList().setEnabled(false);
-			parentPresenter.showLoadScreen();
+			//parentPresenter.showLoadScreen();
 			
 			int selectedIndex = view.getRequestList().getSelectedIndex();
 			//String selectedItem = view.getRequestList().getValue(selectedIndex);
@@ -167,7 +167,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			String requester = String.valueOf(selectedRequest.getRequesterId());
 			String requestType = selectedRequest.getRequestType();
 			String requestDetail = selectedRequest.getRequestDetails();
-			selectRequestAction(selectedRequest.getRequesterId(), requestType, requestDetail);
+			//selectRequestAction(selectedRequest.getRequesterId(), requestType, requestDetail);
 			view.setUserRequestLabel(requester);
 			view.setTypeLabel(requestType);
 			view.setRequesterDescriptLabel(requestDetail);			
@@ -176,13 +176,13 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		
 	}
 	
-	private void selectRequestAction(Integer requester, String requestType, String Description) {
+	/*private void selectRequestAction(Integer requester, String requestType, String Description) {
 		parentPresenter.hideLoadScreen();
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SelectRequestAction sra = new SelectRequestAction(requester, requestType, Description);
 		SelectRequestEvent sre = new SelectRequestEvent(sra, container);
 		eventBus.fireEvent(sre);
-	}
+	}*/
 	
 	private void validateField(String field) throws EmptyStringException
 	{
@@ -231,7 +231,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	
 	@Override
 	public void populateRequestList(List<Request> requestList) {
-		// TODO Auto-generated method stub
+		view.setRequestList(requestList);
 		
 	}
 

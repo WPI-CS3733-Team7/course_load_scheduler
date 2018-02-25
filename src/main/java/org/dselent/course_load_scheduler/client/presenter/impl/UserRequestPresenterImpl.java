@@ -7,12 +7,14 @@ import org.dselent.course_load_scheduler.client.action.InvalidRequestAction;
 import org.dselent.course_load_scheduler.client.action.SendRequestAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidSubmitStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveUserClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
 import org.dselent.course_load_scheduler.client.model.Request;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
+import org.dselent.course_load_scheduler.client.presenter.MainPresenter;
 import org.dselent.course_load_scheduler.client.presenter.UserRequestPresenter;
 import org.dselent.course_load_scheduler.client.view.BaseView;
 import org.dselent.course_load_scheduler.client.view.UserRequestView;
@@ -24,15 +26,17 @@ import com.google.inject.Inject;
 public class UserRequestPresenterImpl extends BasePresenterImpl implements UserRequestPresenter
 {
 	private IndexPresenter parentPresenter;
+	private MainPresenter mainPresenter;
 	private UserRequestView view;
 	private GlobalData globalData;
 	private boolean submitClickInProgress;
 	
 	@Inject
-	public UserRequestPresenterImpl(IndexPresenter parentPresenter, UserRequestView view, GlobalData globalData)
+	public UserRequestPresenterImpl(IndexPresenter parentPresenter, MainPresenter mainPresenter, UserRequestView view, GlobalData globalData)
 	{
 		this.view = view;
 		this.parentPresenter = parentPresenter;
+		this.mainPresenter = mainPresenter;
 		this.globalData = globalData;
 		view.setPresenter(this);
 		submitClickInProgress = false;
@@ -151,6 +155,11 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 		eventBus.fireEvent(sre);
 	}
 	
+	public void onReceiveUserClickRequestTab(ReceiveUserClickRequestTabEvent evt) {
+		this.go(mainPresenter.getRequestPanel());
+		
+	}
+	
 	private void validateField(String field) throws EmptyStringException
 	{
 		checkEmptyString(field);
@@ -166,7 +175,7 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 
 	@Override
 	public void populateRequestList(List<Request> requestList) {
-		// TODO Auto-generated method stub
+		view.setRequestHistoryList(requestList);
 		
 	}
 
