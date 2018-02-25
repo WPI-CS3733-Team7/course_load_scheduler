@@ -19,6 +19,7 @@ import org.dselent.course_load_scheduler.client.model.GlobalData;
 import org.dselent.course_load_scheduler.client.model.Request;
 import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
+import org.dselent.course_load_scheduler.client.presenter.MainPresenter;
 import org.dselent.course_load_scheduler.client.view.AdminRequestView;
 
 import com.google.gwt.dom.client.Style.Visibility;
@@ -29,16 +30,18 @@ import com.google.inject.Inject;
 public class AdminRequestPresenterImpl extends BasePresenterImpl implements AdminRequestPresenter
 {
 	private IndexPresenter parentPresenter;
+	private MainPresenter mainPresenter;
 	private AdminRequestView view;
 	private GlobalData globalData;
 	private boolean replyClickInProgress;
 	private boolean selectClickInProgress;
 	
 	@Inject
-	public AdminRequestPresenterImpl(IndexPresenter parentPresenter, AdminRequestView view, GlobalData globalData)
+	public AdminRequestPresenterImpl(IndexPresenter parentPresenter, AdminRequestView view, MainPresenter mainPresenter, GlobalData globalData)
 	{
 		this.view = view;
 		this.parentPresenter = parentPresenter;
+		this.mainPresenter = mainPresenter;
 		this.globalData = globalData;
 		view.setPresenter(this);
 		replyClickInProgress = false;
@@ -211,16 +214,10 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		replyClickInProgress = false;
 	}
 	
-	/*public void onReceiveClickRequestTab(ReceiveClickRequestTabEvent evt)
+	public void onReceiveClickRequestTab(ReceiveClickRequestTabEvent evt)
 	{	
-		if (globalData.getRole() != "ADMIN")
-		{
-			view.getAdminTable().getElement().getStyle().setVisibility(Visibility.HIDDEN);
-		} else 
-		{
-			view.getAdminTable().getElement().getStyle().setVisibility(Visibility.VISIBLE);
-		}
-		
+		this.go(mainPresenter.getRequestPanel());
+		/*
 		ReceiveClickRequestTabAction action = evt.getAction();
 		view.setChangingUsernameLabelText(action.getUserName());
 		view.setChangingNameLabelText(action.getFirstName() + " " + action.getLastName());
@@ -228,9 +225,10 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		view.setChangingEmailLabelText(action.getEmail());
 		
 		populateRequestList(action.getRequestList());
-		
+		*/
 		parentPresenter.hideLoadScreen();
-	}*/
+	}
+	
 	@Override
 	public void populateRequestList(List<Request> requestList) {
 		// TODO Auto-generated method stub

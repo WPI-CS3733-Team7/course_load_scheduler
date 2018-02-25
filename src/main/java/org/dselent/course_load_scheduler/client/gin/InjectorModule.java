@@ -8,7 +8,6 @@ import org.dselent.course_load_scheduler.client.presenter.LoginPresenter;
 import org.dselent.course_load_scheduler.client.presenter.MainPresenter;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.presenter.UserRequestPresenter;
-import org.dselent.course_load_scheduler.client.presenter.ExamplePresenter;
 import org.dselent.course_load_scheduler.client.presenter.impl.AccountPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.AdminRequestPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.IndexPresenterImpl;
@@ -16,10 +15,16 @@ import org.dselent.course_load_scheduler.client.presenter.impl.LoginPresenterImp
 import org.dselent.course_load_scheduler.client.presenter.impl.MainPresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.SchedulePresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.UserRequestPresenterImpl;
-import org.dselent.course_load_scheduler.client.presenter.impl.ExamplePresenterImpl;
+import org.dselent.course_load_scheduler.client.service.AccountService;
+import org.dselent.course_load_scheduler.client.service.RequestService;
+import org.dselent.course_load_scheduler.client.service.ScheduleService;
+import org.dselent.course_load_scheduler.client.service.UserRequestService;
 import org.dselent.course_load_scheduler.client.service.UserService;
+import org.dselent.course_load_scheduler.client.service.impl.AccountServiceImpl;
+import org.dselent.course_load_scheduler.client.service.impl.RequestServiceImpl;
+import org.dselent.course_load_scheduler.client.service.impl.ScheduleServiceImpl;
+import org.dselent.course_load_scheduler.client.service.impl.UserRequestServiceImpl;
 import org.dselent.course_load_scheduler.client.service.impl.UserServiceImpl;
-import org.dselent.course_load_scheduler.client.view.ExampleView;
 import org.dselent.course_load_scheduler.client.view.AccountView;
 import org.dselent.course_load_scheduler.client.view.AdminRequestView;
 import org.dselent.course_load_scheduler.client.view.IndexView;
@@ -27,7 +32,6 @@ import org.dselent.course_load_scheduler.client.view.LoginView;
 import org.dselent.course_load_scheduler.client.view.MainView;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
 import org.dselent.course_load_scheduler.client.view.UserRequestView;
-import org.dselent.course_load_scheduler.client.view.impl.ExampleViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.AccountViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.AdminRequestViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.IndexViewImpl;
@@ -65,7 +69,6 @@ public class InjectorModule extends AbstractGinModule
         bind(AccountPresenter.class).to(AccountPresenterImpl.class).in(Singleton.class);
         bind(AdminRequestPresenter.class).to(AdminRequestPresenterImpl.class).in(Singleton.class);
         bind(UserRequestPresenter.class).to(UserRequestPresenterImpl.class).in(Singleton.class);
-        bind(ExamplePresenter.class).to(ExamplePresenterImpl.class).in(Singleton.class);
         
         // views
         bind(IndexView.class).to(IndexViewImpl.class).in(Singleton.class);
@@ -75,10 +78,13 @@ public class InjectorModule extends AbstractGinModule
         bind(AccountView.class).to(AccountViewImpl.class).in(Singleton.class);
         bind(AdminRequestView.class).to(AdminRequestViewImpl.class).in(Singleton.class);
         bind(UserRequestView.class).to(UserRequestViewImpl.class).in(Singleton.class);
-        bind(ExampleView.class).to(ExampleViewImpl.class).in(Singleton.class);
         
         //services
-        bind(UserService.class).to(UserServiceImpl.class).in(Singleton.class); 
+        bind(UserService.class).to(UserServiceImpl.class).in(Singleton.class);
+        bind(AccountService.class).to(AccountServiceImpl.class).in(Singleton.class); 
+        bind(ScheduleService.class).to(ScheduleServiceImpl.class).in(Singleton.class);
+        bind(RequestService.class).to(RequestServiceImpl.class).in(Singleton.class);
+        bind(UserRequestService.class).to(UserRequestServiceImpl.class).in(Singleton.class);
     }
 	
 	/*

@@ -8,6 +8,9 @@ import org.dselent.course_load_scheduler.client.action.SendClickRequestTabAction
 import org.dselent.course_load_scheduler.client.action.SendClickScheduleTabAction;
 import org.dselent.course_load_scheduler.client.action.SendClickUserRequestTabAction;
 import org.dselent.course_load_scheduler.client.action.SendLogoutAction;
+import org.dselent.course_load_scheduler.client.event.InvalidCreateCourseEvent;
+import org.dselent.course_load_scheduler.client.event.InvalidCreateInstructorEvent;
+import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveLoginEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickAccountTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickRequestTabEvent;
@@ -22,6 +25,7 @@ import org.dselent.course_load_scheduler.client.view.BaseView;
 import org.dselent.course_load_scheduler.client.view.MainView;
 
 import com.google.gwt.user.client.Window;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
@@ -49,7 +53,10 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 	@Override
 	public void bind()
 	{
-
+		HandlerRegistration registration;
+		
+		registration = eventBus.addHandler(ReceiveLoginEvent.TYPE, this);
+		eventBusRegistration.put(ReceiveLoginEvent.TYPE, registration);
 	}
 	
 	@Override
@@ -117,7 +124,6 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 		if (globalData.getRole() == "USER") {
 			
 		}
-		
 		parentPresenter.hideLoadScreen();
 		this.go(parentPresenter.getView().getViewRootPanel());
 	}
@@ -154,6 +160,7 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 				Window.alert("ERROR: Permission denied.");
 				break;
 			case 2:
+				parentPresenter.showLoadScreen();
 				SendClickAccountTabAction accountAction = new SendClickAccountTabAction(globalData.getUserId());
 				SendClickAccountTabEvent  accountEvent = new SendClickAccountTabEvent(accountAction, container);
 				eventBus.fireEvent(accountEvent);
