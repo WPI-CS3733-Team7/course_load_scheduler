@@ -39,6 +39,7 @@ import org.dselent.course_load_scheduler.client.event.SendValidateEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.CalendarInfo;
 import org.dselent.course_load_scheduler.client.model.Course;
+import org.dselent.course_load_scheduler.client.model.CourseLoad;
 import org.dselent.course_load_scheduler.client.model.CourseSection;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
 import org.dselent.course_load_scheduler.client.model.Instructor;
@@ -71,6 +72,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	List<Course> courseList = new ArrayList<Course>();
 	List<CourseSection> courseSectionList = new ArrayList<CourseSection>();
 	List<CalendarInfo> calendarInfoList = new ArrayList<CalendarInfo>();
+	List<CourseLoad> courseLoadList = new ArrayList<CourseLoad>();
 	
 	@Inject
 	public SchedulePresenterImpl(IndexPresenter parentPresenter, ScheduleView view, GlobalData globalData)
@@ -202,6 +204,10 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		for(Course c : courseList) {
 			view.getCourseBox().addItem(c.displayText());
 		}
+	}
+	
+	public void populateCourseLoadList(List<CourseLoad> clList) {
+		courseLoadList = clList;
 	}
 	
 	@Override
@@ -1017,7 +1023,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		ReceiveClickScheduleTabAction action = evt.getAction();
 		populateInstructorList(action.getInstructorList());
 		populateCourseList(action.getCourseList());
-		// need to populate course load list with this action
+		populateCourseLoadList(action.getCourseLoadList());
 		
 		// default selected instructor to linked instructor if possible
 		int linkedInstructorId = action.getLinkedInstructorId();
