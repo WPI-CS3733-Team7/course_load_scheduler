@@ -232,6 +232,12 @@ public class AdminRequestViewImpl extends BaseViewImpl<AdminRequestPresenter> im
 		return adminRequestPanel;
 	}
 
+	@Override
+	public VerticalPanel getAdminTable() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 

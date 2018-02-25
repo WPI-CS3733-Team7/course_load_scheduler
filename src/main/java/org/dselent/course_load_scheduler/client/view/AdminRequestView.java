@@ -3,6 +3,7 @@ package org.dselent.course_load_scheduler.client.view;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 
@@ -34,4 +35,5 @@ public interface AdminRequestView extends BaseView<AdminRequestPresenter>{
 		void setRejected(RadioButton rejectedRdo);
 		Button getReplyButton();
 		public void showErrorMessages(String errorMessages);
+		VerticalPanel getAdminTable();
 }

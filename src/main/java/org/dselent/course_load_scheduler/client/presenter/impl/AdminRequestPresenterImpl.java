@@ -4,18 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidReplyAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveClickAccountTabAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveClickRequestTabAction;
 import org.dselent.course_load_scheduler.client.action.SelectRequestAction;
 import org.dselent.course_load_scheduler.client.action.SendReplyAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidReplyStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidReplyEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveClickAccountTabEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.SelectRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendReplyEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
+import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.model.Request;
 import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.view.AdminRequestView;
+
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
@@ -27,7 +34,9 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	private GlobalData globalData;
 	private boolean replyClickInProgress;
 	private boolean selectClickInProgress;
+	private boolean requestClickInProgress;
 	
+	List<Request> RequestList = new ArrayList<Request>();
 	@Inject
 	public AdminRequestPresenterImpl(IndexPresenter parentPresenter, AdminRequestView view, GlobalData globalData)
 	{
@@ -37,6 +46,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		view.setPresenter(this);
 		replyClickInProgress = false;
 		selectClickInProgress = false;
+		requestClickInProgress = false;
 	}
 	
 	@Override
@@ -52,6 +62,9 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		
 		registration = eventBus.addHandler(InvalidReplyEvent.TYPE, this);
 		eventBusRegistration.put(InvalidReplyEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(ReceiveClickRequestTabEvent.TYPE, this);
+		eventBusRegistration.put(ReceiveClickRequestTabEvent.TYPE, registration);
 	}
 	
 	@Override
@@ -165,11 +178,8 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			
 			
 		}
-		
-		
-		
+			
 	}
-	
 	private void selectRequestAction(Integer requester, String requestType, String Description) {
 		parentPresenter.hideLoadScreen();
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
@@ -190,7 +200,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			throw new EmptyStringException();
 		}
 	}
-
+	
 	@Override
 	public void onInvalidReply(InvalidReplyEvent evt) {
 		parentPresenter.hideLoadScreen();
@@ -202,9 +212,26 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	}
 
 	@Override
-	public void populateRequestList(List<Request> requestList) {
-		// TODO Auto-generated method stub
+	public void onReceiveClickRequestTab(ReceiveClickRequestTabEvent evt)
+	{	
+		if (globalData.getRole() != "ADMIN")
+		{
+			view.getAdminTable().getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		} else 
+		{
+			view.getAdminTable().getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}
 		
+		ReceiveClickRequestTabAction action = evt.getAction();
+		populateRequestList(action.getRequestList());
+		
+		parentPresenter.hideLoadScreen();
+	}
+	
+	@Override
+	public void populateRequestList(List<Request> rList) {
+		// TODO Auto-generated method stub
+		RequestList = rList;
 	}
 
 	@Override
