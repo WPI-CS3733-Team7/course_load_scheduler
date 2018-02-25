@@ -30,13 +30,16 @@ public class ClickScheduleTabActionTranslatorImpl implements ActionTranslator<Se
 	public ReceiveClickScheduleTabAction translateToAction(JSONObject json)
 	{
 		JSONValue jsonObject = json.get("success");
-		JSONObject returnObject = jsonObject.isArray().get(0).isObject();
+		JSONObject jsonReturnClickScheduleTabObject = jsonObject.isObject();
+		
+		JSONValue returnClickScheduleTab = jsonReturnClickScheduleTabObject.get("returnObject");
+		JSONObject returnClickScheduleTabObject = returnClickScheduleTab.isObject();
 		
 		//Linked instructor id		
-		Integer linkedInstructorId = JSONHelper.getIntValue(returnObject, JSONHelper.convertKeyName(ReceiveClickScheduleTabKeys.LINKED_INSTRUCTOR_ID));
+		Integer linkedInstructorId = JSONHelper.getIntValue(returnClickScheduleTabObject, JSONHelper.convertKeyName(ReceiveClickScheduleTabKeys.LINKED_INSTRUCTOR_ID));
 		
 		//Extract instructor list
-		JSONValue instructorListObjectStart = returnObject.get("instructorList");
+		JSONValue instructorListObjectStart = returnClickScheduleTabObject.get("instructorList");
 		JSONArray instructorListObject = instructorListObjectStart.isArray();
 		List<Instructor> instructorList = new ArrayList<Instructor>();
 		for (int i = 0; i < instructorListObject.size(); i++) 
@@ -60,7 +63,7 @@ public class ClickScheduleTabActionTranslatorImpl implements ActionTranslator<Se
 		}
 		
 		// Extract course list
-		JSONValue courseListObjectStart = returnObject.get("courseList");
+		JSONValue courseListObjectStart = returnClickScheduleTabObject.get("courseList");
 		JSONArray courseListObject = courseListObjectStart.isArray();
 		List<Course> courseList = new ArrayList<Course>();
 		for (int i = 0; i < courseListObject.size(); i++) 
@@ -83,7 +86,7 @@ public class ClickScheduleTabActionTranslatorImpl implements ActionTranslator<Se
 		}
 		
 		// extract user role link list
-		JSONValue calendarInfoListObjectStart = returnObject.get("calendarInfoList");
+		JSONValue calendarInfoListObjectStart = returnClickScheduleTabObject.get("calendarInfoList");
 		JSONArray calendarInfoListObject = calendarInfoListObjectStart.isArray();
 		List<CalendarInfo> calendarInfoList = new ArrayList<CalendarInfo>();
 		for (int i = 0; i < calendarInfoListObject.size(); i++) 
@@ -109,7 +112,7 @@ public class ClickScheduleTabActionTranslatorImpl implements ActionTranslator<Se
 		}
 		
 		// instructorList
-		JSONValue courseLoadListObjectStart = returnObject.get("courseLoadList");
+		JSONValue courseLoadListObjectStart = returnClickScheduleTabObject.get("courseLoadList");
 		JSONArray courseLoadListObject = courseLoadListObjectStart.isArray();
 		List<CourseLoad> courseLoadList = new ArrayList<CourseLoad>();
 		for (int i = 0; i < courseLoadListObject.size(); i++) 

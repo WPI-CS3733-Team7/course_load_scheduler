@@ -34,13 +34,16 @@ public class ValidateActionTranslatorImpl implements ActionTranslator<SendValida
 		// sent timestamps as epoch seconds (long)
 		
 		JSONValue jsonObject = json.get("success");
-		JSONObject returnObject = jsonObject.isArray().get(0).isObject();
+		JSONObject jsonReturnValidateObject = jsonObject.isObject();
+		
+		JSONValue returnValidate = jsonReturnValidateObject.get("returnObject");
+		JSONObject returnValidateObject = returnValidate.isObject();
 		
 		// Message to display	
-		String message = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveValidateKeys.MESSAGE));
+		String message = JSONHelper.getStringValue(returnValidateObject, JSONHelper.convertKeyName(ReceiveValidateKeys.MESSAGE));
 		
 		// instructorList
-		JSONValue instructorListObjectStart = returnObject.get("instructorList");
+		JSONValue instructorListObjectStart = returnValidateObject.get("instructorList");
 		JSONArray instructorListObject = instructorListObjectStart.isArray();
 		List<Instructor> instructorList = new ArrayList<Instructor>();
 		for (int i = 0; i < instructorListObject.size(); i++) 
@@ -64,7 +67,7 @@ public class ValidateActionTranslatorImpl implements ActionTranslator<SendValida
 		}
 		
 		//courseList
-		JSONValue courseListObjectStart = returnObject.get("courseList");
+		JSONValue courseListObjectStart = returnValidateObject.get("courseList");
 		JSONArray courseListObject = courseListObjectStart.isArray();
 		List<Course> courseList = new ArrayList<Course>();
 		for (int i = 0; i < courseListObject.size(); i++) 
