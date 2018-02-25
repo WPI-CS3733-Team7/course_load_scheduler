@@ -433,6 +433,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 				match = i;
 		}
 		if(match<0) {
+			
 			String instFullName = editedInstructor.displayText();
 			int begin = 0;
 			int end = instructorList.size();
