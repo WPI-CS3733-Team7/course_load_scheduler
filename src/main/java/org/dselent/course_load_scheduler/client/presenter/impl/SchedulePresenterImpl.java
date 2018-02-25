@@ -439,11 +439,14 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		CourseLoad courseLoad = evt.getAction().getCourseLoadModel();
 		
 		int match = -1;
+		Window.alert(new Integer(instructorList.size()).toString());
 		for(int i=0; i<instructorList.size(); i++)
 		{
-			if(instructorList.get(i).getId()==editedInstructor.getId())
+			if(instructorList.get(i).getId()==editedInstructor.getId()) {
 				match = i;
+			}
 		}
+		Window.alert(instructorList.toString());
 		if(match<0) {
 			
 			String instFullName = editedInstructor.displayText();
