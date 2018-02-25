@@ -10,6 +10,7 @@ import org.dselent.course_load_scheduler.client.errorstring.InvalidReplyStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidReplyEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveClickAccountTabEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveClickRequestTabEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveReplyEvent;
 import org.dselent.course_load_scheduler.client.event.SendReplyEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
@@ -62,6 +63,10 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		
 		registration = eventBus.addHandler(ReceiveClickRequestTabEvent.TYPE, this);
 		eventBusRegistration.put(ReceiveClickRequestTabEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(ReceiveReplyEvent.TYPE, this);
+		eventBusRegistration.put(ReceiveReplyEvent.TYPE, registration);
+		
 	}
 	
 	@Override
