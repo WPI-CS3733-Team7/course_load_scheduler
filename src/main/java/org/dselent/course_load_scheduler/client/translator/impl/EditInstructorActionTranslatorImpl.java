@@ -25,6 +25,7 @@ public class EditInstructorActionTranslatorImpl implements ActionTranslator<Send
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditInstructorKeys.FIRST_NAME), action.getFirstName());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditInstructorKeys.LAST_NAME), action.getLastName());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditInstructorKeys.EMAIL), action.getEmail());
+		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditInstructorKeys.COURSE_LOAD_ID), action.getCourseLoadId());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditInstructorKeys.COURSE_LOAD_TYPE), action.getCourseLoadType());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditInstructorKeys.COURSE_LOAD_DESCRIPTION), action.getCourseLoadDescription());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditInstructorKeys.DELETED), action.getDeleted());

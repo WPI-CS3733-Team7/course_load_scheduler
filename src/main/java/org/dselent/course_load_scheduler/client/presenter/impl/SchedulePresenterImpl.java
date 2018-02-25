@@ -394,11 +394,21 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 				view.getInstructorSubmitButton().setEnabled(false);
 				view.getInstructorDeleteButton().setEnabled(false);
 				if(creating) {
-					sendInstructorEdit(-1, firstName, lastName, rank, email, courseLoadType, courseLoadDescription, false);
+					sendInstructorEdit(-1, firstName, lastName, rank, email, -1, courseLoadType, courseLoadDescription, false);
 					
-				} else {
-					sendInstructorEdit(instructorList.get(view.getInstructorBox().getSelectedIndex()).getId(), firstName, lastName, rank, email, courseLoadType, 
-							courseLoadDescription, deleting);
+				} else {					
+					Integer selectedInstructorId = instructorList.get(view.getInstructorBox().getSelectedIndex()).getId();
+					
+					//iterate through course load list to get course load id
+					
+					Integer courseLoadId = -1;
+					for(int i = 0; i < courseLoadList.size(); i++) {
+						if(courseLoadList.get(i).getInstructorId() == selectedInstructorId) {
+							courseLoadId = courseLoadList.get(i).getId(); 
+						}
+					}
+					sendInstructorEdit(selectedInstructorId, firstName, lastName, rank, email, courseLoadId,
+							courseLoadType,	courseLoadDescription, deleting);
 					
 				}
 				
@@ -418,7 +428,8 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	/* The following methods are for sending and listening for events related to instructors
 	 * such as SendEditInstructor, ReceiveEditInstructor, ReceiveSelectInstructor, and InvalidCreateInstructor */
 	
-	private void sendInstructorEdit(Integer id, String firstName, String lastName, String rank, String email, String courseLoadType, String courseLoadDescription, boolean deleted)
+	private void sendInstructorEdit(Integer id, String firstName, String lastName, String rank, String email, Integer courseLoadId,
+			String courseLoadType, String courseLoadDescription, boolean deleted)
 	{
 		String idString = null;
 		if(id!=null)
@@ -426,7 +437,8 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		else
 			idString = "-1";
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendEditInstructorAction siea = new SendEditInstructorAction(globalData.getUserId(), idString, rank, firstName, lastName, email, courseLoadType, courseLoadDescription, Boolean.toString(deleted));
+		SendEditInstructorAction siea = new SendEditInstructorAction(globalData.getUserId(), idString, rank, firstName, lastName, email, courseLoadId.toString(),
+				courseLoadType, courseLoadDescription, Boolean.toString(deleted));
 		SendEditInstructorEvent siee = new SendEditInstructorEvent(siea, container);
 		submitEditInstructorClickInProgress = false;
 		eventBus.fireEvent(siee);
