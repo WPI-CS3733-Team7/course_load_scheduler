@@ -1,5 +1,8 @@
 package org.dselent.course_load_scheduler.client.view;
 
+import java.util.List;
+
+import org.dselent.course_load_scheduler.client.model.Request;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
 import org.dselent.course_load_scheduler.client.presenter.UserRequestPresenter;
 
@@ -20,6 +23,7 @@ public interface UserRequestView extends BaseView<UserRequestPresenter>{
 		void setDescriptionTextArea(TextArea descriptionTextArea);
 		ListBox getRequestHistoryList();
 		void setRequestHistoryList(ListBox requestHistoryList);
+		void setRequestHistoryList(List<Request> requestList);
 		Button getSubmitButton();
 		public void showErrorMessages(String errorMessages);
 }

@@ -48,6 +48,7 @@ import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
 
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
@@ -393,7 +394,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 				view.getInstructorSubmitButton().setEnabled(false);
 				view.getInstructorDeleteButton().setEnabled(false);
 				if(creating) {
-					sendInstructorEdit(null, firstName, lastName, rank, email, courseLoadType, courseLoadDescription, false);
+					sendInstructorEdit(-1, firstName, lastName, rank, email, courseLoadType, courseLoadDescription, false);
 					
 				} else {
 					sendInstructorEdit(instructorList.get(view.getInstructorBox().getSelectedIndex()).getId(), firstName, lastName, rank, email, courseLoadType, 
@@ -425,7 +426,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		else
 			idString = "-1";
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendEditInstructorAction siea = new SendEditInstructorAction(globalData.getUserId(), idString, firstName, lastName, rank, email, courseLoadType, courseLoadDescription, Boolean.toString(deleted));
+		SendEditInstructorAction siea = new SendEditInstructorAction(globalData.getUserId(), idString, rank, firstName, lastName, email, courseLoadType, courseLoadDescription, Boolean.toString(deleted));
 		SendEditInstructorEvent siee = new SendEditInstructorEvent(siea, container);
 		submitEditInstructorClickInProgress = false;
 		eventBus.fireEvent(siee);
@@ -480,6 +481,8 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			courseLoadList.add(courseLoad);
 		}
 		parentPresenter.hideLoadScreen();
+		
+		populateInstructorList(instructorList);
 	}
 	
 	@Override
