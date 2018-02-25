@@ -1,35 +1,38 @@
 package org.dselent.course_load_scheduler.client.action;
 
+import org.dselent.course_load_scheduler.client.model.CourseLoad;
 import org.dselent.course_load_scheduler.client.model.Instructor;
 
 public class ReceiveEditInstructorAction extends Action
 {
-	private Instructor model;
+	private Instructor instructorModel;
+	private CourseLoad courseLoadModel;
 
-	public ReceiveEditInstructorAction(Instructor model)
+	public ReceiveEditInstructorAction(Instructor instructorModel, CourseLoad courseLoadModel)
 	{
-		this.model = model;
+		this.instructorModel = instructorModel;
+		this.courseLoadModel = courseLoadModel;
 	}
 
-	public Instructor getModel()
-	{
-		return model;
+	public Instructor getInstructorModel() {
+		return instructorModel;
 	}
 
-	public void setModel(Instructor model)
-	{
-		this.model = model;
+	public void setInstructorModel(Instructor instructorModel) {
+		this.instructorModel = instructorModel;
+	}
+
+	public CourseLoad getCourseLoadModel() {
+		return courseLoadModel;
+	}
+
+	public void setCourseLoadModel(CourseLoad courseLoadModel) {
+		this.courseLoadModel = courseLoadModel;
 	}
 
 	@Override
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder();
-		builder.append("ReceiveEditInstructorAction [model=");
-		builder.append(model);
-		builder.append("]");
-		return builder.toString();
+	public String toString() {
+		return "ReceiveEditInstructorAction [instructorModel=" + instructorModel + ", courseLoadModel="
+				+ courseLoadModel + "]";
 	}
-
-
 }

@@ -8,10 +8,12 @@ public class SendEditInstructorAction extends Action
 	String firstName;
 	String lastName;
 	String email;
+	String courseLoadType;
+	String courseLoadDescription;
 	String deleted;
 	
 	public SendEditInstructorAction(Integer userId, String id, String rank, String firstName, String lastName, String email,
-			String deleted)
+			String courseLoadType, String courseLoadDescription, String deleted)
 	{
 		this.userId = userId;
 		this.id = id;
@@ -19,6 +21,8 @@ public class SendEditInstructorAction extends Action
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.courseLoadType = courseLoadType;
+		this.courseLoadDescription = courseLoadDescription;
 		this.deleted = deleted;
 	}
 
@@ -45,6 +49,14 @@ public class SendEditInstructorAction extends Action
 	public String getEmail() {
 		return email;
 	}
+	
+	public String getCourseLoadType() {
+		return courseLoadType;
+	}
+
+	public String getCourseLoadDescription() {
+		return courseLoadDescription;
+	}
 
 	public String getDeleted() {
 		return deleted;
@@ -52,7 +64,8 @@ public class SendEditInstructorAction extends Action
 
 	@Override
 	public String toString() {
-		return "SendEditInstructorAction [id=" + id + ", rank=" + rank + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", email=" + email + ", deleted=" + deleted + "]";
+		return "SendEditInstructorAction [userId=" + userId + ", id=" + id + ", rank=" + rank + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", email=" + email + ", courseLoadType=" + courseLoadType
+				+ ", courseLoadDescription=" + courseLoadDescription + ", deleted=" + deleted + "]";
 	}
 }

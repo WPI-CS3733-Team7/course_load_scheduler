@@ -321,10 +321,24 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			String lastName = view.getPopInstructorTextLastName().getText();
 			String rank = view.getPopInstructorTextRank().getText();
 			String email = view.getPopInstructorTextEmail().getText();
+			
+			//Check which radio button is selected and set string based on that selection
+			
+			String courseLoadType = "";
+			
+			if(view.getRegular().isChecked() == true) {
+				courseLoadType = "REGULAR";
+			}
+			else if(view.getSpecial().isChecked() == true) {
+				courseLoadType = "SPECIAL";
+			}
+			
+			String courseLoadDescription = view.getCourseLoadDescriptionText().getText();
 			boolean validFirstName = true;
 			boolean validLastName = true;
 			boolean validRank = true;
 			boolean validEmail = true;
+			boolean validCourseLoadDescription = true;
 			List<String> invalidReasonList = new ArrayList<>();
 			try {
 				validateField(firstName);
@@ -354,16 +368,24 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 				invalidReasonList.add(InvalidEditInstructorStrings.NULL_EMAIL);
 				validEmail = false;
 			}
-			if(validFirstName && validLastName && validRank && validEmail)
+			try {
+				validateField(courseLoadDescription);
+			} catch (EmptyStringException e)
+			{
+				invalidReasonList.add(InvalidEditInstructorStrings.NULL_COURSE_LOAD_DESCRIPTION);
+				validCourseLoadDescription = false;
+			}
+			if(validFirstName && validLastName && validRank && validEmail && validCourseLoadDescription)
 			{
 				view.getInstructorCreateButton().setEnabled(false);
 				view.getInstructorSubmitButton().setEnabled(false);
 				view.getInstructorDeleteButton().setEnabled(false);
 				if(creating) {
-					sendInstructorEdit(null, firstName, lastName, rank, email, false);
+					sendInstructorEdit(null, firstName, lastName, rank, email, courseLoadType, courseLoadDescription, false);
 					
 				} else {
-					sendInstructorEdit(instructorList.get(view.getInstructorBox().getSelectedIndex()).getId(), firstName, lastName, rank, email, deleting);
+					sendInstructorEdit(instructorList.get(view.getInstructorBox().getSelectedIndex()).getId(), firstName, lastName, rank, email, courseLoadType, 
+							courseLoadDescription, deleting);
 					
 				}
 				
@@ -383,7 +405,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	/* The following methods are for sending and listening for events related to instructors
 	 * such as SendEditInstructor, ReceiveEditInstructor, ReceiveSelectInstructor, and InvalidCreateInstructor */
 	
-	private void sendInstructorEdit(Integer id, String firstName, String lastName, String rank, String email, boolean deleted)
+	private void sendInstructorEdit(Integer id, String firstName, String lastName, String rank, String email, String courseLoadType, String courseLoadDescription, boolean deleted)
 	{
 		String idString = null;
 		if(id!=null)
@@ -391,7 +413,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		else
 			idString = "-1";
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendEditInstructorAction siea = new SendEditInstructorAction(globalData.getUserId(), idString, firstName, lastName, rank, email, Boolean.toString(deleted));
+		SendEditInstructorAction siea = new SendEditInstructorAction(globalData.getUserId(), idString, firstName, lastName, rank, email, courseLoadType, courseLoadDescription, Boolean.toString(deleted));
 		SendEditInstructorEvent siee = new SendEditInstructorEvent(siea, container);
 		submitEditInstructorClickInProgress = false;
 		eventBus.fireEvent(siee);
@@ -400,7 +422,9 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	@Override
 	public void onReceiveEditInstructor(ReceiveEditInstructorEvent evt)
 	{
-		Instructor editedInstructor = evt.getAction().getModel();
+		Instructor editedInstructor = evt.getAction().getInstructorModel();
+		CourseLoad courseLoad = evt.getAction().getCourseLoadModel();
+		
 		int match = -1;
 		for(int i=0; i<instructorList.size(); i++)
 		{
@@ -431,6 +455,17 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 				instructorList.set(match, editedInstructor);
 				view.getInstructorBox().setItemText(match, editedInstructor.displayText());
 			}
+		}
+		
+		boolean found = false;
+		for(int j = 0; j < courseLoadList.size(); j++) {
+			if(courseLoadList.get(j).getId() == courseLoad.getId()) {
+				courseLoadList.set(j, courseLoad);
+				found = true;
+			}
+		}
+		if(found == false) {
+			courseLoadList.add(courseLoad);
 		}
 		parentPresenter.hideLoadScreen();
 	}
