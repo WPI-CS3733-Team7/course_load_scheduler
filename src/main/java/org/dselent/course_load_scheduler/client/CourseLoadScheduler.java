@@ -46,6 +46,8 @@ public class CourseLoadScheduler implements EntryPoint
 		schedulePresenter.init();
 		AdminRequestPresenterImpl requestPresenter = injector.getAdminRequestPresenter();
 		requestPresenter.init();
+		UserRequestPresenterImpl userRequestPresenter = injector.getUserRequestPresenter();
+		
 		
 		ExamplePresenterImpl examplePresenter = injector.getExamplePresenter();
 		examplePresenter.init();

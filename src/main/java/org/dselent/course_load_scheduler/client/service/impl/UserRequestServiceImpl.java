@@ -9,6 +9,7 @@ import org.dselent.course_load_scheduler.client.event.SendUserClickRequestTabEve
 import org.dselent.course_load_scheduler.client.network.NetworkRequest;
 import org.dselent.course_load_scheduler.client.network.NetworkRequestStrings;
 import org.dselent.course_load_scheduler.client.service.UserRequestService;
+import org.dselent.course_load_scheduler.client.translator.impl.ClickUserRequestTabActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.translator.impl.UserRequestActionTranslatorImpl;
 
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -54,7 +55,7 @@ public class UserRequestServiceImpl extends BaseServiceImpl implements UserReque
 	public void onSendUserClickRequestTab(SendUserClickRequestTabEvent evt)
 	{
 		SendClickUserRequestTabAction action = evt.getAction();
-		UserRequestActionTranslatorImpl UserRequestActionTranslator = new UserRequestActionTranslatorImpl();
+		ClickUserRequestTabActionTranslatorImpl UserRequestActionTranslator = new ClickUserRequestTabActionTranslatorImpl();
 		JSONObject json = UserRequestActionTranslator.translateToJson(action);
 		SendClickUserRequestTabCallback UserRequestCallback = new SendClickUserRequestTabCallback(eventBus, evt.getContainer());
 		

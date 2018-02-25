@@ -6,12 +6,14 @@ import org.dselent.course_load_scheduler.client.action.ReceiveLoginAction;
 import org.dselent.course_load_scheduler.client.action.SendClickAccountTabAction;
 import org.dselent.course_load_scheduler.client.action.SendClickRequestTabAction;
 import org.dselent.course_load_scheduler.client.action.SendClickScheduleTabAction;
+import org.dselent.course_load_scheduler.client.action.SendClickUserRequestTabAction;
 import org.dselent.course_load_scheduler.client.action.SendLogoutAction;
 import org.dselent.course_load_scheduler.client.event.ReceiveLoginEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickAccountTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickScheduleTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendLogoutEvent;
+import org.dselent.course_load_scheduler.client.event.SendUserClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
@@ -19,6 +21,7 @@ import org.dselent.course_load_scheduler.client.presenter.MainPresenter;
 import org.dselent.course_load_scheduler.client.view.BaseView;
 import org.dselent.course_load_scheduler.client.view.MainView;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
@@ -133,9 +136,22 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 				eventBus.fireEvent(scheduleEvent);
 				break;
 			case 1: 
-				SendClickRequestTabAction requestAction = new SendClickRequestTabAction(globalData.getUserId());
-				SendClickRequestTabEvent requestEvent = new SendClickRequestTabEvent(requestAction, container);
-				eventBus.fireEvent(requestEvent);
+				if (role == "LINKED USER" || role == "ADMIN")
+				{
+					if (role == "ADMIN")
+					{
+						SendClickRequestTabAction requestAction = new SendClickRequestTabAction(globalData.getUserId());
+						SendClickRequestTabEvent requestEvent = new SendClickRequestTabEvent(requestAction, container);
+						eventBus.fireEvent(requestEvent);
+					}
+					else
+					{
+						SendClickUserRequestTabAction userRequestAction = new SendClickUserRequestTabAction(globalData.getUserId());
+						SendUserClickRequestTabEvent userRequestEvent = new SendUserClickRequestTabEvent(userRequestAction, container);
+						eventBus.fireEvent(userRequestEvent);
+					}	
+				}
+				Window.alert("ERROR: Permission denied.");
 				break;
 			case 2:
 				SendClickAccountTabAction accountAction = new SendClickAccountTabAction(globalData.getUserId());

@@ -211,7 +211,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		replyClickInProgress = false;
 	}
 	
-	public void onReceiveClickRequestTab(ReceiveClickRequestTabEvent evt)
+	/*public void onReceiveClickRequestTab(ReceiveClickRequestTabEvent evt)
 	{	
 		if (globalData.getRole() != "ADMIN")
 		{
@@ -230,7 +230,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		populateRequestList(action.getRequestList());
 		
 		parentPresenter.hideLoadScreen();
-	}
+	}*/
 	@Override
 	public void populateRequestList(List<Request> requestList) {
 		// TODO Auto-generated method stub

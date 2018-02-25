@@ -6,5 +6,4 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface SendUserClickRequestTabEventHandler extends EventHandler{
 	void onSendUserClickRequestTab(SendUserClickRequestTabEvent evt);
-
 }

@@ -5,6 +5,9 @@ import org.dselent.course_load_scheduler.client.action.ReceiveClickUserRequestTa
 import org.dselent.course_load_scheduler.client.event.ReceiveClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveUserClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.translator.impl.ClickRequestTabActionTranslatorImpl;
+import org.dselent.course_load_scheduler.client.action.ReceiveClickUserRequestTabAction;
+import org.dselent.course_load_scheduler.client.event.ReceiveUserClickRequestTabEvent;
+import org.dselent.course_load_scheduler.client.translator.impl.ClickUserRequestTabActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.utils.JSONHelper;
 
 import com.google.gwt.event.shared.SimpleEventBus;

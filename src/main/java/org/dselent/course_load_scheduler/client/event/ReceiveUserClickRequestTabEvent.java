@@ -28,5 +28,5 @@ public static Type<ReceiveUserClickRequestTabEventHandler> TYPE = new Type<Recei
 	{
 		handler.onReceiveUserClickRequestTab(this);
 	}
-
+	
 }
