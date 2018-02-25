@@ -8,7 +8,6 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public class SendEditUserEvent extends DisplayEvent<SendEditUserAction, SendEditUserEventHandler>
 {
-	
 	public static Type<SendEditUserEventHandler> TYPE = new Type<SendEditUserEventHandler>();
 	
 	public SendEditUserEvent(SendEditUserAction action, HasWidgets container)

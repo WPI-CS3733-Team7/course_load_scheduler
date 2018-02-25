@@ -30,6 +30,7 @@ import org.dselent.course_load_scheduler.client.view.AccountView;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.thirdparty.javascript.jscomp.CssRenamingMap.Style;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 import com.google.gwt.dom.client.Style.Visibility;
@@ -173,47 +174,50 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		}
 		// user role entry was not found (should never happen if user was not manually entered in database)
 		if (userRole == null) {
-			view.getRoleDropBox().setSelectedIndex(0);
+			view.getRoleDropBox().setSelectedIndex(1);
 		} 
 		else 
 		{
+			int instructorIndex = 0;
 			// get corresponding user role
 			if (userRole.getRoleId() == 1) {
-				view.getRoleDropBox().setSelectedIndex(2);
-			} else if (userRole.getRoleId() == 2) {
 				view.getRoleDropBox().setSelectedIndex(0);
+			} else if (userRole.getRoleId() == 2) {
+				view.getRoleDropBox().setSelectedIndex(2);
 			} else if (userRole.getRoleId() == 3) {
 				view.getRoleDropBox().setSelectedIndex(1);
+				
+				InstructorUserLink userLink = null;
+				for (InstructorUserLink u : instructorUserLinkList)
+				{
+					if (u.getLinkedUserId() == userId)
+					{
+						userLink = u;
+						break;
+					}
+				}
+				
+				
+				// if the user has a link to an instructor, find the corresponding instructor
+				if (userLink != null)
+				{
+					for (int i = 0; i < instructorList.size(); i++)
+					{
+						if (instructorList.get(i).getId() == userLink.getInstructorId())
+						{
+							instructorIndex = i + 1;
+							break;
+						}
+					}
+				}
 			}
+			view.getLinkedInstructorDropBox().setSelectedIndex(instructorIndex);
 		}
 		
 		//
-		
+
 		// get the user's instructor link
-		InstructorUserLink userLink = null;
-		for (InstructorUserLink u : instructorUserLinkList)
-		{
-			if (u.getLinkedUserId() == userId)
-			{
-				userLink = u;
-				break;
-			}
-		}
 		
-		int instructorIndex = 0;
-		// if the user has a link to an instructor, find the corresponding instructor
-		if (userLink != null)
-		{
-			for (int i = 0; i < instructorList.size(); i++)
-			{
-				if (instructorList.get(i).getId() == userLink.getInstructorId())
-				{
-					instructorIndex = i + 1;
-					break;
-				}
-			}
-		}
-		view.getLinkedInstructorDropBox().setSelectedIndex(instructorIndex);
 	}
 	
 	/*---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----*/
@@ -344,8 +348,11 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			boolean validUserRole = true;
 			boolean validLinkedInstructor = true;
 			
-			String userRole = view.getRoleDropBox().getItemText(view.getRoleDropBox().getSelectedIndex());
-			String linkedInstructor = view.getLinkedInstructorDropBox().getItemText(view.getLinkedInstructorDropBox().getSelectedIndex());
+			User selectedUser = userList.get(view.getUserBox().getSelectedIndex());
+			Integer roleIndex = view.getRoleDropBox().getSelectedIndex();
+			String userRole = view.getRoleDropBox().getItemText(roleIndex);
+			Integer instructorIndex = view.getLinkedInstructorDropBox().getSelectedIndex();
+			String linkedInstructor = view.getLinkedInstructorDropBox().getItemText(instructorIndex);
 			Boolean deleted = view.isDeleted();
 			
 			List<String> invalidReasonList = new ArrayList<>();
@@ -353,10 +360,27 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 			{
 				invalidReasonList.add(InvalidEditUserStrings.LINKED_USER_ERROR);
 				validLinkedInstructor = false;
+			} 
+			else if (userRole != "LINKED USER" && linkedInstructor != "-" && !deleted)
+			{
+				invalidReasonList.add(InvalidEditUserStrings.BAD_USER_ROLE);
+				validUserRole = false;
 			}
 			if(validUserRole && validLinkedInstructor)
 			{
-				sendEditUser(userRole, linkedInstructor, deleted);
+				// set role number based on listbox index
+				Integer roleNum = 2;
+				if (roleIndex == 0) roleNum = 1;
+				else if (roleIndex == 1) roleNum = 3;
+				else if (roleIndex == 2) roleNum = 2;
+				
+				// set selected instructor id, -1 if not LINKED USER
+				Integer selectedInstructorId = -1;
+				if (roleNum == 3) {
+					selectedInstructorId = instructorList.get(instructorIndex - 1).getId();
+				}
+				
+				sendEditUser(roleNum, selectedUser.getId(), selectedInstructorId, deleted);
 			}
 			else
 			{
@@ -378,10 +402,10 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		view.showErrorMessages(ieau.toString());
 	}
 	
-	private void sendEditUser(String userRole, String linkedInstructor, Boolean deleted)
+	private void sendEditUser(Integer userRole, Integer editId, Integer linkedInstructorId, Boolean deleted)
 	{
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendEditUserAction seua = new SendEditUserAction(globalData.getUserId(), null, userRole, /*linkedInstructor*/ -1, deleted);
+		SendEditUserAction seua = new SendEditUserAction(globalData.getUserId(), editId, userRole, linkedInstructorId, deleted);
 		SendEditUserEvent seue = new SendEditUserEvent(seua, container);
 		eventBus.fireEvent(seue);
 	}
@@ -394,6 +418,10 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		parentPresenter.hideLoadScreen();
 		view.getSubmitChangePasswordButton().setEnabled(true);
 		changePasswordClickInProgress = false;
+		
+		view.getOldPasswordText().setText("");
+		view.getNewPasswordText().setText("");
+		view.getConfirmPasswordText().setText("");
 		
 		String message = evt.getAction().getMessage();
 		view.showErrorMessages(message);
@@ -415,7 +443,6 @@ public class AccountPresenterImpl  extends BasePresenterImpl implements AccountP
 		view.setChangingNameLabelText(action.getFirstName() + " " + action.getLastName());
 		view.setChangingAccountStateLabelText(action.getUserRole());
 		view.setChangingEmailLabelText(action.getEmail());
-		
 		populateUserList(action.getUserList());
 		populateInstructorList(action.getInstructorList());
 		populateUserRolesLinkList(action.getUserRoleLinkList());

@@ -4,8 +4,8 @@ import org.dselent.course_load_scheduler.client.action.SendChangePasswordAction;
 import org.dselent.course_load_scheduler.client.action.SendClickAccountTabAction;
 import org.dselent.course_load_scheduler.client.callback.SendChangePasswordCallback;
 import org.dselent.course_load_scheduler.client.callback.SendClickAccountTabCallback;
+import org.dselent.course_load_scheduler.client.callback.SendEditUserCallback;
 import org.dselent.course_load_scheduler.client.action.SendEditUserAction;
-import org.dselent.course_load_scheduler.client.callback.SendLoginCallback;
 import org.dselent.course_load_scheduler.client.event.SendChangePasswordEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickAccountTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendEditUserEvent;
@@ -68,10 +68,9 @@ public class AccountServiceImpl extends BaseServiceImpl implements AccountServic
 		SendEditUserAction action = evt.getAction();
 		EditUserActionTranslatorImpl editUserActionTranslator = new EditUserActionTranslatorImpl();
 		JSONObject json = editUserActionTranslator.translateToJson(action);
-		SendLoginCallback editUserCallback = new SendLoginCallback(eventBus, evt.getContainer());
+		SendEditUserCallback editUserCallback = new SendEditUserCallback(eventBus, evt.getContainer());
 		
 		String uri = action.getUserId() + NetworkRequestStrings.EDIT_USER;
-		
 		NetworkRequest request = new NetworkRequest(uri, editUserCallback, json);
 		request.send();
 	}

@@ -26,7 +26,7 @@ public class EditUserActionTranslatorImpl implements ActionTranslator<SendEditUs
 		JSONObject jsonObject = new JSONObject();
 		
 		JSONHelper.putIntValue(jsonObject, JSONHelper.convertKeyName(SendEditUserKeys.EDIT_ID), action.getEditId());
-		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditUserKeys.USER_ROLE), action.getUserRole());
+		JSONHelper.putIntValue(jsonObject, JSONHelper.convertKeyName(SendEditUserKeys.USER_ROLE), action.getUserRole());
 		JSONHelper.putIntValue(jsonObject, JSONHelper.convertKeyName(SendEditUserKeys.LINKED_INSTRUCTOR), action.getLinkedInstructor());
 		JSONHelper.putBooleanValue(jsonObject, JSONHelper.convertKeyName(SendEditUserKeys.DELETED), action.getDeleted());
 		
@@ -36,11 +36,14 @@ public class EditUserActionTranslatorImpl implements ActionTranslator<SendEditUs
 	@Override
 	public ReceiveEditUserAction translateToAction(JSONObject json) {
 		
-		JSONValue jsonObject = json.get("success");
-		JSONObject returnObject = jsonObject.isArray().get(0).isObject();
+		JSONValue jsonEditUserObject = json.get("success");
+		JSONObject editUserObject = jsonEditUserObject.isObject();
+		
+		JSONValue jsonEditUser = editUserObject.get("returnObject");
+		JSONObject editUser = jsonEditUser.isObject();
 		
 		// extract user list
-		JSONValue userListObjectStart = returnObject.get("userList");
+		JSONValue userListObjectStart = editUser.get("userList");
 		JSONArray userListObject = userListObjectStart.isArray();
 		List<User> userList = new ArrayList<User>();
 		for (int i = 0; i < userListObject.size(); i++) {
@@ -62,7 +65,7 @@ public class EditUserActionTranslatorImpl implements ActionTranslator<SendEditUs
 		}
 		
 		// extract user role link list
-		JSONValue userRoleLinkListObjectStart = returnObject.get("userRoleLinkList");
+		JSONValue userRoleLinkListObjectStart = editUser.get("userRoleLinkList");
 		JSONArray userRoleLinkListObject = userRoleLinkListObjectStart.isArray();
 		List<UsersRolesLink> userRoleLinkList = new ArrayList<UsersRolesLink>();
 		for (int i = 0; i < userRoleLinkListObject.size(); i++) 
@@ -82,7 +85,7 @@ public class EditUserActionTranslatorImpl implements ActionTranslator<SendEditUs
 		}
 		
 		// instructorList
-		JSONValue instructorListObjectStart = returnObject.get("instructorList");
+		JSONValue instructorListObjectStart = editUser.get("instructorList");
 		JSONArray instructorListObject = instructorListObjectStart.isArray();
 		List<Instructor> instructorList = new ArrayList<Instructor>();
 		for (int i = 0; i < instructorListObject.size(); i++) 
@@ -102,7 +105,7 @@ public class EditUserActionTranslatorImpl implements ActionTranslator<SendEditUs
 		}
 		
 		// get instructor user link list
-		JSONValue instructorLinkListObjectStart = returnObject.get("instructorUserLinkList");
+		JSONValue instructorLinkListObjectStart = editUser.get("instructorUserLinkList");
 		JSONArray instructorLinkListObject = instructorLinkListObjectStart.isArray();
 		List<InstructorUserLink> instructorLinkList = new ArrayList<InstructorUserLink>();
 		for (int i = 0; i < instructorLinkListObject.size(); i++) 
