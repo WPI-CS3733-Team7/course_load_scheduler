@@ -39,8 +39,8 @@ public class RequestServiceImpl extends BaseServiceImpl implements RequestServic
 		registration = eventBus.addHandler(SendReplyEvent.TYPE, this);
 		eventBusRegistration.put(SendReplyEvent.TYPE, registration);
 		
-		registration = eventBus.addHandler(SelectRequestEvent.TYPE, this);
-		eventBusRegistration.put(SelectRequestEvent.TYPE, registration);
+		//registration = eventBus.addHandler(SelectRequestEvent.TYPE, this);
+		//eventBusRegistration.put(SelectRequestEvent.TYPE, registration);
 		
 		registration = eventBus.addHandler(SendClickRequestTabEvent.TYPE, this);
 		eventBusRegistration.put(SendClickRequestTabEvent.TYPE, registration);
@@ -58,7 +58,7 @@ public class RequestServiceImpl extends BaseServiceImpl implements RequestServic
 		request.send();
 	}
 	
-	@Override
+	/*@Override
 	public void onSelectRequest(SelectRequestEvent evt) {
 		SelectRequestAction action = evt.getAction();
 		SelectRequestActionTranslatorImpl selectRequestActionTranslator = new SelectRequestActionTranslatorImpl();
@@ -67,7 +67,7 @@ public class RequestServiceImpl extends BaseServiceImpl implements RequestServic
 		
 		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.SELECT_REQUEST, selectRequestCallback, json);
 		request.send();
-	}
+	}*/
 	
 	@Override
 	public void onSendClickRequestTab(SendClickRequestTabEvent evt) {

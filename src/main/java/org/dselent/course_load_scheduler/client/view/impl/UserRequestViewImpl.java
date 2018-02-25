@@ -1,5 +1,8 @@
 package org.dselent.course_load_scheduler.client.view.impl;
 
+import java.util.List;
+
+import org.dselent.course_load_scheduler.client.model.Request;
 import org.dselent.course_load_scheduler.client.presenter.UserRequestPresenter;
 import org.dselent.course_load_scheduler.client.view.UserRequestView;
 
@@ -119,6 +122,13 @@ public class UserRequestViewImpl extends BaseViewImpl<UserRequestPresenter> impl
 	@Override
 	public void setRequestHistoryList(ListBox requestHistoryList) {
 		this.requestHistoryList = requestHistoryList;
+	}
+	
+	@Override
+	public void setRequestHistoryList(List<Request> requestList) {
+		for (Request r:requestList) {
+			requestHistoryList.addItem(r.getRequestDetails());
+		}
 	}
 	
 	@Override

@@ -219,6 +219,18 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		view.getPopInstructorTextLastName().setText(selected.getLastName());
 		view.getPopInstructorTextRank().setText(selected.getRank());
 		view.getPopInstructorTextEmail().setText(selected.getEmail());
+		
+		for(int i = 0; i < courseLoadList.size(); i++) {
+			if(courseLoadList.get(i).getInstructorId() == selected.getId()) {
+				CourseLoad linkedCourseLoad = courseLoadList.get(i);
+				if (linkedCourseLoad.getLoadType() == "REGULAR") {
+					view.getRegular().setChecked(true);
+				} else {
+					view.getSpecial().setChecked(true);
+				}
+				view.getCourseLoadDescriptionText().setText(linkedCourseLoad.getLoadDescription());
+			}
+		}
 	}
 
 	@Override

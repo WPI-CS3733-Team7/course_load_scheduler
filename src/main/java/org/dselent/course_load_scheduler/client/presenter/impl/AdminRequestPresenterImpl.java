@@ -20,6 +20,7 @@ import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.model.Request;
 import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
+import org.dselent.course_load_scheduler.client.presenter.MainPresenter;
 import org.dselent.course_load_scheduler.client.view.AdminRequestView;
 
 import com.google.gwt.dom.client.Style.Visibility;
@@ -30,6 +31,7 @@ import com.google.inject.Inject;
 public class AdminRequestPresenterImpl extends BasePresenterImpl implements AdminRequestPresenter
 {
 	private IndexPresenter parentPresenter;
+	private MainPresenter mainPresenter;
 	private AdminRequestView view;
 	private GlobalData globalData;
 	private boolean replyClickInProgress;
@@ -38,7 +40,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	
 	List<Request> RequestList = new ArrayList<Request>();
 	@Inject
-	public AdminRequestPresenterImpl(IndexPresenter parentPresenter, AdminRequestView view, GlobalData globalData)
+	public AdminRequestPresenterImpl(IndexPresenter parentPresenter, MainPresenter mainPresenter, AdminRequestView view, GlobalData globalData)
 	{
 		this.view = view;
 		this.parentPresenter = parentPresenter;
@@ -163,7 +165,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		if(!selectClickInProgress) {
 			selectClickInProgress = true;
 			view.getRequestList().setEnabled(false);
-			parentPresenter.showLoadScreen();
+			//parentPresenter.showLoadScreen();
 			
 			int selectedIndex = view.getRequestList().getSelectedIndex();
 			//String selectedItem = view.getRequestList().getValue(selectedIndex);
@@ -171,7 +173,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			String requester = String.valueOf(selectedRequest.getRequesterId());
 			String requestType = selectedRequest.getRequestType();
 			String requestDetail = selectedRequest.getRequestDetails();
-			selectRequestAction(selectedRequest.getRequesterId(), requestType, requestDetail);
+			//selectRequestAction(selectedRequest.getRequesterId(), requestType, requestDetail);
 			view.setUserRequestLabel(requester);
 			view.setTypeLabel(requestType);
 			view.setRequesterDescriptLabel(requestDetail);
@@ -180,13 +182,16 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		}
 			
 	}
+	
+	/*private void selectRequestAction(Integer requester, String requestType, String Description) {
+
 	private void selectRequestAction(Integer requester, String requestType, String Description) {
 		parentPresenter.hideLoadScreen();
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SelectRequestAction sra = new SelectRequestAction(requester, requestType, Description);
 		SelectRequestEvent sre = new SelectRequestEvent(sra, container);
 		eventBus.fireEvent(sre);
-	}
+	}*/
 	
 	private void validateField(String field) throws EmptyStringException
 	{
@@ -214,24 +219,17 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	@Override
 	public void onReceiveClickRequestTab(ReceiveClickRequestTabEvent evt)
 	{	
-		if (globalData.getRole() != "ADMIN")
-		{
-			view.getAdminTable().getElement().getStyle().setVisibility(Visibility.HIDDEN);
-		} else 
-		{
-			view.getAdminTable().getElement().getStyle().setVisibility(Visibility.VISIBLE);
-		}
+		this.go(mainPresenter.getRequestPanel());
 		
-		ReceiveClickRequestTabAction action = evt.getAction();
+		/*ReceiveClickRequestTabAction action = evt.getAction();
 		populateRequestList(action.getRequestList());
-		
+		*/
 		parentPresenter.hideLoadScreen();
 	}
 	
 	@Override
-	public void populateRequestList(List<Request> rList) {
-		// TODO Auto-generated method stub
-		RequestList = rList;
+	public void populateRequestList(List<Request> requestList) {
+		view.setRequestList(requestList);
 	}
 
 	@Override
