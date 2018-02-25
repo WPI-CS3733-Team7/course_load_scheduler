@@ -39,15 +39,18 @@ public class EditCourseActionTranslatorImpl implements ActionTranslator<SendEdit
 		// sent timestamps as epoch seconds (long)
 		
 		JSONValue jsonObject = json.get("success");
-		JSONObject courseObject = jsonObject.isArray().get(0).isObject();
+		JSONObject jsonReturnCourseObject = jsonObject.isObject();
 		
-		Integer id = JSONHelper.getIntValue(courseObject, JSONHelper.convertKeyName(ReceiveEditCourseKeys.ID));
-		String courseName = JSONHelper.getStringValue(courseObject, JSONHelper.convertKeyName(ReceiveEditCourseKeys.NAME));
-		String courseNumber = JSONHelper.getStringValue(courseObject, JSONHelper.convertKeyName(ReceiveEditCourseKeys.NUMBER));
-		String frequency = JSONHelper.getStringValue(courseObject, JSONHelper.convertKeyName(ReceiveEditCourseKeys.FREQUENCY));
-		Long createdAt = JSONHelper.getLongValue(courseObject, JSONHelper.convertKeyName(ReceiveEditCourseKeys.CREATED_AT));
-		Long updatedAt = JSONHelper.getLongValue(courseObject, JSONHelper.convertKeyName(ReceiveEditCourseKeys.UPDATED_AT));
-		Boolean deleted = JSONHelper.getBooleanValue(courseObject, JSONHelper.convertKeyName(ReceiveEditCourseKeys.DELETED));
+		JSONValue returnCourse = jsonReturnCourseObject.get("returnObject");
+		JSONObject returnCourseObject = returnCourse.isObject();
+		
+		Integer id = JSONHelper.getIntValue(returnCourseObject, JSONHelper.convertKeyName(ReceiveEditCourseKeys.ID));
+		String courseName = JSONHelper.getStringValue(returnCourseObject, JSONHelper.convertKeyName(ReceiveEditCourseKeys.NAME));
+		String courseNumber = JSONHelper.getStringValue(returnCourseObject, JSONHelper.convertKeyName(ReceiveEditCourseKeys.NUMBER));
+		String frequency = JSONHelper.getStringValue(returnCourseObject, JSONHelper.convertKeyName(ReceiveEditCourseKeys.FREQUENCY));
+		Long createdAt = JSONHelper.getLongValue(returnCourseObject, JSONHelper.convertKeyName(ReceiveEditCourseKeys.CREATED_AT));
+		Long updatedAt = JSONHelper.getLongValue(returnCourseObject, JSONHelper.convertKeyName(ReceiveEditCourseKeys.UPDATED_AT));
+		//Boolean deleted = JSONHelper.getBooleanValue(returnCourseObject, JSONHelper.convertKeyName(ReceiveEditCourseKeys.DELETED));
 		
 		// TODO look into time conversion more
 		// put into JSONHelper?
@@ -59,7 +62,7 @@ public class EditCourseActionTranslatorImpl implements ActionTranslator<SendEdit
 		course.setFrequency(frequency);
 		course.setCreatedAt(new Date(createdAt));
 		course.setUpdatedAt(new Date(updatedAt));
-		course.setDeleted(deleted);
+		//course.setDeleted(deleted);
 		
 		// possibly use builder pattern if it is a lot of data
 		ReceiveEditCourseAction action = new ReceiveEditCourseAction(course);	

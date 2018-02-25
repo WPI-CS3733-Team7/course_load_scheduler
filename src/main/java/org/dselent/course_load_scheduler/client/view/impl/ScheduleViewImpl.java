@@ -8,7 +8,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -21,6 +20,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.RadioButton;
 
 public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements ScheduleView {
 
@@ -63,10 +63,15 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		Label popInstructorLabelLastName = new Label("Last Name:");
 		Label popInstructorLabelRank = new Label("Rank:");
 		Label popInstructorLabelEmail = new Label("Email:");
+		Label courseLoadType = new Label("Course Load Type:");
+		Label courseLoadDescription = new Label("Course Load Description:");
 		TextBox popInstructorTextFirstName = new TextBox();
 		TextBox popInstructorTextLastName = new TextBox();
 		TextBox popInstructorTextRank = new TextBox();
 		TextBox popInstructorTextEmail = new TextBox();
+		RadioButton regular = new RadioButton("courseLoadTypeGroup","REGULAR");
+	    RadioButton special = new RadioButton("courseLoadTypeGroup","SPECIAL");
+	    TextBox courseLoadDescriptionText = new TextBox();
 		Button popInstructorButtonDelete = new Button("Delete", new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -179,12 +184,25 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			sectionTypeListBox.addItem("LECTURE");
 			sectionTypeListBox.addItem("LAB");
 			sectionTypeListBox.addItem("CONFERENCE");
+			
+			regular.setChecked(true);
 		}
 		
 		/* Methods to generate pop-up windows */
+		
+		
+		// Create separate grid in Instructor pop-up for course load type radio buttons
+		
+		private Grid makeCourseLoadTypeGrid() {
+			Grid courseLoadTypeGrid = new Grid(1,2);
+			courseLoadTypeGrid.setWidget(0, 0, regular);
+			courseLoadTypeGrid.setWidget(0, 1, special);
+			
+			return courseLoadTypeGrid;
+		}
 
 		private void makeInstructorPopUp(boolean creating) {
-			Grid popGrid = new Grid(5, 2);
+			Grid popGrid = new Grid(7, 2);
 			popGrid.setWidget(0, 0, popInstructorLabelFirstName);
 			popGrid.setWidget(1, 0, popInstructorLabelLastName);
 			popGrid.setWidget(2, 0, popInstructorLabelRank);
@@ -193,13 +211,17 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			popGrid.setWidget(1, 1, popInstructorTextLastName);
 			popGrid.setWidget(2, 1, popInstructorTextRank);
 			popGrid.setWidget(3, 1, popInstructorTextEmail);
+			popGrid.setWidget(4, 0, courseLoadType);
+			popGrid.setWidget(4, 1, makeCourseLoadTypeGrid());
+			popGrid.setWidget(5, 0, courseLoadDescription);
+			popGrid.setWidget(5, 1, courseLoadDescriptionText);
 			
 			if(!creating) {
-				popGrid.setWidget(4, 1, popInstructorButtonSubmit);
-				popGrid.setWidget(4, 0, popInstructorButtonDelete);
+				popGrid.setWidget(6, 1, popInstructorButtonSubmit);
+				popGrid.setWidget(6, 0, popInstructorButtonDelete);
 				presenter.fillInstructorFields();
 			} else {
-				popGrid.setWidget(4, 1, popInstructorButtonCreate);
+				popGrid.setWidget(6, 1, popInstructorButtonCreate);
 				popInstructorTextFirstName.setText("");
 				popInstructorTextLastName.setText("");
 				popInstructorTextRank.setText("");
@@ -342,6 +364,30 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 
 		public void setPopInstructorTextEmail(TextBox popInstructorTextEmail) {
 			this.popInstructorTextEmail = popInstructorTextEmail;
+		}
+		
+		public RadioButton getRegular() {
+			return regular;
+		}
+
+		public void setRegular(RadioButton regular) {
+			this.regular = regular;
+		}
+
+		public RadioButton getSpecial() {
+			return special;
+		}
+
+		public void setSpecial(RadioButton special) {
+			this.special = special;
+		}
+
+		public TextBox getCourseLoadDescriptionText() {
+			return courseLoadDescriptionText;
+		}
+
+		public void setCourseLoadDescriptionText(TextBox courseLoadDescriptionText) {
+			this.courseLoadDescriptionText = courseLoadDescriptionText;
 		}
 
 		public TextBox getPopCourseTextName() {

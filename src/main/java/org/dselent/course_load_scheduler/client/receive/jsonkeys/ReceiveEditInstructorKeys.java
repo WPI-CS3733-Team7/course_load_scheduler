@@ -8,5 +8,9 @@ public enum ReceiveEditInstructorKeys {
 	EMAIL,
 	CREATED_AT,
 	UPDATED_AT,
-	DELETED;
+	DELETED,
+	
+	LOAD_TYPE,
+	LOAD_DESCRIPTION,
+	INSTRUCTOR_ID;
 }

@@ -4,18 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidReplyAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveClickAccountTabAction;
 import org.dselent.course_load_scheduler.client.action.ReceiveClickRequestTabAction;
 import org.dselent.course_load_scheduler.client.action.SelectRequestAction;
 import org.dselent.course_load_scheduler.client.action.SendReplyAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidReplyStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidReplyEvent;
-import org.dselent.course_load_scheduler.client.event.ReceiveChangePasswordEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveClickAccountTabEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveClickRequestTabEvent;
-import org.dselent.course_load_scheduler.client.event.ReceiveReplyEvent;
 import org.dselent.course_load_scheduler.client.event.SelectRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendReplyEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
+import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.model.Request;
 import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
@@ -35,17 +36,19 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	private GlobalData globalData;
 	private boolean replyClickInProgress;
 	private boolean selectClickInProgress;
+	private boolean requestClickInProgress;
 	
+	List<Request> RequestList = new ArrayList<Request>();
 	@Inject
-	public AdminRequestPresenterImpl(IndexPresenter parentPresenter, AdminRequestView view, MainPresenter mainPresenter, GlobalData globalData)
+	public AdminRequestPresenterImpl(IndexPresenter parentPresenter, MainPresenter mainPresenter, AdminRequestView view, GlobalData globalData)
 	{
 		this.view = view;
 		this.parentPresenter = parentPresenter;
-		this.mainPresenter = mainPresenter;
 		this.globalData = globalData;
 		view.setPresenter(this);
 		replyClickInProgress = false;
 		selectClickInProgress = false;
+		requestClickInProgress = false;
 	}
 	
 	@Override
@@ -61,6 +64,9 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		
 		registration = eventBus.addHandler(InvalidReplyEvent.TYPE, this);
 		eventBusRegistration.put(InvalidReplyEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(ReceiveClickRequestTabEvent.TYPE, this);
+		eventBusRegistration.put(ReceiveClickRequestTabEvent.TYPE, registration);
 	}
 	
 	@Override
@@ -170,13 +176,16 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			//selectRequestAction(selectedRequest.getRequesterId(), requestType, requestDetail);
 			view.setUserRequestLabel(requester);
 			view.setTypeLabel(requestType);
-			view.setRequesterDescriptLabel(requestDetail);			
-		}		
-		
-		
+			view.setRequesterDescriptLabel(requestDetail);
+			
+			
+		}
+			
 	}
 	
 	/*private void selectRequestAction(Integer requester, String requestType, String Description) {
+
+	private void selectRequestAction(Integer requester, String requestType, String Description) {
 		parentPresenter.hideLoadScreen();
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		SelectRequestAction sra = new SelectRequestAction(requester, requestType, Description);
@@ -196,7 +205,7 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 			throw new EmptyStringException();
 		}
 	}
-
+	
 	@Override
 	public void onInvalidReply(InvalidReplyEvent evt) {
 		parentPresenter.hideLoadScreen();
@@ -207,23 +216,12 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 		view.showErrorMessages(ira.toString());
 	}
 
-	public void onReceiveReply(ReceiveReplyEvent evt)
-	{
-		parentPresenter.hideLoadScreen();
-		view.getReplyButton().setEnabled(true);
-		replyClickInProgress = false;
-	}
-	
+	@Override
 	public void onReceiveClickRequestTab(ReceiveClickRequestTabEvent evt)
 	{	
 		this.go(mainPresenter.getRequestPanel());
-		/*
-		ReceiveClickRequestTabAction action = evt.getAction();
-		view.setChangingUsernameLabelText(action.getUserName());
-		view.setChangingNameLabelText(action.getFirstName() + " " + action.getLastName());
-		view.setChangingRequestStateLabelText(action.getUserRole());
-		view.setChangingEmailLabelText(action.getEmail());
 		
+		/*ReceiveClickRequestTabAction action = evt.getAction();
 		populateRequestList(action.getRequestList());
 		*/
 		parentPresenter.hideLoadScreen();
@@ -232,7 +230,6 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	@Override
 	public void populateRequestList(List<Request> requestList) {
 		view.setRequestList(requestList);
-		
 	}
 
 	@Override

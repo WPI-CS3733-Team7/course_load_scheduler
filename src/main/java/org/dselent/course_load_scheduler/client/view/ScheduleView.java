@@ -5,6 +5,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.TextBox; 
 
 public interface ScheduleView extends BaseView<SchedulePresenter>{
@@ -53,6 +54,12 @@ public interface ScheduleView extends BaseView<SchedulePresenter>{
 	public void setPopInstructorTextRank(TextBox popInstructorTextRank);
 	public TextBox getPopInstructorTextEmail();
 	public void setPopInstructorTextEmail(TextBox popInstructorTextEmail);
+	public RadioButton getRegular();
+	public void setRegular(RadioButton regular);
+	public RadioButton getSpecial();
+	public void setSpecial(RadioButton special);
+	public TextBox getCourseLoadDescriptionText();
+	public void setCourseLoadDescriptionText(TextBox courseLoadDescriptionText);
 	public TextBox getPopCourseTextName();
 	public void setPopCourseTextName(TextBox popCourseTextName);
 	public TextBox getPopCourseTextNumber();

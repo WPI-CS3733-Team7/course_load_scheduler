@@ -314,6 +314,9 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
 	@Override
 	public void onReceiveLogin(ReceiveLoginEvent evt)
 	{
+		loginClickInProgress = false;
 		view.getLoginButton().setEnabled(true);
+		view.getLoginPasswordTextBox().setText("");
+		view.getLoginUserTextBox().setText("");
 	}
 }

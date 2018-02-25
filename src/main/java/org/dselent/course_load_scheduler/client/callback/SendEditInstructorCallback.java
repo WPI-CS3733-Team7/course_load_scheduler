@@ -14,7 +14,6 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public class SendEditInstructorCallback extends DisplayCallback<JSONValue>
 {
-
 	public SendEditInstructorCallback(SimpleEventBus eventBus, HasWidgets container)
 	{
 		super(eventBus, container);
@@ -47,7 +46,7 @@ public class SendEditInstructorCallback extends DisplayCallback<JSONValue>
 			sb.append("\n");
 		}
 		
-		InvalidCreateInstructorAction icia = new InvalidCreateInstructorAction(sb.toString());
+		InvalidCreateInstructorAction icia = new InvalidCreateInstructorAction("Failed."/*sb.toString()*/);
 		InvalidCreateInstructorEvent icie = new InvalidCreateInstructorEvent(icia);
 		eventBus.fireEvent(icie);
 	}

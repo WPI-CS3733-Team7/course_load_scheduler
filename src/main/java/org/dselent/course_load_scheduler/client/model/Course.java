@@ -156,7 +156,7 @@ public class Course extends Model
 	@Override
 	public String displayText() {
 		if(course_name.length()>15)
-			return course_number + " " + course_name.substring(0, 12) + "...";
+			return course_number + " " + course_name.substring(0, 18) + "...";
 		else
 			return course_number + " " + course_name;
 	}

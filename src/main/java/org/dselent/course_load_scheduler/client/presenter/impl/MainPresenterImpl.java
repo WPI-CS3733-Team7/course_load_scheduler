@@ -121,9 +121,6 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 		ReceiveLoginAction action = evt.getAction();
 		globalData.setRole(action.getUserRole());
 		
-		if (globalData.getRole() == "USER") {
-			
-		}
 		parentPresenter.hideLoadScreen();
 		this.go(parentPresenter.getView().getViewRootPanel());
 	}
@@ -133,9 +130,8 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 	{
 		String role = globalData.getRole();
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		if (role == "ADMIN" || role == "LINKED USER") {
-			switch (index)
-			{
+		switch (index)
+		{
 			case 0: 
 				SendClickScheduleTabAction scheduleAction = new SendClickScheduleTabAction(globalData.getUserId());
 				SendClickScheduleTabEvent scheduleEvent = new SendClickScheduleTabEvent(scheduleAction, container);
@@ -165,7 +161,6 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 				SendClickAccountTabEvent  accountEvent = new SendClickAccountTabEvent(accountAction, container);
 				eventBus.fireEvent(accountEvent);
 				break;
-			}
 		}
 	}
 }
