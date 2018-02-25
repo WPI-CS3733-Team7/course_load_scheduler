@@ -8,7 +8,9 @@ import org.dselent.course_load_scheduler.client.presenter.impl.MainPresenterImpl
 import org.dselent.course_load_scheduler.client.presenter.impl.SchedulePresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.UserRequestPresenterImpl;
 import org.dselent.course_load_scheduler.client.service.impl.AccountServiceImpl;
+import org.dselent.course_load_scheduler.client.service.impl.RequestServiceImpl;
 import org.dselent.course_load_scheduler.client.service.impl.ScheduleServiceImpl;
+import org.dselent.course_load_scheduler.client.service.impl.UserRequestServiceImpl;
 import org.dselent.course_load_scheduler.client.service.impl.UserServiceImpl;
 import org.dselent.course_load_scheduler.client.view.impl.AccountViewImpl;
 import org.dselent.course_load_scheduler.client.view.impl.AdminRequestViewImpl;
@@ -65,6 +67,8 @@ public interface Injector extends Ginjector
     public UserServiceImpl getUserService();
     public AccountServiceImpl getAccountService();
     public ScheduleServiceImpl getScheduleService();
+    public RequestServiceImpl getRequestService();
+    public UserRequestServiceImpl getUserRequestService();
     
     // might need to add it here
 }

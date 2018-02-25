@@ -16,10 +16,14 @@ import org.dselent.course_load_scheduler.client.presenter.impl.MainPresenterImpl
 import org.dselent.course_load_scheduler.client.presenter.impl.SchedulePresenterImpl;
 import org.dselent.course_load_scheduler.client.presenter.impl.UserRequestPresenterImpl;
 import org.dselent.course_load_scheduler.client.service.AccountService;
+import org.dselent.course_load_scheduler.client.service.RequestService;
 import org.dselent.course_load_scheduler.client.service.ScheduleService;
+import org.dselent.course_load_scheduler.client.service.UserRequestService;
 import org.dselent.course_load_scheduler.client.service.UserService;
 import org.dselent.course_load_scheduler.client.service.impl.AccountServiceImpl;
+import org.dselent.course_load_scheduler.client.service.impl.RequestServiceImpl;
 import org.dselent.course_load_scheduler.client.service.impl.ScheduleServiceImpl;
+import org.dselent.course_load_scheduler.client.service.impl.UserRequestServiceImpl;
 import org.dselent.course_load_scheduler.client.service.impl.UserServiceImpl;
 import org.dselent.course_load_scheduler.client.view.AccountView;
 import org.dselent.course_load_scheduler.client.view.AdminRequestView;
@@ -78,7 +82,9 @@ public class InjectorModule extends AbstractGinModule
         //services
         bind(UserService.class).to(UserServiceImpl.class).in(Singleton.class);
         bind(AccountService.class).to(AccountServiceImpl.class).in(Singleton.class); 
-        bind(ScheduleService.class).to(ScheduleServiceImpl.class).in(Singleton.class); 
+        bind(ScheduleService.class).to(ScheduleServiceImpl.class).in(Singleton.class);
+        bind(RequestService.class).to(RequestServiceImpl.class).in(Singleton.class);
+        bind(UserRequestService.class).to(UserRequestServiceImpl.class).in(Singleton.class);
     }
 	
 	/*

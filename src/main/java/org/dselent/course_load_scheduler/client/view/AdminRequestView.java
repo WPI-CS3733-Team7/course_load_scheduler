@@ -34,5 +34,4 @@ public interface AdminRequestView extends BaseView<AdminRequestPresenter>{
 		void setRejected(RadioButton rejectedRdo);
 		Button getReplyButton();
 		public void showErrorMessages(String errorMessages);
-		VerticalPanel getAdminTable();
 }

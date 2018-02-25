@@ -1,5 +1,10 @@
 package org.dselent.course_load_scheduler.client.callback;
 
+import org.dselent.course_load_scheduler.client.action.ReceiveClickRequestTabAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveClickUserRequestTabAction;
+import org.dselent.course_load_scheduler.client.event.ReceiveClickRequestTabEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveUserClickRequestTabEvent;
+import org.dselent.course_load_scheduler.client.translator.impl.ClickRequestTabActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.action.ReceiveClickUserRequestTabAction;
 import org.dselent.course_load_scheduler.client.event.ReceiveUserClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.translator.impl.ClickUserRequestTabActionTranslatorImpl;

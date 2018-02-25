@@ -1,6 +1,8 @@
 package org.dselent.course_load_scheduler.client.event;
 
+import org.dselent.course_load_scheduler.client.action.ReceiveClickRequestTabAction;
 import org.dselent.course_load_scheduler.client.action.ReceiveClickUserRequestTabAction;
+import org.dselent.course_load_scheduler.client.event_handler.ReceiveClickRequestTabEventHandler;
 import org.dselent.course_load_scheduler.client.event_handler.ReceiveUserClickRequestTabEventHandler;
 
 import com.google.gwt.event.shared.GwtEvent.Type;
