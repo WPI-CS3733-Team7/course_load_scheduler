@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.model.Course;
-import org.dselent.course_load_scheduler.client.model.CalendarInfo;
 import org.dselent.course_load_scheduler.client.model.CourseLoad;
 
 
@@ -13,16 +12,13 @@ public class ReceiveClickScheduleTabAction extends Action
 	Integer linkedInstructorId;
 	List<Instructor> instructorList;
 	List<Course> courseList;
-	List<CalendarInfo> calendarInfoList;
 	List<CourseLoad> courseLoadList;
 	
-	public ReceiveClickScheduleTabAction(Integer linkedInstructorId, List<Instructor> instructorList, List<Course> courseList, List<CalendarInfo> calendarInfoList,
-			List<CourseLoad> courseLoadList) {
+	public ReceiveClickScheduleTabAction(Integer linkedInstructorId, List<Instructor> instructorList, List<Course> courseList, List<CourseLoad> courseLoadList) {
 		super();
 		this.linkedInstructorId = linkedInstructorId;
 		this.instructorList = instructorList;
 		this.courseList = courseList;
-		this.calendarInfoList = calendarInfoList;
 		this.courseLoadList = courseLoadList;
 	}	
 	
@@ -49,14 +45,6 @@ public class ReceiveClickScheduleTabAction extends Action
 	public void setCourseList(List<Course> courseList) {
 		this.courseList = courseList;
 	}
-	
-	public List<CalendarInfo> getCalendarInfoList() {
-		return calendarInfoList;
-	}
-
-	public void setCalendarInfoList(List<CalendarInfo> calendarInfoList) {
-		this.calendarInfoList = calendarInfoList;
-	}
 
 	public List<CourseLoad> getCourseLoadList() {
 		return courseLoadList;
@@ -69,7 +57,6 @@ public class ReceiveClickScheduleTabAction extends Action
 	@Override
 	public String toString() {
 		return "ReceiveClickScheduleTabAction [linkedInstructorId=" + linkedInstructorId + ", instructorList="
-				+ instructorList + ", courseList=" + courseList + ", calendarInfoList=" + calendarInfoList
-				+ ", courseLoadList=" + courseLoadList + "]";
+				+ instructorList + ", courseList=" + courseList + ", courseLoadList=" + courseLoadList + "]";
 	}	
 }
