@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidRequestAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveClickUserRequestTabAction;
 import org.dselent.course_load_scheduler.client.action.SendRequestAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidSubmitStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
@@ -160,6 +161,9 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 	
 	public void onReceiveUserClickRequestTab(ReceiveUserClickRequestTabEvent evt) {
 		this.go(mainPresenter.getRequestPanel());
+		
+		ReceiveClickUserRequestTabAction action = evt.getAction();
+		populateRequestList(action.getRequestList());
 		
 	}
 	

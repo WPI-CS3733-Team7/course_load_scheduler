@@ -4,26 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidReplyAction;
-import org.dselent.course_load_scheduler.client.action.ReceiveClickAccountTabAction;
 import org.dselent.course_load_scheduler.client.action.ReceiveClickRequestTabAction;
-import org.dselent.course_load_scheduler.client.action.SelectRequestAction;
 import org.dselent.course_load_scheduler.client.action.SendReplyAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidReplyStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidReplyEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveClickAccountTabEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveClickRequestTabEvent;
-import org.dselent.course_load_scheduler.client.event.SelectRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendReplyEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
-import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.model.Request;
 import org.dselent.course_load_scheduler.client.presenter.AdminRequestPresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
 import org.dselent.course_load_scheduler.client.presenter.MainPresenter;
 import org.dselent.course_load_scheduler.client.view.AdminRequestView;
 
-import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
@@ -221,9 +216,9 @@ public class AdminRequestPresenterImpl extends BasePresenterImpl implements Admi
 	{	
 		this.go(mainPresenter.getRequestPanel());
 		
-		/*ReceiveClickRequestTabAction action = evt.getAction();
+		ReceiveClickRequestTabAction action = evt.getAction();
 		populateRequestList(action.getRequestList());
-		*/
+		
 		parentPresenter.hideLoadScreen();
 	}
 	
