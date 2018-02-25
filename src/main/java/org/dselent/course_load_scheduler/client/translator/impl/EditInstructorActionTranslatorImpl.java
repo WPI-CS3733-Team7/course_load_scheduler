@@ -11,6 +11,7 @@ import org.dselent.course_load_scheduler.client.utils.JSONHelper;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Window;
 
 public class EditInstructorActionTranslatorImpl implements ActionTranslator<SendEditInstructorAction, ReceiveEditInstructorAction>{
 	
@@ -47,6 +48,8 @@ public class EditInstructorActionTranslatorImpl implements ActionTranslator<Send
 		JSONObject returnInstructorObject = returnInstructor.isObject();	
 		
 		JSONObject instructorObject = returnInstructorObject.get("instructor").isObject();
+		
+		Window.alert(instructorObject.toString());
 		
 		Integer id = JSONHelper.getIntValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.ID));
 		String rank = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.RANK));
