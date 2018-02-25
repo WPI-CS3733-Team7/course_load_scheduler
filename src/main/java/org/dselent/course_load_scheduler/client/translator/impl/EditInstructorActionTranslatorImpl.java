@@ -52,7 +52,7 @@ public class EditInstructorActionTranslatorImpl implements ActionTranslator<Send
 		String email = JSONHelper.getStringValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.EMAIL));
 		//Long createdAt = JSONHelper.getLongValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.CREATED_AT));
 		//Long updatedAt = JSONHelper.getLongValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.UPDATED_AT));
-		Boolean deleted = JSONHelper.getBooleanValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.DELETED));
+		//Boolean deleted = JSONHelper.getBooleanValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.DELETED));
 		
 		// TODO look into time conversion more
 		// put into JSONHelper?
@@ -65,7 +65,7 @@ public class EditInstructorActionTranslatorImpl implements ActionTranslator<Send
 		instructor.setEmail(email);
 		//instructor.setCreatedAt(new Date(createdAt));
 		//instructor.setUpdatedAt(new Date(updatedAt));
-		instructor.setDeleted(deleted);
+		//instructor.setDeleted(deleted);
 		
 		// possibly use builder pattern if it is a lot of data
 		ReceiveEditInstructorAction action = new ReceiveEditInstructorAction(instructor);	

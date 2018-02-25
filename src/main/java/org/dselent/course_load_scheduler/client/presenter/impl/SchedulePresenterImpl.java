@@ -163,11 +163,8 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	}
 
 	@Override
-	public void go(HasWidgets container) {
-		// one handler will populate data into models for this view
-		// and then will call go (this function)
-		// go will use that data to determine the visibility
-		// in views with potentially hidden fields, create .defaul css styling
+	public void go(HasWidgets container)
+	{
 		container.clear();
 		container.add(view.getWidgetContainer());		
 	}
@@ -388,7 +385,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		else
 			idString = "-1";
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendEditInstructorAction siea = new SendEditInstructorAction(idString, firstName, lastName, rank, email, Boolean.toString(deleted));
+		SendEditInstructorAction siea = new SendEditInstructorAction(globalData.getUserId(), idString, firstName, lastName, rank, email, Boolean.toString(deleted));
 		SendEditInstructorEvent siee = new SendEditInstructorEvent(siea, container);
 		submitEditInstructorClickInProgress = false;
 		eventBus.fireEvent(siee);

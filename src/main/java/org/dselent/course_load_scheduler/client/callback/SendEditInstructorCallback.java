@@ -46,7 +46,7 @@ public class SendEditInstructorCallback extends DisplayCallback<JSONValue>
 			sb.append("\n");
 		}
 		
-		InvalidCreateInstructorAction icia = new InvalidCreateInstructorAction(sb.toString());
+		InvalidCreateInstructorAction icia = new InvalidCreateInstructorAction("Failed."/*sb.toString()*/);
 		InvalidCreateInstructorEvent icie = new InvalidCreateInstructorEvent(icia);
 		eventBus.fireEvent(icie);
 	}

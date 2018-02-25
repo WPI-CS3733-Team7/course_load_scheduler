@@ -2,6 +2,7 @@ package org.dselent.course_load_scheduler.client.action;
 
 public class SendEditInstructorAction extends Action
 {
+	Integer userId;
 	String id;
 	String rank;
 	String firstName;
@@ -9,9 +10,10 @@ public class SendEditInstructorAction extends Action
 	String email;
 	String deleted;
 	
-	public SendEditInstructorAction(String id, String rank, String firstName, String lastName, String email,
+	public SendEditInstructorAction(Integer userId, String id, String rank, String firstName, String lastName, String email,
 			String deleted)
 	{
+		this.userId = userId;
 		this.id = id;
 		this.rank = rank;
 		this.firstName = firstName;
@@ -20,6 +22,10 @@ public class SendEditInstructorAction extends Action
 		this.deleted = deleted;
 	}
 
+	public Integer getUserId() {
+		return userId;
+	}
+	
 	public String getId() {
 		return id;
 	}

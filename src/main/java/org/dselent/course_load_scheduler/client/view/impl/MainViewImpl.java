@@ -1,17 +1,11 @@
 package org.dselent.course_load_scheduler.client.view.impl;
 
-import org.dselent.course_load_scheduler.client.action.SendClickAccountTabAction;
-import org.dselent.course_load_scheduler.client.action.SendClickScheduleTabAction;
-import org.dselent.course_load_scheduler.client.event.SendClickAccountTabEvent;
-import org.dselent.course_load_scheduler.client.event.SendClickScheduleTabEvent;
 import org.dselent.course_load_scheduler.client.presenter.MainPresenter;
 import org.dselent.course_load_scheduler.client.view.MainView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.BeforeSelectionEvent;
-import com.google.gwt.event.logical.shared.BeforeSelectionHandler;
-import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -19,8 +13,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.TabBar;
-import com.google.gwt.user.client.ui.TabBar.Tab;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
@@ -59,7 +51,8 @@ public class MainViewImpl extends BaseViewImpl<MainPresenter> implements MainVie
 
 
 	@Override
-	public HasWidgets getViewRootPanel() {
+	public HasWidgets getViewRootPanel()
+	{
 		return mainPanel;
 	}
 	
@@ -76,25 +69,32 @@ public class MainViewImpl extends BaseViewImpl<MainPresenter> implements MainVie
 	}
 
 	@Override
-	public void showErrorMessages(String errorMessages) {
+	public void showErrorMessages(String errorMessages)
+	{
 		Window.alert(errorMessages);
 	}
 
 	@Override
-	public HasWidgets getSchedulePanel() {
+	public HasWidgets getSchedulePanel()
+	{
 		return schedulePanel;
 	}
 
 	@Override
-	public HasWidgets getRequestPanel() {
-		// TODO Auto-generated method stub
+	public HasWidgets getRequestPanel() 
+	{
 		return requestPanel;
 	}
 
 	@Override
-	public HasWidgets getAccountPanel() {
-		// TODO Auto-generated method stub
+	public HasWidgets getAccountPanel()
+	{
 		return accountPanel;
+	}
+	
+	public TabLayoutPanel getTabPanel()
+	{
+		return tabPanel;
 	}
 	
 	@UiHandler("tabPanel")
