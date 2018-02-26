@@ -526,8 +526,11 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		List<CourseSection> sectionList = evt.getAction().getSectionList();
 		for(CourseSection section : sectionList) {
 			for(CalendarInfo calInfo : calInfoList) {
-				if(section.getCalendarInfoId()==calInfo.getId())
+				if(section.getCalendarInfoId()==calInfo.getId()) {
+					calendarInfoList.add(calInfo);
+					sectionList.add(section);
 					createCourseSection(section, calInfo);
+				}
 			}
 		}
 	}
@@ -677,8 +680,11 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		List<CourseSection> sectionList = evt.getAction().getSectionList();
 		for(CourseSection section : sectionList) {
 			for(CalendarInfo calInfo : calInfoList) {
-				if(section.getCalendarInfoId()==calInfo.getId())
+				if(section.getCalendarInfoId()==calInfo.getId()) {
+					calendarInfoList.add(calInfo);
+					sectionList.add(section);
 					createCourseSection(section, calInfo);
+				}
 			}
 		}
 	}
@@ -955,7 +961,11 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		if(calInfoDays.contains("F")) {
 			columnList.add(5);
 		}
-				
+
+		if(calInfoStartTime<800)
+			calInfoStartTime+=1200;
+		if(calInfoEndTime<800)
+			calInfoEndTime+=1200;
 		Integer startTimeIndex = (int)Math.ceil(calInfoStartTime/50.0) - 15;
 		Integer endTimeIndex = (int)Math.ceil(calInfoEndTime/50.0) - 15;
 				
@@ -1007,7 +1017,10 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 						if(calInfoDays.contains("F")) {
 							columnList.add(5);
 						}
-						
+						if(calInfoStartTime<800)
+							calInfoStartTime+=1200;
+						if(calInfoEndTime<800)
+							calInfoEndTime+=1200;
 						Integer startTimeIndex = (int)Math.ceil(calInfoStartTime/50.0) - 15;
 						Integer endTimeIndex = (int)Math.ceil(calInfoEndTime/50.0) - 15;
 						
@@ -1027,7 +1040,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			
 		}
 		
-		if(found) {
+		if(!found) {
 			courseSectionList.add(courseSection);
 			calendarInfoList.add(calendarInfo);
 		}
@@ -1038,8 +1051,8 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		
 		parentPresenter.hideLoadScreen();
 		
-		String message = action.getMessage();
-		view.showErrorMessages(message);
+		/*String message = action.getMessage();
+		view.showErrorMessages(message);*/
 		
 		
 	}
