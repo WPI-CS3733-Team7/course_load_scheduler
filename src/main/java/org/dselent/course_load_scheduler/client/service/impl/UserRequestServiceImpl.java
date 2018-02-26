@@ -35,6 +35,9 @@ public class UserRequestServiceImpl extends BaseServiceImpl implements UserReque
 		registration = eventBus.addHandler(SendRequestEvent.TYPE, this);
 		eventBusRegistration.put(SendRequestEvent.TYPE, registration);
 		
+		registration = eventBus.addHandler(SendUserClickRequestTabEvent.TYPE, this);
+		eventBusRegistration.put(SendUserClickRequestTabEvent.TYPE, registration);
+		
 	}
 	
 	@Override
@@ -57,11 +60,11 @@ public class UserRequestServiceImpl extends BaseServiceImpl implements UserReque
 		SendClickUserRequestTabAction action = evt.getAction();
 		ClickUserRequestTabActionTranslatorImpl UserClickRequestTabActionTranslator = new ClickUserRequestTabActionTranslatorImpl();
 		JSONObject json = UserClickRequestTabActionTranslator.translateToJson(action);
-		SendClickUserRequestTabCallback UserRequestCallback = new SendClickUserRequestTabCallback(eventBus, evt.getContainer());
+		SendClickUserRequestTabCallback UserClickRequestCallback = new SendClickUserRequestTabCallback(eventBus, evt.getContainer());
 		
 		String uri = action.getUserId() + NetworkRequestStrings.CLICK_USER_REQUEST_TAB;
 		
-		NetworkRequest request = new NetworkRequest(uri, UserRequestCallback, json);
+		NetworkRequest request = new NetworkRequest(uri, UserClickRequestCallback, json);
 		request.send();
 	}
 }

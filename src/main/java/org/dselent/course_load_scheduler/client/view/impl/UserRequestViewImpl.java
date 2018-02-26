@@ -18,7 +18,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ListBox;
@@ -126,7 +125,7 @@ public class UserRequestViewImpl extends BaseViewImpl<UserRequestPresenter> impl
 	
 	@Override
 	public void setRequestHistoryList(List<Request> requestList) {
-		for (Request r:requestList) {
+		for (Request r: requestList) {
 			requestHistoryList.addItem(r.getRequestDetails());
 		}
 	}

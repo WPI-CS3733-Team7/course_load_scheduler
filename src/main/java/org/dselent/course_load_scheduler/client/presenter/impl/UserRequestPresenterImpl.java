@@ -119,10 +119,10 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			}
 			
 			if(courses) {
-				requestType = "courses"; //return courses if clicked course radio button
+				requestType = "Course"; //return courses if clicked course radio button
 			}
 			else if(other){
-				requestType = "others"; ////return other if clicked other radio button
+				requestType = "Other"; ////return other if clicked other radio button
 			}
 			else {
 				requestType = null; //None of radio button selected
@@ -131,7 +131,7 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			}
 			
 			if(validRequesttype && validDescription) { //Both True
-				sendRequest(description); //Show both informations
+				sendRequest(requestType, description); //Show both informations
 			}
 			else									//Return error messages
 			{
@@ -153,10 +153,10 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 		view.showErrorMessages(ira.toString());
 	}
 	
-	private void sendRequest(String Description)
+	private void sendRequest(String RequestType, String Description)
 	{
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendRequestAction sra = new SendRequestAction(globalData.getUserId(), Description);
+		SendRequestAction sra = new SendRequestAction(globalData.getUserId(), RequestType, Description);
 		SendRequestEvent sre = new SendRequestEvent(sra, container);
 		eventBus.fireEvent(sre);
 	}

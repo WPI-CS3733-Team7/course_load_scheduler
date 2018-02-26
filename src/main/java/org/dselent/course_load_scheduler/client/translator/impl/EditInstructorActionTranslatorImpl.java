@@ -50,8 +50,6 @@ public class EditInstructorActionTranslatorImpl implements ActionTranslator<Send
 		
 		JSONObject instructorObject = returnInstructorObject.get("instructor").isObject();
 		
-		Window.alert(returnInstructorObject.toString());
-		
 		Integer id = JSONHelper.getIntValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.ID));
 		String rank = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.RANK));
 		String firstName = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.FIRST_NAME));

@@ -1,19 +1,15 @@
 package org.dselent.course_load_scheduler.client.service.impl;
 
 import org.dselent.course_load_scheduler.client.action.SendReplyAction;
-import org.dselent.course_load_scheduler.client.action.SelectRequestAction;
 import org.dselent.course_load_scheduler.client.action.SendClickRequestTabAction;
 import org.dselent.course_load_scheduler.client.callback.SendClickRequestTabCallback;
 import org.dselent.course_load_scheduler.client.callback.SendReplyCallback;
-import org.dselent.course_load_scheduler.client.callback.SendSelectRequestCallback;
-import org.dselent.course_load_scheduler.client.event.SelectRequestEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendReplyEvent;
 import org.dselent.course_load_scheduler.client.network.NetworkRequest;
 import org.dselent.course_load_scheduler.client.network.NetworkRequestStrings;
 import org.dselent.course_load_scheduler.client.service.RequestService;
 import org.dselent.course_load_scheduler.client.translator.impl.ClickRequestTabActionTranslatorImpl;
-import org.dselent.course_load_scheduler.client.translator.impl.SelectRequestActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.translator.impl.SendReplyActionTranslatorImpl;
 
 import com.google.gwt.event.shared.HandlerRegistration;

@@ -5,11 +5,13 @@ public class SendSelectCourseAction extends Action
 	private Integer courseId;
 	private Integer year;
 	private String term;
+	private Integer userId;
 
-	public SendSelectCourseAction(Integer id, String term, Integer year) {
+	public SendSelectCourseAction(Integer userId, Integer id, String term, Integer year) {
 		courseId = id;
 		this.term = term;
 		this.year = year;
+		this.userId = userId;
 	}
 
 	public Integer getId()
@@ -25,10 +27,16 @@ public class SendSelectCourseAction extends Action
 		return term;
 	}
 
+	public Integer getUserId() {
+		return userId;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("SendSelectCourseAction [courseId=");
+		builder.append("SendSelectCourseAction [userId=");
+		builder.append(userId);
+		builder.append(", courseId=");
 		builder.append(courseId);
 		builder.append(", year=");
 		builder.append(year);

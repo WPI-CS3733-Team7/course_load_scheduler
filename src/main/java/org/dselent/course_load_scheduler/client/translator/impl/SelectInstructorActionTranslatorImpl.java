@@ -1,12 +1,14 @@
 package org.dselent.course_load_scheduler.client.translator.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.ReceiveSelectInstructorAction;
 import org.dselent.course_load_scheduler.client.action.SendSelectInstructorAction;
 import org.dselent.course_load_scheduler.client.model.CalendarInfo;
 import org.dselent.course_load_scheduler.client.model.CourseSection;
+import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveCalendarInfoKeys;
 import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveEditSectionKeys;
 import org.dselent.course_load_scheduler.client.send.jsonkeys.SendSelectKeys;
 import org.dselent.course_load_scheduler.client.translator.ActionTranslator;
@@ -23,7 +25,7 @@ public class SelectInstructorActionTranslatorImpl implements ActionTranslator<Se
 	{
 		JSONObject jsonObject = new JSONObject();
 		
-		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendSelectKeys.ID), action.getId().toString());
+		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendSelectKeys.INSTRUCTOR_ID), action.getId().toString());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendSelectKeys.TERM), action.getTerm());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendSelectKeys.YEAR), action.getYear().toString());
 		
@@ -40,7 +42,10 @@ public class SelectInstructorActionTranslatorImpl implements ActionTranslator<Se
 		// sent timestamps as epoch seconds (long)
 		
 		JSONValue jsonObject = json.get("success");
-		JSONObject returnObject = jsonObject.isArray().get(0).isObject();
+		JSONObject jsonReturnObject = jsonObject.isObject();
+		
+		JSONValue returnInstructor = jsonReturnObject.get("returnObject");		
+		JSONObject returnObject = returnInstructor.isObject();
 		
 		// extract course section list
 		JSONValue sectionListObjectStart = returnObject.get("sectionList");
@@ -56,7 +61,8 @@ public class SelectInstructorActionTranslatorImpl implements ActionTranslator<Se
 			String sectionType = JSONHelper.getStringValue(sectionObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.SECTION_TYPE));
 			Integer population = JSONHelper.getIntValue(sectionObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.POPULATION));
 			Integer courseId = JSONHelper.getIntValue(sectionObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.COURSE_ID));
-			Integer instructorId = JSONHelper.getIntValue(sectionObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.CALENDAR_INFO_ID));
+			Integer instructorId = JSONHelper.getIntValue(sectionObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.INSTRUCTOR_ID));
+			Integer calInfoId = JSONHelper.getIntValue(sectionObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.CALENDAR_INFO_ID));
 			
 			CourseSection section = new CourseSection();
 			section.setId(id);
@@ -66,6 +72,7 @@ public class SelectInstructorActionTranslatorImpl implements ActionTranslator<Se
 			section.setPopulation(population);
 			section.setCourseId(courseId);
 			section.setInstructorId(instructorId);
+			section.setCalendarInfoId(calInfoId);
 			
 			sectionList.add(section);
 		}
@@ -78,12 +85,12 @@ public class SelectInstructorActionTranslatorImpl implements ActionTranslator<Se
 		{
 			JSONObject calInfoObject = calInfoListObject.get(i).isObject();
 			
-			Integer id = JSONHelper.getIntValue(calInfoObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.CALENDAR_INFO_ID));
-			Integer year = JSONHelper.getIntValue(calInfoObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.CAL_YEAR));
-			String term = JSONHelper.getStringValue(calInfoObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.CAL_TERM));
-			String days = JSONHelper.getStringValue(calInfoObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.DAYS));
-			Integer startTime = JSONHelper.getIntValue(calInfoObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.START_TIME));
-			Integer endTime = JSONHelper.getIntValue(calInfoObject, JSONHelper.convertKeyName(ReceiveEditSectionKeys.END_TIME));
+			Integer id = JSONHelper.getIntValue(calInfoObject, JSONHelper.convertKeyName(ReceiveCalendarInfoKeys.ID));
+			Integer year = JSONHelper.getIntValue(calInfoObject, JSONHelper.convertKeyName(ReceiveCalendarInfoKeys.CAL_YEAR));
+			String term = JSONHelper.getStringValue(calInfoObject, JSONHelper.convertKeyName(ReceiveCalendarInfoKeys.CAL_TERM));
+			String days = JSONHelper.getStringValue(calInfoObject, JSONHelper.convertKeyName(ReceiveCalendarInfoKeys.DAYS));
+			Integer startTime = JSONHelper.getIntValue(calInfoObject, JSONHelper.convertKeyName(ReceiveCalendarInfoKeys.START_TIME));
+			Integer endTime = JSONHelper.getIntValue(calInfoObject, JSONHelper.convertKeyName(ReceiveCalendarInfoKeys.END_TIME));
 			
 			CalendarInfo calInfo = new CalendarInfo();
 			calInfo.setId(id);

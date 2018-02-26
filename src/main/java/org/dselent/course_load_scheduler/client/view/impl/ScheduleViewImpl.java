@@ -4,7 +4,6 @@ import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -641,7 +640,7 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		}
 		
 		@UiHandler("instructorBox")
-		void onSelectInstructor(ClickEvent event) {
+		void onSelectInstructor(ChangeEvent event) {
 			presenter.selectInstructor();
 		}
 		
