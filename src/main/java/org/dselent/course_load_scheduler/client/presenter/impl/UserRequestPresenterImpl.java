@@ -8,7 +8,6 @@ import org.dselent.course_load_scheduler.client.action.ReceiveClickUserRequestTa
 import org.dselent.course_load_scheduler.client.action.SendRequestAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidSubmitStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
-import org.dselent.course_load_scheduler.client.event.ReceiveClickAccountTabEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveRequestEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveUserClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
@@ -102,7 +101,6 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			boolean courses = view.getCourseRdo().getValue(); //Check click or not on radio button course
 			boolean other = view.getOtherRdo().getValue(); ////Check click or not on radio button other
 			String requestType = "";
-			
 			String description = view.getDescriptionTextArea().getText();
 			
 			boolean validRequesttype = true; //Manage request type
@@ -158,7 +156,7 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 	private void sendRequest(String Description, String Requesttype)
 	{
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendRequestAction sra = new SendRequestAction(Description, Requesttype);
+		SendRequestAction sra = new SendRequestAction(globalData.getUserId(), Description, Requesttype);
 		SendRequestEvent sre = new SendRequestEvent(sra, container);
 		eventBus.fireEvent(sre);
 	}

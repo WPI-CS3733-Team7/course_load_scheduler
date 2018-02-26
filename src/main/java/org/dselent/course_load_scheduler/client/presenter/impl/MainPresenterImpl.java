@@ -1,16 +1,11 @@
 package org.dselent.course_load_scheduler.client.presenter.impl;
 
-import javax.swing.text.View;
-
 import org.dselent.course_load_scheduler.client.action.ReceiveLoginAction;
 import org.dselent.course_load_scheduler.client.action.SendClickAccountTabAction;
 import org.dselent.course_load_scheduler.client.action.SendClickRequestTabAction;
 import org.dselent.course_load_scheduler.client.action.SendClickScheduleTabAction;
 import org.dselent.course_load_scheduler.client.action.SendClickUserRequestTabAction;
 import org.dselent.course_load_scheduler.client.action.SendLogoutAction;
-import org.dselent.course_load_scheduler.client.event.InvalidCreateCourseEvent;
-import org.dselent.course_load_scheduler.client.event.InvalidCreateInstructorEvent;
-import org.dselent.course_load_scheduler.client.event.InvalidEditSectionEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveLoginEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickAccountTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickRequestTabEvent;
@@ -152,6 +147,7 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 						SendClickRequestTabAction requestAction = new SendClickRequestTabAction(globalData.getUserId());
 						SendClickRequestTabEvent requestEvent = new SendClickRequestTabEvent(requestAction, container);
 						eventBus.fireEvent(requestEvent);
+						Window.alert("ERROR: Permission denied.");
 					}
 					else
 					{	
@@ -164,7 +160,6 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 				}else {
 					Window.alert("ERROR: Permission denied.");
 				}
-				
 				break;
 			case 2:
 				parentPresenter.showLoadScreen();

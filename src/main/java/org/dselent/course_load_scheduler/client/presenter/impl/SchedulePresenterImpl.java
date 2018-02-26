@@ -451,7 +451,6 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		CourseLoad courseLoad = evt.getAction().getCourseLoadModel();
 		
 		int match = -1;
-		Window.alert(new Integer(instructorList.size()).toString());
 		for(int i=0; i<instructorList.size(); i++)
 		{
 			if(instructorList.get(i).getId()==editedInstructor.getId()) {
@@ -459,9 +458,8 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 				break;
 			}
 		}
-		Window.alert(instructorList.toString());
+
 		if(match<0) {
-			
 			String instFullName = editedInstructor.displayText();
 			int begin = 0;
 			int end = instructorList.size();
@@ -1066,7 +1064,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		
 		populateInstructorList(action.getInstructorList());
 		populateCourseList(action.getCourseList());
-		// need to populate course load list with this action
+		populateCourseLoadList(action.getCourseLoadList());
 		
 		// default selected instructor to linked instructor if possible
 		int linkedInstructorId = action.getLinkedInstructorId();

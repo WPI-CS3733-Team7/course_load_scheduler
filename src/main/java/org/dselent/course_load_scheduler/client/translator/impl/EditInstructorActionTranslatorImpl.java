@@ -50,7 +50,7 @@ public class EditInstructorActionTranslatorImpl implements ActionTranslator<Send
 		
 		JSONObject instructorObject = returnInstructorObject.get("instructor").isObject();
 		
-		Window.alert(instructorObject.toString());
+		Window.alert(returnInstructorObject.toString());
 		
 		Integer id = JSONHelper.getIntValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.ID));
 		String rank = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.RANK));
@@ -59,7 +59,7 @@ public class EditInstructorActionTranslatorImpl implements ActionTranslator<Send
 		String email = JSONHelper.getStringValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.EMAIL));
 		//Long createdAt = JSONHelper.getLongValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.CREATED_AT));
 		//Long updatedAt = JSONHelper.getLongValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.UPDATED_AT));
-		//Boolean deleted = JSONHelper.getBooleanValue(returnInstructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.DELETED));
+		Boolean deleted = JSONHelper.getBooleanValue(instructorObject, JSONHelper.convertKeyName(ReceiveEditInstructorKeys.DELETED));
 		
 		// TODO look into time conversion more
 		// put into JSONHelper?
@@ -72,7 +72,7 @@ public class EditInstructorActionTranslatorImpl implements ActionTranslator<Send
 		instructor.setEmail(email);
 		//instructor.setCreatedAt(new Date(createdAt));
 		//instructor.setUpdatedAt(new Date(updatedAt));
-		//instructor.setDeleted(deleted);
+		instructor.setDeleted(deleted);
 		
 		JSONObject courseLoadObject = returnInstructorObject.get("courseLoad").isObject();
 		
