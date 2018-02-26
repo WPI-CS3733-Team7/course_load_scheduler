@@ -155,7 +155,19 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 	Button sectionSubmitButton = new Button("Submit", new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			presenter.editSection(isCreating);
+			presenter.editSection(false, true);
+		}
+	});
+	Button sectionDeleteButton = new Button("Delete", new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			presenter.editSection(false, false);
+		}
+	});
+	Button sectionCreateButton = new Button("Submit", new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			presenter.editSection(true, false);
 		}
 	});
 
@@ -317,19 +329,29 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		
 	}
 	
+	//Grid of section submit button and section delete button
+	
+	private Grid makeSectionButtonGrid() {
+		Grid sectionButtonGrid = new Grid(1, 2);
+		sectionButtonGrid.setWidget(0, 0, sectionSubmitButton);
+		sectionButtonGrid.setWidget(0, 1, sectionDeleteButton);
+		
+		return sectionButtonGrid;
+	}
+	
 	//Combines all 3 grids into one pop-up
 	
 	private void makeSectionPopUp() {
-	Grid sectionGrid = new Grid(4, 1);		
+	Grid sectionGrid = new Grid(5, 1);		
 	sectionGrid.setWidget(0, 0, makeFirstGrid());
 	sectionGrid.setWidget(1, 0, daysLabel);
 	sectionGrid.setWidget(2, 0, makeCalendarInfoGrid());
 	sectionGrid.setWidget(3, 0, makeLastGrid());
+	sectionGrid.setWidget(4, 0, makeSectionButtonGrid());
 	
 	VerticalPanel vertPanel = new VerticalPanel();
 	vertPanel.add(sectionLabel);
 	vertPanel.add(sectionGrid);
-	vertPanel.add(sectionSubmitButton);
 	
 	PopupPanel sectionPopup = new PopupPanel(true);
 	sectionPopup.add(vertPanel);
@@ -625,7 +647,7 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		
 		@UiHandler("createSection")
 		void onClickAddSection(ClickEvent event) {
-			isCreating=true;
+			sectionCreateButton.setEnabled(true);
 			yearText.setText(yearSelect.getSelectedItemText());
 			termText.setText(termSelect.getSelectedItemText());
 			makeSectionPopUp();
@@ -633,7 +655,8 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		
 		@UiHandler("editSection")
 		void onClickEditSection(ClickEvent event) {
-			isCreating=false;
+			sectionSubmitButton.setEnabled(true);
+			sectionDeleteButton.setEnabled(true);
 			yearText.setText(yearSelect.getSelectedItemText());
 			termText.setText(termSelect.getSelectedItemText());
 			makeSectionPopUp();
