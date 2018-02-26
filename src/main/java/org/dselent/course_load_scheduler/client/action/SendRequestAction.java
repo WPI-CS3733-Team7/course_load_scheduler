@@ -20,7 +20,7 @@ public class SendRequestAction extends Action
 		return Description;
 	}
 
-	public String getrequestType() {
+	public String getRequestType() {
 		return RequestType;
 	}
 	

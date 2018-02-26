@@ -11,15 +11,11 @@ public class ReceiveRequestAction extends Action
 	
 	public ReceiveRequestAction(List<Request> requestList) {
 		this.requestList = requestList;
+		//this.message = message;
 	}
 
 	public List<Request> getRequestList() {
 		return requestList;
-	}
-	
-	public ReceiveRequestAction(String message)
-	{
-		this.message = message;
 	}
 
 	public String getMessage()
@@ -33,6 +29,6 @@ public class ReceiveRequestAction extends Action
 	}
 	
 	public String toString() {
-		return "ReceiveRequestAction [requestList=" + requestList + " message= " + message + "]";
+		return "ReceiveRequestAction [requestList=" + requestList + "]";
 	}
 }
