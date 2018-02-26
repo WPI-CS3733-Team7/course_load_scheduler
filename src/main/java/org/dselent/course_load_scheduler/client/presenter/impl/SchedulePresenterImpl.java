@@ -1057,7 +1057,27 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	 * */
 	@Override
 	public void onReceiveLogin(ReceiveLoginEvent evt)
-	{
+	{		
+		if (globalData.getRole() != "ADMIN")
+		{
+			view.getAddInstructorButton().getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			view.getEditInstructorButton().getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			view.getAddCourseButton().getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			view.getEditCourseButton().getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			view.getCreateSectionButton().getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			view.getEditSectionButton().getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			view.getValidateButton().getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		} else 
+		{
+			view.getAddInstructorButton().getElement().getStyle().setVisibility(Visibility.VISIBLE);
+			view.getEditInstructorButton().getElement().getStyle().setVisibility(Visibility.VISIBLE);
+			view.getAddCourseButton().getElement().getStyle().setVisibility(Visibility.VISIBLE);
+			view.getEditCourseButton().getElement().getStyle().setVisibility(Visibility.VISIBLE);
+			view.getCreateSectionButton().getElement().getStyle().setVisibility(Visibility.VISIBLE);
+			view.getEditSectionButton().getElement().getStyle().setVisibility(Visibility.VISIBLE);
+			view.getValidateButton().getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}
+		
 		ReceiveLoginAction action = evt.getAction();
 		globalData.setLinkedInstructorId(action.getLinkedInstructorId());
 		globalData.setRole(action.getUserRole());
