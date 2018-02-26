@@ -670,6 +670,7 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		@UiHandler("courseBox")
 		void onSelectCourse(ClickEvent event) {
 			createSection.setEnabled(true);
+			editSection.setEnabled(true);
 			presenter.selectCourse();
 		}
 		
