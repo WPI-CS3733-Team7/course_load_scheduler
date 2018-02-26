@@ -25,7 +25,7 @@ public class SelectCourseActionTranslatorImpl implements ActionTranslator<SendSe
 	{
 		JSONObject jsonObject = new JSONObject();
 		
-		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendSelectKeys.ID), action.getId().toString());
+		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendSelectKeys.COURSE_ID), action.getId().toString());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendSelectKeys.TERM), action.getTerm());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendSelectKeys.YEAR), action.getYear().toString());
 		
