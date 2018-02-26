@@ -59,8 +59,14 @@ public class ScheduleServiceImpl extends BaseServiceImpl implements ScheduleServ
 		registration = eventBus.addHandler(SendEditInstructorEvent.TYPE, this);
 		eventBusRegistration.put(SendEditInstructorEvent.TYPE, registration);
 		
+		registration = eventBus.addHandler(SendSelectInstructorEvent.TYPE, this);
+		eventBusRegistration.put(SendSelectInstructorEvent.TYPE, registration);
+		
 		registration = eventBus.addHandler(SendEditCourseEvent.TYPE, this);
 		eventBusRegistration.put(SendEditCourseEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(SendSelectCourseEvent.TYPE, this);
+		eventBusRegistration.put(SendSelectCourseEvent.TYPE, registration);
 		
 		registration = eventBus.addHandler(SendEditSectionEvent.TYPE, this);
 		eventBusRegistration.put(SendEditSectionEvent.TYPE, registration);
@@ -119,7 +125,9 @@ public class ScheduleServiceImpl extends BaseServiceImpl implements ScheduleServ
 		JSONObject json = editSectionActionTranslator.translateToJson(action);
 		SendEditSectionCallback editSectionCallback = new SendEditSectionCallback(eventBus, evt.getContainer());
 		
-		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.EDIT_SECTION, editSectionCallback, json);
+		String uri = action.getUserId() + NetworkRequestStrings.EDIT_SECTION;
+		
+		NetworkRequest request = new NetworkRequest(uri, editSectionCallback, json);
 		request.send();
 	}
 	
@@ -130,7 +138,7 @@ public class ScheduleServiceImpl extends BaseServiceImpl implements ScheduleServ
 		JSONObject json = selectInstructorActionTranslator.translateToJson(action);
 		SendSelectInstructorCallback selectInstructorCallback = new SendSelectInstructorCallback(eventBus, evt.getContainer());
 		
-		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.SELECT_INSTRUCTOR, selectInstructorCallback, json);
+		NetworkRequest request = new NetworkRequest(action.getUserId() + NetworkRequestStrings.SELECT_INSTRUCTOR, selectInstructorCallback, json);
 		request.send();
 	}
 	
@@ -141,7 +149,7 @@ public class ScheduleServiceImpl extends BaseServiceImpl implements ScheduleServ
 		JSONObject json = selectCourseActionTranslator.translateToJson(action);
 		SendSelectCourseCallback selectCourseCallback = new SendSelectCourseCallback(eventBus, evt.getContainer());
 		
-		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.SELECT_COURSE, selectCourseCallback, json);
+		NetworkRequest request = new NetworkRequest(action.getUserId() + NetworkRequestStrings.SELECT_COURSE, selectCourseCallback, json);
 		request.send();
 	}
 	

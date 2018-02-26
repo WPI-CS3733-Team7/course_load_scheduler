@@ -3,6 +3,7 @@ package org.dselent.course_load_scheduler.client.view.impl;
 import org.dselent.course_load_scheduler.client.presenter.SchedulePresenter;
 import org.dselent.course_load_scheduler.client.view.ScheduleView;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -54,283 +55,287 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 	@UiField ListBox courseBox;
 	@UiField Grid calendar;
 		
-		boolean isCreating;
-		
-		Button selectedCourseSection;
+	boolean isCreating;
+	boolean creatingSection;
+	
+	Button selectedCourseSection;
 
-		/* Pop-up Widgets for Instructor */
-		Label popInstructorLabelFirstName = new Label("First Name:");
-		Label popInstructorLabelLastName = new Label("Last Name:");
-		Label popInstructorLabelRank = new Label("Rank:");
-		Label popInstructorLabelEmail = new Label("Email:");
-		Label courseLoadType = new Label("Course Load Type:");
-		Label courseLoadDescription = new Label("Course Load Description:");
-		TextBox popInstructorTextFirstName = new TextBox();
-		TextBox popInstructorTextLastName = new TextBox();
-		TextBox popInstructorTextRank = new TextBox();
-		TextBox popInstructorTextEmail = new TextBox();
-		RadioButton regular = new RadioButton("courseLoadTypeGroup","REGULAR");
-	    RadioButton special = new RadioButton("courseLoadTypeGroup","SPECIAL");
-	    TextBox courseLoadDescriptionText = new TextBox();
-		Button popInstructorButtonDelete = new Button("Delete", new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				presenter.editInstructor(false, true);
-			}
-		});
-		Button popInstructorButtonSubmit = new Button("Submit", new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				presenter.editInstructor(false, false);
-				//isCreating=false;
-			}
-		});
-		Button popInstructorButtonCreate = new Button("Submit", new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				presenter.editInstructor(true, false);
-				//isCreating=false;
-			}
-		});
+	/* Pop-up Widgets for Instructor */
+	Label popInstructorLabelFirstName = new Label("First Name:");
+	Label popInstructorLabelLastName = new Label("Last Name:");
+	Label popInstructorLabelRank = new Label("Rank:");
+	Label popInstructorLabelEmail = new Label("Email:");
+	Label courseLoadType = new Label("Course Load Type:");
+	Label courseLoadDescription = new Label("Course Load Description:");
+	TextBox popInstructorTextFirstName = new TextBox();
+	TextBox popInstructorTextLastName = new TextBox();
+	TextBox popInstructorTextRank = new TextBox();
+	TextBox popInstructorTextEmail = new TextBox();
+	RadioButton regular = new RadioButton("courseLoadTypeGroup","REGULAR");
+    RadioButton special = new RadioButton("courseLoadTypeGroup","SPECIAL");
+    TextBox courseLoadDescriptionText = new TextBox();
+	Button popInstructorButtonDelete = new Button("Delete", new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			presenter.editInstructor(false, true);
+		}
+	});
+	Button popInstructorButtonSubmit = new Button("Submit", new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			presenter.editInstructor(false, false);
+			//isCreating=false;
+		}
+	});
+	Button popInstructorButtonCreate = new Button("Submit", new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			presenter.editInstructor(true, false);
+			//isCreating=false;
+		}
+	});
 
-		/* Pop-up Widgets for Course */
-		Label popCourseLabelName = new Label("Course Name:");
-		Label popCourseLabelNumber = new Label("Course Number:");
-		Label popCourseLabelFrequency = new Label("Required Frequency:");
-		TextBox popCourseTextName = new TextBox();
-		TextBox popCourseTextNumber = new TextBox();
-		TextBox popCourseTextFrequency = new TextBox();
-		Button popCourseButtonDelete = new Button("Delete", new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				presenter.editCourse(false, true);
-			}
-		});
-		Button popCourseButtonSubmit = new Button("Submit", new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				presenter.editCourse(false, false);
-				
-			}
-		});
-		Button popCourseButtonCreate = new Button("Submit", new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				presenter.editCourse(true, false);
-				
-			}
-		});
-		
-		/* Pop-up Widgets for Course Sections */
-		Label sectionLabel = new Label("Create/Edit a Section");
-		Label sectionNameLabel = new Label("Section Name");
-		Label sectionIdLabel = new Label("Section ID (CRN)");
-		Label sectionTypeLabel = new Label("Section Type");
-		Label populationLabel = new Label("Population");
-		Label yearLabel = new Label("Year");
-		Label termLabel = new Label("Term");
-		Label daysLabel = new Label("Days of the Week");
-		Label mondayLabel = new Label("M");
-		Label tuesdayLabel = new Label("T");
-		Label wednesdayLabel = new Label("W");
-		Label thursdayLabel = new Label("R");
-		Label fridayLabel = new Label("F");
-		Label startTimeLabel = new Label("Start Time");
-		Label endTimeLabel = new Label("End Time");
-		TextBox sectionNameText = new TextBox();
-		TextBox sectionIdText = new TextBox();
-		ListBox sectionTypeListBox = new ListBox();
-		TextBox populationText = new TextBox();
-		TextBox yearText = new TextBox();
-		TextBox termText = new TextBox();
-		CheckBox monday = new CheckBox();
-		CheckBox tuesday = new CheckBox();
-		CheckBox wednesday = new CheckBox();
-		CheckBox thursday = new CheckBox();
-		CheckBox friday = new CheckBox();
-		TextBox startTimeText = new TextBox();
-		TextBox endTimeText = new TextBox();
-		Button sectionSubmitButton = new Button("Submit", new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				presenter.editSection();
-			}
-		});
+	/* Pop-up Widgets for Course */
+	Label popCourseLabelName = new Label("Course Name:");
+	Label popCourseLabelNumber = new Label("Course Number:");
+	Label popCourseLabelFrequency = new Label("Required Frequency:");
+	TextBox popCourseTextName = new TextBox();
+	TextBox popCourseTextNumber = new TextBox();
+	TextBox popCourseTextFrequency = new TextBox();
+	Button popCourseButtonDelete = new Button("Delete", new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			presenter.editCourse(false, true);
+		}
+	});
+	Button popCourseButtonSubmit = new Button("Submit", new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			presenter.editCourse(false, false);
+			
+		}
+	});
+	Button popCourseButtonCreate = new Button("Submit", new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			presenter.editCourse(true, false);
+			
+		}
+	});
+	
+	/* Pop-up Widgets for Course Sections */
+	Label sectionLabel = new Label("Create/Edit a Section");
+	Label sectionNameLabel = new Label("Section Name");
+	Label sectionIdLabel = new Label("Section ID (CRN)");
+	Label sectionTypeLabel = new Label("Section Type");
+	Label populationLabel = new Label("Population");
+	Label yearLabel = new Label("Year");
+	Label termLabel = new Label("Term");
+	Label daysLabel = new Label("Days of the Week");
+	Label mondayLabel = new Label("M");
+	Label tuesdayLabel = new Label("T");
+	Label wednesdayLabel = new Label("W");
+	Label thursdayLabel = new Label("R");
+	Label fridayLabel = new Label("F");
+	Label startTimeLabel = new Label("Start Time");
+	Label endTimeLabel = new Label("End Time");
+	TextBox sectionNameText = new TextBox();
+	TextBox sectionIdText = new TextBox();
+	ListBox sectionTypeListBox = new ListBox();
+	TextBox populationText = new TextBox();
+	TextBox yearText = new TextBox();
+	TextBox termText = new TextBox();
+	CheckBox monday = new CheckBox();
+	CheckBox tuesday = new CheckBox();
+	CheckBox wednesday = new CheckBox();
+	CheckBox thursday = new CheckBox();
+	CheckBox friday = new CheckBox();
+	TextBox startTimeText = new TextBox();
+	TextBox endTimeText = new TextBox();
+	Button sectionSubmitButton = new Button("Submit", new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			presenter.editSection(isCreating);
+		}
+	});
 
-		/* Constructor */
-		public ScheduleViewImpl() {
-			initWidget(uiBinder.createAndBindUi(this));
-			
-			//yearSelect.addItem("2021");
-			//yearSelect.addItem("2020");
-			//yearSelect.addItem("2019");
-			yearSelect.addItem("2018");
-			/*yearSelect.addItem("2017");
-			yearSelect.addItem("2016");
-			yearSelect.addItem("2015");
-			yearSelect.addItem("2014");
-			yearSelect.addItem("2013");
-			yearSelect.addItem("2012");
-			yearSelect.addItem("2011");
-			yearSelect.addItem("2010");	*/		
-			
-			termSelect.addItem("A");
-			termSelect.addItem("B");
-			termSelect.addItem("C");
-			termSelect.addItem("D");
-			termSelect.addItem("E1");
-			termSelect.addItem("E2");
-			
-			sectionTypeListBox.addItem("LECTURE");
-			sectionTypeListBox.addItem("LAB");
-			sectionTypeListBox.addItem("CONFERENCE");
-			
-			regular.setChecked(true);
-		}
+	/* Constructor */
+	public ScheduleViewImpl() {
+		initWidget(uiBinder.createAndBindUi(this));
 		
-		/* Methods to generate pop-up windows */
+		//yearSelect.addItem("2021");
+		//yearSelect.addItem("2020");
+		//yearSelect.addItem("2019");
+		yearSelect.addItem("2018");
+		/*yearSelect.addItem("2017");
+		yearSelect.addItem("2016");
+		yearSelect.addItem("2015");
+		yearSelect.addItem("2014");
+		yearSelect.addItem("2013");
+		yearSelect.addItem("2012");
+		yearSelect.addItem("2011");
+		yearSelect.addItem("2010");	*/		
 		
+		termSelect.addItem("A");
+		termSelect.addItem("B");
+		termSelect.addItem("C");
+		termSelect.addItem("D");
+		termSelect.addItem("E1");
+		termSelect.addItem("E2");
 		
-		// Create separate grid in Instructor pop-up for course load type radio buttons
+		sectionTypeListBox.addItem("LECTURE");
+		sectionTypeListBox.addItem("LAB");
+		sectionTypeListBox.addItem("CONFERENCE");
 		
-		private Grid makeCourseLoadTypeGrid() {
-			Grid courseLoadTypeGrid = new Grid(1,2);
-			courseLoadTypeGrid.setWidget(0, 0, regular);
-			courseLoadTypeGrid.setWidget(0, 1, special);
-			
-			return courseLoadTypeGrid;
-		}
-
-		private void makeInstructorPopUp(boolean creating) {
-			Grid popGrid = new Grid(7, 2);
-			popGrid.setWidget(0, 0, popInstructorLabelFirstName);
-			popGrid.setWidget(1, 0, popInstructorLabelLastName);
-			popGrid.setWidget(2, 0, popInstructorLabelRank);
-			popGrid.setWidget(3, 0, popInstructorLabelEmail);
-			popGrid.setWidget(0, 1, popInstructorTextFirstName);
-			popGrid.setWidget(1, 1, popInstructorTextLastName);
-			popGrid.setWidget(2, 1, popInstructorTextRank);
-			popGrid.setWidget(3, 1, popInstructorTextEmail);
-			popGrid.setWidget(4, 0, courseLoadType);
-			popGrid.setWidget(4, 1, makeCourseLoadTypeGrid());
-			popGrid.setWidget(5, 0, courseLoadDescription);
-			popGrid.setWidget(5, 1, courseLoadDescriptionText);
-			
-			if(!creating) {
-				popGrid.setWidget(6, 1, popInstructorButtonSubmit);
-				popGrid.setWidget(6, 0, popInstructorButtonDelete);
-				presenter.fillInstructorFields();
-			} else {
-				popGrid.setWidget(6, 1, popInstructorButtonCreate);
-				popInstructorTextFirstName.setText("");
-				popInstructorTextLastName.setText("");
-				popInstructorTextRank.setText("");
-				popInstructorTextEmail.setText("");
-			}
-			PopupPanel editPopup = new PopupPanel(true);
-			editPopup.add(popGrid);
-			editPopup.isGlassEnabled();
-			editPopup.center();
-		}
+		regular.setChecked(true);
 		
-		private void makeCoursePopUp(boolean creating) {
-			Grid popGrid = new Grid(4, 2);
-			popGrid.setWidget(0, 0, popCourseLabelName);
-			popGrid.setWidget(1, 0, popCourseLabelNumber);
-			popGrid.setWidget(2, 0, popCourseLabelFrequency);
-			popGrid.setWidget(0, 1, popCourseTextName);
-			popGrid.setWidget(1, 1, popCourseTextNumber);
-			popGrid.setWidget(2, 1, popCourseTextFrequency);
-			
-			if(!creating) {
-				popGrid.setWidget(3, 1, popCourseButtonSubmit);
-				popGrid.setWidget(3, 0, popCourseButtonDelete);
-				presenter.fillCourseFields();
-			} else {
-				popGrid.setWidget(3, 1, popCourseButtonCreate);
-				popCourseTextName.setText("");
-				popCourseTextNumber.setText("");
-				popCourseTextFrequency.setText("");
-			}
-			
-			PopupPanel editPopup = new PopupPanel(true);
-			editPopup.add(popGrid);
-			editPopup.isGlassEnabled();
-			editPopup.center();
-		}
-		
-		//Creates the grid for the section name, section id, section type, population, year, term
-		
-		private Grid makeFirstGrid() {
-			Grid firstGrid = new Grid(6, 2);
-			firstGrid.setWidget(0, 0, sectionNameLabel);
-			firstGrid.setWidget(0, 1, sectionNameText);
-			firstGrid.setWidget(1, 0, sectionIdLabel);
-			firstGrid.setWidget(1, 1, sectionIdText);
-			firstGrid.setWidget(2, 0, sectionTypeLabel);
-			firstGrid.setWidget(2, 1, sectionTypeListBox);
-			firstGrid.setWidget(3, 0, populationLabel);
-			firstGrid.setWidget(3, 1, populationText);
-			firstGrid.setWidget(4, 0, yearLabel);
-			firstGrid.setWidget(4, 1, yearText);
-			firstGrid.setWidget(5, 0, termLabel);
-			firstGrid.setWidget(5, 1, termText);
-			
-			return firstGrid;
-			
-		}
-		
-		//Creates the grid for the days of the week check boxes in the Course Section pop-up
-		
-		private Grid makeCalendarInfoGrid() {
-			Grid calendarInfoGrid = new Grid(1, 10);
-			calendarInfoGrid.setWidget(0, 0, monday);
-			calendarInfoGrid.setWidget(0, 1, mondayLabel);
-			calendarInfoGrid.setWidget(0, 2, tuesday);
-			calendarInfoGrid.setWidget(0, 3, tuesdayLabel);
-			calendarInfoGrid.setWidget(0, 4, wednesday);
-			calendarInfoGrid.setWidget(0, 5, wednesdayLabel);
-			calendarInfoGrid.setWidget(0, 6, thursday);
-			calendarInfoGrid.setWidget(0, 7, thursdayLabel);
-			calendarInfoGrid.setWidget(0, 8, friday);
-			calendarInfoGrid.setWidget(0, 9, fridayLabel);
-			
-			return calendarInfoGrid;
-			
-		}
-		
-		// Creates the grid for start time, end time
-		
-		private Grid makeLastGrid() {
-			Grid lastGrid = new Grid(2, 2);
-			lastGrid.setWidget(0, 0, startTimeLabel);
-			lastGrid.setWidget(0, 1, startTimeText);
-			lastGrid.setWidget(1, 0, endTimeLabel);
-			lastGrid.setWidget(1, 1, endTimeText);
-			
-			return lastGrid;
-			
-		}
-		
-		//Combines all 3 grids into one pop-up
-		
-		private void makeSectionPopUp() {
-		Grid sectionGrid = new Grid(4, 1);		
-		sectionGrid.setWidget(0, 0, makeFirstGrid());
-		sectionGrid.setWidget(1, 0, daysLabel);
-		sectionGrid.setWidget(2, 0, makeCalendarInfoGrid());
-		sectionGrid.setWidget(3, 0, makeLastGrid());
-		
-		VerticalPanel vertPanel = new VerticalPanel();
-		vertPanel.add(sectionLabel);
-		vertPanel.add(sectionGrid);
-		vertPanel.add(sectionSubmitButton);
-		
-		PopupPanel sectionPopup = new PopupPanel(true);
-		sectionPopup.add(vertPanel);
-		sectionPopup.isGlassEnabled();
-		sectionPopup.center();
+		createSection.setEnabled(false);
+		editSection.setEnabled(false);
 	}
+	
+	/* Methods to generate pop-up windows */
+	
+	
+	// Create separate grid in Instructor pop-up for course load type radio buttons
+	
+	private Grid makeCourseLoadTypeGrid() {
+		Grid courseLoadTypeGrid = new Grid(1,2);
+		courseLoadTypeGrid.setWidget(0, 0, regular);
+		courseLoadTypeGrid.setWidget(0, 1, special);
+		
+		return courseLoadTypeGrid;
+	}
+
+	private void makeInstructorPopUp(boolean creating) {
+		Grid popGrid = new Grid(7, 2);
+		popGrid.setWidget(0, 0, popInstructorLabelFirstName);
+		popGrid.setWidget(1, 0, popInstructorLabelLastName);
+		popGrid.setWidget(2, 0, popInstructorLabelRank);
+		popGrid.setWidget(3, 0, popInstructorLabelEmail);
+		popGrid.setWidget(0, 1, popInstructorTextFirstName);
+		popGrid.setWidget(1, 1, popInstructorTextLastName);
+		popGrid.setWidget(2, 1, popInstructorTextRank);
+		popGrid.setWidget(3, 1, popInstructorTextEmail);
+		popGrid.setWidget(4, 0, courseLoadType);
+		popGrid.setWidget(4, 1, makeCourseLoadTypeGrid());
+		popGrid.setWidget(5, 0, courseLoadDescription);
+		popGrid.setWidget(5, 1, courseLoadDescriptionText);
+		
+		if(!creating) {
+			popGrid.setWidget(6, 1, popInstructorButtonSubmit);
+			popGrid.setWidget(6, 0, popInstructorButtonDelete);
+			presenter.fillInstructorFields();
+		} else {
+			popGrid.setWidget(6, 1, popInstructorButtonCreate);
+			popInstructorTextFirstName.setText("");
+			popInstructorTextLastName.setText("");
+			popInstructorTextRank.setText("");
+			popInstructorTextEmail.setText("");
+		}
+		PopupPanel editPopup = new PopupPanel(true);
+		editPopup.add(popGrid);
+		editPopup.isGlassEnabled();
+		editPopup.center();
+	}
+	
+	private void makeCoursePopUp(boolean creating) {
+		Grid popGrid = new Grid(4, 2);
+		popGrid.setWidget(0, 0, popCourseLabelName);
+		popGrid.setWidget(1, 0, popCourseLabelNumber);
+		popGrid.setWidget(2, 0, popCourseLabelFrequency);
+		popGrid.setWidget(0, 1, popCourseTextName);
+		popGrid.setWidget(1, 1, popCourseTextNumber);
+		popGrid.setWidget(2, 1, popCourseTextFrequency);
+		
+		if(!creating) {
+			popGrid.setWidget(3, 1, popCourseButtonSubmit);
+			popGrid.setWidget(3, 0, popCourseButtonDelete);
+			presenter.fillCourseFields();
+		} else {
+			popGrid.setWidget(3, 1, popCourseButtonCreate);
+			popCourseTextName.setText("");
+			popCourseTextNumber.setText("");
+			popCourseTextFrequency.setText("");
+		}
+		
+		PopupPanel editPopup = new PopupPanel(true);
+		editPopup.add(popGrid);
+		editPopup.isGlassEnabled();
+		editPopup.center();
+	}
+	
+	//Creates the grid for the section name, section id, section type, population, year, term
+	
+	private Grid makeFirstGrid() {
+		Grid firstGrid = new Grid(6, 2);
+		firstGrid.setWidget(0, 0, sectionNameLabel);
+		firstGrid.setWidget(0, 1, sectionNameText);
+		firstGrid.setWidget(1, 0, sectionIdLabel);
+		firstGrid.setWidget(1, 1, sectionIdText);
+		firstGrid.setWidget(2, 0, sectionTypeLabel);
+		firstGrid.setWidget(2, 1, sectionTypeListBox);
+		firstGrid.setWidget(3, 0, populationLabel);
+		firstGrid.setWidget(3, 1, populationText);
+		firstGrid.setWidget(4, 0, yearLabel);
+		firstGrid.setWidget(4, 1, yearText);
+		firstGrid.setWidget(5, 0, termLabel);
+		firstGrid.setWidget(5, 1, termText);
+		
+		return firstGrid;
+		
+	}
+	
+	//Creates the grid for the days of the week check boxes in the Course Section pop-up
+	
+	private Grid makeCalendarInfoGrid() {
+		Grid calendarInfoGrid = new Grid(1, 10);
+		calendarInfoGrid.setWidget(0, 0, monday);
+		calendarInfoGrid.setWidget(0, 1, mondayLabel);
+		calendarInfoGrid.setWidget(0, 2, tuesday);
+		calendarInfoGrid.setWidget(0, 3, tuesdayLabel);
+		calendarInfoGrid.setWidget(0, 4, wednesday);
+		calendarInfoGrid.setWidget(0, 5, wednesdayLabel);
+		calendarInfoGrid.setWidget(0, 6, thursday);
+		calendarInfoGrid.setWidget(0, 7, thursdayLabel);
+		calendarInfoGrid.setWidget(0, 8, friday);
+		calendarInfoGrid.setWidget(0, 9, fridayLabel);
+		
+		return calendarInfoGrid;
+		
+	}
+	
+	// Creates the grid for start time, end time
+	
+	private Grid makeLastGrid() {
+		Grid lastGrid = new Grid(2, 2);
+		lastGrid.setWidget(0, 0, startTimeLabel);
+		lastGrid.setWidget(0, 1, startTimeText);
+		lastGrid.setWidget(1, 0, endTimeLabel);
+		lastGrid.setWidget(1, 1, endTimeText);
+		
+		return lastGrid;
+		
+	}
+	
+	//Combines all 3 grids into one pop-up
+	
+	private void makeSectionPopUp() {
+	Grid sectionGrid = new Grid(4, 1);		
+	sectionGrid.setWidget(0, 0, makeFirstGrid());
+	sectionGrid.setWidget(1, 0, daysLabel);
+	sectionGrid.setWidget(2, 0, makeCalendarInfoGrid());
+	sectionGrid.setWidget(3, 0, makeLastGrid());
+	
+	VerticalPanel vertPanel = new VerticalPanel();
+	vertPanel.add(sectionLabel);
+	vertPanel.add(sectionGrid);
+	vertPanel.add(sectionSubmitButton);
+	
+	PopupPanel sectionPopup = new PopupPanel(true);
+	sectionPopup.add(vertPanel);
+	sectionPopup.isGlassEnabled();
+	sectionPopup.center();
+}
 		
 	/* Getters and Setters for pop-up text boxes */
 		
@@ -621,22 +626,27 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 		@UiHandler("createSection")
 		void onClickAddSection(ClickEvent event) {
 			isCreating=true;
+			yearText.setText(yearSelect.getSelectedItemText());
+			termText.setText(termSelect.getSelectedItemText());
 			makeSectionPopUp();
 		}
 		
 		@UiHandler("editSection")
 		void onClickEditSection(ClickEvent event) {
 			isCreating=false;
+			yearText.setText(yearSelect.getSelectedItemText());
+			termText.setText(termSelect.getSelectedItemText());
 			makeSectionPopUp();
 		}
 		
 		@UiHandler("instructorBox")
-		void onSelectInstructor(ClickEvent event) {
+		void onSelectInstructor(ChangeEvent event) {
 			presenter.selectInstructor();
 		}
 		
 		@UiHandler("courseBox")
 		void onSelectCourse(ClickEvent event) {
+			createSection.setEnabled(true);
 			presenter.selectCourse();
 		}
 		

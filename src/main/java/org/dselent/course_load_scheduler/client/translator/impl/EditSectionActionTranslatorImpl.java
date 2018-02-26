@@ -20,6 +20,10 @@ public class EditSectionActionTranslatorImpl implements ActionTranslator<SendEdi
 	{
 		JSONObject jsonObject = new JSONObject();
 		
+		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditSectionKeys.COURSE_ID), action.getCourseId());
+		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditSectionKeys.ID), action.getId());
+		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditSectionKeys.INSTRUCTOR_ID), action.getInstructorId());
+		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditSectionKeys.CALENDAR_INFO_ID), action.getCalendarInfoId());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditSectionKeys.SECTION_NAME), action.getSectionName());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditSectionKeys.SECTION_ID), action.getSectionId());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditSectionKeys.SECTION_TYPE), action.getSectionType());

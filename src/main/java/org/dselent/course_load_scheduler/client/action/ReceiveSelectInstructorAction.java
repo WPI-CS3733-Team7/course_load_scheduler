@@ -11,7 +11,8 @@ public class ReceiveSelectInstructorAction extends Action
 	private List<CalendarInfo> calInfoList;
 
 	public ReceiveSelectInstructorAction(List<CourseSection> sectionList, List<CalendarInfo> calInfoList) {
-		// TODO Auto-generated constructor stub
+		this.sectionList = sectionList;
+		this.calInfoList = calInfoList;
 	}
 
 	public List<CourseSection> getSectionList() {

@@ -498,7 +498,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		}
 		parentPresenter.hideLoadScreen();
 		
-		populateInstructorList(instructorList);
+		//populateInstructorList(instructorList);
 	}
 	
 	@Override
@@ -506,7 +506,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		view.getEditInstructorButton().setEnabled(true);
 
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendSelectInstructorAction ssia = new SendSelectInstructorAction(instructorList.get(view.getInstructorBox().getSelectedIndex()).getId(), view.getTermSelect().getItemText(view.getTermSelect().getSelectedIndex()), Integer.parseInt(view.getYearSelect().getItemText(view.getYearSelect().getSelectedIndex())));
+		SendSelectInstructorAction ssia = new SendSelectInstructorAction(globalData.getUserId(), instructorList.get(view.getInstructorBox().getSelectedIndex()).getId(), view.getTermSelect().getItemText(view.getTermSelect().getSelectedIndex()), Integer.parseInt(view.getYearSelect().getItemText(view.getYearSelect().getSelectedIndex())));
 		SendSelectInstructorEvent ssie = new SendSelectInstructorEvent(ssia, container);
 		eventBus.fireEvent(ssie);
 	}
@@ -558,7 +558,6 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			String courseName = view.getPopCourseTextName().getText();
 			String courseNumber = view.getPopCourseTextNumber().getText();
 			String frequency = view.getPopCourseTextFrequency().getText();
-			Window.alert(courseName + " " + courseNumber + " " + frequency);
 			boolean validCourseName = true;
 			boolean validCourseNumber = true;
 			boolean validFrequency = true;
@@ -664,11 +663,11 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	@Override
 	public void selectCourse() {
 		view.getEditCourseButton().setEnabled(true);
-
+		/* Server request disabled until we figure out exactly what we want
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendSelectCourseAction ssca = new SendSelectCourseAction(courseList.get(view.getCourseBox().getSelectedIndex()).getId(), view.getTermSelect().getItemText(view.getTermSelect().getSelectedIndex()), Integer.parseInt(view.getYearSelect().getItemText(view.getYearSelect().getSelectedIndex())));
+		SendSelectCourseAction ssca = new SendSelectCourseAction(globalData.getUserId(), courseList.get(view.getCourseBox().getSelectedIndex()).getId(), view.getTermSelect().getItemText(view.getTermSelect().getSelectedIndex()), Integer.parseInt(view.getYearSelect().getItemText(view.getYearSelect().getSelectedIndex())));
 		SendSelectCourseEvent ssce = new SendSelectCourseEvent(ssca, container);
-		eventBus.fireEvent(ssce);
+		eventBus.fireEvent(ssce);*/
 	}
 	
 	@Override
@@ -699,7 +698,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 
 
 	@Override
-	public void editSection() {
+	public void editSection(Boolean creating) {
 		
 		if (!submitEditSectionClickInProgress)
 		{
@@ -723,6 +722,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			String population = view.getPopulationText().getText();
 			String year = view.getYearText().getText();
 			String term = view.getTermText().getText();
+			Integer courseId = courseList.get(view.getCourseBox().getSelectedIndex()).getId();
 			
 			String days = "";
 			if(view.getMonday().getValue() == true) {
@@ -854,9 +854,49 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 				validEndTime = false;
 			}
 			
+			try
+			{
+				Integer.parseInt(startTime);
+				Integer.parseInt(endTime);
+			}
+			catch(Exception e)
+			{
+				invalidReasonList.add(InvalidEditSectionStrings.TIMES_NOT_INTS);
+				validStartTime = false;
+				validEndTime = false;
+			}
+			
 			if(validSectionName && validSectionId && validSectionType && validPopulation && validYear && validTerm && validDays && validStartTime && validEndTime)
 			{
-				sendEditSection(sectionName, sectionId, sectionType, population, year, term, days, startTime, endTime);
+				Integer courseSectionId = -1;
+				Integer calendarInfoId = -1;
+				if (creating != true)
+				{
+					for (int i = 0; i < courseSectionList.size(); i++) {
+						CourseSection cs = courseSectionList.get(i);
+						if ((sectionName + ": " + sectionId).equals(cs.displayText())) {
+							courseSectionId = i;
+							
+							for (int j = 0; i < calendarInfoList.size(); i++) {
+								CalendarInfo ci = calendarInfoList.get(j);
+								if (cs.getCalendarInfoId() == ci.getId()) {
+									calendarInfoId = ci.getId();
+									break;
+								}
+							}
+					
+							break;
+						}
+					}
+				}
+				
+				Integer instructorId = instructorList.get(view.getInstructorBox().getSelectedIndex()).getId();
+				
+				
+					
+				
+				
+				sendEditSection(courseId.toString(), courseSectionId.toString(), instructorId.toString(), calendarInfoId.toString(), sectionName, sectionId, sectionType, population, year, term, days, startTime, endTime);
 			}
 			else
 			{
@@ -880,11 +920,11 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		view.showErrorMessages(iesa.toString());
 	}
 	
-	private void sendEditSection(String sectionName, String sectionId, String sectionType, String population, String year, String term, String days, String startTime,
+	private void sendEditSection(String courseId, String courseSectionId, String instructorId, String calendarInfoId, String sectionName, String sectionId, String sectionType, String population, String year, String term, String days, String startTime,
 			String endTime)
 	{
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendEditSectionAction sesa = new SendEditSectionAction(sectionName, sectionId, sectionType, population, year, term, days, startTime, endTime);
+		SendEditSectionAction sesa = new SendEditSectionAction(globalData.getUserId(), courseSectionId, instructorId, calendarInfoId, courseId, sectionName, sectionId, sectionType, population, year, term, days, startTime, endTime);
 		SendEditSectionEvent sese = new SendEditSectionEvent(sesa,container);
 		eventBus.fireEvent(sese);
 	}
