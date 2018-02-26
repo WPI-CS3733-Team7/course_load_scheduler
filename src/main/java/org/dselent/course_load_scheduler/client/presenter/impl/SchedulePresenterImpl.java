@@ -722,7 +722,6 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			String population = view.getPopulationText().getText();
 			String year = view.getYearText().getText();
 			String term = view.getTermText().getText();
-			Integer courseId = courseList.get(view.getCourseBox().getSelectedIndex()).getId();
 			
 			String days = "";
 			if(view.getMonday().getValue() == true) {
@@ -891,7 +890,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 				}
 				
 				Integer instructorId = instructorList.get(view.getInstructorBox().getSelectedIndex()).getId();
-				
+				Integer courseId = courseList.get(view.getCourseBox().getSelectedIndex()).getId();
 				
 					
 				

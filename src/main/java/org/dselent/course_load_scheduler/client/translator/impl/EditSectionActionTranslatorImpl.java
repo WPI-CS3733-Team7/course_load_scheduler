@@ -33,6 +33,7 @@ public class EditSectionActionTranslatorImpl implements ActionTranslator<SendEdi
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditSectionKeys.DAYS), action.getDays());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditSectionKeys.START_TIME), action.getStartTime());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditSectionKeys.END_TIME), action.getEndTime());
+		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendEditSectionKeys.DELETED), action.getDeleted());
 		
 		return jsonObject;
 	}

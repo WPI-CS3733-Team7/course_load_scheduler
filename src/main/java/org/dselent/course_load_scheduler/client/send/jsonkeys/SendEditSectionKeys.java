@@ -13,5 +13,5 @@ public enum SendEditSectionKeys {
 	TERM,
 	DAYS,
 	START_TIME,
-	END_TIME;
+	END_TIME, DELETED;
 }

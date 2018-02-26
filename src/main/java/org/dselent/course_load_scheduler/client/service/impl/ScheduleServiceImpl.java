@@ -33,6 +33,7 @@ import org.dselent.course_load_scheduler.client.translator.impl.SelectInstructor
 import org.dselent.course_load_scheduler.client.translator.impl.ValidateActionTranslatorImpl;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.user.client.Window;
 
 public class ScheduleServiceImpl extends BaseServiceImpl implements ScheduleService
 {
@@ -125,9 +126,12 @@ public class ScheduleServiceImpl extends BaseServiceImpl implements ScheduleServ
 		JSONObject json = editSectionActionTranslator.translateToJson(action);
 		SendEditSectionCallback editSectionCallback = new SendEditSectionCallback(eventBus, evt.getContainer());
 		
+		Window.alert(json.toString());
+		
 		String uri = action.getUserId() + NetworkRequestStrings.EDIT_SECTION;
 		
 		NetworkRequest request = new NetworkRequest(uri, editSectionCallback, json);
+		
 		request.send();
 	}
 	

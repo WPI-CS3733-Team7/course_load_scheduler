@@ -16,6 +16,7 @@ public class SendEditSectionAction extends Action
 	private String days;
 	private String startTime;
 	private String endTime;
+	private String deleted;
 	
 	public SendEditSectionAction(Integer userId, String id, String instructorId, String calendarInfoId, String courseId, String sectionName, String sectionId, String sectionType, String population, String year, String term, String days, String startTime,
 			String endTime)
@@ -34,6 +35,7 @@ public class SendEditSectionAction extends Action
 		this.days = days;
 		this.startTime = startTime;
 		this.endTime = endTime;
+		this.deleted = "false";
 	}
 
 	public Integer getUserId() {
@@ -105,6 +107,11 @@ public class SendEditSectionAction extends Action
 				+ ", calendarInfoId=" + calendarInfoId + ", courseId=" + courseId + ", sectionName=" + sectionName
 				+ ", sectionId=" + sectionId + ", sectionType=" + sectionType + ", population=" + population + ", year="
 				+ year + ", term=" + term + ", days=" + days + ", startTime=" + startTime + ", endTime=" + endTime
-				+ "]";
+				+ ", deleted=" + deleted + "]";
+	}
+
+	public String getDeleted() {
+		// TODO Auto-generated method stub
+		return deleted;
 	}
 }
