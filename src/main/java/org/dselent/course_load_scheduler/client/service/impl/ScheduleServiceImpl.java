@@ -119,7 +119,9 @@ public class ScheduleServiceImpl extends BaseServiceImpl implements ScheduleServ
 		JSONObject json = editSectionActionTranslator.translateToJson(action);
 		SendEditSectionCallback editSectionCallback = new SendEditSectionCallback(eventBus, evt.getContainer());
 		
-		NetworkRequest request = new NetworkRequest(NetworkRequestStrings.EDIT_SECTION, editSectionCallback, json);
+		String uri = action.getUserId() + NetworkRequestStrings.EDIT_SECTION;
+		
+		NetworkRequest request = new NetworkRequest(uri, editSectionCallback, json);
 		request.send();
 	}
 	

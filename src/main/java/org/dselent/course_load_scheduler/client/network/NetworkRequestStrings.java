@@ -6,7 +6,7 @@ public final class NetworkRequestStrings
 	public static final String BASE_REQUEST = "course_load_scheduler/";
 	public static String LOGIN = "user/login";
 	public static String REGISTER = "user/register";
-	public static String CLICK_SCHEDULE_TAB = "/scheduler/page";
+	public static String CLICK_SCHEDULE_TAB = "/scheduler/schedule/page";
 	public static String EDIT_INSTRUCTOR = "/scheduler/instructors/edit";
 	public static String EDIT_COURSE = "/scheduler/courses/edit";
 	public static String EDIT_SECTION = "/scheduler/sections/edit";

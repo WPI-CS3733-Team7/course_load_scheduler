@@ -11,5 +11,6 @@ public class InvalidEditSectionStrings {
 	public static final String NULL_DAYS = "One of the checkboxes for days must be selected.";
 	public static final String NULL_START_TIME = "Start time cannot be empty.";
 	public static final String NULL_END_TIME = "End time cannot be empty.";
+	public static final String TIMES_NOT_INTS = "Start and end times must be integers > 0";
 	
 }

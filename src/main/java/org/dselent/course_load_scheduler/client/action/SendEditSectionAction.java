@@ -2,7 +2,11 @@ package org.dselent.course_load_scheduler.client.action;
 
 public class SendEditSectionAction extends Action
 {
-	
+	private Integer userId;
+	private String id;
+	private String instructorId;
+	private String calendarInfoId;
+	private String courseId;
 	private String sectionName;
 	private String sectionId;
 	private String sectionType;
@@ -13,9 +17,14 @@ public class SendEditSectionAction extends Action
 	private String startTime;
 	private String endTime;
 	
-	public SendEditSectionAction(String sectionName, String sectionId, String sectionType, String population, String year, String term, String days, String startTime,
+	public SendEditSectionAction(Integer userId, String id, String instructorId, String calendarInfoId, String courseId, String sectionName, String sectionId, String sectionType, String population, String year, String term, String days, String startTime,
 			String endTime)
 	{
+		this.userId = userId;
+		this.id = id;
+		this.instructorId = instructorId;
+		this.calendarInfoId = calendarInfoId;
+		this.courseId = courseId;
 		this.sectionName = sectionName;
 		this.sectionId= sectionId;
 		this.sectionType = sectionType;
@@ -27,6 +36,29 @@ public class SendEditSectionAction extends Action
 		this.endTime = endTime;
 	}
 
+	public Integer getUserId() {
+		return userId;
+	}
+	
+	public String getId()
+	{
+		return id;
+	}
+	
+	public String getInstructorId()
+	{
+		return instructorId;
+	}
+	
+	public String getCalendarInfoId()
+	{
+		return calendarInfoId;
+	}
+	
+	public String getCourseId() {
+		return courseId;
+	}
+	
 	public String getSectionName()
 	{
 		return sectionName;
@@ -68,29 +100,11 @@ public class SendEditSectionAction extends Action
 	}
 
 	@Override
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder();
-		builder.append("SendEditSectionAction [sectionName=");
-		builder.append(sectionName);
-		builder.append(", sectionId=");
-		builder.append(sectionId);
-		builder.append(", sectionType=");
-		builder.append(sectionType);
-		builder.append(", population=");
-		builder.append(population);
-		builder.append(", year=");
-		builder.append(year);
-		builder.append(", term=");
-		builder.append(term);
-		builder.append(", days=");
-		builder.append(days);
-		builder.append(", startTime=");
-		builder.append(startTime);
-		builder.append(", endTime=");
-		builder.append(endTime);
-		builder.append("]");
-		return builder.toString();
+	public String toString() {
+		return "SendEditSectionAction [userId=" + userId + ", id=" + id + ", instructorId=" + instructorId
+				+ ", calendarInfoId=" + calendarInfoId + ", courseId=" + courseId + ", sectionName=" + sectionName
+				+ ", sectionId=" + sectionId + ", sectionType=" + sectionType + ", population=" + population + ", year="
+				+ year + ", term=" + term + ", days=" + days + ", startTime=" + startTime + ", endTime=" + endTime
+				+ "]";
 	}
-
 }
