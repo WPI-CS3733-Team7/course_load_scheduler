@@ -126,7 +126,7 @@ public class UserRequestViewImpl extends BaseViewImpl<UserRequestPresenter> impl
 	
 	@Override
 	public void setRequestHistoryList(List<Request> requestList) {
-		for (Request r:requestList) {
+		for (Request r: requestList) {
 			requestHistoryList.addItem(r.getRequestDetails());
 		}
 	}

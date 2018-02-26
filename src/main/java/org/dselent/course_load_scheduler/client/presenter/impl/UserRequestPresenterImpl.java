@@ -131,7 +131,7 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			}
 			
 			if(validRequesttype && validDescription) { //Both True
-				sendRequest(description); //Show both informations
+				sendRequest(requestType, description); //Show both informations
 			}
 			else									//Return error messages
 			{
@@ -153,10 +153,10 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 		view.showErrorMessages(ira.toString());
 	}
 	
-	private void sendRequest(String Description)
+	private void sendRequest(String RequestType, String Description)
 	{
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendRequestAction sra = new SendRequestAction(globalData.getUserId(), Description);
+		SendRequestAction sra = new SendRequestAction(globalData.getUserId(), RequestType, Description);
 		SendRequestEvent sre = new SendRequestEvent(sra, container);
 		eventBus.fireEvent(sre);
 	}
