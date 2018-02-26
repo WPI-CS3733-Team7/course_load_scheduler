@@ -698,7 +698,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 
 
 	@Override
-	public void editSection(Boolean creating) {
+	public void editSection(boolean creating, boolean deleting) {
 		
 		if (!submitEditSectionClickInProgress)
 		{
@@ -892,10 +892,14 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 				Integer instructorId = instructorList.get(view.getInstructorBox().getSelectedIndex()).getId();
 				Integer courseId = courseList.get(view.getCourseBox().getSelectedIndex()).getId();
 				
-					
-				
-				
-				sendEditSection(courseId.toString(), courseSectionId.toString(), instructorId.toString(), calendarInfoId.toString(), sectionName, sectionId, sectionType, population, year, term, days, startTime, endTime);
+				if(creating)
+				{
+					sendEditSection(courseId.toString(), courseSectionId.toString(), instructorId.toString(), calendarInfoId.toString(), sectionName, sectionId, sectionType, population, year, term, days, startTime, endTime, false);	
+				} 
+				else
+				{
+					sendEditSection(courseId.toString(), courseSectionId.toString(), instructorId.toString(), calendarInfoId.toString(), sectionName, sectionId, sectionType, population, year, term, days, startTime, endTime, deleting);
+				}	
 			}
 			else
 			{
@@ -920,10 +924,10 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	}
 	
 	private void sendEditSection(String courseId, String courseSectionId, String instructorId, String calendarInfoId, String sectionName, String sectionId, String sectionType, String population, String year, String term, String days, String startTime,
-			String endTime)
+			String endTime, boolean deleted)
 	{
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendEditSectionAction sesa = new SendEditSectionAction(globalData.getUserId(), courseSectionId, instructorId, calendarInfoId, courseId, sectionName, sectionId, sectionType, population, year, term, days, startTime, endTime);
+		SendEditSectionAction sesa = new SendEditSectionAction(globalData.getUserId(), courseSectionId, instructorId, calendarInfoId, courseId, sectionName, sectionId, sectionType, population, year, term, days, startTime, endTime, Boolean.toString(deleted));
 		SendEditSectionEvent sese = new SendEditSectionEvent(sesa,container);
 		eventBus.fireEvent(sese);
 	}

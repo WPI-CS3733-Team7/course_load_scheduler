@@ -19,7 +19,7 @@ public class SendEditSectionAction extends Action
 	private String deleted;
 	
 	public SendEditSectionAction(Integer userId, String id, String instructorId, String calendarInfoId, String courseId, String sectionName, String sectionId, String sectionType, String population, String year, String term, String days, String startTime,
-			String endTime)
+			String endTime, String deleted)
 	{
 		this.userId = userId;
 		this.id = id;

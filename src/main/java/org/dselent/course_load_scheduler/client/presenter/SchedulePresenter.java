@@ -16,7 +16,7 @@ public interface SchedulePresenter extends BasePresenter {
 	public void populateInstructorList(List<Instructor> instructorList);
 	public void populateCourseList(List<Course> instructorList);
 	
-	void editSection(Boolean creating);
+	void editSection(boolean creating, boolean deleting);
 	void validate();
 	void fillInstructorFields();
 	void fillCourseFields();
