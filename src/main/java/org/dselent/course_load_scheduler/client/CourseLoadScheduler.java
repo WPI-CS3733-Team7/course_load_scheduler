@@ -68,7 +68,7 @@ public class CourseLoadScheduler implements EntryPoint
 		loginPresenter.go(indexView.getViewRootPanel());
 		//mainPresenter.go(indexView.getViewRootPanel());
 		schedulePresenter.go(mainPresenter.getSchedulePanel());
-		requestPresenter.go(mainPresenter.getRequestPanel());
+		userRequestPresenter.go(mainPresenter.getRequestPanel());
 		accountPresenter.go(mainPresenter.getAccountPanel());
 	}
 }
