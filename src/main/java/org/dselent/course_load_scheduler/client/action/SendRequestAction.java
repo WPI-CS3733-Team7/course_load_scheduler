@@ -3,12 +3,12 @@ package org.dselent.course_load_scheduler.client.action;
 public class SendRequestAction extends Action
 {
 	Integer User_Id;
-	String RequestType;
+	//String RequestType;
 	String Description;
 	
-	public SendRequestAction (Integer userId, String Description, String RequestType) {
+	public SendRequestAction (Integer userId, String Description) {
 		this.User_Id = userId;
-		this.RequestType = RequestType;
+		//this.RequestType = RequestType;
 		this.Description = Description;
 	}
 	
@@ -20,12 +20,12 @@ public class SendRequestAction extends Action
 		return Description;
 	}
 
-	public String getrequestType() {
+	/*public String getrequestType() {
 		return RequestType;
-	}
+	}*/
 	
 	@Override
 	public String toString() {
-		return "SendRequestAction [UserID =" + User_Id + " Description=" + Description + " RequestType=" + RequestType + "]";
+		return "SendRequestAction [Description=" + Description + "]";
 	}
 }
