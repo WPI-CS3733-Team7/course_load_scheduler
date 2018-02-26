@@ -11,6 +11,7 @@ import org.dselent.course_load_scheduler.client.send.jsonkeys.SendRequestKeys;
 import org.dselent.course_load_scheduler.client.translator.ActionTranslator;
 import org.dselent.course_load_scheduler.client.utils.JSONHelper;
 
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 
@@ -31,24 +32,30 @@ public class UserRequestActionTranslatorImpl implements ActionTranslator<SendReq
 	public ReceiveRequestAction translateToAction(JSONObject json) {
 		
 		JSONValue jsonObject = json.get("success");
-		JSONObject returnObject = jsonObject.isObject();
+		JSONObject jsonReturnRequestObject = jsonObject.isObject();
+		
+		JSONValue returnRequest = jsonReturnRequestObject.get("returnObject");
+		JSONObject returnRequestObject = returnRequest.isObject();
 		
 		// extract request list
-		JSONValue requestObjectStart = returnObject.get("request");
-		JSONObject requestObject = requestObjectStart.isObject();
 		
+		JSONArray requestListObject = returnRequestObject.get("requestList").isArray();
 		List<Request> requestList = new ArrayList<Request>();
-		//String message = JSONHelper.getStringValue(returnObject, JSONHelper.convertKeyName(ReceiveRequestKeys.MESSAGE));
-		
-		Integer requester_id = JSONHelper.getIntValue(requestObject, JSONHelper.convertKeyName(ReceiveRequestKeys.Requester_ID));
-		String requestType = JSONHelper.getStringValue(requestObject, JSONHelper.convertKeyName(ReceiveRequestKeys.Request_Type));
-		String requestDetails = JSONHelper.getStringValue(requestObject, JSONHelper.convertKeyName(ReceiveRequestKeys.Request_Details));
-		
-		Request request = new Request();
-		request.setRequesterId(requester_id);
-		request.setRequestType(requestType);
-		request.setRequestDetails(requestDetails);
-		requestList.add(request);
+		for (int i = 0; i < requestListObject.size();) {
+			
+			JSONObject requestObject = requestListObject.get(i).isObject();
+			
+			Integer requester_id = JSONHelper.getIntValue(requestObject, JSONHelper.convertKeyName(ReceiveRequestKeys.Requester_ID));
+			String requestType = JSONHelper.getStringValue(requestObject, JSONHelper.convertKeyName(ReceiveRequestKeys.Request_Type));
+			String requestDetails = JSONHelper.getStringValue(requestObject, JSONHelper.convertKeyName(ReceiveRequestKeys.Request_Details));
+			
+			
+			Request request = new Request();
+			request.setRequesterId(requester_id);
+			request.setRequestType(requestType);
+			request.setRequestDetails(requestDetails);
+			requestList.add(request);
+		}
 		
 		ReceiveRequestAction action = new ReceiveRequestAction(requestList);	
 		return action;
