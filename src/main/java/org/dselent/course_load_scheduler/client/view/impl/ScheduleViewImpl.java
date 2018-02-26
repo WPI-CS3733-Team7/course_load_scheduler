@@ -791,6 +791,7 @@ public class ScheduleViewImpl extends BaseViewImpl<SchedulePresenter> implements
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 				selectedCourseSection.setEnabled(true);
+				editSection.setEnabled(true);
 				selectedCourseSection = (Button)event.getSource(); // may be errors
 				selectedCourseSection.setEnabled(false);
 			}

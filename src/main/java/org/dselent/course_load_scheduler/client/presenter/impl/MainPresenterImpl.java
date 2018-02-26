@@ -12,6 +12,7 @@ import org.dselent.course_load_scheduler.client.event.SendClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendClickScheduleTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendLogoutEvent;
 import org.dselent.course_load_scheduler.client.event.SendUserClickRequestTabEvent;
+import org.dselent.course_load_scheduler.client.gin.Injector;
 import org.dselent.course_load_scheduler.client.model.GlobalData;
 import org.dselent.course_load_scheduler.client.presenter.BasePresenter;
 import org.dselent.course_load_scheduler.client.presenter.IndexPresenter;
@@ -109,7 +110,7 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 	public HasWidgets getAccountPanel() {
 		return view.getAccountPanel();
 	}
-
+	
 	@Override
 	public void onReceiveLogin(ReceiveLoginEvent evt)
 	{
@@ -122,7 +123,10 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 	
 	@Override
 	public void onTabClicked(Integer index)
-	{
+	{	
+		final Injector injector = Injector.INSTANCE;
+		AdminRequestPresenterImpl requestPresenter = injector.getAdminRequestPresenter();
+		UserRequestPresenterImpl userRequestPresenter = injector.getUserRequestPresenter();
 		String role = globalData.getRole();
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
 		switch (index)
@@ -136,18 +140,25 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 				if (role == "LINKED_USER" || role == "ADMIN")
 				{
 					if (role == "ADMIN")
-					{
+					{	
+						
+						requestPresenter.go(this.getRequestPanel());
+						//requestPresenter.init();
 						SendClickRequestTabAction requestAction = new SendClickRequestTabAction(globalData.getUserId());
 						SendClickRequestTabEvent requestEvent = new SendClickRequestTabEvent(requestAction, container);
 						eventBus.fireEvent(requestEvent);
 						Window.alert("ERROR: Permission denied.");
 					}
 					else
-					{
+					{	
+						userRequestPresenter.go(this.getRequestPanel());
+						//userRequestPresenter.init();
 						SendClickUserRequestTabAction userRequestAction = new SendClickUserRequestTabAction(globalData.getUserId());
 						SendUserClickRequestTabEvent userRequestEvent = new SendUserClickRequestTabEvent(userRequestAction, container);
 						eventBus.fireEvent(userRequestEvent);
 					}	
+				}else {
+					Window.alert("ERROR: Permission denied.");
 				}
 				break;
 			case 2:
