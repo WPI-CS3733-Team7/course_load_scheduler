@@ -119,10 +119,10 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			}
 			
 			if(courses) {
-				requestType = "courses"; //return courses if clicked course radio button
+				requestType = "Course"; //return courses if clicked course radio button
 			}
 			else if(other){
-				requestType = "others"; ////return other if clicked other radio button
+				requestType = "Other"; ////return other if clicked other radio button
 			}
 			else {
 				requestType = null; //None of radio button selected
