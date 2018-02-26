@@ -164,6 +164,9 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		
 		registration = eventBus.addHandler(ReceiveEditSectionEvent.TYPE, this);
 		eventBusRegistration.put(ReceiveEditSectionEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(ReceiveValidateEvent.TYPE, this);
+		eventBusRegistration.put(ReceiveValidateEvent.TYPE, registration);
 	}
 
 	@Override
@@ -527,8 +530,8 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		for(CourseSection section : sectionList) {
 			for(CalendarInfo calInfo : calInfoList) {
 				if(section.getCalendarInfoId()==calInfo.getId()) {
-					calendarInfoList.add(calInfo);
-					sectionList.add(section);
+					/*calendarInfoList.add(calInfo);
+					sectionList.add(section);*/
 					createCourseSection(section, calInfo);
 				}
 			}
@@ -681,8 +684,8 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		for(CourseSection section : sectionList) {
 			for(CalendarInfo calInfo : calInfoList) {
 				if(section.getCalendarInfoId()==calInfo.getId()) {
-					calendarInfoList.add(calInfo);
-					sectionList.add(section);
+					/*calendarInfoList.add(calInfo);
+					sectionList.add(section);*/
 					createCourseSection(section, calInfo);
 				}
 			}
@@ -1062,8 +1065,8 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		
 		if(!validateClickInProgress)
 		{
-			validateClickInProgress = true;
-			view.getValidateButton().setEnabled(false);
+			//validateClickInProgress = true;
+			//view.getValidateButton().setEnabled(false);
 			parentPresenter.showLoadScreen();
 			
 			sendValidate();

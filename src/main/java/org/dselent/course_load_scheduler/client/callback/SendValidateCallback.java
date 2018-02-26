@@ -1,6 +1,8 @@
 package org.dselent.course_load_scheduler.client.callback;
 
+import org.dselent.course_load_scheduler.client.action.InvalidCreateInstructorAction;
 import org.dselent.course_load_scheduler.client.action.ReceiveValidateAction;
+import org.dselent.course_load_scheduler.client.event.InvalidCreateInstructorEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveValidateEvent;
 import org.dselent.course_load_scheduler.client.translator.impl.ValidateActionTranslatorImpl;
 import org.dselent.course_load_scheduler.client.utils.JSONHelper;
@@ -43,6 +45,9 @@ public class SendValidateCallback extends DisplayCallback<JSONValue> {
 
 	@Override
 	public void onFailure(Throwable caught) {
-		// THIS SHOULD NEVER FAIL
+		//Using the invalid create instructor action because it does what we want: hide the loading screen and display the message passed with it
+		InvalidCreateInstructorAction icia = new InvalidCreateInstructorAction("FAILED");
+		InvalidCreateInstructorEvent icie = new InvalidCreateInstructorEvent(icia);
+		eventBus.fireEvent(icie);
 	}
 }
