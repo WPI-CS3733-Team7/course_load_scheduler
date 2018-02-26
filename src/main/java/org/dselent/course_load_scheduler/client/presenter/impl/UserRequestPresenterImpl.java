@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidRequestAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveClickUserRequestTabAction;
 import org.dselent.course_load_scheduler.client.action.SendRequestAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidSubmitStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveClickAccountTabEvent;
+import org.dselent.course_load_scheduler.client.event.ReceiveRequestEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveUserClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
 import org.dselent.course_load_scheduler.client.exceptions.EmptyStringException;
@@ -59,6 +61,9 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 		
 		registration = eventBus.addHandler(ReceiveUserClickRequestTabEvent.TYPE, this);
 		eventBusRegistration.put(ReceiveUserClickRequestTabEvent.TYPE, registration);
+		
+		registration = eventBus.addHandler(ReceiveRequestEvent.TYPE, this);
+		eventBusRegistration.put(ReceiveRequestEvent.TYPE, registration);
 	}
 	
 	@Override
@@ -160,6 +165,9 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 	
 	public void onReceiveUserClickRequestTab(ReceiveUserClickRequestTabEvent evt) {
 		this.go(mainPresenter.getRequestPanel());
+		
+		ReceiveClickUserRequestTabAction action = evt.getAction();
+		populateRequestList(action.getRequestList());
 		
 	}
 	
