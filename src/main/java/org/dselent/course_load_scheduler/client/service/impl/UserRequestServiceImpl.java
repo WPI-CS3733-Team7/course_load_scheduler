@@ -35,6 +35,9 @@ public class UserRequestServiceImpl extends BaseServiceImpl implements UserReque
 		registration = eventBus.addHandler(SendRequestEvent.TYPE, this);
 		eventBusRegistration.put(SendRequestEvent.TYPE, registration);
 		
+		registration = eventBus.addHandler(SendUserClickRequestTabEvent.TYPE, this);
+		eventBusRegistration.put(SendUserClickRequestTabEvent.TYPE, registration);
+		
 	}
 	
 	@Override
