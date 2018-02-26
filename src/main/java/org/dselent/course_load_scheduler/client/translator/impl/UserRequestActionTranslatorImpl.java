@@ -21,8 +21,8 @@ public class UserRequestActionTranslatorImpl implements ActionTranslator<SendReq
 	{
 		JSONObject jsonObject = new JSONObject();
 		
-		JSONHelper.putIntValue(jsonObject, JSONHelper.convertKeyName(SendRequestKeys.User_ID), action.getUserId());
-		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendRequestKeys.Request_Type), action.getrequestType());
+		//JSONHelper.putIntValue(jsonObject, JSONHelper.convertKeyName(SendRequestKeys.User_ID), action.getUserId());
+		//JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendRequestKeys.Request_Type), action.getrequestType());
 		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendRequestKeys.Request_Descriptions), action.getDescription());
 		
 		return jsonObject;
@@ -51,7 +51,6 @@ public class UserRequestActionTranslatorImpl implements ActionTranslator<SendReq
 			request.setRequesterId(requester_id);
 			request.setRequestType(requestType);
 			request.setRequestDetails(requestDetails);
-			
 			requestList.add(request);
 			ReceiveRequestAction action = new ReceiveRequestAction(message);	
 			return action;

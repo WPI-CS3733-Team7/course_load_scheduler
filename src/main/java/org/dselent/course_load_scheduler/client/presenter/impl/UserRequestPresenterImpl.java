@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.course_load_scheduler.client.action.InvalidRequestAction;
-import org.dselent.course_load_scheduler.client.action.ReceiveClickUserRequestTabAction;
+import org.dselent.course_load_scheduler.client.action.ReceiveRequestAction;
 import org.dselent.course_load_scheduler.client.action.SendRequestAction;
 import org.dselent.course_load_scheduler.client.errorstring.InvalidSubmitStrings;
 import org.dselent.course_load_scheduler.client.event.InvalidRequestEvent;
-import org.dselent.course_load_scheduler.client.event.ReceiveClickAccountTabEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveRequestEvent;
 import org.dselent.course_load_scheduler.client.event.ReceiveUserClickRequestTabEvent;
 import org.dselent.course_load_scheduler.client.event.SendRequestEvent;
@@ -102,7 +101,6 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			boolean courses = view.getCourseRdo().getValue(); //Check click or not on radio button course
 			boolean other = view.getOtherRdo().getValue(); ////Check click or not on radio button other
 			String requestType = "";
-			
 			String description = view.getDescriptionTextArea().getText();
 			
 			boolean validRequesttype = true; //Manage request type
@@ -133,7 +131,7 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 			}
 			
 			if(validRequesttype && validDescription) { //Both True
-				sendRequest(description, requestType); //Show both informations
+				sendRequest(description); //Show both informations
 			}
 			else									//Return error messages
 			{
@@ -155,18 +153,18 @@ public class UserRequestPresenterImpl extends BasePresenterImpl implements UserR
 		view.showErrorMessages(ira.toString());
 	}
 	
-	private void sendRequest(String Description, String Requesttype)
+	private void sendRequest(String Description)
 	{
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendRequestAction sra = new SendRequestAction(Description, Requesttype);
+		SendRequestAction sra = new SendRequestAction(globalData.getUserId(), Description);
 		SendRequestEvent sre = new SendRequestEvent(sra, container);
 		eventBus.fireEvent(sre);
 	}
 	
-	public void onReceiveUserClickRequestTab(ReceiveUserClickRequestTabEvent evt) {
+	public void onReceiveRequestTab(ReceiveRequestEvent evt) {
 		this.go(mainPresenter.getRequestPanel());
 		
-		ReceiveClickUserRequestTabAction action = evt.getAction();
+		ReceiveRequestAction action = evt.getAction();
 		populateRequestList(action.getRequestList());
 		
 	}
