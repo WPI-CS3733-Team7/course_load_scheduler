@@ -143,7 +143,7 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 					{	
 						
 						requestPresenter.go(this.getRequestPanel());
-						
+						//requestPresenter.init();
 						SendClickRequestTabAction requestAction = new SendClickRequestTabAction(globalData.getUserId());
 						SendClickRequestTabEvent requestEvent = new SendClickRequestTabEvent(requestAction, container);
 						eventBus.fireEvent(requestEvent);
@@ -152,7 +152,7 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 					else
 					{	
 						userRequestPresenter.go(this.getRequestPanel());
-						
+						//userRequestPresenter.init();
 						SendClickUserRequestTabAction userRequestAction = new SendClickUserRequestTabAction(globalData.getUserId());
 						SendUserClickRequestTabEvent userRequestEvent = new SendUserClickRequestTabEvent(userRequestAction, container);
 						eventBus.fireEvent(userRequestEvent);

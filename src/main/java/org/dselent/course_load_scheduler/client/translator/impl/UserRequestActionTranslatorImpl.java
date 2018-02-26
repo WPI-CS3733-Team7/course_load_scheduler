@@ -22,8 +22,8 @@ public class UserRequestActionTranslatorImpl implements ActionTranslator<SendReq
 		JSONObject jsonObject = new JSONObject();
 		
 		JSONHelper.putIntValue(jsonObject, JSONHelper.convertKeyName(SendRequestKeys.User_ID), action.getUserId());
-		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendRequestKeys.Request_Type), action.getRequestType());
-		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendRequestKeys.Request_Descriptions), action.getDescription());
+		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendRequestKeys.REQUEST_TYPE), action.getRequestType());
+		JSONHelper.putStringValue(jsonObject, JSONHelper.convertKeyName(SendRequestKeys.REQUEST_DETAILS), action.getDescription());
 		
 		return jsonObject;
 	}
