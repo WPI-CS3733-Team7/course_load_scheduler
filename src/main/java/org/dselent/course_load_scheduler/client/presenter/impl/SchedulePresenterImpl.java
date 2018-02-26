@@ -558,6 +558,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			String courseName = view.getPopCourseTextName().getText();
 			String courseNumber = view.getPopCourseTextNumber().getText();
 			String frequency = view.getPopCourseTextFrequency().getText();
+			Window.alert(courseName + " " + courseNumber + " " + frequency);
 			boolean validCourseName = true;
 			boolean validCourseNumber = true;
 			boolean validFrequency = true;
@@ -589,12 +590,13 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 				view.getCourseCreateButton().setEnabled(false);
 				view.getCourseSubmitButton().setEnabled(false);
 				view.getCourseDeleteButton().setEnabled(false);
-				if(creating) {
-					sendCourseEdit(null, courseName, courseNumber, frequency, false);
-					
-				} else {
+				if(creating)
+				{
+					sendCourseEdit(-1, courseName, courseNumber, frequency, false);	
+				} 
+				else
+				{
 					sendCourseEdit(courseList.get(view.getCourseBox().getSelectedIndex()).getId(), courseName, courseNumber, frequency, deleting);
-					
 				}
 			}
 			else
@@ -611,14 +613,11 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	/* The following methods are for sending and listening for events related to courses
 	 * such as SendEditCourse, ReceiveEditCourse, ReceiveSelectCourse, and InvalidCreateCourse */
 
-	private void sendCourseEdit(Integer id, String courseName, String courseNumber, String frequency, boolean deleted) {
-		String idString = null;
-		if(id!=null)
-			idString = id.toString();
-		else
-			idString = "-1";
+	private void sendCourseEdit(Integer id, String courseName, String courseNumber, String frequency, boolean deleted)
+	{
+		String idString = id.toString();
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendEditCourseAction scea = new SendEditCourseAction(idString, courseName, courseNumber, frequency, Boolean.toString(deleted));
+		SendEditCourseAction scea = new SendEditCourseAction(globalData.getUserId(), idString, courseName, courseNumber, frequency, Boolean.toString(deleted));
 		SendEditCourseEvent scee = new SendEditCourseEvent(scea, container);
 		submitEditCourseClickInProgress = false;
 		eventBus.fireEvent(scee);	
@@ -653,10 +652,10 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		} else {
 			if(editedCourse.getDeleted()) {
 				courseList.remove(match);
-				view.getInstructorBox().removeItem(match);
+				view.getCourseBox().removeItem(match);
 			} else {
 				courseList.set(match, editedCourse);
-				view.getInstructorBox().setItemText(match, editedCourse.displayText());
+				view.getCourseBox().setItemText(match, editedCourse.displayText());
 			}
 		}
 		parentPresenter.hideLoadScreen();

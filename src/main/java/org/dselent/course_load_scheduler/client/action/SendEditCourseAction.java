@@ -2,15 +2,16 @@ package org.dselent.course_load_scheduler.client.action;
 
 public class SendEditCourseAction extends Action
 {
-
+	private Integer userId;
 	private String courseId;
 	private String courseName;
 	private String courseNumber;
 	private String frequency;
 	private String deleted;
 	
-	public SendEditCourseAction(String courseId, String courseName, String courseNumber, String frequency, String deleted)
+	public SendEditCourseAction(Integer userId, String courseId, String courseName, String courseNumber, String frequency, String deleted)
 	{
+		this.userId = userId;
 		this.courseId = courseId;
 		this.courseName = courseName;
 		this.courseNumber = courseNumber;
@@ -18,6 +19,11 @@ public class SendEditCourseAction extends Action
 		this.deleted = deleted;
 	}
 
+	public Integer getUserId()
+	{
+		return userId;
+	}
+	
 	public String getCourseId()
 	{
 		return courseId;

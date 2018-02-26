@@ -55,8 +55,8 @@ public class UserRequestServiceImpl extends BaseServiceImpl implements UserReque
 	public void onSendUserClickRequestTab(SendUserClickRequestTabEvent evt)
 	{
 		SendClickUserRequestTabAction action = evt.getAction();
-		ClickUserRequestTabActionTranslatorImpl UserRequestActionTranslator = new ClickUserRequestTabActionTranslatorImpl();
-		JSONObject json = UserRequestActionTranslator.translateToJson(action);
+		ClickUserRequestTabActionTranslatorImpl UserClickRequestTabActionTranslator = new ClickUserRequestTabActionTranslatorImpl();
+		JSONObject json = UserClickRequestTabActionTranslator.translateToJson(action);
 		SendClickUserRequestTabCallback UserRequestCallback = new SendClickUserRequestTabCallback(eventBus, evt.getContainer());
 		
 		String uri = action.getUserId() + NetworkRequestStrings.CLICK_USER_REQUEST_TAB;
