@@ -498,7 +498,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		}
 		parentPresenter.hideLoadScreen();
 		
-		populateInstructorList(instructorList);
+		//populateInstructorList(instructorList);
 	}
 	
 	@Override
@@ -506,7 +506,7 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 		view.getEditInstructorButton().setEnabled(true);
 
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendSelectInstructorAction ssia = new SendSelectInstructorAction(instructorList.get(view.getInstructorBox().getSelectedIndex()).getId(), view.getTermSelect().getItemText(view.getTermSelect().getSelectedIndex()), Integer.parseInt(view.getYearSelect().getItemText(view.getYearSelect().getSelectedIndex())));
+		SendSelectInstructorAction ssia = new SendSelectInstructorAction(globalData.getUserId(), instructorList.get(view.getInstructorBox().getSelectedIndex()).getId(), view.getTermSelect().getItemText(view.getTermSelect().getSelectedIndex()), Integer.parseInt(view.getYearSelect().getItemText(view.getYearSelect().getSelectedIndex())));
 		SendSelectInstructorEvent ssie = new SendSelectInstructorEvent(ssia, container);
 		eventBus.fireEvent(ssie);
 	}
@@ -558,7 +558,6 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 			String courseName = view.getPopCourseTextName().getText();
 			String courseNumber = view.getPopCourseTextNumber().getText();
 			String frequency = view.getPopCourseTextFrequency().getText();
-			Window.alert(courseName + " " + courseNumber + " " + frequency);
 			boolean validCourseName = true;
 			boolean validCourseNumber = true;
 			boolean validFrequency = true;
@@ -664,11 +663,11 @@ public class SchedulePresenterImpl extends BasePresenterImpl implements Schedule
 	@Override
 	public void selectCourse() {
 		view.getEditCourseButton().setEnabled(true);
-
+		/* Server request disabled until we figure out exactly what we want
 		HasWidgets container = parentPresenter.getView().getViewRootPanel();
-		SendSelectCourseAction ssca = new SendSelectCourseAction(courseList.get(view.getCourseBox().getSelectedIndex()).getId(), view.getTermSelect().getItemText(view.getTermSelect().getSelectedIndex()), Integer.parseInt(view.getYearSelect().getItemText(view.getYearSelect().getSelectedIndex())));
+		SendSelectCourseAction ssca = new SendSelectCourseAction(globalData.getUserId(), courseList.get(view.getCourseBox().getSelectedIndex()).getId(), view.getTermSelect().getItemText(view.getTermSelect().getSelectedIndex()), Integer.parseInt(view.getYearSelect().getItemText(view.getYearSelect().getSelectedIndex())));
 		SendSelectCourseEvent ssce = new SendSelectCourseEvent(ssca, container);
-		eventBus.fireEvent(ssce);
+		eventBus.fireEvent(ssce);*/
 	}
 	
 	@Override

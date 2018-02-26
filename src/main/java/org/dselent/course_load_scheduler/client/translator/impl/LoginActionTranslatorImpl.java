@@ -9,7 +9,6 @@ import org.dselent.course_load_scheduler.client.model.Course;
 import org.dselent.course_load_scheduler.client.model.CourseLoad;
 import org.dselent.course_load_scheduler.client.model.Instructor;
 import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveLoginKeys;
-import org.dselent.course_load_scheduler.client.receive.jsonkeys.ReceiveRegisterKeys;
 import org.dselent.course_load_scheduler.client.send.jsonkeys.SendLoginKeys;
 import org.dselent.course_load_scheduler.client.translator.ActionTranslator;
 import org.dselent.course_load_scheduler.client.utils.JSONHelper;

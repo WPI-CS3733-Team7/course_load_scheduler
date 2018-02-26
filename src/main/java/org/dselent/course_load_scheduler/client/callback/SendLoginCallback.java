@@ -25,11 +25,11 @@ public class SendLoginCallback extends DisplayCallback<JSONValue>
 		JSONObject json = JSONHelper.getObjectValue(result);
 		LoginActionTranslatorImpl loginActionTranslator = new LoginActionTranslatorImpl();
 		ReceiveLoginAction action = loginActionTranslator.translateToAction(json);
-		
 		// if userId equals -1, the login attempt failed, display failure message
 		if (action.getUserId() == -1)
 		{
-			InvalidLoginAction invalidLoginAction = new InvalidLoginAction(action.getMessage());
+			String output = action.getMessage() + " " + action.toString();
+			InvalidLoginAction invalidLoginAction = new InvalidLoginAction(output);
 			InvalidLoginEvent invalidLoginEvent = new InvalidLoginEvent(invalidLoginAction);
 			eventBus.fireEvent(invalidLoginEvent);
 		}
