@@ -32,11 +32,14 @@ public class UserRequestActionTranslatorImpl implements ActionTranslator<SendReq
 	public ReceiveRequestAction translateToAction(JSONObject json) {
 		
 		JSONValue jsonObject = json.get("success");
-		JSONObject returnObject = jsonObject.isArray().get(0).isObject();
+		JSONObject jsonReturnRequestObject = jsonObject.isObject();
+		
+		JSONValue returnRequest = jsonReturnRequestObject.get("returnObject");
+		JSONObject returnRequestObject = returnRequest.isObject();
 		
 		// extract request list
-		JSONValue requestListObjectStart = returnObject.get("requestList");
-		JSONArray requestListObject = requestListObjectStart.isArray();
+		
+		JSONArray requestListObject = returnRequestObject.get("requestList").isArray();
 		List<Request> requestList = new ArrayList<Request>();
 		for (int i = 0; i < requestListObject.size();) {
 			
@@ -45,7 +48,7 @@ public class UserRequestActionTranslatorImpl implements ActionTranslator<SendReq
 			Integer requester_id = JSONHelper.getIntValue(requestObject, JSONHelper.convertKeyName(ReceiveRequestKeys.Requester_ID));
 			String requestType = JSONHelper.getStringValue(requestObject, JSONHelper.convertKeyName(ReceiveRequestKeys.Request_Type));
 			String requestDetails = JSONHelper.getStringValue(requestObject, JSONHelper.convertKeyName(ReceiveRequestKeys.Request_Details));
-			String message = JSONHelper.getStringValue(requestObject, JSONHelper.convertKeyName(ReceiveRequestKeys.MESSAGE));
+			
 			
 			Request request = new Request();
 			request.setRequesterId(requester_id);

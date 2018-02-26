@@ -26,13 +26,17 @@ public class SendReplyActionTranslatorImpl implements ActionTranslator<SendReply
 
 	@Override
 	public ReceiveReplyAction translateToAction(JSONObject json) {
+		
 		JSONValue jsonObject = json.get("success");
-		JSONObject replyObject = jsonObject.isArray().get(0).isObject();
+		JSONObject jsonReturnReplyObject = jsonObject.isObject();
+		
+		JSONValue returnReply = jsonReturnReplyObject.get("returnObject");
+		JSONObject returnReplyObject = returnReply.isObject();
 		
 		
-		Integer requestId = JSONHelper.getIntValue(replyObject, JSONHelper.convertKeyName(ReceiveReplyKeys.REQUEST_ID));
-		String response = JSONHelper.getStringValue(replyObject, JSONHelper.convertKeyName(ReceiveReplyKeys.RESPONSE));
-		String replyType = JSONHelper.getStringValue(replyObject, JSONHelper.convertKeyName(ReceiveReplyKeys.REPLY_TYPE));
+		Integer requestId = JSONHelper.getIntValue(returnReplyObject, JSONHelper.convertKeyName(ReceiveReplyKeys.REQUEST_ID));
+		String response = JSONHelper.getStringValue(returnReplyObject, JSONHelper.convertKeyName(ReceiveReplyKeys.RESPONSE));
+		String replyType = JSONHelper.getStringValue(returnReplyObject, JSONHelper.convertKeyName(ReceiveReplyKeys.REPLY_TYPE));
 		
 		Request request = new Request();
 		request.setId(requestId);
